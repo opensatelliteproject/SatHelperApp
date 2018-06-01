@@ -1,2 +1,2 @@
-Satellite Receiver Helper Application
-=====================================
+Satellite Receiver Helper Application Page
+==========================================
