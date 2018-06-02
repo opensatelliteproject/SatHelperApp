@@ -7,6 +7,7 @@ import (
 	"time"
 	"bufio"
 	"encoding/binary"
+	. "github.com/logrusorgru/aurora"
 )
 
 const CFileFrontendBufferSize = 65535
@@ -64,18 +65,18 @@ func (f *CFileFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 // region Commands
 func (f *CFileFrontend) Start() {
 	if f.running {
-		log.Println("CFileFrontend is already running.")
+		log.Println(Red("CFileFrontend is already running."))
 		return
 	}
 	f.running = true
 	go func(frontend *CFileFrontend) {
-		log.Println("CFileFrontend Routine started")
+		log.Println(Green("CFileFrontend Routine started"))
 		f, err := os.Open(f.filename)
 
 		var period = CFileFrontendBufferSize / float32(frontend.sampleRate)
 
 		if err != nil {
-			log.Fatalf("Error opening file %s: %s", frontend.filename, err)
+			log.Fatalf(Red("Error opening file %s: %s").String(), Bold(frontend.filename), Bold(err))
 			frontend.running = false
 		}
 		defer frontend.fileHandler.Close()
@@ -90,7 +91,7 @@ func (f *CFileFrontend) Start() {
 			if float32(time.Now().Sub(frontend.t0).Seconds()) >= period {
 				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)
 				if err != nil {
-					log.Println("Error reading input CFile: %s", err)
+					log.Println(Red("Error reading input CFile: %s").String(), Bold(err))
 					frontend.running = false
 					break
 				}
@@ -106,13 +107,13 @@ func (f *CFileFrontend) Start() {
 			}
 			time.Sleep(time.Duration((period / 100) * float32(time.Second)))
 		}
-		log.Println("CFileFrontend Routine ended")
+		log.Println(Red("CFileFrontend Routine ended"))
 	}(f)
 }
 
 func (f *CFileFrontend) Stop() {
 	if ! f.running {
-		log.Println("CFileFrontend is not running")
+		log.Println(Red("CFileFrontend is not running"))
 		return
 	}
 	f.running = false

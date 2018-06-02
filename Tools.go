@@ -34,3 +34,11 @@ func AddToFifoS8(fifo *fifo.Queue, arr []int8, length int) {
 		fifo.Add(arr[i])
 	}
 }
+
+
+func swapBuffers(a **complex64, b **complex64) {
+	c := *b
+	*b = *a
+	*a = c
+}
+
