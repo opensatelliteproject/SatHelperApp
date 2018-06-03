@@ -47,6 +47,8 @@ var statisticsMutex = &sync.Mutex{}
 
 var demuxer Demuxer.BaseDemuxer
 
+var demodFifoUsage uint8
+
 // endregion
 
 func GetStats() Models.Statistics {

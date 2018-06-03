@@ -239,6 +239,8 @@ func decoderLoop() {
 					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets % AverageLastNSamples))
 				}
 				localStats.FrameLock = 1
+				localStats.DecoderFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
+				localStats.DemodulatorFifoUsage = demodFifoUsage
 
 				if demuxer != nil {
 					demuxer.SendFrame(rsCorrectedData)

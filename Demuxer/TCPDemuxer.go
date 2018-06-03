@@ -54,6 +54,9 @@ func (f *TCPServerDemuxer) SendFrame(frame []byte) {
 		f.syncMtx.Unlock()
 	}()
 }
+func (f *TCPServerDemuxer) GetName() string {
+	return "TCP Server"
+}
 // endregion
 // region Loop Function
 func (f *TCPServerDemuxer) loop() {
@@ -64,7 +67,7 @@ func (f *TCPServerDemuxer) loop() {
 	for f.running {
 		conn, err := ln.Accept()
 		if err != nil {
-
+			log.Error(err)
 		} else {
 			f.syncMtx.Lock()
 			f.clients.PushBack(conn)

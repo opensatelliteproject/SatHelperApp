@@ -20,4 +20,6 @@ type Statistics struct {
 	StartTime uint32
 	SyncWord [4]uint8
 	FrameLock uint8
+	DemodulatorFifoUsage uint8
+	DecoderFifoUsage uint8
 }

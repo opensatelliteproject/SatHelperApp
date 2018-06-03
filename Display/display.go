@@ -17,6 +17,15 @@ type DisplayObjects struct {
 	syncWord *ui.Par
 	scid *ui.Par
 	vcid *ui.Par
+	decoderFifoUsage *ui.Gauge
+	demodulatorFifoUsage *ui.Gauge
+	viterbiErrors *ui.Par
+	syncCorrelation *ui.Par
+	phaseCorrection *ui.Par
+	mode *ui.Par
+	centerFrequency *ui.Par
+	demuxer *ui.Par
+	device *ui.Par
 }
 
 var state = struct {
@@ -28,6 +37,16 @@ var state = struct {
 	syncWord [4]byte
 	scid uint8
 	vcid uint8
+	decoderFifoUsage uint8
+	demodulatorFifoUsage uint8
+	viterbiErrors uint
+	frameSize uint
+	phaseCorrection uint16
+	syncCorrelation uint8
+	centerFreq uint32
+	mode string
+	demuxer string
+	device string
 }{
 	signalQuality: 0,
 	rsErrors: [4]int32 {0,0,0,0},
@@ -35,6 +54,14 @@ var state = struct {
 	syncWord: [4]byte {0,0,0,0},
 	scid: 0,
 	vcid: 0,
+	decoderFifoUsage: 0,
+	demodulatorFifoUsage: 0,
+	phaseCorrection: 0,
+	syncCorrelation: 0,
+	centerFreq: 0,
+	mode: "Not Selected",
+	device: "None",
+	demuxer: "None",
 }
 
 var colorBar []uint32
@@ -128,8 +155,85 @@ func InitDisplay() {
 	scid.Height = 3
 	scid.Align()
 	// endregion
-
-
+	// region Decoder Fifo Usage
+	decoderFifoUsage := ui.NewGauge()
+	decoderFifoUsage.Percent = 0
+	decoderFifoUsage.Height = 3
+	decoderFifoUsage.BorderLabel = "Decoder FIFO"
+	decoderFifoUsage.BarColor = ui.ColorRed
+	decoderFifoUsage.BorderFg = ui.ColorWhite
+	decoderFifoUsage.PercentColor = ui.ColorBlue
+	decoderFifoUsage.PercentColorHighlighted = ui.ColorBlue
+	decoderFifoUsage.BorderLabelFg = ui.ColorCyan
+	// endregion
+	// region Demodulator Fifo Usage
+	demodulatorFifoUsage := ui.NewGauge()
+	demodulatorFifoUsage.Percent = 0
+	demodulatorFifoUsage.Height = 3
+	demodulatorFifoUsage.BorderLabel = "Demodulator FIFO"
+	demodulatorFifoUsage.BarColor = ui.ColorRed
+	demodulatorFifoUsage.BorderFg = ui.ColorWhite
+	demodulatorFifoUsage.PercentColor = ui.ColorBlue
+	demodulatorFifoUsage.PercentColorHighlighted = ui.ColorBlue
+	demodulatorFifoUsage.BorderLabelFg = ui.ColorCyan
+	// endregion
+	// region Viterbi Errors
+	viterbiErrors := ui.NewPar("Viterbi Err")
+	viterbiErrors.BorderLabel = "Viterbi Err"
+	viterbiErrors.TextFgColor = ui.ColorWhite
+	viterbiErrors.Text = "   0 /    0 bits"
+	viterbiErrors.Height = 3
+	viterbiErrors.Align()
+	// endregion
+	// region Phase Correction
+	phaseCorrection := ui.NewPar("Phase Corr")
+	phaseCorrection.BorderLabel = "Phase Corr"
+	phaseCorrection.TextFgColor = ui.ColorWhite
+	phaseCorrection.Text = "  0 deg"
+	phaseCorrection.Height = 3
+	phaseCorrection.Align()
+	// endregion
+	// region Sync Correlation
+	syncCorrelation := ui.NewPar("Sync Corr")
+	syncCorrelation.BorderLabel = "Sync Corr"
+	syncCorrelation.TextFgColor = ui.ColorWhite
+	syncCorrelation.Text = " 0"
+	syncCorrelation.Height = 3
+	syncCorrelation.Align()
+	// endregion
+	// region Center Frequency
+	centerFrequency := ui.NewPar("Center Frequency")
+	centerFrequency.BorderLabel = "Center Freq."
+	centerFrequency.TextFgColor = ui.ColorWhite
+	centerFrequency.Text = "0 MHz"
+	centerFrequency.Height = 3
+	centerFrequency.Align()
+	// endregion
+	// region Mode
+	mode := ui.NewPar("Mode")
+	mode.BorderLabel = "Mode"
+	mode.TextFgColor = ui.ColorWhite
+	mode.Text = "None"
+	mode.Height = 3
+	mode.Align()
+	// endregion
+	// region Device
+	device := ui.NewPar("Device")
+	device.BorderLabel = "Device"
+	device.TextFgColor = ui.ColorWhite
+	device.Text = "None"
+	device.Height = 3
+	device.Align()
+	// endregion
+	// region Demuxer
+	demuxer := ui.NewPar("Demuxer")
+	demuxer.BorderLabel = "Demuxer"
+	demuxer.TextFgColor = ui.ColorWhite
+	demuxer.Text = "None"
+	demuxer.Height = 3
+	demuxer.Align()
+	// endregion
+	// region Save Objects
 	state.displayObjects.head = head
 	state.displayObjects.signalLocked = signalLocked
 	state.displayObjects.signalQuality = signalQuality
@@ -138,7 +242,17 @@ func InitDisplay() {
 	state.displayObjects.syncWord = syncWord
 	state.displayObjects.vcid = vcid
 	state.displayObjects.scid = scid
-
+	state.displayObjects.decoderFifoUsage = decoderFifoUsage
+	state.displayObjects.demodulatorFifoUsage = demodulatorFifoUsage
+	state.displayObjects.viterbiErrors = viterbiErrors
+	state.displayObjects.phaseCorrection = phaseCorrection
+	state.displayObjects.syncCorrelation = syncCorrelation
+	state.displayObjects.centerFrequency = centerFrequency
+	state.displayObjects.mode = mode
+	state.displayObjects.device = device
+	state.displayObjects.demuxer = demuxer
+	// endregion
+	// region Configure Body
 	ui.Body.AddRows(
 		ui.NewRow(
 			ui.NewCol(12, 0, head),
@@ -151,12 +265,28 @@ func InitDisplay() {
 			ui.NewCol(2,0,scid),
 		),
 		ui.NewRow(
+			ui.NewCol(3, 0, decoderFifoUsage),
+			ui.NewCol(3,0, demodulatorFifoUsage),
+			ui.NewCol(2,0,viterbiErrors),
+			ui.NewCol(2,0,syncCorrelation),
+			ui.NewCol(2,0,phaseCorrection),
+		),
+		ui.NewRow(
+			ui.NewCol(3, 0, centerFrequency),
+			ui.NewCol(2, 0, mode),
+			ui.NewCol(3,0, demuxer),
+			ui.NewCol(4,0, device),
+		),
+		ui.NewRow(
 			ui.NewCol(6, 0, rsErrors),
 			ui.NewCol(6, 0, channelData),
 		),
 	)
+	// endregion
+	// region Create Timers
 	e := ui.NewTimerCh(10 * time.Millisecond)
 	ui.Merge("timer10ms", e)
+	// endregion
 }
 
 func updateComponents() {
@@ -211,21 +341,56 @@ func updateComponents() {
 	// region SCID / VCID
 	state.displayObjects.scid.Text = strconv.FormatUint(uint64(state.scid), 10)
 	state.displayObjects.vcid.Text = strconv.FormatUint(uint64(state.vcid), 10)
-	// endreigon
+	// endregion
+	// region FIFO
+	state.displayObjects.decoderFifoUsage.Percent = int(state.decoderFifoUsage)
+	state.displayObjects.demodulatorFifoUsage.Percent = int(state.demodulatorFifoUsage)
+	// endregion
+	// region Viterbi Errors
+	state.displayObjects.viterbiErrors.Text = fmt.Sprintf("%4d / %4d bits", state.viterbiErrors, state.frameSize)
+	// endregion
+	// region Sync Correlation
+	state.displayObjects.syncCorrelation.Text = fmt.Sprintf("%2d", state.syncCorrelation)
+	// endregion
+	// region Phase Correction
+	state.displayObjects.phaseCorrection.Text = fmt.Sprintf("%3d deg", state.phaseCorrection)
+	// endregion
+	// region Center Frequency
+	state.displayObjects.centerFrequency.Text = fmt.Sprintf("%d Hz", state.centerFreq)
+	// endregion
+	// region Mode
+	state.displayObjects.mode.Text = state.mode
+	// endregion
+	// region Device
+	state.displayObjects.device.Text = state.device
+	// endregion
+	// region Device
+	state.displayObjects.demuxer.Text = state.demuxer
+	// endregion
+	// region UI Alignments
 	ui.Body.Align()
 	AlignCenter(state.displayObjects.scid)
 	AlignCenter(state.displayObjects.vcid)
 	AlignCenter(state.displayObjects.signalLocked)
 	AlignCenter(state.displayObjects.head)
 	AlignCenter(state.displayObjects.syncWord)
+	AlignCenter(state.displayObjects.viterbiErrors)
+	AlignCenter(state.displayObjects.phaseCorrection)
+	AlignCenter(state.displayObjects.syncCorrelation)
+	AlignCenter(state.displayObjects.mode)
+	AlignCenter(state.displayObjects.centerFrequency)
+	AlignCenter(state.displayObjects.demuxer)
+	AlignCenter(state.displayObjects.device)
+	// endregion
 }
 
 func Render() {
 	updateComponents()
 	ui.Clear()
-	// ui.Render(ui.Body)
+	ui.Render(ui.Body)
 }
 
+// region Update Functions
 func UpdateLockedState(lck bool) {
 	state.signalLocked = lck
 }
@@ -250,3 +415,46 @@ func UpdateSCVCID (scid byte, vcid byte) {
 	state.vcid = vcid
 	state.scid = scid
 }
+
+func UpdateDecoderFifoUsage(percent uint8) {
+	state.decoderFifoUsage = percent
+}
+
+func UpdateDemodulatorFifoUsage(percent uint8) {
+	state.demodulatorFifoUsage = percent
+}
+
+func UpdateViterbiErrors(errors uint, frameSize uint) {
+	state.viterbiErrors = errors
+	state.frameSize = frameSize
+}
+
+func UpdateSyncCorrelation(corr uint8) {
+	state.syncCorrelation = corr
+}
+
+func UpdatePhaseCorr(corr uint8) {
+	switch corr {
+	case 0: state.phaseCorrection = 0; break
+	case 1: state.phaseCorrection = 90; break
+	case 2: state.phaseCorrection = 180; break
+	case 3: state.phaseCorrection = 270; break
+	}
+}
+
+func UpdateCenterFrequency(freq uint32) {
+	state.centerFreq = freq
+}
+
+func UpdateMode(mode string) {
+	state.mode = mode
+}
+
+func UpdateDevice(device string) {
+	state.device = device
+}
+
+func UpdateDemuxer(demuxer string) {
+	state.demuxer = demuxer
+}
+// endregion

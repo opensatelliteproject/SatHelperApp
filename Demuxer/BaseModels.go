@@ -5,4 +5,5 @@ type BaseDemuxer interface {
 	Start()
 	Stop()
 	SendFrame([]byte)
+	GetName() string
 }

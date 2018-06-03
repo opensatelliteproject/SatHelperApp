@@ -77,8 +77,6 @@ func processSamples() {
 
 	symbols := clockRecovery.Work(ba, bb, length)
 	swapBuffers(&ba, &bb)
-	//
-	//sendbuffer := make([]byte, symbols)
 
 	var ob *[]complex64
 
@@ -98,14 +96,8 @@ func processSamples() {
 		}
 
 		symbolsFifo.Add(byte(v))
-		//
-		//sendbuffer[i] = byte(v)
 	}
-	//
-	//_, err := conn.Write(sendbuffer)
-	//if err != nil {
-	//	log.Printf(Red("Error writting data: %s").String(), Bold(err))
-	//}
+	demodFifoUsage = uint8(100 * float32(samplesFifo.Len()) / float32(FifoSize))
 }
 
 func symbolProcessLoop() {

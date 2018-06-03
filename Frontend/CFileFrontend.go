@@ -39,6 +39,9 @@ func NewCFileFrontend(filename string) *CFileFrontend {
 func (f *CFileFrontend) GetName() string {
 	return fmt.Sprintf("CFileFrontend (%s)", f.filename)
 }
+func (f *CFileFrontend) GetShortName() string {
+	return "CFileFrontend"
+}
 func (f *CFileFrontend) GetAvailableSampleRates() []uint32 {
 	return make([]uint32, 0)
 }
