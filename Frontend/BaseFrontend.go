@@ -27,6 +27,7 @@ type BaseFrontend interface {
 	SetBiasT(value uint8)
 	GetCenterFrequency() uint32
 	GetName() string
+	GetShortName() string
 	GetSampleRate() uint32
 	SetSamplesAvailableCallback(cb SamplesCallback)
 }

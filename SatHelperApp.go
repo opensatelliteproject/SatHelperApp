@@ -2,97 +2,127 @@ package main
 
 import (
 	"github.com/OpenSatelliteProject/libsathelper"
-	. "github.com/logrusorgru/aurora"
 	"log"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
-	"time"
 	"github.com/foize/go.fifo"
-	"os"
-	"os/signal"
-	"net"
+	ui "github.com/airking05/termui"
+	"github.com/logrusorgru/aurora"
+	"github.com/OpenSatelliteProject/SatHelperApp/Display"
+	"strings"
+	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 )
 
 func main() {
 	log.Printf("%s %s (%s) - %s %s\n",
-		Green(Bold("SatHelperApp")),
-		Bold(GetVersion()),
-		Bold(GetRevision()),
-		Bold(GetCompilationDate()),
-		Bold(GetCompilationTime()),
+		aurora.Green(aurora.Bold("SatHelperApp")),
+		aurora.Bold(GetVersion()),
+		aurora.Bold(GetRevision()),
+		aurora.Bold(GetCompilationDate()),
+		aurora.Bold(GetCompilationTime()),
 	)
 	log.Printf("%s %s (%s) - %s %s\n",
-		Green(Bold("libSatHelper")),
-		Bold(SatHelper.InfoGetVersion()),
-		Bold(SatHelper.InfoGetGitSHA1()),
-		Bold(SatHelper.InfoGetCompilationDate()),
-		Bold(SatHelper.InfoGetCompilationTime()),
+		aurora.Green(aurora.Bold("libSatHelper")),
+		aurora.Bold(SatHelper.InfoGetVersion()),
+		aurora.Bold(SatHelper.InfoGetGitSHA1()),
+		aurora.Bold(SatHelper.InfoGetCompilationDate()),
+		aurora.Bold(SatHelper.InfoGetCompilationTime()),
 	)
+
+	err := ui.Init()
+	if err != nil {
+		panic(err)
+	}
+	defer ui.Close()
 
 	LoadConfig()
 
 	samplesFifo = fifo.NewQueue()
 
-	switch CurrentConfig.Base.Mode {
+	switch strings.ToLower(CurrentConfig.Base.Mode) {
 		case "lrit":
-			log.Println(Cyan("Selected LRIT mode. Ignoring parameters from config file."))
+			log.Println(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file."))
 			SetLRITMode()
 		break
 		case "hrit":
-			log.Println(Cyan("Selected HRIT mode. Ignoring parameters from config file."))
+			log.Println(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file."))
 			SetHRITMode()
 		break
 		default:
-			log.Println(Gray("No valid mode selected. Using config file parameters."))
+			log.Println(aurora.Gray("No valid mode selected. Using config file parameters."))
 	}
 
-	switch CurrentConfig.Base.DeviceType {
+	switch strings.ToLower(CurrentConfig.Base.DeviceType) {
 		case "cfile":
-			log.Printf(Cyan("CFile Frontend selected. File Name: %s").String(), Bold(Green(CurrentConfig.CFileSource.Filename)))
+			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
 			device.SetSampleRate(CurrentConfig.Source.SampleRate)
 			device.SetCenterFrequency(CurrentConfig.Source.Frequency)
 			break
 		default:
-			log.Fatalf(Red("Device %s is not currently supported.").String(), Bold(CurrentConfig.Base.DeviceType))
+			log.Fatalf(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
 		break
+	}
+
+	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
+	case "tcpserver":
+		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d\n").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
+		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
+		break
+	default:
+		log.Fatalf(aurora.Red("Unknown Demuxer Type %s.\n").String(), CurrentConfig.Base.DemuxerType)
 	}
 
 	device.SetSamplesAvailableCallback(newSamplesCallback)
 
 	initDSP()
+	initDecoder()
+	Display.InitDisplay()
+	demuxer.Init()
 
-	log.Println(Cyan("Connecting to localhost:5000"))
-	cn, err := net.Dial("tcp", "127.0.0.1:5000")
+	log.Println(aurora.Cyan("Starting Source"))
+	device.Start()
 
-	conn = cn
+	log.Println(aurora.Cyan("Starting Main loop"))
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	demuxer.Start()
+
+	go symbolProcessLoop()
+	go decoderLoop()
 
 	running = true
 
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func(){
-		for range c {
-			log.Println(Bold(Red("Got Ctrl+C! Closing!!!!")))
-			running = false
-		}
-	}()
-
-	log.Println(Cyan("Starting Source"))
-	device.Start()
-
-	log.Println(Cyan("Starting Main loop"))
-
-	// go symbolLoopFunc()
-
-	for running {
-		processSamples()
-		time.Sleep(time.Microsecond)
+	stopFunc := func(ui.Event) {
+		log.Println(aurora.Bold(aurora.Red("Got close handler.")))
+		running = false
+		ui.StopLoop()
 	}
 
-	log.Println(Red("Stopping Source"))
+	ui.Handle("/sys/kbd/q", stopFunc)
+	ui.Handle("/sys/kbd/C-c", stopFunc)
+	ui.Handle("/timer/10ms", func (e ui.Event) {
+		stat := GetStats()
+		Display.UpdateSignalQuality(stat.SignalQuality)
+		Display.UpdateLockedState(stat.FrameLock == 1)
+		Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
+		Display.UpdateReedSolomon(stat.RsErrors)
+		Display.UpdateSyncWord(stat.SyncWord)
+		Display.UpdateSCVCID(stat.SCID, stat.VCID)
+		Display.UpdateDecoderFifoUsage(stat.DecoderFifoUsage)
+		Display.UpdateDemodulatorFifoUsage(stat.DemodulatorFifoUsage)
+		Display.UpdateViterbiErrors(uint(stat.VitErrors), uint(stat.FrameBits))
+		Display.UpdatePhaseCorr(stat.PhaseCorrection)
+		Display.UpdateSyncCorrelation(stat.SyncCorrelation)
+		Display.UpdateMode(strings.ToUpper(CurrentConfig.Base.Mode))
+		Display.UpdateCenterFrequency(device.GetCenterFrequency())
+		Display.UpdateDevice(device.GetShortName())
+		Display.UpdateDemuxer(demuxer.GetName())
+		Display.Render()
+	})
+
+	CallClear()
+
+	ui.Loop()
+
+	log.Println(aurora.Red("Stopping Source"))
 	device.Stop()
 }

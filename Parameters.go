@@ -5,8 +5,10 @@ import (
 	"github.com/BurntSushi/toml"
 	"bytes"
 	"io/ioutil"
+	. "github.com/OpenSatelliteProject/SatHelperApp/Models"
 )
 
+// region Demodulator Parameters
 // These are the parameters used by the demodulator. Change with care.
 
 // GOES HRIT Settings
@@ -52,48 +54,35 @@ const DefaultBiast = false
 // This should be more than enough
 const FifoSize = 1024 * 1024
 
-type BaseConfig struct {
-	SymbolRate uint32
-	RRCAlpha float32
-	Mode string
-	Decimation uint8
-	AGCEnabled bool
-	DeviceType string
-	SendConstellation bool
-	PLLAlpha float32
-}
+// endregion
+// region Decoder Parameters
 
-type CFileSourceConfig struct {
-	Filename string
-}
+const HritUw0 uint64 = 0xfc4ef4fd0cc2df89
+const HritUw2 uint64 = 0x25010b02f33d2076
+const LritUw0 uint64 = 0xfca2b63db00d9794
+const LritUw2 uint64 = 0x035d49c24ff2686b
 
-type AirspySourceConfig struct {
-	MixerGain uint8
-	LNAGain uint8
-	VGAGain uint8
-	BiasTEnabled bool
-}
+const FRAMESIZE = 1024
+const FRAMEBITS = FRAMESIZE * 8
+const CODEDFRAMESIZE = FRAMEBITS * 2
+const MINCORRELATIONBITS = 46
+const RSBLOCKS = 4
+const RSPARITYSIZE = 32
+const RSPARITYBLOCK = RSPARITYSIZE * RSBLOCKS
+const SYNCWORDSIZE = 32
+const LASTFRAMEDATABITS = 64
+const LASTFRAMEDATA = LASTFRAMEDATABITS / 8
+const TIMEOUT = 2
 
-type SpyServerConfig struct {
-	SpyServerHost string
-	SpyServerPort int
-	BiasTEnabled bool
-}
 
-type SourceConfig struct {
-	SampleRate uint32
-	Frequency uint32
-}
+const DefaultFlywheelRecheck = 4
+const DefaultVchannelPort = 5001
+const DefaultStatisticsPort = 5002
 
-type AppConfig struct {
-	Title string
-	Base BaseConfig
-	Source SourceConfig
-	AirspySource AirspySourceConfig
-	SpyServerSource SpyServerConfig
-	CFileSource CFileSourceConfig
-}
+const AverageLastNSamples = 10000
 
+// endregion
+// region Current Config Stuff
 var CurrentConfig AppConfig
 
 func SetHRITMode() {
@@ -129,6 +118,12 @@ func LoadDefaults() {
 	CurrentConfig.AirspySource.BiasTEnabled = DefaultBiast
 	CurrentConfig.SpyServerSource.BiasTEnabled = DefaultBiast
 
+	// Decoder
+	CurrentConfig.Decoder.Display = true
+	CurrentConfig.Decoder.VChannelPort = DefaultVchannelPort
+	CurrentConfig.Decoder.StatisticsPort = DefaultStatisticsPort
+	CurrentConfig.Decoder.UseLastFrameData = true
+
 	SaveConfig()
 }
 
@@ -151,3 +146,4 @@ func LoadConfig() {
 		LoadDefaults()
 	}
 }
+// endregion
