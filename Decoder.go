@@ -239,6 +239,11 @@ func decoderLoop() {
 					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets % AverageLastNSamples))
 				}
 				localStats.FrameLock = 1
+
+				if demuxer != nil {
+					demuxer.SendFrame(rsCorrectedData)
+				}
+
 			} else {
 				localStats.FrameLock = 0
 			}

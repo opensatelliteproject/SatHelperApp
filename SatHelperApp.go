@@ -8,6 +8,8 @@ import (
 	ui "github.com/airking05/termui"
 	"github.com/logrusorgru/aurora"
 	"github.com/OpenSatelliteProject/SatHelperApp/Display"
+	"strings"
+	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 )
 
 func main() {
@@ -36,7 +38,7 @@ func main() {
 
 	samplesFifo = fifo.NewQueue()
 
-	switch CurrentConfig.Base.Mode {
+	switch strings.ToLower(CurrentConfig.Base.Mode) {
 		case "lrit":
 			log.Println(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file."))
 			SetLRITMode()
@@ -49,7 +51,7 @@ func main() {
 			log.Println(aurora.Gray("No valid mode selected. Using config file parameters."))
 	}
 
-	switch CurrentConfig.Base.DeviceType {
+	switch strings.ToLower(CurrentConfig.Base.DeviceType) {
 		case "cfile":
 			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
@@ -61,31 +63,31 @@ func main() {
 		break
 	}
 
+	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
+	case "tcpserver":
+		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d\n").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
+		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
+		break
+	default:
+		log.Fatalf(aurora.Red("Unknown Demuxer Type %s.\n").String(), CurrentConfig.Base.DemuxerType)
+	}
+
 	device.SetSamplesAvailableCallback(newSamplesCallback)
 
 	initDSP()
 	initDecoder()
 	Display.InitDisplay()
+	demuxer.Init()
 
 	log.Println(aurora.Cyan("Starting Source"))
 	device.Start()
 
 	log.Println(aurora.Cyan("Starting Main loop"))
 
+	demuxer.Start()
+
 	go symbolProcessLoop()
 	go decoderLoop()
-
-
-	//log.Println(Cyan("Connecting to localhost:5000"))
-	//cn, err := net.Dial("tcp", "127.0.0.1:5000")
-	//
-	//conn = cn
-	//
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
-	// Display.Render()
 
 	running = true
 

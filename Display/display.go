@@ -223,7 +223,7 @@ func updateComponents() {
 func Render() {
 	updateComponents()
 	ui.Clear()
-	ui.Render(ui.Body)
+	// ui.Render(ui.Body)
 }
 
 func UpdateLockedState(lck bool) {

@@ -6,6 +6,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
 	"sync"
+	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 )
 // region Global Globals
 var running = false
@@ -43,6 +44,8 @@ var packetFixer SatHelper.PacketFixer
 
 var statistics Models.Statistics
 var statisticsMutex = &sync.Mutex{}
+
+var demuxer Demuxer.BaseDemuxer
 
 // endregion
 

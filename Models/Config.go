@@ -11,6 +11,7 @@ type BaseConfig struct {
 	DeviceType string
 	SendConstellation bool
 	PLLAlpha float32
+	DemuxerType string
 }
 
 type CFileSourceConfig struct {
@@ -42,6 +43,11 @@ type DecoderConfig struct {
 	UseLastFrameData bool
 }
 
+type TCPServerDemuxerConfig struct {
+	Port int
+	Host string
+}
+
 type AppConfig struct {
 	Title string
 	Base BaseConfig
@@ -50,5 +56,6 @@ type AppConfig struct {
 	AirspySource AirspySourceConfig
 	SpyServerSource SpyServerConfig
 	CFileSource CFileSourceConfig
+	TCPServerDemuxer TCPServerDemuxerConfig
 }
 // endregion
