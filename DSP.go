@@ -5,6 +5,7 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	. "github.com/logrusorgru/aurora"
+	"time"
 )
 
 func initDSP() {
@@ -76,8 +77,8 @@ func processSamples() {
 
 	symbols := clockRecovery.Work(ba, bb, length)
 	swapBuffers(&ba, &bb)
-
-	sendbuffer := make([]byte, symbols)
+	//
+	//sendbuffer := make([]byte, symbols)
 
 	var ob *[]complex64
 
@@ -96,12 +97,22 @@ func processSamples() {
 			v = -128
 		}
 
-		sendbuffer[i] = byte(v)
+		symbolsFifo.Add(byte(v))
+		//
+		//sendbuffer[i] = byte(v)
 	}
+	//
+	//_, err := conn.Write(sendbuffer)
+	//if err != nil {
+	//	log.Printf(Red("Error writting data: %s").String(), Bold(err))
+	//}
+}
 
-	_, err := conn.Write(sendbuffer)
-	if err != nil {
-		log.Printf(Red("Error writting data: %s").String(), Bold(err))
+func symbolProcessLoop() {
+	log.Println(Green("Symbol Process Routine started"))
+	for running {
+		processSamples()
+		time.Sleep(time.Microsecond)
 	}
-
+	log.Println(Red("Symbol Process Routine stopped"))
 }
