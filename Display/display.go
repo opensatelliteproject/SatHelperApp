@@ -5,6 +5,7 @@ import (
 	"time"
 	"github.com/nsf/termbox-go"
 	"strconv"
+	"fmt"
 )
 
 type DisplayObjects struct {
@@ -13,18 +14,27 @@ type DisplayObjects struct {
 	signalQuality *ui.Gauge
 	channelData *ui.BarChart
 	rsErrors *ui.BarChart
+	syncWord *ui.Par
+	scid *ui.Par
+	vcid *ui.Par
 }
 
 var state = struct {
 	signalQuality int
 	signalLocked bool
 	channelPackets [256]int64
-	rsErrors [4] int
+	rsErrors [4] int32
 	displayObjects DisplayObjects
+	syncWord [4]byte
+	scid uint8
+	vcid uint8
 }{
 	signalQuality: 0,
-	rsErrors: [4]int {0,0,0,0},
+	rsErrors: [4]int32 {0,0,0,0},
 	signalLocked: false,
+	syncWord: [4]byte {0,0,0,0},
+	scid: 0,
+	vcid: 0,
 }
 
 var colorBar []uint32
@@ -96,12 +106,38 @@ func InitDisplay() {
 	rsErrors.DataLabels = []string{"0", "1", "2", "3"}
 	rsErrors.TextColor = ui.ColorGreen | ui.AttrBold
 	// endregion
+	// region Sync Word
+	syncWord := ui.NewPar("Sync Word")
+	syncWord.BorderLabel = "Sync Word"
+	syncWord.TextFgColor = ui.ColorWhite
+	syncWord.Text = "00000000"
+	syncWord.Height = 3
+	syncWord.Align()
+	// endregion
+	// region VCID / SCID
+	vcid := ui.NewPar("VCID")
+	vcid.BorderLabel = "VCID"
+	vcid.TextFgColor = ui.ColorWhite
+	vcid.Text = "0"
+	vcid.Height = 3
+	vcid.Align()
+	scid := ui.NewPar("SCID")
+	scid.BorderLabel = "SCID"
+	scid.TextFgColor = ui.ColorWhite
+	scid.Text = "0"
+	scid.Height = 3
+	scid.Align()
+	// endregion
 
 
 	state.displayObjects.head = head
 	state.displayObjects.signalLocked = signalLocked
 	state.displayObjects.signalQuality = signalQuality
 	state.displayObjects.channelData = channelData
+	state.displayObjects.rsErrors = rsErrors
+	state.displayObjects.syncWord = syncWord
+	state.displayObjects.vcid = vcid
+	state.displayObjects.scid = scid
 
 	ui.Body.AddRows(
 		ui.NewRow(
@@ -109,11 +145,14 @@ func InitDisplay() {
 		),
 		ui.NewRow(
 			ui.NewCol(3, 0, signalLocked),
-			ui.NewCol(4,0,signalQuality),
-			ui.NewCol(7, 0, rsErrors),
+			ui.NewCol(3,0,signalQuality),
+			ui.NewCol(2,0, syncWord),
+			ui.NewCol(2,0,vcid),
+			ui.NewCol(2,0,scid),
 		),
 		ui.NewRow(
-			ui.NewCol(12, 0, channelData),
+			ui.NewCol(6, 0, rsErrors),
+			ui.NewCol(6, 0, channelData),
 		),
 	)
 	e := ui.NewTimerCh(10 * time.Millisecond)
@@ -156,11 +195,29 @@ func updateComponents() {
 	}
 	state.displayObjects.channelData.DataLabels = label
 	state.displayObjects.channelData.Data = data
-	// channelData
 	// endregion
+	// region RS Errors
+	for i := 0; i < 4; i++ {
+		state.displayObjects.rsErrors.Data[i] = int(state.rsErrors[i])
+	}
+	// endregion
+	// region Sync Word
+	state.displayObjects.syncWord.Text = ""
+	for i := 0; i < 4; i++ {
+		state.displayObjects.syncWord.Text += fmt.Sprintf("%02X", state.syncWord[i])
+	}
+	state.displayObjects.syncWord.Align()
+	// endregion
+	// region SCID / VCID
+	state.displayObjects.scid.Text = strconv.FormatUint(uint64(state.scid), 10)
+	state.displayObjects.vcid.Text = strconv.FormatUint(uint64(state.vcid), 10)
+	// endreigon
 	ui.Body.Align()
+	AlignCenter(state.displayObjects.scid)
+	AlignCenter(state.displayObjects.vcid)
 	AlignCenter(state.displayObjects.signalLocked)
 	AlignCenter(state.displayObjects.head)
+	AlignCenter(state.displayObjects.syncWord)
 }
 
 func Render() {
@@ -179,4 +236,17 @@ func UpdateSignalQuality(q uint8) {
 
 func UpdateChannelData(d [256]int64) {
 	state.channelPackets = d
+}
+
+func UpdateReedSolomon(d [4]int32) {
+	state.rsErrors = d
+}
+
+func UpdateSyncWord (d [4]byte) {
+	state.syncWord = d
+}
+
+func UpdateSCVCID (scid byte, vcid byte) {
+	state.vcid = vcid
+	state.scid = scid
 }

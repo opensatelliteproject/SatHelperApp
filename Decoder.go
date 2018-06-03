@@ -6,7 +6,6 @@ import (
 	"time"
 	"log"
 	. "github.com/logrusorgru/aurora"
-	"os"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
 )
 
@@ -56,11 +55,6 @@ func initDecoder() {
 func decoderLoop() {
 	isCorrupted := false
 	lastFrameOk := false
-	f, err := os.Create("output.data")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
 
 	var localStats Models.Statistics
 	var averageRSCorrections float32 = 0.0

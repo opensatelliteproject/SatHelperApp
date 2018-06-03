@@ -102,6 +102,9 @@ func main() {
 		Display.UpdateSignalQuality(stat.SignalQuality)
 		Display.UpdateLockedState(stat.FrameLock == 1)
 		Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
+		Display.UpdateReedSolomon(stat.RsErrors)
+		Display.UpdateSyncWord(stat.SyncWord)
+		Display.UpdateSCVCID(stat.SCID, stat.VCID)
 		Display.Render()
 	})
 
