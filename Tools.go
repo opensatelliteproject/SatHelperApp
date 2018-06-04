@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/foize/go.fifo"
+	"github.com/racerxdl/go.fifo"
 	"log"
 	"runtime"
 	"os/exec"
@@ -9,32 +9,38 @@ import (
 )
 
 func AddToFifoC64(fifo *fifo.Queue, arr []complex64, length int) {
+	fifo.UnsafeLock()
+	defer fifo.UnsafeUnlock()
 	for i := 0; i < length; i++ {
-		if fifo.Len() >= FifoSize {
+		if fifo.UnsafeLen() >= FifoSize {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		fifo.Add(arr[i])
+		fifo.UnsafeAdd(arr[i])
 	}
 }
 
 func AddToFifoS16(fifo *fifo.Queue, arr []int16, length int) {
+	fifo.UnsafeLock()
+	defer fifo.UnsafeUnlock()
 	for i := 0; i < length; i++ {
-		if fifo.Len() >= FifoSize {
+		if fifo.UnsafeLen() >= FifoSize {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		fifo.Add(arr[i])
+		fifo.UnsafeAdd(arr[i])
 	}
 }
 
 func AddToFifoS8(fifo *fifo.Queue, arr []int8, length int) {
+	fifo.UnsafeLock()
+	defer fifo.UnsafeUnlock()
 	for i := 0; i < length; i++ {
-		if fifo.Len() >= FifoSize {
+		if fifo.UnsafeLen() >= FifoSize {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		fifo.Add(arr[i])
+		fifo.UnsafeAdd(arr[i])
 	}
 }
 

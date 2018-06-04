@@ -4,15 +4,30 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	"log"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
-	"github.com/foize/go.fifo"
 	ui "github.com/airking05/termui"
 	"github.com/logrusorgru/aurora"
 	"github.com/OpenSatelliteProject/SatHelperApp/Display"
 	"strings"
 	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
+	"flag"
+	"os"
+	"runtime/pprof"
 )
 
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+
 func main() {
+
+	flag.Parse()
+	if *cpuprofile != "" {
+		f, err := os.Create(*cpuprofile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
+	}
+
 	log.Printf("%s %s (%s) - %s %s\n",
 		aurora.Green(aurora.Bold("SatHelperApp")),
 		aurora.Bold(GetVersion()),
@@ -35,8 +50,6 @@ func main() {
 	defer ui.Close()
 
 	LoadConfig()
-
-	samplesFifo = fifo.NewQueue()
 
 	switch strings.ToLower(CurrentConfig.Base.Mode) {
 		case "lrit":
@@ -99,7 +112,7 @@ func main() {
 
 	ui.Handle("/sys/kbd/q", stopFunc)
 	ui.Handle("/sys/kbd/C-c", stopFunc)
-	ui.Handle("/timer/10ms", func (e ui.Event) {
+	ui.Handle("/timer/100ms", func (e ui.Event) {
 		stat := GetStats()
 		Display.UpdateSignalQuality(stat.SignalQuality)
 		Display.UpdateLockedState(stat.FrameLock == 1)

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/OpenSatelliteProject/libsathelper"
-	"github.com/foize/go.fifo"
+	"github.com/racerxdl/go.fifo"
 	"time"
 	"log"
 	. "github.com/logrusorgru/aurora"
@@ -70,9 +70,11 @@ func decoderLoop() {
 				averageRSCorrections = 0
 				averageVitCorrections = 0
 			}
+			symbolsFifo.UnsafeLock()
 			for i := 0; i < CODEDFRAMESIZE; i++ {
-				codedData[i] = symbolsFifo.Next().(byte)
+				codedData[i] = symbolsFifo.UnsafeNext().(byte)
 			}
+			symbolsFifo.UnsafeUnlock()
 
 			if flywheelCount == DefaultFlywheelRecheck {
 				lastFrameOk = false
@@ -88,7 +90,7 @@ func decoderLoop() {
 				correlator.Correlate(&codedData[0], CODEDFRAMESIZE / 16)
 				if correlator.GetHighestCorrelationPosition() != 0 {
 					// Oh no, that means something happened :/
-					correlator.Correlate(&codedData[0], CODEDFRAMESIZE);
+					correlator.Correlate(&codedData[0], CODEDFRAMESIZE)
 					lastFrameOk = false
 					flywheelCount = 0
 				}
@@ -104,7 +106,7 @@ func decoderLoop() {
 			}
 
 			if corr < MINCORRELATIONBITS {
-				log.Printf(Red("Correlation didn't match criteria of %d bits. Got %d\n").String(), Bold(MINCORRELATIONBITS), Bold(corr))
+				// log.Printf(Red("Correlation didn't match criteria of %d bits. Got %d\n").String(), Bold(MINCORRELATIONBITS), Bold(corr))
 			}
 
 			if pos != 0 {
@@ -115,9 +117,11 @@ func decoderLoop() {
 					time.Sleep(time.Microsecond)
 				}
 				offset := CODEDFRAMESIZE - pos
+				symbolsFifo.UnsafeLock()
 				for i := offset; i < CODEDFRAMESIZE; i++ {
-					codedData[i] = symbolsFifo.Next().(byte)
+					codedData[i] = symbolsFifo.UnsafeNext().(byte)
 				}
+				symbolsFifo.UnsafeUnlock()
 			}
 
 			if CurrentConfig.Base.Mode == "lrit" {
@@ -256,7 +260,7 @@ func decoderLoop() {
 			}
 			SetStats(localStats)
 		} else {
-			time.Sleep(time.Microsecond)
+			time.Sleep(5 * time.Microsecond)
 		}
 	}
 }

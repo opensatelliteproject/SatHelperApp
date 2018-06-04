@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/foize/go.fifo"
+	"github.com/racerxdl/go.fifo"
 	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"

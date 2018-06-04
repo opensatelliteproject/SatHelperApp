@@ -6,9 +6,12 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	. "github.com/logrusorgru/aurora"
 	"time"
+	"github.com/racerxdl/go.fifo"
 )
 
 func initDSP() {
+
+	samplesFifo = fifo.NewQueue()
 	circuitSampleRate := float32(device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
 
@@ -46,16 +49,21 @@ func newSamplesCallback(d Frontend.SampleCallbackData) {
 }
 
 func processSamples() {
-	if samplesFifo.Len() <= 64 * 1024{
+	length := samplesFifo.Len()
+	if length <= 64 * 1024 {
 		return
 	}
 
-	length := samplesFifo.Len()
+	samplesFifo.UnsafeLock()
+	// region Unsafe Locked Section
 	checkAndResizeBuffers(length)
 
 	for i := 0; i < length; i++ {
-		buffer0[i] = samplesFifo.Next().(complex64)
+		buffer0[i] = samplesFifo.UnsafeNext().(complex64)
 	}
+	demodFifoUsage = uint8(100 * float32(samplesFifo.UnsafeLen()) / float32(FifoSize))
+	// endregion
+	samplesFifo.UnsafeUnlock()
 
 	ba := &buffer0[0]
 	bb := &buffer1[0]
@@ -86,6 +94,8 @@ func processSamples() {
 		ob = &buffer1
 	}
 
+	symbolsFifo.UnsafeLock()
+	defer symbolsFifo.UnsafeUnlock()
 	for i := 0; i < symbols; i++ {
 		z := (*ob)[i]
 		v := imag(z) * 127
@@ -95,9 +105,8 @@ func processSamples() {
 			v = -128
 		}
 
-		symbolsFifo.Add(byte(v))
+		symbolsFifo.UnsafeAdd(byte(v))
 	}
-	demodFifoUsage = uint8(100 * float32(samplesFifo.Len()) / float32(FifoSize))
 }
 
 func symbolProcessLoop() {

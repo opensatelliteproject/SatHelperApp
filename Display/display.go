@@ -284,8 +284,8 @@ func InitDisplay() {
 	)
 	// endregion
 	// region Create Timers
-	e := ui.NewTimerCh(10 * time.Millisecond)
-	ui.Merge("timer10ms", e)
+	e := ui.NewTimerCh(100 * time.Millisecond)
+	ui.Merge("refresh", e)
 	// endregion
 }
 
