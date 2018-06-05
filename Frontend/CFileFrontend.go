@@ -100,8 +100,8 @@ func (f *CFileFrontend) Start() {
 				}
 				if frontend.cb != nil {
 					var cbData = SampleCallbackData{
-						SampleType:FRONTEND_SAMPLETYPE_FLOATIQ,
-						NumSamples: len(frontend.sampleBuffer),
+						SampleType:   FrontendSampletypeFloatiq,
+						NumSamples:   len(frontend.sampleBuffer),
 						ComplexArray: frontend.sampleBuffer,
 					}
 					frontend.cb(cbData)
@@ -126,5 +126,5 @@ func (f *CFileFrontend) SetAGC(bool) {}
 func (f *CFileFrontend) SetLNAGain(uint8) {}
 func (f *CFileFrontend) SetVGAGain(uint8) {}
 func (f *CFileFrontend) SetMixerGain(uint8) {}
-func (f *CFileFrontend) SetBiasT(uint8) {}
+func (f *CFileFrontend) SetBiasT(bool) {}
 // endregion

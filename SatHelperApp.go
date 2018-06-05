@@ -68,8 +68,14 @@ func main() {
 		case "cfile":
 			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
-			device.SetSampleRate(CurrentConfig.Source.SampleRate)
-			device.SetCenterFrequency(CurrentConfig.Source.Frequency)
+			break
+		case "airspy":
+			log.Print(aurora.Cyan("Airspy Frontend selected."))
+			device = Frontend.NewAirspyFrontend()
+			device.SetLNAGain(CurrentConfig.AirspySource.LNAGain)
+			device.SetLNAGain(CurrentConfig.AirspySource.VGAGain)
+			device.SetLNAGain(CurrentConfig.AirspySource.MixerGain)
+			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
 		default:
 			log.Fatalf(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
@@ -83,6 +89,14 @@ func main() {
 		break
 	default:
 		log.Fatalf(aurora.Red("Unknown Demuxer Type %s.\n").String(), CurrentConfig.Base.DemuxerType)
+	}
+
+	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
+		log.Fatalln("Cannot set sample rate.")
+	}
+
+	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {
+		log.Printf("Cannot set exact frequency. Current Value: %d\n", device.GetCenterFrequency())
 	}
 
 	device.SetSamplesAvailableCallback(newSamplesCallback)

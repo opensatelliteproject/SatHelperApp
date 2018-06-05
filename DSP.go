@@ -10,7 +10,6 @@ import (
 )
 
 func initDSP() {
-
 	samplesFifo = fifo.NewQueue()
 	circuitSampleRate := float32(device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
@@ -31,20 +30,13 @@ func initDSP() {
 
 	log.Printf(Cyan("Center Frequency: %d MHz").String(), Bold(Green(device.GetCenterFrequency())))
 	log.Printf(Cyan("Automatic Gain Control: %t").String(), Bold(Green(CurrentConfig.Base.AGCEnabled)))
-
-	if CurrentConfig.Base.AGCEnabled {
-		device.SetAGC(true)
-	} else {
-		device.SetAGC(false)
-		// TODO: Gains
-	}
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
 	switch d.SampleType {
-	case Frontend.FRONTEND_SAMPLETYPE_FLOATIQ: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
-	case Frontend.FRONTEND_SAMPLETYPE_S16IQ: AddToFifoS16(samplesFifo, d.Int16Array, d.NumSamples); break
-	case Frontend.FRONTEND_SAMPLETYPE_S8IQ: AddToFifoS8(samplesFifo, d.Int8Array, d.NumSamples); break
+	case Frontend.FrontendSampletypeFloatiq: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
+	case Frontend.FrontendSampletypeS16iq: AddToFifoS16(samplesFifo, d.Int16Array, d.NumSamples); break
+	case Frontend.FrontendSampletypeS8iq: AddToFifoS8(samplesFifo, d.Int8Array, d.NumSamples); break
 	}
 }
 

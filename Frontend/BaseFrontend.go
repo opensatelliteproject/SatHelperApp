@@ -1,8 +1,8 @@
 package Frontend
 
-const FRONTEND_SAMPLETYPE_FLOATIQ = 0
-const FRONTEND_SAMPLETYPE_S16IQ = 1
-const FRONTEND_SAMPLETYPE_S8IQ = 2
+const FrontendSampletypeFloatiq = 0
+const FrontendSampletypeS16iq = 1
+const FrontendSampletypeS8iq = 2
 
 type SampleCallbackData struct {
 	ComplexArray []complex64
@@ -24,7 +24,7 @@ type BaseFrontend interface {
 	SetLNAGain(value uint8)
 	SetVGAGain(value uint8)
 	SetMixerGain(value uint8)
-	SetBiasT(value uint8)
+	SetBiasT(value bool)
 	GetCenterFrequency() uint32
 	GetName() string
 	GetShortName() string
