@@ -65,11 +65,8 @@ const CODEDFRAMESIZE = FRAMEBITS * 2
 const MINCORRELATIONBITS = 46
 const RSBLOCKS = 4
 const RSPARITYSIZE = 32
-const RSPARITYBLOCK = RSPARITYSIZE * RSBLOCKS
-const SYNCWORDSIZE = 32
 const LASTFRAMEDATABITS = 64
 const LASTFRAMEDATA = LASTFRAMEDATABITS / 8
-const TIMEOUT = 2
 
 
 const DefaultFlywheelRecheck = 4
@@ -121,7 +118,7 @@ func LoadDefaults() {
 	CurrentConfig.Decoder.UseLastFrameData = true
 
 	// Others
-	CurrentConfig.Base.DemuxerType = "TCPDemuxer"
+	CurrentConfig.Base.DemuxerType = "tcpserver"
 
 	// TCPDemuxer
 	CurrentConfig.TCPServerDemuxer.Port = DefaultVchannelPort
@@ -146,7 +143,8 @@ func SaveConfig() {
 }
 
 func LoadConfig() {
-	if _, err := toml.DecodeFile("SatHelperApp.cfg", &CurrentConfig); err != nil {
+	_, err := toml.DecodeFile("SatHelperApp.cfg", &CurrentConfig)
+	if err != nil {
 		log.Println("Cannot load file SatHelperApp.cfg. Loading default values.")
 		LoadDefaults()
 	}

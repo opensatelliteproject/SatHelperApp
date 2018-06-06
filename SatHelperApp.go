@@ -87,11 +87,11 @@ func main() {
 
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
 	case "tcpserver":
-		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d\n").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
+		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 		break
 	default:
-		log.Println(aurora.Red("Unknown Demuxer Type %s.\n").String(), CurrentConfig.Base.DemuxerType)
+		log.Printf(aurora.Red("Unknown Demuxer Type %s.").String(), CurrentConfig.Base.DemuxerType)
 		return
 	}
 
