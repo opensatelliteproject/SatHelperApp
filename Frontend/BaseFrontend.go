@@ -30,4 +30,6 @@ type BaseFrontend interface {
 	GetShortName() string
 	GetSampleRate() uint32
 	SetSamplesAvailableCallback(cb SamplesCallback)
+	Init() bool
+	Destroy()
 }

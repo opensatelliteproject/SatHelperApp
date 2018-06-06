@@ -44,6 +44,12 @@ func NewAirspyFrontend() *AirspyFrontend {
 
 	return &afrnt
 }
+func AirspyInitialize() {
+	AirspyDevice.AirspyDeviceInitialize()
+}
+func AirspyDeinitialize() {
+	AirspyDevice.AirspyDeviceDeInitialize()
+}
 // endregion
 // region Getters
 func (f *AirspyFrontend) GetName() string {
@@ -106,5 +112,12 @@ func (f *AirspyFrontend) SetBiasT(biast bool) {
 		val = 1
 	}
 	f.device.SetBiasT(val)
+}
+func (f *AirspyFrontend) Init() bool {
+	return f.device.Init()
+}
+
+func (f *AirspyFrontend) Destroy() {
+	f.device.Destroy()
 }
 // endregion

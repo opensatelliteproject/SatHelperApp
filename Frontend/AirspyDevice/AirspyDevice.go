@@ -115,6 +115,8 @@ extern uintptr_t _wrap_AirspyDevice_GetAvailableSampleRates_AirspyDevice_0e77a2c
 extern void _wrap_AirspyDevice_Start_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1);
 extern void _wrap_AirspyDevice_Stop_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1);
 extern void _wrap_AirspyDevice_SetAGC_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1, _Bool arg2);
+extern _Bool _wrap_AirspyDevice_Init_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1);
+extern void _wrap_AirspyDevice_Destroy_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1);
 extern void _wrap_AirspyDevice_SetLNAGain_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1, char arg2);
 extern void _wrap_AirspyDevice_SetVGAGain_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1, char arg2);
 extern void _wrap_AirspyDevice_SetMixerGain_AirspyDevice_0e77a2c8c0b439db(uintptr_t arg1, char arg2);
@@ -818,6 +820,18 @@ func (arg1 SwigcptrAirspyDevice) SetAGC(arg2 bool) {
 	C._wrap_AirspyDevice_SetAGC_AirspyDevice_0e77a2c8c0b439db(C.uintptr_t(_swig_i_0), C._Bool(_swig_i_1))
 }
 
+func (arg1 SwigcptrAirspyDevice) Init() (_swig_ret bool) {
+	var swig_r bool
+	_swig_i_0 := arg1
+	swig_r = (bool)(C._wrap_AirspyDevice_Init_AirspyDevice_0e77a2c8c0b439db(C.uintptr_t(_swig_i_0)))
+	return swig_r
+}
+
+func (arg1 SwigcptrAirspyDevice) Destroy() {
+	_swig_i_0 := arg1
+	C._wrap_AirspyDevice_Destroy_AirspyDevice_0e77a2c8c0b439db(C.uintptr_t(_swig_i_0))
+}
+
 func (arg1 SwigcptrAirspyDevice) SetLNAGain(arg2 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
@@ -881,6 +895,8 @@ type AirspyDevice interface {
 	Start()
 	Stop()
 	SetAGC(arg2 bool)
+	Init() (_swig_ret bool)
+	Destroy()
 	SetLNAGain(arg2 byte)
 	SetVGAGain(arg2 byte)
 	SetMixerGain(arg2 byte)

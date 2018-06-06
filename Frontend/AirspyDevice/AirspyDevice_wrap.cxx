@@ -1300,6 +1300,29 @@ void _wrap_AirspyDevice_SetAGC_AirspyDevice_0e77a2c8c0b439db(AirspyDevice *_swig
 }
 
 
+bool _wrap_AirspyDevice_Init_AirspyDevice_0e77a2c8c0b439db(AirspyDevice *_swig_go_0) {
+  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+  bool result;
+  bool _swig_go_result;
+  
+  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  
+  result = (bool)(arg1)->Init();
+  _swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_AirspyDevice_Destroy_AirspyDevice_0e77a2c8c0b439db(AirspyDevice *_swig_go_0) {
+  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+  
+  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  
+  (arg1)->Destroy();
+  
+}
+
+
 void _wrap_AirspyDevice_SetLNAGain_AirspyDevice_0e77a2c8c0b439db(AirspyDevice *_swig_go_0, char _swig_go_1) {
   AirspyDevice *arg1 = (AirspyDevice *) 0 ;
   uint8_t arg2 ;

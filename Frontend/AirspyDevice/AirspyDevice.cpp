@@ -28,7 +28,6 @@ void AirspyDevice::SetSamplesAvailableCallback(GoDeviceCallback *cb) {
 	this->cb = cb;
 }
 
-
 void AirspyDevice::SetBiasT(uint8_t value) {
 	int result = airspy_set_rf_bias(device, value);
 	if (result != AIRSPY_SUCCESS) {
@@ -36,11 +35,14 @@ void AirspyDevice::SetBiasT(uint8_t value) {
 	}
 }
 
-AirspyDevice::AirspyDevice() {
+AirspyDevice::AirspyDevice() : device(NULL) {}
+
+bool AirspyDevice::Init() {
 	int result = airspy_open(&device);
 	if (result != AIRSPY_SUCCESS) {
 		std::cerr << "Cannot open device: " << AIRSPY_ERROR << std::endl;
-		throw SatHelperException("There was an error initializing AirSpy.");
+		return false;
+		// throw SatHelperException("There was an error initializing AirSpy.");
 	}
 
 	if (device != NULL) {
@@ -48,7 +50,8 @@ AirspyDevice::AirspyDevice() {
 		result = airspy_board_id_read(device, &boardId);
 		if (result != AIRSPY_SUCCESS) {
 			std::cerr << "Cannot get BoardId: " << AIRSPY_ERROR << std::endl;
-			throw SatHelperException("There was an error initializing AirSpy.");
+			return false;
+			// throw SatHelperException("There was an error initializing AirSpy.");
 		}
 		// std::cout << "  Device Board ID: " << (int) boardId << std::endl;
 
@@ -56,9 +59,9 @@ AirspyDevice::AirspyDevice() {
 		char version[256];
 		result = airspy_version_string_read(device, version, 255);
 		if (result != AIRSPY_SUCCESS) {
-			std::cerr << "Cannot get Firmware Version: " << AIRSPY_ERROR
-					<< std::endl;
-			throw SatHelperException("There was an error initializing AirSpy.");
+			std::cerr << "Cannot get Firmware Version: " << AIRSPY_ERROR << std::endl;
+			return false;
+			// throw SatHelperException("There was an error initializing AirSpy.");
 		}
 		firmwareVersion = std::string(version);
 		// std::cout << "  Firmware Version: " << firmwareVersion << std::endl;
@@ -67,9 +70,9 @@ AirspyDevice::AirspyDevice() {
 		airspy_read_partid_serialno_t ser;
 		result = airspy_board_partid_serialno_read(device, &ser);
 		if (result != AIRSPY_SUCCESS) {
-			std::cerr << "Cannot get Serial Data: " << AIRSPY_ERROR
-					<< std::endl;
-			throw SatHelperException("There was an error initializing AirSpy.");
+			std::cerr << "Cannot get Serial Data: " << AIRSPY_ERROR << std::endl;
+			return false;
+			// throw SatHelperException("There was an error initializing AirSpy.");
 		}
 
 		std::stringstream ss;
@@ -110,9 +113,9 @@ AirspyDevice::AirspyDevice() {
 		SetCenterFrequency(106300000);
 		result = airspy_set_sample_type(device, AIRSPY_SAMPLE_FLOAT32_IQ);
 		if (result != AIRSPY_SUCCESS) {
-			std::cerr << "Cannot set Sample Type: " << AIRSPY_ERROR
-					<< std::endl;
-			throw SatHelperException("There was an error initializing AirSpy.");
+			std::cerr << "Cannot set Sample Type: " << AIRSPY_ERROR << std::endl;
+			return false;
+			//throw SatHelperException("There was an error initializing AirSpy.");
 		}
 
 		SetSampleRate(availableSampleRates[0]);
@@ -123,18 +126,24 @@ AirspyDevice::AirspyDevice() {
 	}
 }
 
-AirspyDevice::~AirspyDevice() {
-	int result = airspy_close(device);
-	if (result != AIRSPY_SUCCESS) {
-		std::cerr << "Cannot close device: " << AIRSPY_ERROR << std::endl;
+void AirspyDevice::Destroy() {
+    if (device != NULL) {
+        int result = airspy_close(device);
+        if (result != AIRSPY_SUCCESS) {
+            std::cerr << "Cannot close device: " << AIRSPY_ERROR << std::endl;
+        }
+        device = NULL;
 	}
+}
+
+AirspyDevice::~AirspyDevice() {
+    Destroy();
 }
 
 void AirspyDevice::Initialize() {
 	int result = airspy_init();
 	if (result != AIRSPY_SUCCESS) {
-		std::cerr << "Error initializing Airspy Library: " << AIRSPY_ERROR
-				<< std::endl;
+		std::cerr << "Error initializing Airspy Library: " << AIRSPY_ERROR	<< std::endl;
 		return;
 	}
 	airspy_lib_version_t lib_version;

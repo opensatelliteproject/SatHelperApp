@@ -55,6 +55,9 @@ public:
 	void Stop();
 	void SetAGC(bool agc);
 
+	bool Init();
+	void Destroy();
+
 	void SetLNAGain(uint8_t value);
 	void SetVGAGain(uint8_t value);
 	void SetMixerGain(uint8_t value);

@@ -124,6 +124,9 @@ func LoadDefaults() {
 	CurrentConfig.Decoder.StatisticsPort = DefaultStatisticsPort
 	CurrentConfig.Decoder.UseLastFrameData = true
 
+	// Others
+	CurrentConfig.Base.DemuxerType = "TCPDemuxer"
+
 	SaveConfig()
 }
 
@@ -132,11 +135,13 @@ func SaveConfig() {
 	e := toml.NewEncoder(&firstBuffer)
 	err := e.Encode(CurrentConfig)
 	if err != nil {
-		log.Fatalf("Cannot save config: %s", err)
+		log.Printf("Cannot save config: %s", err)
+		return
 	}
 	err = ioutil.WriteFile("SatHelperApp.cfg", firstBuffer.Bytes(), 0644)
 	if err != nil {
-		log.Fatalf("Cannot save config: %s", err)
+		log.Printf("Cannot save config: %s", err)
+		return
 	}
 }
 

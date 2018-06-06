@@ -62,7 +62,8 @@ func (f *TCPServerDemuxer) GetName() string {
 func (f *TCPServerDemuxer) loop() {
 	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", f.host, f.port))
 	if err != nil {
-		log.Fatalf("Error opening TCP Server Socket: %s\n", err)
+		log.Error("Error opening TCP Server Socket: %s\n", err)
+		return
 	}
 	for f.running {
 		conn, err := ln.Accept()
