@@ -14,3 +14,7 @@ That's a standard go project. Make sure you have `libSatHelper` and `libairspy` 
 ```bash
 go get github.com/OpenSatelliteProject/SatHelperApp
 ```
+
+It will be installed into your `${GOPATH}/bin`. If you have it it on your path, just run `SatHelperApp` 
+
+Have fun!
