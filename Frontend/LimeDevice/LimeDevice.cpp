@@ -86,19 +86,10 @@ void LimeDevice::SetAntenna() {
 
 uint32_t LimeDevice::SetSampleRate(uint32_t sampleRate) {
 	device->setSampleRate(SOAPY_SDR_RX, 0, (double)sampleRate);
-	std::cout << device->getSampleRate(SOAPY_SDR_RX, 0) << std::endl;
 	return this->sampleRate = device->getSampleRate(SOAPY_SDR_RX, 0);
 }
 
 uint32_t LimeDevice::SetCenterFrequency(uint32_t centerFrequency) {
 	device->setFrequency(SOAPY_SDR_RX, 0, (double)centerFrequency);
 	return this->centerFrequency = device->getFrequency(SOAPY_SDR_RX, 0);
-}
-
-int LimeDevice::SamplesAvailableCallback() {
-	if (cb != NULL) {
-		//device->readStream(transfer, buffs, 1024, flags, timeNs);
-		//cb->cbFloatIQ(buffs, 1024);
-	}
-	return 0;
 }

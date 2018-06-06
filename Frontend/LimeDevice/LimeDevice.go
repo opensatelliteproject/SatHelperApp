@@ -30,7 +30,7 @@ typedef struct { void* array; intgo len; intgo cap; } _goslice_;
 
 
 #cgo CXXFLAGS: -std=c++11
-#cgo LDFLAGS: -lSoapySDR 
+#cgo LDFLAGS: -lSoapySDR
 
 typedef long long swig_type_1;
 typedef long long swig_type_2;
@@ -49,78 +49,78 @@ typedef long long swig_type_14;
 typedef long long swig_type_15;
 typedef long long swig_type_16;
 typedef _gostring_ swig_type_17;
-extern void _wrap_Swig_free_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_Swig_malloc_LimeDevice_7f60b6f200effffa(swig_intgo arg1);
-extern uintptr_t _wrap__swig_NewDirectorLimeCallbackLimeCallback_LimeDevice_7f60b6f200effffa(int);
-extern void _wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_7f60b6f200effffa(uintptr_t, uintptr_t data, swig_intgo length);
-extern void _wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_7f60b6f200effffa(uintptr_t, swig_voidp data, swig_intgo length);
-extern void _wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_7f60b6f200effffa(uintptr_t, swig_voidp data, swig_intgo length);
-extern void _wrap_DeleteDirectorLimeCallback_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeCallback_cbFloatIQ_LimeDevice_7f60b6f200effffa(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
-extern void _wrap_LimeCallback_cbS16IQ_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
-extern void _wrap_LimeCallback_cbS8IQ_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
-extern void _wrap_delete_LimeCallback_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_new_LimeCallback_LimeDevice_7f60b6f200effffa(void);
-extern uintptr_t _wrap_new_Vector32u__SWIG_0_LimeDevice_7f60b6f200effffa(void);
-extern uintptr_t _wrap_new_Vector32u__SWIG_1_LimeDevice_7f60b6f200effffa(swig_type_1 arg1);
-extern swig_type_2 _wrap_Vector32u_size_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_type_3 _wrap_Vector32u_capacity_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32u_reserve_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_type_4 arg2);
-extern _Bool _wrap_Vector32u_isEmpty_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32u_clear_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32u_add_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern swig_intgo _wrap_Vector32u_get_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_Vector32u_set_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2, swig_intgo arg3);
-extern void _wrap_delete_Vector32u_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_new_Vector32f__SWIG_0_LimeDevice_7f60b6f200effffa(void);
-extern uintptr_t _wrap_new_Vector32f__SWIG_1_LimeDevice_7f60b6f200effffa(swig_type_5 arg1);
-extern swig_type_6 _wrap_Vector32f_size_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_type_7 _wrap_Vector32f_capacity_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32f_reserve_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_type_8 arg2);
-extern _Bool _wrap_Vector32f_isEmpty_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32f_clear_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector32f_add_LimeDevice_7f60b6f200effffa(uintptr_t arg1, float arg2);
-extern float _wrap_Vector32f_get_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_Vector32f_set_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2, float arg3);
-extern void _wrap_delete_Vector32f_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_new_Vector16i__SWIG_0_LimeDevice_7f60b6f200effffa(void);
-extern uintptr_t _wrap_new_Vector16i__SWIG_1_LimeDevice_7f60b6f200effffa(swig_type_9 arg1);
-extern swig_type_10 _wrap_Vector16i_size_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_type_11 _wrap_Vector16i_capacity_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector16i_reserve_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_type_12 arg2);
-extern _Bool _wrap_Vector16i_isEmpty_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector16i_clear_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector16i_add_LimeDevice_7f60b6f200effffa(uintptr_t arg1, short arg2);
-extern short _wrap_Vector16i_get_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_Vector16i_set_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2, short arg3);
-extern void _wrap_delete_Vector16i_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_new_Vector8i__SWIG_0_LimeDevice_7f60b6f200effffa(void);
-extern uintptr_t _wrap_new_Vector8i__SWIG_1_LimeDevice_7f60b6f200effffa(swig_type_13 arg1);
-extern swig_type_14 _wrap_Vector8i_size_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_type_15 _wrap_Vector8i_capacity_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector8i_reserve_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_type_16 arg2);
-extern _Bool _wrap_Vector8i_isEmpty_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector8i_clear_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_Vector8i_add_LimeDevice_7f60b6f200effffa(uintptr_t arg1, char arg2);
-extern char _wrap_Vector8i_get_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern void _wrap_Vector8i_set_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2, char arg3);
-extern void _wrap_delete_Vector8i_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern uintptr_t _wrap_new_LimeDevice_LimeDevice_7f60b6f200effffa(void);
-extern void _wrap_delete_LimeDevice_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeDevice_Initialize_LimeDevice_7f60b6f200effffa(void);
-extern void _wrap_LimeDevice_DeInitialize_LimeDevice_7f60b6f200effffa(void);
-extern swig_intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern swig_intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_7f60b6f200effffa(uintptr_t arg1, swig_intgo arg2);
-extern uintptr_t _wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeDevice_Start_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeDevice_Stop_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeDevice_SetAGC_LimeDevice_7f60b6f200effffa(uintptr_t arg1, _Bool arg2);
-extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_7f60b6f200effffa(uintptr_t arg1, char arg2);
-extern void _wrap_LimeDevice_SetAntenna_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_type_17 _wrap_LimeDevice_GetName_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_7f60b6f200effffa(uintptr_t arg1);
-extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f60b6f200effffa(uintptr_t arg1, uintptr_t arg2);
+extern void _wrap_Swig_free_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_Swig_malloc_LimeDevice_f36a06c4aed6a5ac(swig_intgo arg1);
+extern uintptr_t _wrap__swig_NewDirectorLimeCallbackLimeCallback_LimeDevice_f36a06c4aed6a5ac(int);
+extern void _wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t, uintptr_t data, swig_intgo length);
+extern void _wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t, swig_voidp data, swig_intgo length);
+extern void _wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t, swig_voidp data, swig_intgo length);
+extern void _wrap_DeleteDirectorLimeCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeCallback_cbFloatIQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
+extern void _wrap_LimeCallback_cbS16IQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
+extern void _wrap_LimeCallback_cbS8IQ_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
+extern void _wrap_delete_LimeCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_new_LimeCallback_LimeDevice_f36a06c4aed6a5ac(void);
+extern uintptr_t _wrap_new_Vector32u__SWIG_0_LimeDevice_f36a06c4aed6a5ac(void);
+extern uintptr_t _wrap_new_Vector32u__SWIG_1_LimeDevice_f36a06c4aed6a5ac(swig_type_1 arg1);
+extern swig_type_2 _wrap_Vector32u_size_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_type_3 _wrap_Vector32u_capacity_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32u_reserve_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_4 arg2);
+extern _Bool _wrap_Vector32u_isEmpty_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32u_clear_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32u_add_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern swig_intgo _wrap_Vector32u_get_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_Vector32u_set_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2, swig_intgo arg3);
+extern void _wrap_delete_Vector32u_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_new_Vector32f__SWIG_0_LimeDevice_f36a06c4aed6a5ac(void);
+extern uintptr_t _wrap_new_Vector32f__SWIG_1_LimeDevice_f36a06c4aed6a5ac(swig_type_5 arg1);
+extern swig_type_6 _wrap_Vector32f_size_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_type_7 _wrap_Vector32f_capacity_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32f_reserve_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_8 arg2);
+extern _Bool _wrap_Vector32f_isEmpty_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32f_clear_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector32f_add_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, float arg2);
+extern float _wrap_Vector32f_get_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_Vector32f_set_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2, float arg3);
+extern void _wrap_delete_Vector32f_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_new_Vector16i__SWIG_0_LimeDevice_f36a06c4aed6a5ac(void);
+extern uintptr_t _wrap_new_Vector16i__SWIG_1_LimeDevice_f36a06c4aed6a5ac(swig_type_9 arg1);
+extern swig_type_10 _wrap_Vector16i_size_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_type_11 _wrap_Vector16i_capacity_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector16i_reserve_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_12 arg2);
+extern _Bool _wrap_Vector16i_isEmpty_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector16i_clear_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector16i_add_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, short arg2);
+extern short _wrap_Vector16i_get_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_Vector16i_set_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2, short arg3);
+extern void _wrap_delete_Vector16i_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_new_Vector8i__SWIG_0_LimeDevice_f36a06c4aed6a5ac(void);
+extern uintptr_t _wrap_new_Vector8i__SWIG_1_LimeDevice_f36a06c4aed6a5ac(swig_type_13 arg1);
+extern swig_type_14 _wrap_Vector8i_size_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_type_15 _wrap_Vector8i_capacity_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector8i_reserve_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_16 arg2);
+extern _Bool _wrap_Vector8i_isEmpty_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector8i_clear_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_Vector8i_add_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
+extern char _wrap_Vector8i_get_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern void _wrap_Vector8i_set_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2, char arg3);
+extern void _wrap_delete_Vector8i_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern uintptr_t _wrap_new_LimeDevice_LimeDevice_f36a06c4aed6a5ac(void);
+extern void _wrap_delete_LimeDevice_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_Initialize_LimeDevice_f36a06c4aed6a5ac(void);
+extern void _wrap_LimeDevice_DeInitialize_LimeDevice_f36a06c4aed6a5ac(void);
+extern swig_intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern swig_intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
+extern uintptr_t _wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_SetAGC_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, _Bool arg2);
+extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
+extern void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_type_17 _wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, uintptr_t arg2);
 #undef intgo
 */
 import "C"
@@ -155,13 +155,13 @@ func swigCopyString(s string) string {
 
 func Swig_free(arg1 uintptr) {
 	_swig_i_0 := arg1
-	C._wrap_Swig_free_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_Swig_free_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func Swig_malloc(arg1 int) (_swig_ret uintptr) {
 	var swig_r uintptr
 	_swig_i_0 := arg1
-	swig_r = (uintptr)(C._wrap_Swig_malloc_LimeDevice_7f60b6f200effffa(C.swig_intgo(_swig_i_0)))
+	swig_r = (uintptr)(C._wrap_Swig_malloc_LimeDevice_f36a06c4aed6a5ac(C.swig_intgo(_swig_i_0)))
 	return swig_r
 }
 
@@ -186,7 +186,7 @@ func (p *_swig_DirectorLimeCallback) DirectorInterface() interface{} {
 
 func NewDirectorLimeCallback(v interface{}) LimeCallback {
 	p := &_swig_DirectorLimeCallback{0, v}
-	p.SwigcptrLimeCallback = SwigcptrLimeCallback(C._wrap__swig_NewDirectorLimeCallbackLimeCallback_LimeDevice_7f60b6f200effffa(C.int(swigDirectorAdd(p))))
+	p.SwigcptrLimeCallback = SwigcptrLimeCallback(C._wrap__swig_NewDirectorLimeCallbackLimeCallback_LimeDevice_f36a06c4aed6a5ac(C.int(swigDirectorAdd(p))))
 	return p
 }
 
@@ -201,17 +201,17 @@ func (swig_p *_swig_DirectorLimeCallback) CbFloatIQ(data uintptr, length int) {
 	}
 	_swig_i_0 := data
 	_swig_i_1 := length
-	C._wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 func DirectorLimeCallbackCbFloatIQ(p LimeCallback, arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg2
 	_swig_i_1 := arg3
-	C._wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbFloatIQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
-//export Swig_DirectorLimeCallback_callback_cbFloatIQ_LimeDevice_7f60b6f200effffa
-func Swig_DirectorLimeCallback_callback_cbFloatIQ_LimeDevice_7f60b6f200effffa(swig_c int, arg2 uintptr, arg3 int) {
+//export Swig_DirectorLimeCallback_callback_cbFloatIQ_LimeDevice_f36a06c4aed6a5ac
+func Swig_DirectorLimeCallback_callback_cbFloatIQ_LimeDevice_f36a06c4aed6a5ac(swig_c int, arg2 uintptr, arg3 int) {
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeCallback)
 	swig_p.CbFloatIQ(arg2, arg3)
 }
@@ -227,17 +227,17 @@ func (swig_p *_swig_DirectorLimeCallback) CbS16IQ(data *int16, length int) {
 	}
 	_swig_i_0 := data
 	_swig_i_1 := length
-	C._wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 func DirectorLimeCallbackCbS16IQ(p LimeCallback, arg2 *int16, arg3 int) {
 	_swig_i_0 := arg2
 	_swig_i_1 := arg3
-	C._wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbS16IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
-//export Swig_DirectorLimeCallback_callback_cbS16IQ_LimeDevice_7f60b6f200effffa
-func Swig_DirectorLimeCallback_callback_cbS16IQ_LimeDevice_7f60b6f200effffa(swig_c int, arg2 *int16, arg3 int) {
+//export Swig_DirectorLimeCallback_callback_cbS16IQ_LimeDevice_f36a06c4aed6a5ac
+func Swig_DirectorLimeCallback_callback_cbS16IQ_LimeDevice_f36a06c4aed6a5ac(swig_c int, arg2 *int16, arg3 int) {
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeCallback)
 	swig_p.CbS16IQ(arg2, arg3)
 }
@@ -253,28 +253,28 @@ func (swig_p *_swig_DirectorLimeCallback) CbS8IQ(data *int8, length int) {
 	}
 	_swig_i_0 := data
 	_swig_i_1 := length
-	C._wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(swig_p.SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 func DirectorLimeCallbackCbS8IQ(p LimeCallback, arg2 *int8, arg3 int) {
 	_swig_i_0 := arg2
 	_swig_i_1 := arg3
-	C._wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorLimeCallback_upcall_CbS8IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(p.(*_swig_DirectorLimeCallback).SwigcptrLimeCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
-//export Swig_DirectorLimeCallback_callback_cbS8IQ_LimeDevice_7f60b6f200effffa
-func Swig_DirectorLimeCallback_callback_cbS8IQ_LimeDevice_7f60b6f200effffa(swig_c int, arg2 *int8, arg3 int) {
+//export Swig_DirectorLimeCallback_callback_cbS8IQ_LimeDevice_f36a06c4aed6a5ac
+func Swig_DirectorLimeCallback_callback_cbS8IQ_LimeDevice_f36a06c4aed6a5ac(swig_c int, arg2 *int8, arg3 int) {
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeCallback)
 	swig_p.CbS8IQ(arg2, arg3)
 }
 
 func DeleteDirectorLimeCallback(arg1 LimeCallback) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_DeleteDirectorLimeCallback_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_DeleteDirectorLimeCallback_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
-//export Swiggo_DeleteDirector_LimeCallback_LimeDevice_7f60b6f200effffa
-func Swiggo_DeleteDirector_LimeCallback_LimeDevice_7f60b6f200effffa(c int) {
+//export Swiggo_DeleteDirector_LimeCallback_LimeDevice_f36a06c4aed6a5ac
+func Swiggo_DeleteDirector_LimeCallback_LimeDevice_f36a06c4aed6a5ac(c int) {
 	swigDirectorLookup(c).(*_swig_DirectorLimeCallback).SwigcptrLimeCallback = 0
 	swigDirectorDelete(c)
 }
@@ -296,31 +296,31 @@ func (arg1 SwigcptrLimeCallback) CbFloatIQ(arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_LimeCallback_cbFloatIQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_LimeCallback_cbFloatIQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
 func (arg1 SwigcptrLimeCallback) CbS16IQ(arg2 *int16, arg3 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_LimeCallback_cbS16IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_LimeCallback_cbS16IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
 func (arg1 SwigcptrLimeCallback) CbS8IQ(arg2 *int8, arg3 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_LimeCallback_cbS8IQ_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_LimeCallback_cbS8IQ_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
 func DeleteLimeCallback(arg1 LimeCallback) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_LimeCallback_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_LimeCallback_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func NewLimeCallback() (_swig_ret LimeCallback) {
 	var swig_r LimeCallback
-	swig_r = (LimeCallback)(SwigcptrLimeCallback(C._wrap_new_LimeCallback_LimeDevice_7f60b6f200effffa()))
+	swig_r = (LimeCallback)(SwigcptrLimeCallback(C._wrap_new_LimeCallback_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
@@ -344,14 +344,14 @@ func (p SwigcptrVector32u) SwigIsVector32u() {
 
 func NewVector32u__SWIG_0() (_swig_ret Vector32u) {
 	var swig_r Vector32u
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_0_LimeDevice_7f60b6f200effffa()))
+	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_0_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
 func NewVector32u__SWIG_1(arg1 int64) (_swig_ret Vector32u) {
 	var swig_r Vector32u
 	_swig_i_0 := arg1
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_LimeDevice_7f60b6f200effffa(C.swig_type_1(_swig_i_0))))
+	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_LimeDevice_f36a06c4aed6a5ac(C.swig_type_1(_swig_i_0))))
 	return swig_r
 }
 
@@ -369,46 +369,46 @@ func NewVector32u(a ...interface{}) Vector32u {
 func (arg1 SwigcptrVector32u) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector32u_size_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector32u_size_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32u) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector32u_capacity_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector32u_capacity_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32u) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32u_reserve_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
+	C._wrap_Vector32u_reserve_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32u) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_Vector32u_isEmpty_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_Vector32u_isEmpty_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32u) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_Vector32u_clear_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_Vector32u_clear_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrVector32u) Add(arg2 uint) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32u_add_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap_Vector32u_add_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32u) Get(arg2 int) (_swig_ret uint) {
 	var swig_r uint
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (uint)(C._wrap_Vector32u_get_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (uint)(C._wrap_Vector32u_get_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -416,12 +416,12 @@ func (arg1 SwigcptrVector32u) Set(arg2 int, arg3 uint) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_Vector32u_set_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_Vector32u_set_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
 func DeleteVector32u(arg1 Vector32u) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_Vector32u_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_Vector32u_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 type Vector32u interface {
@@ -448,14 +448,14 @@ func (p SwigcptrVector32f) SwigIsVector32f() {
 
 func NewVector32f__SWIG_0() (_swig_ret Vector32f) {
 	var swig_r Vector32f
-	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_0_LimeDevice_7f60b6f200effffa()))
+	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_0_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
 func NewVector32f__SWIG_1(arg1 int64) (_swig_ret Vector32f) {
 	var swig_r Vector32f
 	_swig_i_0 := arg1
-	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_LimeDevice_7f60b6f200effffa(C.swig_type_5(_swig_i_0))))
+	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_LimeDevice_f36a06c4aed6a5ac(C.swig_type_5(_swig_i_0))))
 	return swig_r
 }
 
@@ -473,46 +473,46 @@ func NewVector32f(a ...interface{}) Vector32f {
 func (arg1 SwigcptrVector32f) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector32f_size_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector32f_size_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32f) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector32f_capacity_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector32f_capacity_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32f) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32f_reserve_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
+	C._wrap_Vector32f_reserve_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32f) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_Vector32f_isEmpty_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_Vector32f_isEmpty_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector32f) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_Vector32f_clear_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_Vector32f_clear_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrVector32f) Add(arg2 float32) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32f_add_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.float(_swig_i_1))
+	C._wrap_Vector32f_add_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.float(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32f) Get(arg2 int) (_swig_ret float32) {
 	var swig_r float32
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (float32)(C._wrap_Vector32f_get_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (float32)(C._wrap_Vector32f_get_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -520,12 +520,12 @@ func (arg1 SwigcptrVector32f) Set(arg2 int, arg3 float32) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_Vector32f_set_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.float(_swig_i_2))
+	C._wrap_Vector32f_set_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.float(_swig_i_2))
 }
 
 func DeleteVector32f(arg1 Vector32f) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_Vector32f_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_Vector32f_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 type Vector32f interface {
@@ -552,14 +552,14 @@ func (p SwigcptrVector16i) SwigIsVector16i() {
 
 func NewVector16i__SWIG_0() (_swig_ret Vector16i) {
 	var swig_r Vector16i
-	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_0_LimeDevice_7f60b6f200effffa()))
+	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_0_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
 func NewVector16i__SWIG_1(arg1 int64) (_swig_ret Vector16i) {
 	var swig_r Vector16i
 	_swig_i_0 := arg1
-	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_LimeDevice_7f60b6f200effffa(C.swig_type_9(_swig_i_0))))
+	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_LimeDevice_f36a06c4aed6a5ac(C.swig_type_9(_swig_i_0))))
 	return swig_r
 }
 
@@ -577,46 +577,46 @@ func NewVector16i(a ...interface{}) Vector16i {
 func (arg1 SwigcptrVector16i) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector16i_size_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector16i_size_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector16i) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector16i_capacity_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector16i_capacity_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector16i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector16i_reserve_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
+	C._wrap_Vector16i_reserve_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector16i) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_Vector16i_isEmpty_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_Vector16i_isEmpty_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector16i) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_Vector16i_clear_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_Vector16i_clear_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrVector16i) Add(arg2 int16) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector16i_add_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.short(_swig_i_1))
+	C._wrap_Vector16i_add_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.short(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector16i) Get(arg2 int) (_swig_ret int16) {
 	var swig_r int16
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (int16)(C._wrap_Vector16i_get_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (int16)(C._wrap_Vector16i_get_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -624,12 +624,12 @@ func (arg1 SwigcptrVector16i) Set(arg2 int, arg3 int16) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_Vector16i_set_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.short(_swig_i_2))
+	C._wrap_Vector16i_set_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.short(_swig_i_2))
 }
 
 func DeleteVector16i(arg1 Vector16i) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_Vector16i_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_Vector16i_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 type Vector16i interface {
@@ -656,14 +656,14 @@ func (p SwigcptrVector8i) SwigIsVector8i() {
 
 func NewVector8i__SWIG_0() (_swig_ret Vector8i) {
 	var swig_r Vector8i
-	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_0_LimeDevice_7f60b6f200effffa()))
+	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_0_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
 func NewVector8i__SWIG_1(arg1 int64) (_swig_ret Vector8i) {
 	var swig_r Vector8i
 	_swig_i_0 := arg1
-	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_LimeDevice_7f60b6f200effffa(C.swig_type_13(_swig_i_0))))
+	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_LimeDevice_f36a06c4aed6a5ac(C.swig_type_13(_swig_i_0))))
 	return swig_r
 }
 
@@ -681,46 +681,46 @@ func NewVector8i(a ...interface{}) Vector8i {
 func (arg1 SwigcptrVector8i) Size() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector8i_size_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector8i_size_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector8i) Capacity() (_swig_ret int64) {
 	var swig_r int64
 	_swig_i_0 := arg1
-	swig_r = (int64)(C._wrap_Vector8i_capacity_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (int64)(C._wrap_Vector8i_capacity_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector8i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector8i_reserve_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
+	C._wrap_Vector8i_reserve_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector8i) IsEmpty() (_swig_ret bool) {
 	var swig_r bool
 	_swig_i_0 := arg1
-	swig_r = (bool)(C._wrap_Vector8i_isEmpty_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (bool)(C._wrap_Vector8i_isEmpty_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrVector8i) Clear() {
 	_swig_i_0 := arg1
-	C._wrap_Vector8i_clear_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_Vector8i_clear_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrVector8i) Add(arg2 int8) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector8i_add_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
+	C._wrap_Vector8i_add_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector8i) Get(arg2 int) (_swig_ret int8) {
 	var swig_r int8
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (int8)(C._wrap_Vector8i_get_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (int8)(C._wrap_Vector8i_get_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -728,12 +728,12 @@ func (arg1 SwigcptrVector8i) Set(arg2 int, arg3 int8) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_Vector8i_set_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.char(_swig_i_2))
+	C._wrap_Vector8i_set_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1), C.char(_swig_i_2))
 }
 
 func DeleteVector8i(arg1 Vector8i) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_Vector8i_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_Vector8i_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 type Vector8i interface {
@@ -760,28 +760,28 @@ func (p SwigcptrLimeDevice) SwigIsLimeDevice() {
 
 func NewLimeDevice() (_swig_ret LimeDevice) {
 	var swig_r LimeDevice
-	swig_r = (LimeDevice)(SwigcptrLimeDevice(C._wrap_new_LimeDevice_LimeDevice_7f60b6f200effffa()))
+	swig_r = (LimeDevice)(SwigcptrLimeDevice(C._wrap_new_LimeDevice_LimeDevice_f36a06c4aed6a5ac()))
 	return swig_r
 }
 
 func DeleteLimeDevice(arg1 LimeDevice) {
 	_swig_i_0 := arg1.Swigcptr()
-	C._wrap_delete_LimeDevice_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_delete_LimeDevice_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func LimeDeviceInitialize() {
-	C._wrap_LimeDevice_Initialize_LimeDevice_7f60b6f200effffa()
+	C._wrap_LimeDevice_Initialize_LimeDevice_f36a06c4aed6a5ac()
 }
 
 func LimeDeviceDeInitialize() {
-	C._wrap_LimeDevice_DeInitialize_LimeDevice_7f60b6f200effffa()
+	C._wrap_LimeDevice_DeInitialize_LimeDevice_f36a06c4aed6a5ac()
 }
 
 func (arg1 SwigcptrLimeDevice) SetSampleRate(arg2 uint) (_swig_ret uint) {
 	var swig_r uint
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (uint)(C._wrap_LimeDevice_SetSampleRate_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (uint)(C._wrap_LimeDevice_SetSampleRate_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
@@ -789,55 +789,55 @@ func (arg1 SwigcptrLimeDevice) SetCenterFrequency(arg2 uint) (_swig_ret uint) {
 	var swig_r uint
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	swig_r = (uint)(C._wrap_LimeDevice_SetCenterFrequency_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
+	swig_r = (uint)(C._wrap_LimeDevice_SetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1)))
 	return swig_r
 }
 
 func (arg1 SwigcptrLimeDevice) GetAvailableSampleRates() (_swig_ret Vector32u) {
 	var swig_r Vector32u
 	_swig_i_0 := arg1
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))))
+	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))))
 	return swig_r
 }
 
 func (arg1 SwigcptrLimeDevice) Start() {
 	_swig_i_0 := arg1
-	C._wrap_LimeDevice_Start_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrLimeDevice) Stop() {
 	_swig_i_0 := arg1
-	C._wrap_LimeDevice_Stop_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrLimeDevice) SetAGC(arg2 bool) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_LimeDevice_SetAGC_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C._Bool(_swig_i_1))
+	C._wrap_LimeDevice_SetAGC_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C._Bool(_swig_i_1))
 }
 
 func (arg1 SwigcptrLimeDevice) SetLNAGain(arg2 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_LimeDevice_SetLNAGain_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
+	C._wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
 }
 
 func (arg1 SwigcptrLimeDevice) SetAntenna() {
 	_swig_i_0 := arg1
-	C._wrap_LimeDevice_SetAntenna_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	C._wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
 func (arg1 SwigcptrLimeDevice) GetCenterFrequency() (_swig_ret uint) {
 	var swig_r uint
 	_swig_i_0 := arg1
-	swig_r = (uint)(C._wrap_LimeDevice_GetCenterFrequency_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (uint)(C._wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrLimeDevice) GetName() (_swig_ret string) {
 	var swig_r string
 	_swig_i_0 := arg1
-	swig_r_p := C._wrap_LimeDevice_GetName_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0))
+	swig_r_p := C._wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
  swig_r_1 = swigCopyString(swig_r) 
@@ -847,14 +847,14 @@ func (arg1 SwigcptrLimeDevice) GetName() (_swig_ret string) {
 func (arg1 SwigcptrLimeDevice) GetSampleRate() (_swig_ret uint) {
 	var swig_r uint
 	_swig_i_0 := arg1
-	swig_r = (uint)(C._wrap_LimeDevice_GetSampleRate_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0)))
+	swig_r = (uint)(C._wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
 }
 
 func (arg1 SwigcptrLimeDevice) SetSamplesAvailableCallback(arg2 LimeCallback) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2.Swigcptr()
-	C._wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f60b6f200effffa(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1))
+	C._wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1))
 }
 
 type LimeDevice interface {

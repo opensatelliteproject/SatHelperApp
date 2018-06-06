@@ -5,7 +5,7 @@
 
 %insert(cgo_comment_typedefs) %{
 #cgo CXXFLAGS: -std=c++11
-#cgo LDFLAGS: -lSoapySDR 
+#cgo LDFLAGS: -lSoapySDR
 %}
 
 %include "stdint.i"

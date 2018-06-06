@@ -36,7 +36,7 @@ private:
 	std::string firmwareVersion;
 	std::string partNumber;
 	std::string serialNumber;
-	std::string name = "LimeSDR Mini";
+	std::string name = "LimeSDR-Mini";
 
 	uint32_t sampleRate;
 	uint32_t centerFrequency;
