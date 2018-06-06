@@ -40,9 +40,6 @@ const DefaultSampleRate = AirspyMiniDefaultSamplerate
 const DefaultDecimation = 1
 const DefaultDeviceNumber = 0
 
-const DefaultDecoderAddress = "127.0.0.1"
-const DefaultDecoderPort = 5000
-
 const DefaultLnaGain = 5
 const DefaultVgaGain = 5
 const DefaultMixGain = 5
@@ -120,12 +117,15 @@ func LoadDefaults() {
 
 	// Decoder
 	CurrentConfig.Decoder.Display = true
-	CurrentConfig.Decoder.VChannelPort = DefaultVchannelPort
 	CurrentConfig.Decoder.StatisticsPort = DefaultStatisticsPort
 	CurrentConfig.Decoder.UseLastFrameData = true
 
 	// Others
 	CurrentConfig.Base.DemuxerType = "TCPDemuxer"
+
+	// TCPDemuxer
+	CurrentConfig.TCPServerDemuxer.Port = DefaultVchannelPort
+	CurrentConfig.TCPServerDemuxer.Host = ""
 
 	SaveConfig()
 }
