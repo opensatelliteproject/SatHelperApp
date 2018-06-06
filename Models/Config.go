@@ -25,6 +25,13 @@ type AirspySourceConfig struct {
 	BiasTEnabled bool
 }
 
+type LimeSourceConfig struct {
+	MixerGain uint8
+	LNAGain uint8
+	VGAGain uint8
+	BiasTEnabled bool
+}
+
 type SpyServerConfig struct {
 	SpyServerHost string
 	SpyServerPort int
@@ -54,6 +61,7 @@ type AppConfig struct {
 	Decoder DecoderConfig
 	Source SourceConfig
 	AirspySource AirspySourceConfig
+	LimeSource LimeSourceConfig
 	SpyServerSource SpyServerConfig
 	CFileSource CFileSourceConfig
 	TCPServerDemuxer TCPServerDemuxerConfig

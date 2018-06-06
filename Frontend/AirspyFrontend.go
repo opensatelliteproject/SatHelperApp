@@ -2,35 +2,17 @@ package Frontend
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/AirspyDevice"
-	"unsafe"
 )
-
 
 // region Struct Definition
 type AirspyFrontend struct {
 	device AirspyDevice.AirspyDevice
 	goCb GoCallback
-	goDirCb AirspyDevice.GoDeviceCallback
+	goDirCb AirspyDevice.AirspyCallback
 }
 
-type GoCallback struct {
-	callback SamplesCallback
-}
-
-func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
-	const arrayLen = 1 << 30
-	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
-	if p.callback != nil {
-		p.callback(SampleCallbackData{
-			ComplexArray: arr,
-			NumSamples:   length,
-			SampleType:   FrontendSampletypeFloatiq,
-		})
-	}
-}
-
-func MakeGoCallbackDirector(callback *GoCallback) AirspyDevice.GoDeviceCallback {
-	return AirspyDevice.NewDirectorGoDeviceCallback(callback)
+func MakeGoCallbackDirector(callback *GoCallback) AirspyDevice.AirspyCallback {
+	return AirspyDevice.NewDirectorAirspyCallback(callback)
 }
 
 // endregion

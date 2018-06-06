@@ -69,6 +69,11 @@ func main() {
 			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
 			break
+		case "lime":
+			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
+			device = Frontend.NewLimeFrontend()
+			device.SetLNAGain(CurrentConfig.LimeSource.LNAGain)
+			break
 		case "airspy":
 			log.Print(aurora.Cyan("Airspy Frontend selected."))
 			device = Frontend.NewAirspyFrontend()

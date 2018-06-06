@@ -1,5 +1,9 @@
 package Frontend
 
+import (
+	"unsafe"
+)
+
 const FrontendSampletypeFloatiq = 0
 const FrontendSampletypeS16iq = 1
 const FrontendSampletypeS8iq = 2
@@ -13,6 +17,22 @@ type SampleCallbackData struct {
 }
 
 type SamplesCallback func(data SampleCallbackData)
+
+type GoCallback struct {
+	callback SamplesCallback
+}
+
+func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
+	const arrayLen = 1 << 30
+	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			ComplexArray: arr,
+			NumSamples:   length,
+			SampleType:   FrontendSampletypeFloatiq,
+		})
+	}
+}
 
 type BaseFrontend interface {
 	SetSampleRate(sampleRate uint32) uint32

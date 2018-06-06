@@ -10,12 +10,17 @@ BUILD_TIME := $(shell date +"%H:%M:%S")
 
 GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(REPO_VERSION) -X \"$(BUILD_DATE_VAR)=$(BUILD_DATE)\" -X $(BUILD_TIME_VAR)=$(BUILD_TIME)"
 
-all: update build
+all: update build install
 
 update:
-	@echo Updating AirspyDevice Wrapper
+	@echo Updating Devices Wrappers
 	@swig -cgo -go -c++ -intgosize 64 Frontend/AirspyDevice/AirspyDevice.i
+	@swig -cgo -go -c++ -intgosize 64 Frontend/LimeDevice/LimeDevice.i
 
 build:
 	@echo Building SatHelperApp
-	@go build $(GOBUILD_VERSION_ARGS) -o SatHelperApp
+	@go build $(GOBUILD_VERSION_ARGS) -o SatHelperApp -x
+
+install:
+	@echo Installing SatHelperApp
+	@go install

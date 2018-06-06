@@ -8,17 +8,17 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
-// source: Frontend/AirspyDevice/AirspyDevice.i
+// source: Frontend/LimeDevice/LimeDevice.i
 
-#ifndef SWIG_AirspyDevice_WRAP_H_
-#define SWIG_AirspyDevice_WRAP_H_
+#ifndef SWIG_LimeDevice_WRAP_H_
+#define SWIG_LimeDevice_WRAP_H_
 
 class Swig_memory;
 
-class SwigDirector_AirspyCallback : public GoDeviceCallback
+class SwigDirector_LimeCallback : public GoDeviceCallback
 {
  public:
-  SwigDirector_AirspyCallback(int swig_p);
+  SwigDirector_LimeCallback(int swig_p);
   void _swig_upcall_cbFloatIQ(void *data, int length) {
     GoDeviceCallback::cbFloatIQ(data,length);
   }
@@ -31,7 +31,7 @@ class SwigDirector_AirspyCallback : public GoDeviceCallback
     GoDeviceCallback::cbS8IQ(data,length);
   }
   virtual void cbS8IQ(int8_t *data, int length);
-  virtual ~SwigDirector_AirspyCallback();
+  virtual ~SwigDirector_LimeCallback();
  private:
   intgo go_val;
   Swig_memory *swig_mem;
