@@ -4,8 +4,11 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/LimeDevice"
 )
 
+const LimeFrontendBufferSize = 65535
+
 // region Struct Definition
 type LimeFrontend struct {
+	running bool
 	device LimeDevice.LimeDevice
 	goCb GoCallback
 	goDirCb LimeDevice.LimeCallback
@@ -20,6 +23,7 @@ func LimeMakeGoCallbackDirector(callback *GoCallback) LimeDevice.LimeCallback {
 func NewLimeFrontend() *LimeFrontend {
 	goCb := GoCallback{}
 	afrnt := LimeFrontend{
+		running: false,
 		device: LimeDevice.NewLimeDevice(),
 		goCb: goCb,
 	}
@@ -40,15 +44,6 @@ func (f *LimeFrontend) GetCenterFrequency() uint32 {
 func (f *LimeFrontend)  GetSampleRate() uint32 {
 	return uint32(f.device.GetSampleRate())
 }
-func (f *LimeFrontend) GetAvailableSampleRates() []uint32 {
-	var sampleRates = f.device.GetAvailableSampleRates()
-	var sr = make([]uint32, sampleRates.Size())
-	for i := 0; i < int(sampleRates.Size()); i++ {
-		sr[i] = uint32(sampleRates.Get(i))
-	}
-
-	return sr
-}
 // endregion
 // region Setters
 func (f *LimeFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
@@ -66,16 +61,23 @@ func (f *LimeFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 // region Commands
 func (f *LimeFrontend) Start() {
 	f.device.Start()
+	f.running = true
+	go func(frontend *LimeFrontend) {
+		for frontend.running {
+			f.device.GetSamples(LimeFrontendBufferSize)
+		}
+	}(f)
 }
 func (f *LimeFrontend) Stop() {
+	f.running = false
 	f.device.Stop()
-}
-func (f *LimeFrontend) SetAGC(agc bool) {
-	f.device.SetAGC(agc)
 }
 func (f *LimeFrontend) SetLNAGain(gain uint8) {
 	f.device.SetLNAGain(gain)
 }
+
+func (f *LimeFrontend) GetAvailableSampleRates() []uint32 { return nil }
+func (f *LimeFrontend) SetAGC(agc bool) {}
 func (f *LimeFrontend) SetVGAGain(gain uint8) {}
 func (f *LimeFrontend) SetMixerGain(gain uint8) {}
 func (f *LimeFrontend) SetBiasT(biast bool) {}

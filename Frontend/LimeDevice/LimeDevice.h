@@ -18,11 +18,6 @@
 #include <string>
 #include <functional>
 
-extern "C" {
-//#include <SoapySDR/Device.h>
-//#include <SoapySDR/Formats.h>
-}
-
 #include "../DeviceParameters.h"
 
 class LimeDevice {
@@ -42,30 +37,25 @@ private:
 	uint32_t centerFrequency;
 	uint8_t gain;
 
-	std::vector<uint32_t> availableSampleRates;
-	int SamplesAvailableCallback();
+	std::complex<float> buff[65535];
 
 public:
 	LimeDevice();
 	virtual ~LimeDevice();
 
-	static void Initialize();
-	static void DeInitialize();
-
+	const std::string &GetName();
+	
 	uint32_t SetSampleRate(uint32_t sampleRate);
 	uint32_t SetCenterFrequency(uint32_t centerFrequency);
-	const std::vector<uint32_t>& GetAvailableSampleRates();
+	uint32_t GetCenterFrequency();
+	uint32_t GetSampleRate();
+	void GetSamples(uint16_t samples);
+
 	void Start();
 	void Stop();
-	void SetAGC(bool agc);
+
 	void SetLNAGain(uint8_t value);
 	void SetAntenna();
-	uint32_t GetCenterFrequency();
-
-	const std::string &GetName();
-
-	uint32_t GetSampleRate();
-
 	void SetSamplesAvailableCallback(GoDeviceCallback *cb);
 };
 

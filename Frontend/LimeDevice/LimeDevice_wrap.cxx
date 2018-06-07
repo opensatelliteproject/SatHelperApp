@@ -1213,15 +1213,16 @@ void _wrap_delete_LimeDevice_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0)
 }
 
 
-void _wrap_LimeDevice_Initialize_LimeDevice_f36a06c4aed6a5ac() {
-  LimeDevice::Initialize();
+_gostring_ _wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  std::string *result = 0 ;
+  _gostring_ _swig_go_result;
   
-}
-
-
-void _wrap_LimeDevice_DeInitialize_LimeDevice_f36a06c4aed6a5ac() {
-  LimeDevice::DeInitialize();
+  arg1 = *(LimeDevice **)&_swig_go_0; 
   
+  result = (std::string *) &(arg1)->GetName();
+  _swig_go_result = Swig_AllocateString((*result).data(), (*result).length()); 
+  return _swig_go_result;
 }
 
 
@@ -1255,16 +1256,41 @@ intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(LimeDevice
 }
 
 
-std::vector< unsigned int > *_wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
-  std::vector< uint32_t > *result = 0 ;
-  std::vector< unsigned int > *_swig_go_result;
+  uint32_t result;
+  intgo _swig_go_result;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
   
-  result = (std::vector< uint32_t > *) &(arg1)->GetAvailableSampleRates();
-  *(std::vector< uint32_t > **)&_swig_go_result = result; 
+  result = (uint32_t)(arg1)->GetCenterFrequency();
+  _swig_go_result = result; 
   return _swig_go_result;
+}
+
+
+intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  uint32_t result;
+  intgo _swig_go_result;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  
+  result = (uint32_t)(arg1)->GetSampleRate();
+  _swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, short _swig_go_1) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  uint16_t arg2 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  arg2 = (uint16_t)_swig_go_1; 
+  
+  (arg1)->GetSamples(arg2);
+  
 }
 
 
@@ -1288,18 +1314,6 @@ void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
 }
 
 
-void _wrap_LimeDevice_SetAGC_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, bool _swig_go_1) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  bool arg2 ;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  arg2 = (bool)_swig_go_1; 
-  
-  (arg1)->SetAGC(arg2);
-  
-}
-
-
 void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, char _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint8_t arg2 ;
@@ -1319,45 +1333,6 @@ void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_g
   
   (arg1)->SetAntenna();
   
-}
-
-
-intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  uint32_t result;
-  intgo _swig_go_result;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  
-  result = (uint32_t)(arg1)->GetCenterFrequency();
-  _swig_go_result = result; 
-  return _swig_go_result;
-}
-
-
-_gostring_ _wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  std::string *result = 0 ;
-  _gostring_ _swig_go_result;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  
-  result = (std::string *) &(arg1)->GetName();
-  _swig_go_result = Swig_AllocateString((*result).data(), (*result).length()); 
-  return _swig_go_result;
-}
-
-
-intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  uint32_t result;
-  intgo _swig_go_result;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  
-  result = (uint32_t)(arg1)->GetSampleRate();
-  _swig_go_result = result; 
-  return _swig_go_result;
 }
 
 

@@ -107,19 +107,16 @@ extern void _wrap_Vector8i_set_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_
 extern void _wrap_delete_Vector8i_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern uintptr_t _wrap_new_LimeDevice_LimeDevice_f36a06c4aed6a5ac(void);
 extern void _wrap_delete_LimeDevice_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern void _wrap_LimeDevice_Initialize_LimeDevice_f36a06c4aed6a5ac(void);
-extern void _wrap_LimeDevice_DeInitialize_LimeDevice_f36a06c4aed6a5ac(void);
+extern swig_type_17 _wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern swig_intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
 extern swig_intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
-extern uintptr_t _wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, short arg2);
 extern void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern void _wrap_LimeDevice_SetAGC_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, _Bool arg2);
 extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern swig_type_17 _wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, uintptr_t arg2);
 #undef intgo
 */
@@ -769,12 +766,14 @@ func DeleteLimeDevice(arg1 LimeDevice) {
 	C._wrap_delete_LimeDevice_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
-func LimeDeviceInitialize() {
-	C._wrap_LimeDevice_Initialize_LimeDevice_f36a06c4aed6a5ac()
-}
-
-func LimeDeviceDeInitialize() {
-	C._wrap_LimeDevice_DeInitialize_LimeDevice_f36a06c4aed6a5ac()
+func (arg1 SwigcptrLimeDevice) GetName() (_swig_ret string) {
+	var swig_r string
+	_swig_i_0 := arg1
+	swig_r_p := C._wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
+	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
+	var swig_r_1 string
+ swig_r_1 = swigCopyString(swig_r) 
+	return swig_r_1
 }
 
 func (arg1 SwigcptrLimeDevice) SetSampleRate(arg2 uint) (_swig_ret uint) {
@@ -793,11 +792,24 @@ func (arg1 SwigcptrLimeDevice) SetCenterFrequency(arg2 uint) (_swig_ret uint) {
 	return swig_r
 }
 
-func (arg1 SwigcptrLimeDevice) GetAvailableSampleRates() (_swig_ret Vector32u) {
-	var swig_r Vector32u
+func (arg1 SwigcptrLimeDevice) GetCenterFrequency() (_swig_ret uint) {
+	var swig_r uint
 	_swig_i_0 := arg1
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_LimeDevice_GetAvailableSampleRates_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))))
+	swig_r = (uint)(C._wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
 	return swig_r
+}
+
+func (arg1 SwigcptrLimeDevice) GetSampleRate() (_swig_ret uint) {
+	var swig_r uint
+	_swig_i_0 := arg1
+	swig_r = (uint)(C._wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
+	return swig_r
+}
+
+func (arg1 SwigcptrLimeDevice) GetSamples(arg2 uint16) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.short(_swig_i_1))
 }
 
 func (arg1 SwigcptrLimeDevice) Start() {
@@ -808,12 +820,6 @@ func (arg1 SwigcptrLimeDevice) Start() {
 func (arg1 SwigcptrLimeDevice) Stop() {
 	_swig_i_0 := arg1
 	C._wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
-}
-
-func (arg1 SwigcptrLimeDevice) SetAGC(arg2 bool) {
-	_swig_i_0 := arg1
-	_swig_i_1 := arg2
-	C._wrap_LimeDevice_SetAGC_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C._Bool(_swig_i_1))
 }
 
 func (arg1 SwigcptrLimeDevice) SetLNAGain(arg2 byte) {
@@ -827,30 +833,6 @@ func (arg1 SwigcptrLimeDevice) SetAntenna() {
 	C._wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
 }
 
-func (arg1 SwigcptrLimeDevice) GetCenterFrequency() (_swig_ret uint) {
-	var swig_r uint
-	_swig_i_0 := arg1
-	swig_r = (uint)(C._wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
-	return swig_r
-}
-
-func (arg1 SwigcptrLimeDevice) GetName() (_swig_ret string) {
-	var swig_r string
-	_swig_i_0 := arg1
-	swig_r_p := C._wrap_LimeDevice_GetName_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
-	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
-	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
-	return swig_r_1
-}
-
-func (arg1 SwigcptrLimeDevice) GetSampleRate() (_swig_ret uint) {
-	var swig_r uint
-	_swig_i_0 := arg1
-	swig_r = (uint)(C._wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0)))
-	return swig_r
-}
-
 func (arg1 SwigcptrLimeDevice) SetSamplesAvailableCallback(arg2 LimeCallback) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2.Swigcptr()
@@ -860,17 +842,16 @@ func (arg1 SwigcptrLimeDevice) SetSamplesAvailableCallback(arg2 LimeCallback) {
 type LimeDevice interface {
 	Swigcptr() uintptr
 	SwigIsLimeDevice()
+	GetName() (_swig_ret string)
 	SetSampleRate(arg2 uint) (_swig_ret uint)
 	SetCenterFrequency(arg2 uint) (_swig_ret uint)
-	GetAvailableSampleRates() (_swig_ret Vector32u)
+	GetCenterFrequency() (_swig_ret uint)
+	GetSampleRate() (_swig_ret uint)
+	GetSamples(arg2 uint16)
 	Start()
 	Stop()
-	SetAGC(arg2 bool)
 	SetLNAGain(arg2 byte)
 	SetAntenna()
-	GetCenterFrequency() (_swig_ret uint)
-	GetName() (_swig_ret string)
-	GetSampleRate() (_swig_ret uint)
 	SetSamplesAvailableCallback(arg2 LimeCallback)
 }
 
