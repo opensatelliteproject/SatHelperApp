@@ -85,7 +85,16 @@ func main() {
 			break
 		case "airspy":
 			log.Print(aurora.Cyan("Airspy Frontend selected."))
+			Frontend.AirspyInitialize()
+			defer Frontend.AirspyDeinitialize()
 			device = Frontend.NewAirspyFrontend()
+
+			if ! device.Init() {
+				log.Println("Error initializing device")
+				return
+			}
+			defer device.Destroy()
+
 			device.SetGain1(CurrentConfig.AirspySource.LNAGain)
 			device.SetGain2(CurrentConfig.AirspySource.VGAGain)
 			device.SetGain3(CurrentConfig.AirspySource.MixerGain)
@@ -106,7 +115,7 @@ func main() {
 	}
 
 	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
-		log.Printf("Cannot set sample rate.")
+		log.Println("Cannot set sample rate.")
 	}
 
 	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {

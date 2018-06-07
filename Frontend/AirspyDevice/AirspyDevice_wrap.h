@@ -15,10 +15,10 @@
 
 class Swig_memory;
 
-class SwigDirector_AirspyCallback : public GoDeviceCallback
+class SwigDirector_AirspyDeviceCallback : public GoDeviceCallback
 {
  public:
-  SwigDirector_AirspyCallback(int swig_p);
+  SwigDirector_AirspyDeviceCallback(int swig_p);
   void _swig_upcall_cbFloatIQ(void *data, int length) {
     GoDeviceCallback::cbFloatIQ(data,length);
   }
@@ -31,7 +31,7 @@ class SwigDirector_AirspyCallback : public GoDeviceCallback
     GoDeviceCallback::cbS8IQ(data,length);
   }
   virtual void cbS8IQ(int8_t *data, int length);
-  virtual ~SwigDirector_AirspyCallback();
+  virtual ~SwigDirector_AirspyDeviceCallback();
  private:
   intgo go_val;
   Swig_memory *swig_mem;

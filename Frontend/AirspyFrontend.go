@@ -8,11 +8,11 @@ import (
 type AirspyFrontend struct {
 	device AirspyDevice.AirspyDevice
 	goCb GoCallback
-	goDirCb AirspyDevice.AirspyCallback
+	goDirCb AirspyDevice.AirspyDeviceCallback
 }
 
-func MakeGoCallbackDirector(callback *GoCallback) AirspyDevice.AirspyCallback {
-	return AirspyDevice.NewDirectorAirspyCallback(callback)
+func MakeAirspyGoCallbackDirector(callback *AirspyFrontendGoCallback) AirspyDevice.AirspyDeviceCallback {
+	return AirspyDevice.NewDirectorAirspyDeviceCallback(callback)
 }
 
 // endregion
@@ -88,6 +88,12 @@ func (f *AirspyFrontend) SetBiasT(biast bool) {
 		val = 1
 	}
 	f.device.SetBiasT(val)
+}
+func (f *AirspyFrontend) Init() bool {
+	return f.device.Init()
+}
+func (f *AirspyFrontend) Destroy() {
+	f.device.Destroy()
 }
 
 func (f *AirspyFrontend) SetAntenna(string) {}

@@ -13,7 +13,7 @@
 %include "std_vector.i"
 
 %feature("director") GoDeviceCallback;
-%rename(AirspyCallback) GoDeviceCallback;
+%rename("AirspyDeviceCallback") GoDeviceCallback;
 
 %include "../DeviceParameters.h"
 

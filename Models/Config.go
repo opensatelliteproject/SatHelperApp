@@ -32,12 +32,6 @@ type LimeSourceConfig struct {
 	Antenna string
 }
 
-type SpyServerConfig struct {
-	SpyServerHost string
-	SpyServerPort int
-	BiasTEnabled bool
-}
-
 type SourceConfig struct {
 	SampleRate uint32
 	Frequency uint32

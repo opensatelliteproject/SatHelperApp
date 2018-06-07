@@ -11,11 +11,11 @@ type LimeFrontend struct {
 	running bool
 	device LimeDevice.LimeDevice
 	goCb GoCallback
-	goDirCb LimeDevice.LimeCallback
+	goDirCb LimeDevice.LimeDeviceCallback
 }
 
-func LimeMakeGoCallbackDirector(callback *GoCallback) LimeDevice.LimeCallback {
-	return LimeDevice.NewDirectorLimeCallback(callback)
+func LimeMakeGoCallbackDirector(callback *GoCallback) LimeDevice.LimeDeviceCallback {
+	return LimeDevice.NewDirectorLimeDeviceCallback(callback)
 }
 
 // endregion

@@ -13,7 +13,7 @@
 %include "std_vector.i"
 
 %feature("director") GoDeviceCallback;
-%rename(LimeCallback) GoDeviceCallback;
+%rename(LimeDeviceCallback) GoDeviceCallback;
 
 %include "../DeviceParameters.h"
 
