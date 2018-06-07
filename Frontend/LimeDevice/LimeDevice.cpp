@@ -59,7 +59,7 @@ void LimeDevice::Stop() {
 	} else {
 		std::cerr << "Device not loaded!" << std::endl;
 	}
-	SoapySDR::Device::unmake(this->device);
+	SoapySDR::Device::unmake(device);
 }
 
 void LimeDevice::SetLNAGain(uint8_t value) {
