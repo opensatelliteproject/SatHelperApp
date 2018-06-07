@@ -84,6 +84,12 @@ func (f *LimeFrontend) SetGain3(gain uint8) {
 func (f *LimeFrontend) SetAntenna(value string) {
 	f.device.SetAntenna(value)
 }
+func (f *LimeFrontend) Init() bool {
+	return f.device.Init()
+}
+func (f *LimeFrontend) Destroy() {
+	f.device.Destroy()
+}
 
 func (f *LimeFrontend) GetAvailableSampleRates() []uint32 { return nil }
 func (f *LimeFrontend) SetAGC(agc bool) {}

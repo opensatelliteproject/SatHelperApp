@@ -33,7 +33,7 @@ private:
 	std::complex<float> buff[65535];
 
 public:
-	LimeDevice();
+	LimeDevice() {};
 	virtual ~LimeDevice();
 
 	const std::string &GetName();
@@ -49,6 +49,9 @@ public:
 	void SetPGAGain(uint8_t value);
 	void SetAntenna(std::string antenna);
 	void SetSamplesAvailableCallback(GoDeviceCallback *cb);
+
+	bool Init();
+	void Destroy();
 
 	void Start();
 	void Stop();

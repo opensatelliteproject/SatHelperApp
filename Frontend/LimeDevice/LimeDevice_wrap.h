@@ -23,14 +23,14 @@ class SwigDirector_LimeDeviceCallback : public GoDeviceCallback
     GoDeviceCallback::cbFloatIQ(data,length);
   }
   virtual void cbFloatIQ(void *data, int length);
-  void _swig_upcall_cbS16IQ(int16_t *data, int length) {
+  void _swig_upcall_cbS16IQ(void *data, int length) {
     GoDeviceCallback::cbS16IQ(data,length);
   }
-  virtual void cbS16IQ(int16_t *data, int length);
-  void _swig_upcall_cbS8IQ(int8_t *data, int length) {
+  virtual void cbS16IQ(void *data, int length);
+  void _swig_upcall_cbS8IQ(void *data, int length) {
     GoDeviceCallback::cbS8IQ(data,length);
   }
-  virtual void cbS8IQ(int8_t *data, int length);
+  virtual void cbS8IQ(void *data, int length);
   virtual ~SwigDirector_LimeDeviceCallback();
  private:
   intgo go_val;

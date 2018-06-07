@@ -418,22 +418,22 @@ void SwigDirector_LimeDeviceCallback::cbFloatIQ(void *data, int length) {
   Swig_DirectorLimeDeviceCallback_callback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_7f56157f1ee2307f(int, short *arg2, intgo arg3);
-void SwigDirector_LimeDeviceCallback::cbS16IQ(int16_t *data, int length) {
-  short *swig_arg2;
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_7f56157f1ee2307f(int, void *arg2, intgo arg3);
+void SwigDirector_LimeDeviceCallback::cbS16IQ(void *data, int length) {
+  void *swig_arg2;
   intgo swig_arg3;
   
-  *(int16_t **)&swig_arg2 = (int16_t *)data; 
+  *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
   Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(int, char *arg2, intgo arg3);
-void SwigDirector_LimeDeviceCallback::cbS8IQ(int8_t *data, int length) {
-  char *swig_arg2;
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(int, void *arg2, intgo arg3);
+void SwigDirector_LimeDeviceCallback::cbS8IQ(void *data, int length) {
+  void *swig_arg2;
   intgo swig_arg3;
   
-  *(int8_t **)&swig_arg2 = (int8_t *)data; 
+  *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
   Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
 }
@@ -499,13 +499,13 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_7f56157f
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, short *_swig_go_1, intgo _swig_go_2) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
-  int16_t *arg2 = (int16_t *) 0 ;
+  void *arg2 = (void *) 0 ;
   int arg3 ;
   
   arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
-  arg2 = *(int16_t **)&_swig_go_1; 
+  arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
   arg1->_swig_upcall_cbS16IQ(arg2, arg3);
@@ -513,13 +513,13 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1e
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, char *_swig_go_1, intgo _swig_go_2) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
-  int8_t *arg2 = (int8_t *) 0 ;
+  void *arg2 = (void *) 0 ;
   int arg3 ;
   
   arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
-  arg2 = *(int8_t **)&_swig_go_1; 
+  arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
   arg1->_swig_upcall_cbS8IQ(arg2, arg3);
@@ -551,13 +551,13 @@ void _wrap_LimeDeviceCallback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(GoDeviceCall
 }
 
 
-void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, short *_swig_go_1, intgo _swig_go_2) {
+void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
-  int16_t *arg2 = (int16_t *) 0 ;
+  void *arg2 = (void *) 0 ;
   int arg3 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
-  arg2 = *(int16_t **)&_swig_go_1; 
+  arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
   (arg1)->cbS16IQ(arg2,arg3);
@@ -565,13 +565,13 @@ void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallba
 }
 
 
-void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, char *_swig_go_1, intgo _swig_go_2) {
+void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
-  int8_t *arg2 = (int8_t *) 0 ;
+  void *arg2 = (void *) 0 ;
   int arg3 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
-  arg2 = *(int8_t **)&_swig_go_1; 
+  arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
   (arg1)->cbS8IQ(arg2,arg3);
@@ -1338,6 +1338,29 @@ void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f56157f1ee2307f(Li
   arg2 = *(GoDeviceCallback **)&_swig_go_1; 
   
   (arg1)->SetSamplesAvailableCallback(arg2);
+  
+}
+
+
+bool _wrap_LimeDevice_Init_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  bool result;
+  bool _swig_go_result;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  
+  result = (bool)(arg1)->Init();
+  _swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_LimeDevice_Destroy_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  
+  (arg1)->Destroy();
   
 }
 

@@ -68,6 +68,12 @@ func main() {
 			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
 			device = Frontend.NewLimeFrontend()
 
+			if ! device.Init() {
+				log.Println("Error initializing device")
+				return
+			}
+			defer device.Destroy()
+
 			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
 			device.SetGain2(CurrentConfig.LimeSource.TIAGain)
 			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
@@ -103,7 +109,7 @@ func main() {
 				return
 			}
 			defer device.Destroy()
-			device.SetLNAGain(CurrentConfig.SpyserverSource.Gain)
+			device.SetGain1(CurrentConfig.SpyserverSource.Gain)
 			break
 		default:
 			log.Println(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))

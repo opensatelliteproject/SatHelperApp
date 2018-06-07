@@ -26,19 +26,20 @@ void LimeDevice::SetSamplesAvailableCallback(GoDeviceCallback *cb) {
 	this->cb = cb;
 }
 
-LimeDevice::LimeDevice() {
-	SoapySDR::setLogLevel(SOAPY_SDR_FATAL);
-	args = SoapySDR::KwargsFromString("driver=lime,device=0");
-    device = SoapySDR::Device::make(args);
-
-    if (device == NULL) {
-        throw SatHelperException("There was an error initializing LimeSDR.");
-    }
-}
-
 LimeDevice::~LimeDevice() {
 	SoapySDR::Device::unmake(device);
 }
+
+bool LimeDevice::Init() {
+	SoapySDR::setLogLevel(SOAPY_SDR_FATAL);
+	args = SoapySDR::KwargsFromString("driver=lime,device=0");
+    device = SoapySDR::Device::make(args);
+	return (bool)device;
+};
+
+void LimeDevice::Destroy() {
+	SoapySDR::Device::unmake(device);
+};
 
 void LimeDevice::Start() {
 	transfer = device->setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32);
@@ -56,7 +57,6 @@ void LimeDevice::Stop() {
 	} else {
 		std::cerr << "Device not loaded!" << std::endl;
 	}
-	SoapySDR::Device::unmake(device);
 }
 
 void LimeDevice::SetLNAGain(uint8_t value) {

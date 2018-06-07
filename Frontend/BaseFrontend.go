@@ -34,6 +34,34 @@ func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
 	}
 }
 
+func (p *GoCallback) CbS16IQ(data uintptr, length int) {
+	// Length times two, because each sample contains an I and a Q in S16
+	const arrayLen = 1 << 30
+	var pairLength = length * 2
+	arr := (*[arrayLen]int16)(unsafe.Pointer(data))[:pairLength:pairLength]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			Int16Array: arr,
+			NumSamples: length,
+			SampleType: FrontendSampletypeS16iq,
+		})
+	}
+}
+
+func (p *GoCallback) CbS8IQ(data uintptr, length int) {
+	// Length times two, because each sample contains an I and a Q in S8
+	const arrayLen = 1 << 30
+	var pairLength = length * 2
+	arr := (*[arrayLen]int8)(unsafe.Pointer(data))[:pairLength:pairLength]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			Int8Array: arr,
+			NumSamples: length,
+			SampleType: FrontendSampletypeS8iq,
+		})
+	}
+}
+
 type BaseFrontend interface {
 	SetSampleRate(sampleRate uint32) uint32
 	SetCenterFrequency(centerFrequency uint32) uint32

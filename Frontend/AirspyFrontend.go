@@ -11,14 +11,14 @@ type AirspyFrontend struct {
 	goDirCb AirspyDevice.AirspyDeviceCallback
 }
 
-func MakeAirspyGoCallbackDirector(callback *AirspyFrontendGoCallback) AirspyDevice.AirspyDeviceCallback {
+func MakeAirspyGoCallbackDirector(callback *GoCallback) AirspyDevice.AirspyDeviceCallback {
 	return AirspyDevice.NewDirectorAirspyDeviceCallback(callback)
 }
 
 // endregion
 // region Constructor
 func NewAirspyFrontend() *AirspyFrontend {
-	goCb := AirspyFrontendGoCallback{}
+	goCb := GoCallback{}
 	afrnt := AirspyFrontend{
 		device: AirspyDevice.NewAirspyDevice(),
 		goCb: goCb,
