@@ -1326,6 +1326,30 @@ void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_g
 }
 
 
+void _wrap_LimeDevice_SetTIAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, char _swig_go_1) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  uint8_t arg2 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  arg2 = (uint8_t)_swig_go_1; 
+  
+  (arg1)->SetTIAGain(arg2);
+  
+}
+
+
+void _wrap_LimeDevice_SetPGAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, char _swig_go_1) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  uint8_t arg2 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  arg2 = (uint8_t)_swig_go_1; 
+  
+  (arg1)->SetPGAGain(arg2);
+  
+}
+
+
 void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, _gostring_ _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   std::string arg2 ;

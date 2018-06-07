@@ -72,15 +72,23 @@ func main() {
 		case "lime":
 			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
 			device = Frontend.NewLimeFrontend()
-			device.SetLNAGain(CurrentConfig.LimeSource.Gain)
+			
+			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
+			device.SetGain2(CurrentConfig.LimeSource.TIAGain)
+			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
 			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
+
+			log.Printf(aurora.Cyan("LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			log.Printf(aurora.Cyan("TIA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.TIAGain)))
+			log.Printf(aurora.Cyan("PGA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			log.Printf(aurora.Cyan("Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
 			break
 		case "airspy":
 			log.Print(aurora.Cyan("Airspy Frontend selected."))
 			device = Frontend.NewAirspyFrontend()
-			device.SetLNAGain(CurrentConfig.AirspySource.LNAGain)
-			device.SetLNAGain(CurrentConfig.AirspySource.VGAGain)
-			device.SetLNAGain(CurrentConfig.AirspySource.MixerGain)
+			device.SetGain1(CurrentConfig.AirspySource.LNAGain)
+			device.SetGain2(CurrentConfig.AirspySource.VGAGain)
+			device.SetGain3(CurrentConfig.AirspySource.MixerGain)
 			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
 		default:
@@ -90,7 +98,7 @@ func main() {
 
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
 	case "tcpserver":
-		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d\n").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
+		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 		break
 	default:

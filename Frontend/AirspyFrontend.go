@@ -73,13 +73,13 @@ func (f *AirspyFrontend) Stop() {
 func (f *AirspyFrontend) SetAGC(agc bool) {
 	f.device.SetAGC(agc)
 }
-func (f *AirspyFrontend) SetLNAGain(gain uint8) {
+func (f *AirspyFrontend) SetGain1(gain uint8) {
 	f.device.SetLNAGain(gain)
 }
-func (f *AirspyFrontend) SetVGAGain(gain uint8) {
+func (f *AirspyFrontend) SetGain2(gain uint8) {
 	f.device.SetVGAGain(gain)
 }
-func (f *AirspyFrontend) SetMixerGain(gain uint8) {
+func (f *AirspyFrontend) SetGain3(gain uint8) {
 	f.device.SetMixerGain(gain)
 }
 func (f *AirspyFrontend) SetBiasT(biast bool) {

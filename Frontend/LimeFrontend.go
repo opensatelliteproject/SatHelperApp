@@ -72,8 +72,14 @@ func (f *LimeFrontend) Stop() {
 	f.running = false
 	f.device.Stop()
 }
-func (f *LimeFrontend) SetLNAGain(gain uint8) {
+func (f *LimeFrontend) SetGain1(gain uint8) {
 	f.device.SetLNAGain(gain)
+}
+func (f *LimeFrontend) SetGain2(gain uint8) {
+	f.device.SetTIAGain(gain)
+}
+func (f *LimeFrontend) SetGain3(gain uint8) {
+	f.device.SetPGAGain(gain)
 }
 func (f *LimeFrontend) SetAntenna(value string) {
 	f.device.SetAntenna(value)
@@ -81,7 +87,5 @@ func (f *LimeFrontend) SetAntenna(value string) {
 
 func (f *LimeFrontend) GetAvailableSampleRates() []uint32 { return nil }
 func (f *LimeFrontend) SetAGC(agc bool) {}
-func (f *LimeFrontend) SetVGAGain(gain uint8) {}
-func (f *LimeFrontend) SetMixerGain(gain uint8) {}
 func (f *LimeFrontend) SetBiasT(biast bool) {}
 // endregion

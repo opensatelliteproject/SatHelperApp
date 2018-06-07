@@ -26,7 +26,9 @@ type AirspySourceConfig struct {
 }
 
 type LimeSourceConfig struct {
-	Gain uint8
+	LNAGain uint8
+	PGAGain uint8
+	TIAGain uint8
 	Antenna string
 }
 

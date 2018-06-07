@@ -56,14 +56,22 @@ void LimeDevice::Stop() {
 	if (device != NULL && transfer != NULL) {
 		device->deactivateStream(transfer);
 		device->closeStream(transfer);
-		SoapySDR::Device::unmake(this->device);
 	} else {
 		std::cerr << "Device not loaded!" << std::endl;
 	}
+	SoapySDR::Device::unmake(this->device);
 }
 
 void LimeDevice::SetLNAGain(uint8_t value) {
-	device->setGain(SOAPY_SDR_RX, 0, (double)value);
+	device->setGain(SOAPY_SDR_RX, 0, "LNA", (double)value);
+}
+
+void LimeDevice::SetTIAGain(uint8_t value) {
+	device->setGain(SOAPY_SDR_RX, 0, "TIA", (double)value);
+}
+
+void LimeDevice::SetPGAGain(uint8_t value) {
+	device->setGain(SOAPY_SDR_RX, 0, "PGA", (double)value);
 }
 
 void LimeDevice::SetAntenna(std::string antenna) {
