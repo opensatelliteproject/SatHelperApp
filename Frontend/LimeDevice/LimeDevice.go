@@ -49,6 +49,7 @@ typedef long long swig_type_14;
 typedef long long swig_type_15;
 typedef long long swig_type_16;
 typedef _gostring_ swig_type_17;
+typedef _gostring_ swig_type_18;
 extern void _wrap_Swig_free_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_LimeDevice_f36a06c4aed6a5ac(swig_intgo arg1);
 extern uintptr_t _wrap__swig_NewDirectorLimeCallbackLimeCallback_LimeDevice_f36a06c4aed6a5ac(int);
@@ -116,7 +117,7 @@ extern void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(uintptr_t ar
 extern void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
-extern void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_18 arg2);
 extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, uintptr_t arg2);
 #undef intgo
 */
@@ -828,9 +829,13 @@ func (arg1 SwigcptrLimeDevice) SetLNAGain(arg2 byte) {
 	C._wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.char(_swig_i_1))
 }
 
-func (arg1 SwigcptrLimeDevice) SetAntenna() {
+func (arg1 SwigcptrLimeDevice) SetAntenna(arg2 string) {
 	_swig_i_0 := arg1
-	C._wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
+	_swig_i_1 := arg2
+	C._wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), *(*C.swig_type_18)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
 }
 
 func (arg1 SwigcptrLimeDevice) SetSamplesAvailableCallback(arg2 LimeCallback) {
@@ -851,7 +856,7 @@ type LimeDevice interface {
 	Start()
 	Stop()
 	SetLNAGain(arg2 byte)
-	SetAntenna()
+	SetAntenna(arg2 string)
 	SetSamplesAvailableCallback(arg2 LimeCallback)
 }
 

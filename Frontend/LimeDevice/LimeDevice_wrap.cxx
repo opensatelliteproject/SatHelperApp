@@ -1326,12 +1326,14 @@ void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_g
 }
 
 
-void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, _gostring_ _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
+  std::string arg2 ;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
   
-  (arg1)->SetAntenna();
+  (arg1)->SetAntenna(arg2);
   
 }
 

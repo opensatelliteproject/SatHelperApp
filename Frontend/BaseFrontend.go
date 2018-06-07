@@ -40,6 +40,7 @@ type BaseFrontend interface {
 	GetAvailableSampleRates() []uint32
 	Start()
 	Stop()
+	SetAntenna(value string)
 	SetAGC(agc bool)
 	SetLNAGain(value uint8)
 	SetVGAGain(value uint8)

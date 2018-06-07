@@ -35,7 +35,7 @@ LimeDevice::LimeDevice() {
 	
 	if (device != NULL) {
 		SetLNAGain(50);
-		SetAntenna();
+		SetAntenna("LNAH");
 	}
 }
 
@@ -66,8 +66,8 @@ void LimeDevice::SetLNAGain(uint8_t value) {
 	device->setGain(SOAPY_SDR_RX, 0, (double)value);
 }
 
-void LimeDevice::SetAntenna() {
-	device->setAntenna(SOAPY_SDR_RX, 0, "LNAH");
+void LimeDevice::SetAntenna(std::string antenna) {
+	device->setAntenna(SOAPY_SDR_RX, 0, antenna);
 }
 
 uint32_t LimeDevice::SetSampleRate(uint32_t sampleRate) {

@@ -75,6 +75,9 @@ func (f *LimeFrontend) Stop() {
 func (f *LimeFrontend) SetLNAGain(gain uint8) {
 	f.device.SetLNAGain(gain)
 }
+func (f *LimeFrontend) SetAntenna(value string) {
+	f.device.SetAntenna(value)
+}
 
 func (f *LimeFrontend) GetAvailableSampleRates() []uint32 { return nil }
 func (f *LimeFrontend) SetAGC(agc bool) {}

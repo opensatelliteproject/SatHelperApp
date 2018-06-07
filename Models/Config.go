@@ -26,10 +26,8 @@ type AirspySourceConfig struct {
 }
 
 type LimeSourceConfig struct {
-	MixerGain uint8
-	LNAGain uint8
-	VGAGain uint8
-	BiasTEnabled bool
+	Gain uint8
+	Antenna string
 }
 
 type SpyServerConfig struct {

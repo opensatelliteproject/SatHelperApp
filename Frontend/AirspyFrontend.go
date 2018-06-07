@@ -89,4 +89,6 @@ func (f *AirspyFrontend) SetBiasT(biast bool) {
 	}
 	f.device.SetBiasT(val)
 }
+
+func (f *AirspyFrontend) SetAntenna(string) {}
 // endregion

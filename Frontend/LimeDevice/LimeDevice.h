@@ -55,7 +55,7 @@ public:
 	void Stop();
 
 	void SetLNAGain(uint8_t value);
-	void SetAntenna();
+	void SetAntenna(std::string antenna);
 	void SetSamplesAvailableCallback(GoDeviceCallback *cb);
 };
 

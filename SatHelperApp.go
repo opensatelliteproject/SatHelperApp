@@ -72,7 +72,8 @@ func main() {
 		case "lime":
 			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
 			device = Frontend.NewLimeFrontend()
-			device.SetLNAGain(CurrentConfig.LimeSource.LNAGain)
+			device.SetLNAGain(CurrentConfig.LimeSource.Gain)
+			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
 			break
 		case "airspy":
 			log.Print(aurora.Cyan("Airspy Frontend selected."))

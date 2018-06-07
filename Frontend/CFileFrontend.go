@@ -122,6 +122,7 @@ func (f *CFileFrontend) Stop() {
 	f.running = false
 }
 
+func (f *CFileFrontend) SetAntenna(string) {}
 func (f *CFileFrontend) SetAGC(bool) {}
 func (f *CFileFrontend) SetLNAGain(uint8) {}
 func (f *CFileFrontend) SetVGAGain(uint8) {}
