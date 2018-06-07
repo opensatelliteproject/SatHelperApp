@@ -127,9 +127,10 @@ func (f *CFileFrontend) Stop() {
 	f.running = false
 }
 
+func (f *CFileFrontend) SetAntenna(string) {}
 func (f *CFileFrontend) SetAGC(bool) {}
-func (f *CFileFrontend) SetLNAGain(uint8) {}
-func (f *CFileFrontend) SetVGAGain(uint8) {}
-func (f *CFileFrontend) SetMixerGain(uint8) {}
+func (f *CFileFrontend) SetGain1(uint8) {}
+func (f *CFileFrontend) SetGain2(uint8) {}
+func (f *CFileFrontend) SetGain3(uint8) {}
 func (f *CFileFrontend) SetBiasT(bool) {}
 // endregion

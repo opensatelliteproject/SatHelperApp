@@ -1,5 +1,9 @@
 package Frontend
 
+import (
+	"unsafe"
+)
+
 const FrontendSampletypeFloatiq = 0
 const FrontendSampletypeS16iq = 1
 const FrontendSampletypeS8iq = 2
@@ -14,16 +18,61 @@ type SampleCallbackData struct {
 
 type SamplesCallback func(data SampleCallbackData)
 
+type GoCallback struct {
+	callback SamplesCallback
+}
+
+func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
+	const arrayLen = 1 << 30
+	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			ComplexArray: arr,
+			NumSamples:   length,
+			SampleType:   FrontendSampletypeFloatiq,
+		})
+	}
+}
+
+func (p *GoCallback) CbS16IQ(data uintptr, length int) {
+	// Length times two, because each sample contains an I and a Q in S16
+	const arrayLen = 1 << 30
+	var pairLength = length * 2
+	arr := (*[arrayLen]int16)(unsafe.Pointer(data))[:pairLength:pairLength]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			Int16Array: arr,
+			NumSamples: length,
+			SampleType: FrontendSampletypeS16iq,
+		})
+	}
+}
+
+func (p *GoCallback) CbS8IQ(data uintptr, length int) {
+	// Length times two, because each sample contains an I and a Q in S8
+	const arrayLen = 1 << 30
+	var pairLength = length * 2
+	arr := (*[arrayLen]int8)(unsafe.Pointer(data))[:pairLength:pairLength]
+	if p.callback != nil {
+		p.callback(SampleCallbackData{
+			Int8Array: arr,
+			NumSamples: length,
+			SampleType: FrontendSampletypeS8iq,
+		})
+	}
+}
+
 type BaseFrontend interface {
 	SetSampleRate(sampleRate uint32) uint32
 	SetCenterFrequency(centerFrequency uint32) uint32
 	GetAvailableSampleRates() []uint32
 	Start()
 	Stop()
+	SetAntenna(value string)
 	SetAGC(agc bool)
-	SetLNAGain(value uint8)
-	SetVGAGain(value uint8)
-	SetMixerGain(value uint8)
+	SetGain1(value uint8)
+	SetGain2(value uint8)
+	SetGain3(value uint8)
 	SetBiasT(value bool)
 	GetCenterFrequency() uint32
 	GetName() string

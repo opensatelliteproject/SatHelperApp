@@ -2,41 +2,23 @@ package Frontend
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/AirspyDevice"
-	"unsafe"
 )
-
 
 // region Struct Definition
 type AirspyFrontend struct {
 	device AirspyDevice.AirspyDevice
-	goCb AirspyFrontendGoCallback
+	goCb GoCallback
 	goDirCb AirspyDevice.AirspyDeviceCallback
 }
 
-type AirspyFrontendGoCallback struct {
-	callback SamplesCallback
-}
-
-func (p *AirspyFrontendGoCallback) CbFloatIQ(data uintptr, length int) {
-	const arrayLen = 1 << 30
-	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
-	if p.callback != nil {
-		p.callback(SampleCallbackData{
-			ComplexArray: arr,
-			NumSamples:   length,
-			SampleType:   FrontendSampletypeFloatiq,
-		})
-	}
-}
-
-func MakeAirspyGoCallbackDirector(callback *AirspyFrontendGoCallback) AirspyDevice.AirspyDeviceCallback {
+func MakeAirspyGoCallbackDirector(callback *GoCallback) AirspyDevice.AirspyDeviceCallback {
 	return AirspyDevice.NewDirectorAirspyDeviceCallback(callback)
 }
 
 // endregion
 // region Constructor
 func NewAirspyFrontend() *AirspyFrontend {
-	goCb := AirspyFrontendGoCallback{}
+	goCb := GoCallback{}
 	afrnt := AirspyFrontend{
 		device: AirspyDevice.NewAirspyDevice(),
 		goCb: goCb,
@@ -97,13 +79,13 @@ func (f *AirspyFrontend) Stop() {
 func (f *AirspyFrontend) SetAGC(agc bool) {
 	f.device.SetAGC(agc)
 }
-func (f *AirspyFrontend) SetLNAGain(gain uint8) {
+func (f *AirspyFrontend) SetGain1(gain uint8) {
 	f.device.SetLNAGain(gain)
 }
-func (f *AirspyFrontend) SetVGAGain(gain uint8) {
+func (f *AirspyFrontend) SetGain2(gain uint8) {
 	f.device.SetVGAGain(gain)
 }
-func (f *AirspyFrontend) SetMixerGain(gain uint8) {
+func (f *AirspyFrontend) SetGain3(gain uint8) {
 	f.device.SetMixerGain(gain)
 }
 func (f *AirspyFrontend) SetBiasT(biast bool) {
@@ -116,8 +98,9 @@ func (f *AirspyFrontend) SetBiasT(biast bool) {
 func (f *AirspyFrontend) Init() bool {
 	return f.device.Init()
 }
-
 func (f *AirspyFrontend) Destroy() {
 	f.device.Destroy()
 }
+
+func (f *AirspyFrontend) SetAntenna(string) {}
 // endregion

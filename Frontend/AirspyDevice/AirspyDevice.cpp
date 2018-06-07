@@ -124,6 +124,8 @@ bool AirspyDevice::Init() {
 		SetMixerGain(5);
 		SetVGAGain(5);
 	}
+	
+	return true;
 }
 
 void AirspyDevice::Destroy() {

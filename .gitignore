@@ -1,4 +1,6 @@
 .idea
+.DS_Store
 SatHelperApp
+.vscode
 .gopath
 SatHelperApp.cfg

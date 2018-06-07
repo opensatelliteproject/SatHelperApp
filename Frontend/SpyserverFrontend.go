@@ -2,69 +2,24 @@ package Frontend
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/SpyserverDevice"
-	"unsafe"
 )
 
 
 // region Struct Definition
 type SpyserverFrontend struct {
 	device SpyserverDevice.SpyserverDevice
-	goCb SpyserverGoCallback
+	goCb GoCallback
 	goDirCb SpyserverDevice.SpyserverDeviceCallback
 }
 
-type SpyserverGoCallback struct {
-	callback SamplesCallback
-}
-
-func (p *SpyserverGoCallback) CbFloatIQ(data uintptr, length int) {
-	const arrayLen = 1 << 30
-	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
-	if p.callback != nil {
-		p.callback(SampleCallbackData{
-			ComplexArray: arr,
-			NumSamples: length,
-			SampleType: FrontendSampletypeFloatiq,
-		})
-	}
-}
-
-func (p *SpyserverGoCallback) CbS16IQ(data uintptr, length int) {
-	// Length times two, because each sample contains an I and a Q in S16
-	const arrayLen = 1 << 30
-	var pairLength = length * 2
-	arr := (*[arrayLen]int16)(unsafe.Pointer(data))[:pairLength:pairLength]
-	if p.callback != nil {
-		p.callback(SampleCallbackData{
-			Int16Array: arr,
-			NumSamples: length,
-			SampleType: FrontendSampletypeS16iq,
-		})
-	}
-}
-
-func (p *SpyserverGoCallback) CbS8IQ(data uintptr, length int) {
-	// Length times two, because each sample contains an I and a Q in S8
-	const arrayLen = 1 << 30
-	var pairLength = length * 2
-	arr := (*[arrayLen]int8)(unsafe.Pointer(data))[:pairLength:pairLength]
-	if p.callback != nil {
-		p.callback(SampleCallbackData{
-			Int8Array: arr,
-			NumSamples: length,
-			SampleType: FrontendSampletypeS8iq,
-		})
-	}
-}
-
-func MakeSpyserverGoCallbackDirector(callback *SpyserverGoCallback) SpyserverDevice.SpyserverDeviceCallback {
+func MakeSpyserverGoCallbackDirector(callback *GoCallback) SpyserverDevice.SpyserverDeviceCallback {
 	return SpyserverDevice.NewDirectorSpyserverDeviceCallback(callback)
 }
 
 // endregion
 // region Constructor
 func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
-	goCb := SpyserverGoCallback{}
+	goCb := GoCallback{}
 	afrnt := SpyserverFrontend{
 		device: SpyserverDevice.NewSpyserverDevice(hostname, port),
 		goCb: goCb,
@@ -119,13 +74,13 @@ func (f *SpyserverFrontend) Stop() {
 func (f *SpyserverFrontend) SetAGC(agc bool) {
 	f.device.SetAGC(agc)
 }
-func (f *SpyserverFrontend) SetLNAGain(gain uint8) {
+func (f *SpyserverFrontend) SetGain1(gain uint8) {
 	f.device.SetLNAGain(gain)
 }
-func (f *SpyserverFrontend) SetVGAGain(gain uint8) {
+func (f *SpyserverFrontend) SetGain2(gain uint8) {
 	f.device.SetVGAGain(gain)
 }
-func (f *SpyserverFrontend) SetMixerGain(gain uint8) {
+func (f *SpyserverFrontend) SetGain3(gain uint8) {
 	f.device.SetMixerGain(gain)
 }
 func (f *SpyserverFrontend) SetBiasT(biast bool) {
@@ -142,4 +97,6 @@ func (f *SpyserverFrontend) Init() bool {
 func (f *SpyserverFrontend) Destroy() {
 	f.device.Destroy()
 }
+
+func (f *SpyserverFrontend) SetAntenna(string) {}
 // endregion

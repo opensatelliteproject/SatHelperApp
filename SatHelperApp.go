@@ -64,19 +64,41 @@ func main() {
 			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
 			break
-		case "airspy":
-			log.Print(aurora.Cyan("Airspy Frontend selected."))
-			Frontend.AirspyInitialize()
-			defer Frontend.AirspyDeinitialize()
-			device = Frontend.NewAirspyFrontend()
+		case "lime":
+			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
+			device = Frontend.NewLimeFrontend()
+
 			if ! device.Init() {
 				log.Println("Error initializing device")
 				return
 			}
 			defer device.Destroy()
-			device.SetLNAGain(CurrentConfig.AirspySource.LNAGain)
-			device.SetLNAGain(CurrentConfig.AirspySource.VGAGain)
-			device.SetLNAGain(CurrentConfig.AirspySource.MixerGain)
+
+			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
+			device.SetGain2(CurrentConfig.LimeSource.TIAGain)
+			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
+			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
+
+			log.Printf(aurora.Cyan("LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			log.Printf(aurora.Cyan("TIA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.TIAGain)))
+			log.Printf(aurora.Cyan("PGA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			log.Printf(aurora.Cyan("Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
+			break
+		case "airspy":
+			log.Print(aurora.Cyan("Airspy Frontend selected."))
+			Frontend.AirspyInitialize()
+			defer Frontend.AirspyDeinitialize()
+			device = Frontend.NewAirspyFrontend()
+
+			if ! device.Init() {
+				log.Println("Error initializing device")
+				return
+			}
+			defer device.Destroy()
+
+			device.SetGain1(CurrentConfig.AirspySource.LNAGain)
+			device.SetGain2(CurrentConfig.AirspySource.VGAGain)
+			device.SetGain3(CurrentConfig.AirspySource.MixerGain)
 			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
 		case "spyserver":
@@ -87,7 +109,7 @@ func main() {
 				return
 			}
 			defer device.Destroy()
-			device.SetLNAGain(CurrentConfig.SpyserverSource.Gain)
+			device.SetGain1(CurrentConfig.SpyserverSource.Gain)
 			break
 		default:
 			log.Println(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
@@ -107,7 +129,6 @@ func main() {
 
 	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
 		log.Println("Cannot set sample rate.")
-		return
 	}
 
 	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {

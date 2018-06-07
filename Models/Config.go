@@ -25,6 +25,13 @@ type AirspySourceConfig struct {
 	BiasTEnabled bool
 }
 
+type LimeSourceConfig struct {
+	LNAGain uint8
+	PGAGain uint8
+	TIAGain uint8
+	Antenna string
+}
+
 type SpyserverSourceConfig struct {
 	Gain uint8
 	Hostname string
@@ -54,6 +61,7 @@ type AppConfig struct {
 	Decoder DecoderConfig
 	Source SourceConfig
 	AirspySource AirspySourceConfig
+	LimeSource LimeSourceConfig
 	CFileSource CFileSourceConfig
 	TCPServerDemuxer TCPServerDemuxerConfig
 	SpyserverSource SpyserverSourceConfig

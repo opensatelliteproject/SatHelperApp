@@ -36,6 +36,9 @@ update: | $(BASE)
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize 64 Frontend/AirspyDevice/AirspyDevice.i
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize 64 Frontend/SpyserverDevice/SpyserverDevice.i
 
+	@echo Updating LimeDevice Wrapper
+	@cd $(BASE) && swig -cgo -go -c++ -intgosize 64 Frontend/LimeDevice/LimeDevice.i
+
 build: | $(BASE)
 	@echo Building SatHelperApp
 	@cd $(BASE) && go build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
