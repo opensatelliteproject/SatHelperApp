@@ -53,12 +53,12 @@ extern void _wrap_Swig_free_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_AirspyDevice_1c209d1ee771b908(swig_intgo arg1);
 extern uintptr_t _wrap__swig_NewDirectorAirspyDeviceCallbackAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(int);
 extern void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbFloatIQ_AirspyDevice_1c209d1ee771b908(uintptr_t, uintptr_t data, swig_intgo length);
-extern void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(uintptr_t, swig_voidp data, swig_intgo length);
-extern void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(uintptr_t, swig_voidp data, swig_intgo length);
+extern void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(uintptr_t, uintptr_t data, swig_intgo length);
+extern void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap_DeleteDirectorAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern void _wrap_AirspyDeviceCallback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
-extern void _wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
-extern void _wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, swig_voidp arg2, swig_intgo arg3);
+extern void _wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
+extern void _wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
 extern void _wrap_delete_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern uintptr_t _wrap_new_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(void);
 extern uintptr_t _wrap_new_Vector32u__SWIG_0_AirspyDevice_1c209d1ee771b908(void);
@@ -115,6 +115,8 @@ extern uintptr_t _wrap_AirspyDevice_GetAvailableSampleRates_AirspyDevice_1c209d1
 extern void _wrap_AirspyDevice_Start_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern void _wrap_AirspyDevice_Stop_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern void _wrap_AirspyDevice_SetAGC_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, _Bool arg2);
+extern _Bool _wrap_AirspyDevice_Init_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
+extern void _wrap_AirspyDevice_Destroy_AirspyDevice_1c209d1ee771b908(uintptr_t arg1);
 extern void _wrap_AirspyDevice_SetLNAGain_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, char arg2);
 extern void _wrap_AirspyDevice_SetVGAGain_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, char arg2);
 extern void _wrap_AirspyDevice_SetMixerGain_AirspyDevice_1c209d1ee771b908(uintptr_t arg1, char arg2);
@@ -219,53 +221,53 @@ func Swig_DirectorAirspyDeviceCallback_callback_cbFloatIQ_AirspyDevice_1c209d1ee
 }
 
 type _swig_DirectorInterfaceAirspyDeviceCallbackCbS16IQ interface {
-	CbS16IQ(*int16, int)
+	CbS16IQ(uintptr, int)
 }
 
-func (swig_p *_swig_DirectorAirspyDeviceCallback) CbS16IQ(data *int16, length int) {
+func (swig_p *_swig_DirectorAirspyDeviceCallback) CbS16IQ(data uintptr, length int) {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceAirspyDeviceCallbackCbS16IQ); swig_ok {
 		swig_g.CbS16IQ(data, length)
 		return
 	}
 	_swig_i_0 := data
 	_swig_i_1 := length
-	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(swig_p.SwigcptrAirspyDeviceCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(swig_p.SwigcptrAirspyDeviceCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
-func DirectorAirspyDeviceCallbackCbS16IQ(p AirspyDeviceCallback, arg2 *int16, arg3 int) {
+func DirectorAirspyDeviceCallbackCbS16IQ(p AirspyDeviceCallback, arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg2
 	_swig_i_1 := arg3
-	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(p.(*_swig_DirectorAirspyDeviceCallback).SwigcptrAirspyDeviceCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(p.(*_swig_DirectorAirspyDeviceCallback).SwigcptrAirspyDeviceCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 //export Swig_DirectorAirspyDeviceCallback_callback_cbS16IQ_AirspyDevice_1c209d1ee771b908
-func Swig_DirectorAirspyDeviceCallback_callback_cbS16IQ_AirspyDevice_1c209d1ee771b908(swig_c int, arg2 *int16, arg3 int) {
+func Swig_DirectorAirspyDeviceCallback_callback_cbS16IQ_AirspyDevice_1c209d1ee771b908(swig_c int, arg2 uintptr, arg3 int) {
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorAirspyDeviceCallback)
 	swig_p.CbS16IQ(arg2, arg3)
 }
 
 type _swig_DirectorInterfaceAirspyDeviceCallbackCbS8IQ interface {
-	CbS8IQ(*int8, int)
+	CbS8IQ(uintptr, int)
 }
 
-func (swig_p *_swig_DirectorAirspyDeviceCallback) CbS8IQ(data *int8, length int) {
+func (swig_p *_swig_DirectorAirspyDeviceCallback) CbS8IQ(data uintptr, length int) {
 	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceAirspyDeviceCallbackCbS8IQ); swig_ok {
 		swig_g.CbS8IQ(data, length)
 		return
 	}
 	_swig_i_0 := data
 	_swig_i_1 := length
-	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(swig_p.SwigcptrAirspyDeviceCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(swig_p.SwigcptrAirspyDeviceCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
-func DirectorAirspyDeviceCallbackCbS8IQ(p AirspyDeviceCallback, arg2 *int8, arg3 int) {
+func DirectorAirspyDeviceCallbackCbS8IQ(p AirspyDeviceCallback, arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg2
 	_swig_i_1 := arg3
-	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(p.(*_swig_DirectorAirspyDeviceCallback).SwigcptrAirspyDeviceCallback), C.swig_voidp(_swig_i_0), C.swig_intgo(_swig_i_1))
+	C._wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(p.(*_swig_DirectorAirspyDeviceCallback).SwigcptrAirspyDeviceCallback), C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))
 }
 
 //export Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908
-func Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908(swig_c int, arg2 *int8, arg3 int) {
+func Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908(swig_c int, arg2 uintptr, arg3 int) {
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorAirspyDeviceCallback)
 	swig_p.CbS8IQ(arg2, arg3)
 }
@@ -301,18 +303,18 @@ func (arg1 SwigcptrAirspyDeviceCallback) CbFloatIQ(arg2 uintptr, arg3 int) {
 	C._wrap_AirspyDeviceCallback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
-func (arg1 SwigcptrAirspyDeviceCallback) CbS16IQ(arg2 *int16, arg3 int) {
+func (arg1 SwigcptrAirspyDeviceCallback) CbS16IQ(arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
-func (arg1 SwigcptrAirspyDeviceCallback) CbS8IQ(arg2 *int8, arg3 int) {
+func (arg1 SwigcptrAirspyDeviceCallback) CbS8IQ(arg2 uintptr, arg3 int) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
 	_swig_i_2 := arg3
-	C._wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C.swig_voidp(_swig_i_1), C.swig_intgo(_swig_i_2))
+	C._wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
 func DeleteAirspyDeviceCallback(arg1 AirspyDeviceCallback) {
@@ -331,8 +333,8 @@ type AirspyDeviceCallback interface {
 	SwigIsAirspyDeviceCallback()
 	DirectorInterface() interface{}
 	CbFloatIQ(arg2 uintptr, arg3 int)
-	CbS16IQ(arg2 *int16, arg3 int)
-	CbS8IQ(arg2 *int8, arg3 int)
+	CbS16IQ(arg2 uintptr, arg3 int)
+	CbS8IQ(arg2 uintptr, arg3 int)
 }
 
 type SwigcptrVector32u uintptr
@@ -818,6 +820,18 @@ func (arg1 SwigcptrAirspyDevice) SetAGC(arg2 bool) {
 	C._wrap_AirspyDevice_SetAGC_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0), C._Bool(_swig_i_1))
 }
 
+func (arg1 SwigcptrAirspyDevice) Init() (_swig_ret bool) {
+	var swig_r bool
+	_swig_i_0 := arg1
+	swig_r = (bool)(C._wrap_AirspyDevice_Init_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0)))
+	return swig_r
+}
+
+func (arg1 SwigcptrAirspyDevice) Destroy() {
+	_swig_i_0 := arg1
+	C._wrap_AirspyDevice_Destroy_AirspyDevice_1c209d1ee771b908(C.uintptr_t(_swig_i_0))
+}
+
 func (arg1 SwigcptrAirspyDevice) SetLNAGain(arg2 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
@@ -881,6 +895,8 @@ type AirspyDevice interface {
 	Start()
 	Stop()
 	SetAGC(arg2 bool)
+	Init() (_swig_ret bool)
+	Destroy()
 	SetLNAGain(arg2 byte)
 	SetVGAGain(arg2 byte)
 	SetMixerGain(arg2 byte)

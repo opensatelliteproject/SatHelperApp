@@ -66,6 +66,10 @@ func (f *CFileFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 }
 // endregion
 // region Commands
+func (f *CFileFrontend) Init() bool {
+	return true
+}
+func (f *CFileFrontend) Destroy() {}
 func (f *CFileFrontend) Start() {
 	if f.running {
 		log.Println(Red("CFileFrontend is already running."))
@@ -79,8 +83,9 @@ func (f *CFileFrontend) Start() {
 		var period = CFileFrontendBufferSize / float32(frontend.sampleRate)
 
 		if err != nil {
-			log.Fatalf(Red("Error opening file %s: %s").String(), Bold(frontend.filename), Bold(err))
+			log.Printf(Red("Error opening file %s: %s").String(), Bold(frontend.filename), Bold(err))
 			frontend.running = false
+			return
 		}
 		defer frontend.fileHandler.Close()
 

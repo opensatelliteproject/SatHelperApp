@@ -40,9 +40,6 @@ const DefaultSampleRate = AirspyMiniDefaultSamplerate
 const DefaultDecimation = 1
 const DefaultDeviceNumber = 0
 
-const DefaultDecoderAddress = "127.0.0.1"
-const DefaultDecoderPort = 5000
-
 const DefaultLnaGain = 5
 const DefaultVgaGain = 5
 const DefaultMixGain = 5
@@ -62,17 +59,16 @@ const HritUw2 uint64 = 0x25010b02f33d2076
 const LritUw0 uint64 = 0xfca2b63db00d9794
 const LritUw2 uint64 = 0x035d49c24ff2686b
 
-const FRAMESIZE = 1024
-const FRAMEBITS = FRAMESIZE * 8
-const CODEDFRAMESIZE = FRAMEBITS * 2
-const MINCORRELATIONBITS = 46
-const RSBLOCKS = 4
-const RSPARITYSIZE = 32
-const RSPARITYBLOCK = RSPARITYSIZE * RSBLOCKS
-const SYNCWORDSIZE = 32
-const LASTFRAMEDATABITS = 64
-const LASTFRAMEDATA = LASTFRAMEDATABITS / 8
-const TIMEOUT = 2
+const SyncWordSize = 4
+const FrameSize = 1024
+const FrameBits = FrameSize * 8
+const CodedFrameSize = FrameBits * 2
+const MinCorrelationBits = 46
+const RsBlocks = 4
+const RsParitySize = 32
+const RsParityBlockSize = RsParitySize * RsBlocks
+const LastFrameDataBits = 64
+const LastFrameData = LastFrameDataBits / 8
 
 
 const DefaultFlywheelRecheck = 4
@@ -116,13 +112,18 @@ func LoadDefaults() {
 	CurrentConfig.Base.DeviceType = "airspy"
 	CurrentConfig.Base.SendConstellation = true
 	CurrentConfig.AirspySource.BiasTEnabled = DefaultBiast
-	CurrentConfig.SpyServerSource.BiasTEnabled = DefaultBiast
 
 	// Decoder
 	CurrentConfig.Decoder.Display = true
-	CurrentConfig.Decoder.VChannelPort = DefaultVchannelPort
 	CurrentConfig.Decoder.StatisticsPort = DefaultStatisticsPort
 	CurrentConfig.Decoder.UseLastFrameData = true
+
+	// Others
+	CurrentConfig.Base.DemuxerType = "tcpserver"
+
+	// TCPDemuxer
+	CurrentConfig.TCPServerDemuxer.Port = DefaultVchannelPort
+	CurrentConfig.TCPServerDemuxer.Host = ""
 
 	SaveConfig()
 }
@@ -132,16 +133,19 @@ func SaveConfig() {
 	e := toml.NewEncoder(&firstBuffer)
 	err := e.Encode(CurrentConfig)
 	if err != nil {
-		log.Fatalf("Cannot save config: %s", err)
+		log.Printf("Cannot save config: %s", err)
+		return
 	}
 	err = ioutil.WriteFile("SatHelperApp.cfg", firstBuffer.Bytes(), 0644)
 	if err != nil {
-		log.Fatalf("Cannot save config: %s", err)
+		log.Printf("Cannot save config: %s", err)
+		return
 	}
 }
 
 func LoadConfig() {
-	if _, err := toml.DecodeFile("SatHelperApp.cfg", &CurrentConfig); err != nil {
+	_, err := toml.DecodeFile("SatHelperApp.cfg", &CurrentConfig)
+	if err != nil {
 		log.Println("Cannot load file SatHelperApp.cfg. Loading default values.")
 		LoadDefaults()
 	}

@@ -11,24 +11,24 @@ import (
 
 func initDecoder() {
 	if CurrentConfig.Decoder.UseLastFrameData {
-		viterbiData = make([]byte, CODEDFRAMESIZE + LASTFRAMEDATABITS)
-		decodedData = make([]byte, FRAMESIZE + LASTFRAMEDATA)
-		lastFrameEnd = make([]byte, LASTFRAMEDATABITS)
+		viterbiData = make([]byte, CodedFrameSize+LastFrameDataBits)
+		decodedData = make([]byte, FrameSize+LastFrameData)
+		lastFrameEnd = make([]byte, LastFrameDataBits)
 
-		viterbi = SatHelper.NewViterbi27(FRAMEBITS + LASTFRAMEDATABITS)
+		viterbi = SatHelper.NewViterbi27(FrameBits + LastFrameDataBits)
 
-		for i := 0; i < LASTFRAMEDATABITS; i++ {
+		for i := 0; i < LastFrameDataBits; i++ {
 			lastFrameEnd[i] = 128
 		}
 	} else {
-		viterbiData = make([]byte, CODEDFRAMESIZE)
-		decodedData = make([]byte, FRAMESIZE)
+		viterbiData = make([]byte, CodedFrameSize)
+		decodedData = make([]byte, FrameSize)
 
-		viterbi = SatHelper.NewViterbi27(FRAMEBITS)
+		viterbi = SatHelper.NewViterbi27(FrameBits)
 	}
 
-	codedData = make([]byte, CODEDFRAMESIZE)
-	rsCorrectedData = make([]byte, FRAMESIZE)
+	codedData = make([]byte, CodedFrameSize)
+	rsCorrectedData = make([]byte, FrameSize)
 	rsWorkBuffer = make([]byte, 255)
 
 	reedSolomon = SatHelper.NewReedSolomon()
@@ -65,13 +65,13 @@ func decoderLoop() {
 	var flywheelCount = 0
 
 	for running {
-		if symbolsFifo.Len() >= CODEDFRAMESIZE {
+		if symbolsFifo.Len() >= CodedFrameSize {
 			if localStats.TotalPackets % AverageLastNSamples == 0 {
 				averageRSCorrections = 0
 				averageVitCorrections = 0
 			}
 			symbolsFifo.UnsafeLock()
-			for i := 0; i < CODEDFRAMESIZE; i++ {
+			for i := 0; i < CodedFrameSize; i++ {
 				codedData[i] = symbolsFifo.UnsafeNext().(byte)
 			}
 			symbolsFifo.UnsafeUnlock()
@@ -83,14 +83,14 @@ func decoderLoop() {
 
 			// This reduces CPU Usage
 			if !lastFrameOk {
-				correlator.Correlate(&codedData[0], CODEDFRAMESIZE)
+				correlator.Correlate(&codedData[0], CodedFrameSize)
 			} else {
 				// If we got a good lock before, let's just check if the sync is in correct pos.
 
-				correlator.Correlate(&codedData[0], CODEDFRAMESIZE / 16)
+				correlator.Correlate(&codedData[0], CodedFrameSize/ 16)
 				if correlator.GetHighestCorrelationPosition() != 0 {
 					// Oh no, that means something happened :/
-					correlator.Correlate(&codedData[0], CODEDFRAMESIZE)
+					correlator.Correlate(&codedData[0], CodedFrameSize)
 					lastFrameOk = false
 					flywheelCount = 0
 				}
@@ -105,39 +105,39 @@ func decoderLoop() {
 				phaseShift = SatHelper.DEG_180
 			}
 
-			if corr < MINCORRELATIONBITS {
-				// log.Printf(Red("Correlation didn't match criteria of %d bits. Got %d\n").String(), Bold(MINCORRELATIONBITS), Bold(corr))
+			if corr < MinCorrelationBits {
+				// log.Printf(Red("Correlation didn't match criteria of %d bits. Got %d\n").String(), Bold(MinCorrelationBits), Bold(corr))
 			}
 
 			if pos != 0 {
 				// Sync frame
-				shiftWithConstantSize(&codedData, int(pos), CODEDFRAMESIZE)
+				shiftWithConstantSize(&codedData, int(pos), CodedFrameSize)
 				for symbolsFifo.Len() < int(pos) {
 					// Wait enough data
 					time.Sleep(time.Microsecond)
 				}
-				offset := CODEDFRAMESIZE - pos
+				offset := CodedFrameSize - pos
 				symbolsFifo.UnsafeLock()
-				for i := offset; i < CODEDFRAMESIZE; i++ {
+				for i := offset; i < CodedFrameSize; i++ {
 					codedData[i] = symbolsFifo.UnsafeNext().(byte)
 				}
 				symbolsFifo.UnsafeUnlock()
 			}
 
 			if CurrentConfig.Base.Mode == "lrit" {
-				packetFixer.FixPacket(&codedData[0], CODEDFRAMESIZE, phaseShift, false)
+				packetFixer.FixPacket(&codedData[0], CodedFrameSize, phaseShift, false)
 			}
 
 
 			if CurrentConfig.Decoder.UseLastFrameData {
-				for i := 0; i < LASTFRAMEDATABITS; i++ {
+				for i := 0; i < LastFrameDataBits; i++ {
 					viterbiData[i] = lastFrameEnd[i]
 				}
-				for i := LASTFRAMEDATABITS; i < CODEDFRAMESIZE + LASTFRAMEDATABITS; i++ {
-					viterbiData[i] = codedData[i-LASTFRAMEDATABITS]
+				for i := LastFrameDataBits; i < CodedFrameSize+LastFrameDataBits; i++ {
+					viterbiData[i] = codedData[i-LastFrameDataBits]
 				}
 			} else {
-				for i := 0; i < CODEDFRAMESIZE; i++ {
+				for i := 0; i < CodedFrameSize; i++ {
 					viterbiData[i] = codedData[i]
 				}
 			}
@@ -145,9 +145,9 @@ func decoderLoop() {
 			viterbi.Decode(&viterbiData[0], &decodedData[0])
 
 			if CurrentConfig.Base.Mode == "hrit" {
-				nrzmDecodeSize := FRAMESIZE
+				nrzmDecodeSize := FrameSize
 				if CurrentConfig.Decoder.UseLastFrameData {
-					nrzmDecodeSize += LASTFRAMEDATA
+					nrzmDecodeSize += LastFrameData
 				}
 
 				SatHelper.DifferentialEncodingNrzmDecode(&decodedData[0], nrzmDecodeSize)
@@ -160,30 +160,30 @@ func decoderLoop() {
 			averageVitCorrections += float32(viterbi.GetBER())
 
 			if CurrentConfig.Decoder.UseLastFrameData {
-				shiftWithConstantSize(&decodedData, LASTFRAMEDATA / 2, FRAMESIZE + LASTFRAMEDATA / 2)
-				for i := 0; i < LASTFRAMEDATABITS; i++ {
-					lastFrameEnd[i] = viterbiData[CODEDFRAMESIZE + i]
+				shiftWithConstantSize(&decodedData, LastFrameData/ 2, FrameSize+ LastFrameData/ 2)
+				for i := 0; i < LastFrameDataBits; i++ {
+					lastFrameEnd[i] = viterbiData[CodedFrameSize+ i]
 				}
 			}
 
-			for i:=0; i<4; i++ {
+			for i:=0; i<SyncWordSize; i++ {
 				syncWord[i] = decodedData[i]
 				localStats.SyncWord[i] = decodedData[i]
 			}
 
-			shiftWithConstantSize(&decodedData, 4, FRAMESIZE - 4)
+			shiftWithConstantSize(&decodedData, SyncWordSize, FrameSize- SyncWordSize)
 
 			localStats.AverageVitCorrections += uint16(viterbi.GetBER())
 			localStats.TotalPackets += 1
 
-			SatHelper.DeRandomizerDeRandomize(&decodedData[0], FRAMESIZE-4)
+			SatHelper.DeRandomizerDeRandomize(&decodedData[0], FrameSize-SyncWordSize)
 
-			derrors := make([]int32, RSBLOCKS)
+			derrors := make([]int32, RsBlocks)
 
-			for i := 0; i < RSBLOCKS; i++ {
-				reedSolomon.Deinterleave(&decodedData[0], &rsWorkBuffer[0], byte(i), RSBLOCKS)
+			for i := 0; i < RsBlocks; i++ {
+				reedSolomon.Deinterleave(&decodedData[0], &rsWorkBuffer[0], byte(i), RsBlocks)
 				derrors[i] = int32(int8(reedSolomon.Decode_ccsds(&rsWorkBuffer[0])))
-				reedSolomon.Interleave(&rsWorkBuffer[0], &rsCorrectedData[0], byte(i), RSBLOCKS)
+				reedSolomon.Interleave(&rsWorkBuffer[0], &rsCorrectedData[0], byte(i), RsBlocks)
 				if derrors[i] != -1 {
 					averageRSCorrections += float32(derrors[i])
 				}
@@ -225,7 +225,7 @@ func decoderLoop() {
 
 				localStats.PacketNumber = uint64(counter)
 				localStats.VitErrors = uint16(viterbi.GetBER())
-				localStats.FrameBits = FRAMEBITS
+				localStats.FrameBits = FrameBits
 				localStats.SignalQuality = signalQuality
 				localStats.SyncCorrelation = uint8(corr)
 				switch phaseShift {
@@ -247,7 +247,7 @@ func decoderLoop() {
 				localStats.DemodulatorFifoUsage = demodFifoUsage
 
 				if demuxer != nil {
-					demuxer.SendFrame(rsCorrectedData)
+					demuxer.SendFrame(rsCorrectedData[:FrameSize-RsParityBlockSize- SyncWordSize])
 				}
 
 			} else {

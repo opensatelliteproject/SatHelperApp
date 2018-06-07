@@ -32,6 +32,12 @@ type LimeSourceConfig struct {
 	Antenna string
 }
 
+type SpyserverSourceConfig struct {
+	Gain uint8
+	Hostname string
+	Port int
+}
+
 type SourceConfig struct {
 	SampleRate uint32
 	Frequency uint32
@@ -56,8 +62,8 @@ type AppConfig struct {
 	Source SourceConfig
 	AirspySource AirspySourceConfig
 	LimeSource LimeSourceConfig
-	SpyServerSource SpyServerConfig
 	CFileSource CFileSourceConfig
 	TCPServerDemuxer TCPServerDemuxerConfig
+	SpyserverSource SpyserverSourceConfig
 }
 // endregion

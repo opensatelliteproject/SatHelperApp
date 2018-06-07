@@ -18,13 +18,19 @@ func MakeAirspyGoCallbackDirector(callback *AirspyFrontendGoCallback) AirspyDevi
 // endregion
 // region Constructor
 func NewAirspyFrontend() *AirspyFrontend {
-	goCb := GoCallback{}
+	goCb := AirspyFrontendGoCallback{}
 	afrnt := AirspyFrontend{
 		device: AirspyDevice.NewAirspyDevice(),
 		goCb: goCb,
 	}
 
 	return &afrnt
+}
+func AirspyInitialize() {
+	AirspyDevice.AirspyDeviceInitialize()
+}
+func AirspyDeinitialize() {
+	AirspyDevice.AirspyDeviceDeInitialize()
 }
 // endregion
 // region Getters
@@ -53,7 +59,7 @@ func (f *AirspyFrontend)  GetSampleRate() uint32 {
 // region Setters
 func (f *AirspyFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
 	f.goCb.callback = cb
-	f.goDirCb = MakeGoCallbackDirector(&f.goCb)
+	f.goDirCb = MakeAirspyGoCallbackDirector(&f.goCb)
 	f.device.SetSamplesAvailableCallback(f.goDirCb)
 }
 func (f *AirspyFrontend) SetSampleRate(sampleRate uint32) uint32 {

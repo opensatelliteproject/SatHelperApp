@@ -22,7 +22,8 @@ func main() {
 	if *cpuprofile != "" {
 		f, err := os.Create(*cpuprofile)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			return
 		}
 		pprof.StartCPUProfile(f)
 		defer pprof.StopCPUProfile()
@@ -42,12 +43,6 @@ func main() {
 		aurora.Bold(SatHelper.InfoGetCompilationDate()),
 		aurora.Bold(SatHelper.InfoGetCompilationTime()),
 	)
-
-	err := ui.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer ui.Close()
 
 	LoadConfig()
 
@@ -100,8 +95,19 @@ func main() {
 			device.SetGain3(CurrentConfig.AirspySource.MixerGain)
 			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
+		case "spyserver":
+			log.Printf(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
+			device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
+			if ! device.Init() {
+				log.Println("Error initializing device")
+				return
+			}
+			defer device.Destroy()
+			device.SetLNAGain(CurrentConfig.SpyserverSource.Gain)
+			break
 		default:
-			log.Fatalf(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
+			log.Println(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
+			return
 		break
 	}
 
@@ -111,7 +117,8 @@ func main() {
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 		break
 	default:
-		log.Fatalf(aurora.Red("Unknown Demuxer Type %s.\n").String(), CurrentConfig.Base.DemuxerType)
+		log.Printf(aurora.Red("Unknown Demuxer Type %s.").String(), CurrentConfig.Base.DemuxerType)
+		return
 	}
 
 	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
@@ -126,15 +133,24 @@ func main() {
 
 	initDSP()
 	initDecoder()
+
+	err := ui.Init()
+	if err != nil {
+		panic(err)
+	}
+	defer ui.Close()
+
 	Display.InitDisplay()
 	demuxer.Init()
 
 	log.Println(aurora.Cyan("Starting Source"))
 	device.Start()
+	defer device.Stop()
 
 	log.Println(aurora.Cyan("Starting Main loop"))
 
 	demuxer.Start()
+	defer demuxer.Stop()
 
 	go symbolProcessLoop()
 	go decoderLoop()
@@ -172,7 +188,4 @@ func main() {
 	CallClear()
 
 	ui.Loop()
-
-	log.Println(aurora.Red("Stopping Source"))
-	device.Stop()
 }
