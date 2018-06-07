@@ -59,14 +59,16 @@ const HritUw2 uint64 = 0x25010b02f33d2076
 const LritUw0 uint64 = 0xfca2b63db00d9794
 const LritUw2 uint64 = 0x035d49c24ff2686b
 
-const FRAMESIZE = 1024
-const FRAMEBITS = FRAMESIZE * 8
-const CODEDFRAMESIZE = FRAMEBITS * 2
-const MINCORRELATIONBITS = 46
-const RSBLOCKS = 4
-const RSPARITYSIZE = 32
-const LASTFRAMEDATABITS = 64
-const LASTFRAMEDATA = LASTFRAMEDATABITS / 8
+const SyncWordSize = 4
+const FrameSize = 1024
+const FrameBits = FrameSize * 8
+const CodedFrameSize = FrameBits * 2
+const MinCorrelationBits = 46
+const RsBlocks = 4
+const RsParitySize = 32
+const RsParityBlockSize = RsParitySize * RsBlocks
+const LastFrameDataBits = 64
+const LastFrameData = LastFrameDataBits / 8
 
 
 const DefaultFlywheelRecheck = 4
