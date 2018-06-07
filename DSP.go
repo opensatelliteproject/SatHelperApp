@@ -35,8 +35,8 @@ func initDSP() {
 func newSamplesCallback(d Frontend.SampleCallbackData) {
 	switch d.SampleType {
 	case Frontend.FrontendSampletypeFloatiq: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
-	case Frontend.FrontendSampletypeS16iq: AddToFifoS16(samplesFifo, d.Int16Array, d.NumSamples); break
-	case Frontend.FrontendSampletypeS8iq: AddToFifoS8(samplesFifo, d.Int8Array, d.NumSamples); break
+	case Frontend.FrontendSampletypeS16iq: AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples); break
+	case Frontend.FrontendSampletypeS8iq: AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples); break
 	}
 }
 

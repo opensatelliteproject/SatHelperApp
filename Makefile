@@ -16,7 +16,7 @@ GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(
 
 .PHONY: all
 
-all: | $(BASE) deps build
+all: | $(BASE) update deps build
 
 $(BASE):
 	@echo Linking virtual GOPATH
@@ -33,7 +33,8 @@ deps: | $(BASE)
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
-	@swig -cgo -go -c++ -intgosize 64 Frontend/AirspyDevice/AirspyDevice.i
+	@cd $(BASE) && swig -cgo -go -c++ -intgosize 64 Frontend/AirspyDevice/AirspyDevice.i
+	@cd $(BASE) && swig -cgo -go -c++ -intgosize 64 Frontend/SpyserverDevice/SpyserverDevice.i
 
 build: | $(BASE)
 	@echo Building SatHelperApp

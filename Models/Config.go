@@ -25,10 +25,10 @@ type AirspySourceConfig struct {
 	BiasTEnabled bool
 }
 
-type SpyServerConfig struct {
-	SpyServerHost string
-	SpyServerPort int
-	BiasTEnabled bool
+type SpyserverSourceConfig struct {
+	Gain uint8
+	Hostname string
+	Port int
 }
 
 type SourceConfig struct {
@@ -54,8 +54,8 @@ type AppConfig struct {
 	Decoder DecoderConfig
 	Source SourceConfig
 	AirspySource AirspySourceConfig
-	SpyServerSource SpyServerConfig
 	CFileSource CFileSourceConfig
 	TCPServerDemuxer TCPServerDemuxerConfig
+	SpyserverSource SpyserverSourceConfig
 }
 // endregion

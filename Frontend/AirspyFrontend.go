@@ -9,15 +9,15 @@ import (
 // region Struct Definition
 type AirspyFrontend struct {
 	device AirspyDevice.AirspyDevice
-	goCb GoCallback
-	goDirCb AirspyDevice.GoDeviceCallback
+	goCb AirspyFrontendGoCallback
+	goDirCb AirspyDevice.AirspyDeviceCallback
 }
 
-type GoCallback struct {
+type AirspyFrontendGoCallback struct {
 	callback SamplesCallback
 }
 
-func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
+func (p *AirspyFrontendGoCallback) CbFloatIQ(data uintptr, length int) {
 	const arrayLen = 1 << 30
 	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
 	if p.callback != nil {
@@ -29,14 +29,14 @@ func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
 	}
 }
 
-func MakeGoCallbackDirector(callback *GoCallback) AirspyDevice.GoDeviceCallback {
-	return AirspyDevice.NewDirectorGoDeviceCallback(callback)
+func MakeAirspyGoCallbackDirector(callback *AirspyFrontendGoCallback) AirspyDevice.AirspyDeviceCallback {
+	return AirspyDevice.NewDirectorAirspyDeviceCallback(callback)
 }
 
 // endregion
 // region Constructor
 func NewAirspyFrontend() *AirspyFrontend {
-	goCb := GoCallback{}
+	goCb := AirspyFrontendGoCallback{}
 	afrnt := AirspyFrontend{
 		device: AirspyDevice.NewAirspyDevice(),
 		goCb: goCb,
@@ -77,7 +77,7 @@ func (f *AirspyFrontend)  GetSampleRate() uint32 {
 // region Setters
 func (f *AirspyFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
 	f.goCb.callback = cb
-	f.goDirCb = MakeGoCallbackDirector(&f.goCb)
+	f.goDirCb = MakeAirspyGoCallbackDirector(&f.goCb)
 	f.device.SetSamplesAvailableCallback(f.goDirCb)
 }
 func (f *AirspyFrontend) SetSampleRate(sampleRate uint32) uint32 {

@@ -8,9 +8,9 @@
  * interface file instead.
  * ----------------------------------------------------------------------------- */
 
-// source: Frontend/AirspyDevice/AirspyDevice.i
+// source: Frontend/SpyserverDevice/SpyserverDevice.i
 
-#define SWIGMODULE AirspyDevice
+#define SWIGMODULE SpyserverDevice
 #define SWIG_DIRECTORS
 
 #ifdef __cplusplus
@@ -253,7 +253,7 @@ static void* Swig_malloc(int c) {
 }
 
 
-#include "AirspyDevice.h"
+#include "SpyserverDevice.h"
 
 
 #include <stdint.h>		// Use the C99 official header
@@ -335,7 +335,7 @@ SWIGINTERN void std_vector_Sl_int8_t_Sg__set(std::vector< int8_t > *self,int i,s
             }
 
 // C++ director class methods.
-#include "AirspyDevice_wrap.h"
+#include "SpyserverDevice_wrap.h"
 
 
 #include <map>
@@ -403,45 +403,45 @@ static void swig_acquire_pointer(Swig_memory** pmem, Type* ptr) {
   (*pmem)->swig_acquire_pointer(ptr);
 }
 
-SwigDirector_AirspyDeviceCallback::SwigDirector_AirspyDeviceCallback(int swig_p)
+SwigDirector_SpyserverDeviceCallback::SwigDirector_SpyserverDeviceCallback(int swig_p)
     : GoDeviceCallback(),
       go_val(swig_p), swig_mem(0)
 { }
 
-extern "C" void Swig_DirectorAirspyDeviceCallback_callback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(int, void *arg2, intgo arg3);
-void SwigDirector_AirspyDeviceCallback::cbFloatIQ(void *data, int length) {
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_cbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(int, void *arg2, intgo arg3);
+void SwigDirector_SpyserverDeviceCallback::cbFloatIQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorAirspyDeviceCallback_callback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorSpyserverDeviceCallback_callback_cbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorAirspyDeviceCallback_callback_cbS16IQ_AirspyDevice_1c209d1ee771b908(int, void *arg2, intgo arg3);
-void SwigDirector_AirspyDeviceCallback::cbS16IQ(void *data, int length) {
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_cbS16IQ_SpyserverDevice_62588b4ce09e2d9c(int, void *arg2, intgo arg3);
+void SwigDirector_SpyserverDeviceCallback::cbS16IQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorAirspyDeviceCallback_callback_cbS16IQ_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorSpyserverDeviceCallback_callback_cbS16IQ_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908(int, void *arg2, intgo arg3);
-void SwigDirector_AirspyDeviceCallback::cbS8IQ(void *data, int length) {
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(int, void *arg2, intgo arg3);
+void SwigDirector_SpyserverDeviceCallback::cbS8IQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorSpyserverDeviceCallback_callback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swiggo_DeleteDirector_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(intgo);
-SwigDirector_AirspyDeviceCallback::~SwigDirector_AirspyDeviceCallback()
+extern "C" void Swiggo_DeleteDirector_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(intgo);
+SwigDirector_SpyserverDeviceCallback::~SwigDirector_SpyserverDeviceCallback()
 {
-  Swiggo_DeleteDirector_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(go_val);
+  Swiggo_DeleteDirector_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(go_val);
   delete swig_mem;
 }
 
@@ -449,7 +449,7 @@ SwigDirector_AirspyDeviceCallback::~SwigDirector_AirspyDeviceCallback()
 extern "C" {
 #endif
 
-void _wrap_Swig_free_AirspyDevice_1c209d1ee771b908(void *_swig_go_0) {
+void _wrap_Swig_free_SpyserverDevice_62588b4ce09e2d9c(void *_swig_go_0) {
   void *arg1 = (void *) 0 ;
   
   arg1 = *(void **)&_swig_go_0; 
@@ -459,7 +459,7 @@ void _wrap_Swig_free_AirspyDevice_1c209d1ee771b908(void *_swig_go_0) {
 }
 
 
-void *_wrap_Swig_malloc_AirspyDevice_1c209d1ee771b908(intgo _swig_go_0) {
+void *_wrap_Swig_malloc_SpyserverDevice_62588b4ce09e2d9c(intgo _swig_go_0) {
   int arg1 ;
   void *result = 0 ;
   void *_swig_go_result;
@@ -472,25 +472,25 @@ void *_wrap_Swig_malloc_AirspyDevice_1c209d1ee771b908(intgo _swig_go_0) {
 }
 
 
-GoDeviceCallback *_wrap__swig_NewDirectorAirspyDeviceCallbackAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(intgo _swig_go_0) {
+GoDeviceCallback *_wrap__swig_NewDirectorSpyserverDeviceCallbackSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(intgo _swig_go_0) {
   int arg1 ;
   GoDeviceCallback *result = 0 ;
   GoDeviceCallback *_swig_go_result;
   
   arg1 = (int)_swig_go_0; 
   
-  result = new SwigDirector_AirspyDeviceCallback(arg1);
+  result = new SwigDirector_SpyserverDeviceCallback(arg1);
   *(GoDeviceCallback **)&_swig_go_result = (GoDeviceCallback *)result; 
   return _swig_go_result;
 }
 
 
-void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbFloatIQ_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
-  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
   
-  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
   arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
@@ -499,12 +499,12 @@ void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbFloatIQ_AirspyDevice_1c20
 }
 
 
-void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
-  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbS16IQ_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
   
-  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
   arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
@@ -513,12 +513,12 @@ void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS16IQ_AirspyDevice_1c209d
 }
 
 
-void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
-  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbS8IQ_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
   
-  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
   arg2 = *(void **)&_swig_go_1; 
   arg3 = (int)_swig_go_2; 
   
@@ -527,7 +527,7 @@ void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1
 }
 
 
-void _wrap_DeleteDirectorAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0) {
+void _wrap_DeleteDirectorSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
@@ -537,7 +537,7 @@ void _wrap_DeleteDirectorAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(GoDe
 }
 
 
-void _wrap_AirspyDeviceCallback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_SpyserverDeviceCallback_cbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -551,7 +551,7 @@ void _wrap_AirspyDeviceCallback_cbFloatIQ_AirspyDevice_1c209d1ee771b908(GoDevice
 }
 
 
-void _wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_SpyserverDeviceCallback_cbS16IQ_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -565,7 +565,7 @@ void _wrap_AirspyDeviceCallback_cbS16IQ_AirspyDevice_1c209d1ee771b908(GoDeviceCa
 }
 
 
-void _wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_SpyserverDeviceCallback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -579,7 +579,7 @@ void _wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(GoDeviceCal
 }
 
 
-void _wrap_delete_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0) {
+void _wrap_delete_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
@@ -589,7 +589,7 @@ void _wrap_delete_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(GoDeviceCal
 }
 
 
-GoDeviceCallback *_wrap_new_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908() {
+GoDeviceCallback *_wrap_new_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c() {
   GoDeviceCallback *result = 0 ;
   GoDeviceCallback *_swig_go_result;
   
@@ -600,7 +600,7 @@ GoDeviceCallback *_wrap_new_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908()
 }
 
 
-std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_AirspyDevice_1c209d1ee771b908() {
+std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_SpyserverDevice_62588b4ce09e2d9c() {
   std::vector< uint32_t > *result = 0 ;
   std::vector< unsigned int > *_swig_go_result;
   
@@ -611,7 +611,7 @@ std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_AirspyDevice_1c209d1ee7
 }
 
 
-std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_AirspyDevice_1c209d1ee771b908(long long _swig_go_0) {
+std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(long long _swig_go_0) {
   std::vector< unsigned int >::size_type arg1 ;
   std::vector< uint32_t > *result = 0 ;
   std::vector< unsigned int > *_swig_go_result;
@@ -624,7 +624,7 @@ std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_AirspyDevice_1c209d1ee7
 }
 
 
-long long _wrap_Vector32u_size_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0) {
+long long _wrap_Vector32u_size_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type result;
   long long _swig_go_result;
@@ -637,7 +637,7 @@ long long _wrap_Vector32u_size_AirspyDevice_1c209d1ee771b908(std::vector< unsign
 }
 
 
-long long _wrap_Vector32u_capacity_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0) {
+long long _wrap_Vector32u_capacity_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type result;
   long long _swig_go_result;
@@ -650,7 +650,7 @@ long long _wrap_Vector32u_capacity_AirspyDevice_1c209d1ee771b908(std::vector< un
 }
 
 
-void _wrap_Vector32u_reserve_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector32u_reserve_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0, long long _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type arg2 ;
   
@@ -662,7 +662,7 @@ void _wrap_Vector32u_reserve_AirspyDevice_1c209d1ee771b908(std::vector< unsigned
 }
 
 
-bool _wrap_Vector32u_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0) {
+bool _wrap_Vector32u_isEmpty_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -675,7 +675,7 @@ bool _wrap_Vector32u_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< unsigned
 }
 
 
-void _wrap_Vector32u_clear_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0) {
+void _wrap_Vector32u_clear_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   
   arg1 = *(std::vector< uint32_t > **)&_swig_go_0; 
@@ -685,7 +685,7 @@ void _wrap_Vector32u_clear_AirspyDevice_1c209d1ee771b908(std::vector< unsigned i
 }
 
 
-void _wrap_Vector32u_add_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
+void _wrap_Vector32u_add_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::value_type *arg2 = 0 ;
   
@@ -697,7 +697,7 @@ void _wrap_Vector32u_add_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int
 }
 
 
-intgo _wrap_Vector32u_get_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
+intgo _wrap_Vector32u_get_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   int arg2 ;
   std::vector< unsigned int >::value_type *result = 0 ;
@@ -718,7 +718,7 @@ intgo _wrap_Vector32u_get_AirspyDevice_1c209d1ee771b908(std::vector< unsigned in
 }
 
 
-void _wrap_Vector32u_set_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1, intgo _swig_go_2) {
+void _wrap_Vector32u_set_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1, intgo _swig_go_2) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   int arg2 ;
   std::vector< unsigned int >::value_type *arg3 = 0 ;
@@ -738,7 +738,7 @@ void _wrap_Vector32u_set_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int
 }
 
 
-void _wrap_delete_Vector32u_AirspyDevice_1c209d1ee771b908(std::vector< unsigned int > *_swig_go_0) {
+void _wrap_delete_Vector32u_SpyserverDevice_62588b4ce09e2d9c(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   
   arg1 = *(std::vector< uint32_t > **)&_swig_go_0; 
@@ -748,7 +748,7 @@ void _wrap_delete_Vector32u_AirspyDevice_1c209d1ee771b908(std::vector< unsigned 
 }
 
 
-std::vector< float > *_wrap_new_Vector32f__SWIG_0_AirspyDevice_1c209d1ee771b908() {
+std::vector< float > *_wrap_new_Vector32f__SWIG_0_SpyserverDevice_62588b4ce09e2d9c() {
   std::vector< float > *result = 0 ;
   std::vector< float > *_swig_go_result;
   
@@ -759,7 +759,7 @@ std::vector< float > *_wrap_new_Vector32f__SWIG_0_AirspyDevice_1c209d1ee771b908(
 }
 
 
-std::vector< float > *_wrap_new_Vector32f__SWIG_1_AirspyDevice_1c209d1ee771b908(long long _swig_go_0) {
+std::vector< float > *_wrap_new_Vector32f__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(long long _swig_go_0) {
   std::vector< float >::size_type arg1 ;
   std::vector< float > *result = 0 ;
   std::vector< float > *_swig_go_result;
@@ -772,7 +772,7 @@ std::vector< float > *_wrap_new_Vector32f__SWIG_1_AirspyDevice_1c209d1ee771b908(
 }
 
 
-long long _wrap_Vector32f_size_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0) {
+long long _wrap_Vector32f_size_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type result;
   long long _swig_go_result;
@@ -785,7 +785,7 @@ long long _wrap_Vector32f_size_AirspyDevice_1c209d1ee771b908(std::vector< float 
 }
 
 
-long long _wrap_Vector32f_capacity_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0) {
+long long _wrap_Vector32f_capacity_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type result;
   long long _swig_go_result;
@@ -798,7 +798,7 @@ long long _wrap_Vector32f_capacity_AirspyDevice_1c209d1ee771b908(std::vector< fl
 }
 
 
-void _wrap_Vector32f_reserve_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector32f_reserve_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0, long long _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type arg2 ;
   
@@ -810,7 +810,7 @@ void _wrap_Vector32f_reserve_AirspyDevice_1c209d1ee771b908(std::vector< float > 
 }
 
 
-bool _wrap_Vector32f_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0) {
+bool _wrap_Vector32f_isEmpty_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -823,7 +823,7 @@ bool _wrap_Vector32f_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< float > 
 }
 
 
-void _wrap_Vector32f_clear_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0) {
+void _wrap_Vector32f_clear_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   
   arg1 = *(std::vector< float > **)&_swig_go_0; 
@@ -833,7 +833,7 @@ void _wrap_Vector32f_clear_AirspyDevice_1c209d1ee771b908(std::vector< float > *_
 }
 
 
-void _wrap_Vector32f_add_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0, float _swig_go_1) {
+void _wrap_Vector32f_add_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0, float _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::value_type *arg2 = 0 ;
   
@@ -845,7 +845,7 @@ void _wrap_Vector32f_add_AirspyDevice_1c209d1ee771b908(std::vector< float > *_sw
 }
 
 
-float _wrap_Vector32f_get_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0, intgo _swig_go_1) {
+float _wrap_Vector32f_get_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0, intgo _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   int arg2 ;
   std::vector< float >::value_type *result = 0 ;
@@ -866,7 +866,7 @@ float _wrap_Vector32f_get_AirspyDevice_1c209d1ee771b908(std::vector< float > *_s
 }
 
 
-void _wrap_Vector32f_set_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0, intgo _swig_go_1, float _swig_go_2) {
+void _wrap_Vector32f_set_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0, intgo _swig_go_1, float _swig_go_2) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   int arg2 ;
   std::vector< float >::value_type *arg3 = 0 ;
@@ -886,7 +886,7 @@ void _wrap_Vector32f_set_AirspyDevice_1c209d1ee771b908(std::vector< float > *_sw
 }
 
 
-void _wrap_delete_Vector32f_AirspyDevice_1c209d1ee771b908(std::vector< float > *_swig_go_0) {
+void _wrap_delete_Vector32f_SpyserverDevice_62588b4ce09e2d9c(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   
   arg1 = *(std::vector< float > **)&_swig_go_0; 
@@ -896,7 +896,7 @@ void _wrap_delete_Vector32f_AirspyDevice_1c209d1ee771b908(std::vector< float > *
 }
 
 
-std::vector< short > *_wrap_new_Vector16i__SWIG_0_AirspyDevice_1c209d1ee771b908() {
+std::vector< short > *_wrap_new_Vector16i__SWIG_0_SpyserverDevice_62588b4ce09e2d9c() {
   std::vector< int16_t > *result = 0 ;
   std::vector< short > *_swig_go_result;
   
@@ -907,7 +907,7 @@ std::vector< short > *_wrap_new_Vector16i__SWIG_0_AirspyDevice_1c209d1ee771b908(
 }
 
 
-std::vector< short > *_wrap_new_Vector16i__SWIG_1_AirspyDevice_1c209d1ee771b908(long long _swig_go_0) {
+std::vector< short > *_wrap_new_Vector16i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(long long _swig_go_0) {
   std::vector< short >::size_type arg1 ;
   std::vector< int16_t > *result = 0 ;
   std::vector< short > *_swig_go_result;
@@ -920,7 +920,7 @@ std::vector< short > *_wrap_new_Vector16i__SWIG_1_AirspyDevice_1c209d1ee771b908(
 }
 
 
-long long _wrap_Vector16i_size_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0) {
+long long _wrap_Vector16i_size_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type result;
   long long _swig_go_result;
@@ -933,7 +933,7 @@ long long _wrap_Vector16i_size_AirspyDevice_1c209d1ee771b908(std::vector< short 
 }
 
 
-long long _wrap_Vector16i_capacity_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0) {
+long long _wrap_Vector16i_capacity_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type result;
   long long _swig_go_result;
@@ -946,7 +946,7 @@ long long _wrap_Vector16i_capacity_AirspyDevice_1c209d1ee771b908(std::vector< sh
 }
 
 
-void _wrap_Vector16i_reserve_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector16i_reserve_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0, long long _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type arg2 ;
   
@@ -958,7 +958,7 @@ void _wrap_Vector16i_reserve_AirspyDevice_1c209d1ee771b908(std::vector< short > 
 }
 
 
-bool _wrap_Vector16i_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0) {
+bool _wrap_Vector16i_isEmpty_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -971,7 +971,7 @@ bool _wrap_Vector16i_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< short > 
 }
 
 
-void _wrap_Vector16i_clear_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0) {
+void _wrap_Vector16i_clear_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   
   arg1 = *(std::vector< int16_t > **)&_swig_go_0; 
@@ -981,7 +981,7 @@ void _wrap_Vector16i_clear_AirspyDevice_1c209d1ee771b908(std::vector< short > *_
 }
 
 
-void _wrap_Vector16i_add_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0, short _swig_go_1) {
+void _wrap_Vector16i_add_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0, short _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::value_type *arg2 = 0 ;
   
@@ -993,7 +993,7 @@ void _wrap_Vector16i_add_AirspyDevice_1c209d1ee771b908(std::vector< short > *_sw
 }
 
 
-short _wrap_Vector16i_get_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0, intgo _swig_go_1) {
+short _wrap_Vector16i_get_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0, intgo _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   int arg2 ;
   std::vector< short >::value_type *result = 0 ;
@@ -1014,7 +1014,7 @@ short _wrap_Vector16i_get_AirspyDevice_1c209d1ee771b908(std::vector< short > *_s
 }
 
 
-void _wrap_Vector16i_set_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0, intgo _swig_go_1, short _swig_go_2) {
+void _wrap_Vector16i_set_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0, intgo _swig_go_1, short _swig_go_2) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   int arg2 ;
   std::vector< short >::value_type *arg3 = 0 ;
@@ -1034,7 +1034,7 @@ void _wrap_Vector16i_set_AirspyDevice_1c209d1ee771b908(std::vector< short > *_sw
 }
 
 
-void _wrap_delete_Vector16i_AirspyDevice_1c209d1ee771b908(std::vector< short > *_swig_go_0) {
+void _wrap_delete_Vector16i_SpyserverDevice_62588b4ce09e2d9c(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   
   arg1 = *(std::vector< int16_t > **)&_swig_go_0; 
@@ -1044,7 +1044,7 @@ void _wrap_delete_Vector16i_AirspyDevice_1c209d1ee771b908(std::vector< short > *
 }
 
 
-std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_AirspyDevice_1c209d1ee771b908() {
+std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_SpyserverDevice_62588b4ce09e2d9c() {
   std::vector< int8_t > *result = 0 ;
   std::vector< signed char > *_swig_go_result;
   
@@ -1055,7 +1055,7 @@ std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_AirspyDevice_1c209d1ee771
 }
 
 
-std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_AirspyDevice_1c209d1ee771b908(long long _swig_go_0) {
+std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(long long _swig_go_0) {
   std::vector< signed char >::size_type arg1 ;
   std::vector< int8_t > *result = 0 ;
   std::vector< signed char > *_swig_go_result;
@@ -1068,7 +1068,7 @@ std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_AirspyDevice_1c209d1ee771
 }
 
 
-long long _wrap_Vector8i_size_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0) {
+long long _wrap_Vector8i_size_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type result;
   long long _swig_go_result;
@@ -1081,7 +1081,7 @@ long long _wrap_Vector8i_size_AirspyDevice_1c209d1ee771b908(std::vector< signed 
 }
 
 
-long long _wrap_Vector8i_capacity_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0) {
+long long _wrap_Vector8i_capacity_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type result;
   long long _swig_go_result;
@@ -1094,7 +1094,7 @@ long long _wrap_Vector8i_capacity_AirspyDevice_1c209d1ee771b908(std::vector< sig
 }
 
 
-void _wrap_Vector8i_reserve_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector8i_reserve_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0, long long _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type arg2 ;
   
@@ -1106,7 +1106,7 @@ void _wrap_Vector8i_reserve_AirspyDevice_1c209d1ee771b908(std::vector< signed ch
 }
 
 
-bool _wrap_Vector8i_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0) {
+bool _wrap_Vector8i_isEmpty_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -1119,7 +1119,7 @@ bool _wrap_Vector8i_isEmpty_AirspyDevice_1c209d1ee771b908(std::vector< signed ch
 }
 
 
-void _wrap_Vector8i_clear_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0) {
+void _wrap_Vector8i_clear_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   
   arg1 = *(std::vector< int8_t > **)&_swig_go_0; 
@@ -1129,7 +1129,7 @@ void _wrap_Vector8i_clear_AirspyDevice_1c209d1ee771b908(std::vector< signed char
 }
 
 
-void _wrap_Vector8i_add_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0, char _swig_go_1) {
+void _wrap_Vector8i_add_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0, char _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::value_type *arg2 = 0 ;
   
@@ -1141,7 +1141,7 @@ void _wrap_Vector8i_add_AirspyDevice_1c209d1ee771b908(std::vector< signed char >
 }
 
 
-char _wrap_Vector8i_get_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0, intgo _swig_go_1) {
+char _wrap_Vector8i_get_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0, intgo _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   int arg2 ;
   std::vector< signed char >::value_type *result = 0 ;
@@ -1162,7 +1162,7 @@ char _wrap_Vector8i_get_AirspyDevice_1c209d1ee771b908(std::vector< signed char >
 }
 
 
-void _wrap_Vector8i_set_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
+void _wrap_Vector8i_set_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   int arg2 ;
   std::vector< signed char >::value_type *arg3 = 0 ;
@@ -1182,7 +1182,7 @@ void _wrap_Vector8i_set_AirspyDevice_1c209d1ee771b908(std::vector< signed char >
 }
 
 
-void _wrap_delete_Vector8i_AirspyDevice_1c209d1ee771b908(std::vector< signed char > *_swig_go_0) {
+void _wrap_delete_Vector8i_SpyserverDevice_62588b4ce09e2d9c(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   
   arg1 = *(std::vector< int8_t > **)&_swig_go_0; 
@@ -1192,46 +1192,74 @@ void _wrap_delete_Vector8i_AirspyDevice_1c209d1ee771b908(std::vector< signed cha
 }
 
 
-AirspyDevice *_wrap_new_AirspyDevice_AirspyDevice_1c209d1ee771b908() {
-  AirspyDevice *result = 0 ;
-  AirspyDevice *_swig_go_result;
+intgo _wrap_AcquiringHeader_SpyserverDevice_62588b4ce09e2d9c() {
+  ParserPhase result;
+  intgo _swig_go_result;
   
   
-  result = (AirspyDevice *)new AirspyDevice();
-  *(AirspyDevice **)&_swig_go_result = (AirspyDevice *)result; 
+  result = AcquiringHeader;
+  
+  _swig_go_result = (intgo)result; 
   return _swig_go_result;
 }
 
 
-void _wrap_delete_AirspyDevice_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+intgo _wrap_ReadingData_SpyserverDevice_62588b4ce09e2d9c() {
+  ParserPhase result;
+  intgo _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  
+  result = ReadingData;
+  
+  _swig_go_result = (intgo)result; 
+  return _swig_go_result;
+}
+
+
+intgo _wrap_SAMPLE_BUFFER_SIZE_SpyserverDevice_62588b4ce09e2d9c() {
+  int result;
+  intgo _swig_go_result;
+  
+  
+  result = 256*1024;
+  
+  _swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+SpyserverDevice *_wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(_gostring_ _swig_go_0, intgo _swig_go_1) {
+  std::string arg1 ;
+  int arg2 ;
+  SpyserverDevice *result = 0 ;
+  SpyserverDevice *_swig_go_result;
+  
+  (&arg1)->assign(_swig_go_0.p, _swig_go_0.n); 
+  arg2 = (int)_swig_go_1; 
+  
+  result = (SpyserverDevice *)new SpyserverDevice(arg1,arg2);
+  *(SpyserverDevice **)&_swig_go_result = (SpyserverDevice *)result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_delete_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
+  
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   delete arg1;
   
 }
 
 
-void _wrap_AirspyDevice_Initialize_AirspyDevice_1c209d1ee771b908() {
-  AirspyDevice::Initialize();
-  
-}
-
-
-void _wrap_AirspyDevice_DeInitialize_AirspyDevice_1c209d1ee771b908() {
-  AirspyDevice::DeInitialize();
-  
-}
-
-
-intgo _wrap_AirspyDevice_SetSampleRate_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, intgo _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+intgo _wrap_SpyserverDevice_SetSampleRate_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, intgo _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint32_t arg2 ;
   uint32_t result;
   intgo _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint32_t)_swig_go_1; 
   
   result = (uint32_t)(arg1)->SetSampleRate(arg2);
@@ -1240,13 +1268,13 @@ intgo _wrap_AirspyDevice_SetSampleRate_AirspyDevice_1c209d1ee771b908(AirspyDevic
 }
 
 
-intgo _wrap_AirspyDevice_SetCenterFrequency_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, intgo _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+intgo _wrap_SpyserverDevice_SetCenterFrequency_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, intgo _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint32_t arg2 ;
   uint32_t result;
   intgo _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint32_t)_swig_go_1; 
   
   result = (uint32_t)(arg1)->SetCenterFrequency(arg2);
@@ -1255,12 +1283,12 @@ intgo _wrap_AirspyDevice_SetCenterFrequency_AirspyDevice_1c209d1ee771b908(Airspy
 }
 
 
-std::vector< unsigned int > *_wrap_AirspyDevice_GetAvailableSampleRates_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+std::vector< unsigned int > *_wrap_SpyserverDevice_GetAvailableSampleRates_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   std::vector< uint32_t > *result = 0 ;
   std::vector< unsigned int > *_swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   result = (std::vector< uint32_t > *) &(arg1)->GetAvailableSampleRates();
   *(std::vector< uint32_t > **)&_swig_go_result = result; 
@@ -1268,31 +1296,31 @@ std::vector< unsigned int > *_wrap_AirspyDevice_GetAvailableSampleRates_AirspyDe
 }
 
 
-void _wrap_AirspyDevice_Start_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_Start_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   (arg1)->Start();
   
 }
 
 
-void _wrap_AirspyDevice_Stop_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_Stop_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   (arg1)->Stop();
   
 }
 
 
-void _wrap_AirspyDevice_SetAGC_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, bool _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetAGC_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, bool _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   bool arg2 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (bool)_swig_go_1; 
   
   (arg1)->SetAGC(arg2);
@@ -1300,34 +1328,11 @@ void _wrap_AirspyDevice_SetAGC_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig
 }
 
 
-bool _wrap_AirspyDevice_Init_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
-  bool result;
-  bool _swig_go_result;
-  
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
-  
-  result = (bool)(arg1)->Init();
-  _swig_go_result = result; 
-  return _swig_go_result;
-}
-
-
-void _wrap_AirspyDevice_Destroy_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
-  
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
-  
-  (arg1)->Destroy();
-  
-}
-
-
-void _wrap_AirspyDevice_SetLNAGain_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, char _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetLNAGain_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, char _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint8_t arg2 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint8_t)_swig_go_1; 
   
   (arg1)->SetLNAGain(arg2);
@@ -1335,11 +1340,11 @@ void _wrap_AirspyDevice_SetLNAGain_AirspyDevice_1c209d1ee771b908(AirspyDevice *_
 }
 
 
-void _wrap_AirspyDevice_SetVGAGain_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, char _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetVGAGain_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, char _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint8_t arg2 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint8_t)_swig_go_1; 
   
   (arg1)->SetVGAGain(arg2);
@@ -1347,11 +1352,11 @@ void _wrap_AirspyDevice_SetVGAGain_AirspyDevice_1c209d1ee771b908(AirspyDevice *_
 }
 
 
-void _wrap_AirspyDevice_SetMixerGain_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, char _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetMixerGain_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, char _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint8_t arg2 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint8_t)_swig_go_1; 
   
   (arg1)->SetMixerGain(arg2);
@@ -1359,11 +1364,11 @@ void _wrap_AirspyDevice_SetMixerGain_AirspyDevice_1c209d1ee771b908(AirspyDevice 
 }
 
 
-void _wrap_AirspyDevice_SetBiasT_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, char _swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetBiasT_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, char _swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint8_t arg2 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = (uint8_t)_swig_go_1; 
   
   (arg1)->SetBiasT(arg2);
@@ -1371,12 +1376,12 @@ void _wrap_AirspyDevice_SetBiasT_AirspyDevice_1c209d1ee771b908(AirspyDevice *_sw
 }
 
 
-intgo _wrap_AirspyDevice_GetCenterFrequency_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+intgo _wrap_SpyserverDevice_GetCenterFrequency_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint32_t result;
   intgo _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   result = (uint32_t)(arg1)->GetCenterFrequency();
   _swig_go_result = result; 
@@ -1384,12 +1389,12 @@ intgo _wrap_AirspyDevice_GetCenterFrequency_AirspyDevice_1c209d1ee771b908(Airspy
 }
 
 
-_gostring_ _wrap_AirspyDevice_GetName_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+_gostring_ _wrap_SpyserverDevice_GetName_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   std::string *result = 0 ;
   _gostring_ _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   result = (std::string *) &(arg1)->GetName();
   _swig_go_result = Swig_AllocateString((*result).data(), (*result).length()); 
@@ -1397,12 +1402,12 @@ _gostring_ _wrap_AirspyDevice_GetName_AirspyDevice_1c209d1ee771b908(AirspyDevice
 }
 
 
-intgo _wrap_AirspyDevice_GetSampleRate_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+intgo _wrap_SpyserverDevice_GetSampleRate_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   uint32_t result;
   intgo _swig_go_result;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   
   result = (uint32_t)(arg1)->GetSampleRate();
   _swig_go_result = result; 
@@ -1410,14 +1415,57 @@ intgo _wrap_AirspyDevice_GetSampleRate_AirspyDevice_1c209d1ee771b908(AirspyDevic
 }
 
 
-void _wrap_AirspyDevice_SetSamplesAvailableCallback_AirspyDevice_1c209d1ee771b908(AirspyDevice *_swig_go_0, GoDeviceCallback *_swig_go_1) {
-  AirspyDevice *arg1 = (AirspyDevice *) 0 ;
+void _wrap_SpyserverDevice_SetSamplesAvailableCallback_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0, GoDeviceCallback *_swig_go_1) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
   GoDeviceCallback *arg2 = (GoDeviceCallback *) 0 ;
   
-  arg1 = *(AirspyDevice **)&_swig_go_0; 
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
   arg2 = *(GoDeviceCallback **)&_swig_go_1; 
   
   (arg1)->SetSamplesAvailableCallback(arg2);
+  
+}
+
+
+bool _wrap_SpyserverDevice_Init_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
+  bool result;
+  bool _swig_go_result;
+  
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
+  
+  result = (bool)(arg1)->Init();
+  _swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_SpyserverDevice_Destroy_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
+  
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
+  
+  (arg1)->Destroy();
+  
+}
+
+
+void _wrap_SpyserverDevice_Connect_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
+  
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
+  
+  (arg1)->Connect();
+  
+}
+
+
+void _wrap_SpyserverDevice_Disconnect_SpyserverDevice_62588b4ce09e2d9c(SpyserverDevice *_swig_go_0) {
+  SpyserverDevice *arg1 = (SpyserverDevice *) 0 ;
+  
+  arg1 = *(SpyserverDevice **)&_swig_go_0; 
+  
+  (arg1)->Disconnect();
   
 }
 

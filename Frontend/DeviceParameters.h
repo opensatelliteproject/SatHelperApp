@@ -16,8 +16,8 @@
 class GoDeviceCallback {
 public:
     virtual void cbFloatIQ(void *data, int length) {}
-    virtual void cbS16IQ(int16_t *data, int length) {}
-    virtual void cbS8IQ(int8_t *data, int length) {}
+    virtual void cbS16IQ(void *data, int length) {}
+    virtual void cbS8IQ(void *data, int length) {}
     virtual ~GoDeviceCallback() {}
 };
 

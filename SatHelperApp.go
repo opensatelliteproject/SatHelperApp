@@ -79,6 +79,16 @@ func main() {
 			device.SetLNAGain(CurrentConfig.AirspySource.MixerGain)
 			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
+		case "spyserver":
+			log.Printf(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
+			device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
+			if ! device.Init() {
+				log.Println("Error initializing device")
+				return
+			}
+			defer device.Destroy()
+			device.SetLNAGain(CurrentConfig.SpyserverSource.Gain)
+			break
 		default:
 			log.Println(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
 			return
@@ -120,10 +130,12 @@ func main() {
 
 	log.Println(aurora.Cyan("Starting Source"))
 	device.Start()
+	defer device.Stop()
 
 	log.Println(aurora.Cyan("Starting Main loop"))
 
 	demuxer.Start()
+	defer demuxer.Stop()
 
 	go symbolProcessLoop()
 	go decoderLoop()
@@ -161,7 +173,4 @@ func main() {
 	CallClear()
 
 	ui.Loop()
-
-	log.Println(aurora.Red("Stopping Source"))
-	device.Stop()
 }

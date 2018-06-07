@@ -20,7 +20,7 @@ func AddToFifoC64(fifo *fifo.Queue, arr []complex64, length int) {
 	}
 }
 
-func AddToFifoS16(fifo *fifo.Queue, arr []int16, length int) {
+func AddToFifoS16toC64(fifo *fifo.Queue, arr []int16, length int) {
 	fifo.UnsafeLock()
 	defer fifo.UnsafeUnlock()
 	for i := 0; i < length; i++ {
@@ -28,11 +28,13 @@ func AddToFifoS16(fifo *fifo.Queue, arr []int16, length int) {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		fifo.UnsafeAdd(arr[i])
+
+		var c = complex(float32(arr[i*2]) / 32768.0, float32(arr[i*2+1]) / 32768.0)
+		fifo.UnsafeAdd(c)
 	}
 }
 
-func AddToFifoS8(fifo *fifo.Queue, arr []int8, length int) {
+func AddToFifoS8toC64(fifo *fifo.Queue, arr []int8, length int) {
 	fifo.UnsafeLock()
 	defer fifo.UnsafeUnlock()
 	for i := 0; i < length; i++ {
@@ -40,7 +42,8 @@ func AddToFifoS8(fifo *fifo.Queue, arr []int8, length int) {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		fifo.UnsafeAdd(arr[i])
+		var c = complex(float32(arr[i*2]) / 128, float32(arr[i*2+1]) / 128)
+		fifo.UnsafeAdd(c)
 	}
 }
 

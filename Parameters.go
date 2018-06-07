@@ -112,7 +112,6 @@ func LoadDefaults() {
 	CurrentConfig.Base.DeviceType = "airspy"
 	CurrentConfig.Base.SendConstellation = true
 	CurrentConfig.AirspySource.BiasTEnabled = DefaultBiast
-	CurrentConfig.SpyServerSource.BiasTEnabled = DefaultBiast
 
 	// Decoder
 	CurrentConfig.Decoder.Display = true
