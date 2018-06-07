@@ -113,14 +113,14 @@ extern swig_intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_f36a06c4aed6a5ac(uin
 extern swig_intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_intgo arg2);
 extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, short arg2);
-extern void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
-extern void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
 extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetTIAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetPGAGain_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetAntenna_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, swig_type_18 arg2);
 extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, uintptr_t arg2);
+extern void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1);
+extern void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(uintptr_t arg1, short arg2);
 #undef intgo
 */
 import "C"
@@ -809,22 +809,6 @@ func (arg1 SwigcptrLimeDevice) GetSampleRate() (_swig_ret uint) {
 	return swig_r
 }
 
-func (arg1 SwigcptrLimeDevice) GetSamples(arg2 uint16) {
-	_swig_i_0 := arg1
-	_swig_i_1 := arg2
-	C._wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.short(_swig_i_1))
-}
-
-func (arg1 SwigcptrLimeDevice) Start() {
-	_swig_i_0 := arg1
-	C._wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
-}
-
-func (arg1 SwigcptrLimeDevice) Stop() {
-	_swig_i_0 := arg1
-	C._wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
-}
-
 func (arg1 SwigcptrLimeDevice) SetLNAGain(arg2 byte) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
@@ -858,6 +842,22 @@ func (arg1 SwigcptrLimeDevice) SetSamplesAvailableCallback(arg2 LimeCallback) {
 	C._wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1))
 }
 
+func (arg1 SwigcptrLimeDevice) Start() {
+	_swig_i_0 := arg1
+	C._wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
+}
+
+func (arg1 SwigcptrLimeDevice) Stop() {
+	_swig_i_0 := arg1
+	C._wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0))
+}
+
+func (arg1 SwigcptrLimeDevice) GetSamples(arg2 uint16) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(C.uintptr_t(_swig_i_0), C.short(_swig_i_1))
+}
+
 type LimeDevice interface {
 	Swigcptr() uintptr
 	SwigIsLimeDevice()
@@ -866,14 +866,14 @@ type LimeDevice interface {
 	SetCenterFrequency(arg2 uint) (_swig_ret uint)
 	GetCenterFrequency() (_swig_ret uint)
 	GetSampleRate() (_swig_ret uint)
-	GetSamples(arg2 uint16)
-	Start()
-	Stop()
 	SetLNAGain(arg2 byte)
 	SetTIAGain(arg2 byte)
 	SetPGAGain(arg2 byte)
 	SetAntenna(arg2 string)
 	SetSamplesAvailableCallback(arg2 LimeCallback)
+	Start()
+	Stop()
+	GetSamples(arg2 uint16)
 }
 
 

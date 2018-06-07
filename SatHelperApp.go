@@ -72,7 +72,7 @@ func main() {
 		case "lime":
 			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
 			device = Frontend.NewLimeFrontend()
-			
+
 			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
 			device.SetGain2(CurrentConfig.LimeSource.TIAGain)
 			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
@@ -106,7 +106,7 @@ func main() {
 	}
 
 	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
-		log.Fatalln("Cannot set sample rate.")
+		log.Printf("Cannot set sample rate.")
 	}
 
 	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {

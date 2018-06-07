@@ -1282,38 +1282,6 @@ intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_sw
 }
 
 
-void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, short _swig_go_1) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  uint16_t arg2 ;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  arg2 = (uint16_t)_swig_go_1; 
-  
-  (arg1)->GetSamples(arg2);
-  
-}
-
-
-void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  
-  (arg1)->Start();
-  
-}
-
-
-void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
-  LimeDevice *arg1 = (LimeDevice *) 0 ;
-  
-  arg1 = *(LimeDevice **)&_swig_go_0; 
-  
-  (arg1)->Stop();
-  
-}
-
-
 void _wrap_LimeDevice_SetLNAGain_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, char _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint8_t arg2 ;
@@ -1370,6 +1338,38 @@ void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_f36a06c4aed6a5ac(Li
   arg2 = *(GoDeviceCallback **)&_swig_go_1; 
   
   (arg1)->SetSamplesAvailableCallback(arg2);
+  
+}
+
+
+void _wrap_LimeDevice_Start_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  
+  (arg1)->Start();
+  
+}
+
+
+void _wrap_LimeDevice_Stop_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  
+  (arg1)->Stop();
+  
+}
+
+
+void _wrap_LimeDevice_GetSamples_LimeDevice_f36a06c4aed6a5ac(LimeDevice *_swig_go_0, short _swig_go_1) {
+  LimeDevice *arg1 = (LimeDevice *) 0 ;
+  uint16_t arg2 ;
+  
+  arg1 = *(LimeDevice **)&_swig_go_0; 
+  arg2 = (uint16_t)_swig_go_1; 
+  
+  (arg1)->GetSamples(arg2);
   
 }
 

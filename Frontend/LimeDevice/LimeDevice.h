@@ -11,6 +11,7 @@
 #include <SoapySDR/Device.hpp>
 #include <SoapySDR/Formats.hpp>
 #include <SoapySDR/Errors.hpp>
+#include <SoapySDR/Logger.hpp>
 #include <cstdint>
 #include <iostream>
 #include <sstream>
@@ -25,18 +26,10 @@ private:
 	static std::string libraryVersion;
 	static SoapySDR::Device* device;
 	static SoapySDR::Stream* transfer;
+	static SoapySDR::Kwargs args;
 
 	GoDeviceCallback *cb;
-	uint8_t boardId;
-	std::string firmwareVersion;
-	std::string partNumber;
-	std::string serialNumber;
 	std::string name = "LimeSDR-Mini";
-
-	uint32_t sampleRate;
-	uint32_t centerFrequency;
-	uint8_t gain;
-
 	std::complex<float> buff[65535];
 
 public:
@@ -47,18 +40,19 @@ public:
 	
 	uint32_t SetSampleRate(uint32_t sampleRate);
 	uint32_t SetCenterFrequency(uint32_t centerFrequency);
+
 	uint32_t GetCenterFrequency();
 	uint32_t GetSampleRate();
-	void GetSamples(uint16_t samples);
-
-	void Start();
-	void Stop();
 
 	void SetLNAGain(uint8_t value);
 	void SetTIAGain(uint8_t value);
 	void SetPGAGain(uint8_t value);
 	void SetAntenna(std::string antenna);
 	void SetSamplesAvailableCallback(GoDeviceCallback *cb);
+
+	void Start();
+	void Stop();
+	void GetSamples(uint16_t samples);
 };
 
 #endif /* SRC_LIMEDEVICE_H_ */

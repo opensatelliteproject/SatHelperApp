@@ -8,9 +8,10 @@
 std::string LimeDevice::libraryVersion;
 SoapySDR::Device* LimeDevice::device;
 SoapySDR::Stream* LimeDevice::transfer;
+SoapySDR::Kwargs LimeDevice::args;
 
 uint32_t LimeDevice::GetCenterFrequency() {
-	return centerFrequency;
+	return device->getFrequency(SOAPY_SDR_RX, 0);
 }
 
 const std::string &LimeDevice::GetName() {
@@ -18,7 +19,7 @@ const std::string &LimeDevice::GetName() {
 }
 
 uint32_t LimeDevice::GetSampleRate() {
-	return sampleRate;
+	return device->getSampleRate(SOAPY_SDR_RX, 0);
 }
 
 void LimeDevice::SetSamplesAvailableCallback(GoDeviceCallback *cb) {
@@ -26,17 +27,13 @@ void LimeDevice::SetSamplesAvailableCallback(GoDeviceCallback *cb) {
 }
 
 LimeDevice::LimeDevice() {
-	SoapySDR::Kwargs args = SoapySDR::KwargsFromString("driver=lime");
+	SoapySDR::setLogLevel(SOAPY_SDR_FATAL);
+	args = SoapySDR::KwargsFromString("driver=lime,device=0");
     device = SoapySDR::Device::make(args);
 
     if (device == NULL) {
         throw SatHelperException("There was an error initializing LimeSDR.");
     }
-	
-	if (device != NULL) {
-		SetLNAGain(50);
-		SetAntenna("LNAH");
-	}
 }
 
 LimeDevice::~LimeDevice() {
@@ -80,12 +77,12 @@ void LimeDevice::SetAntenna(std::string antenna) {
 
 uint32_t LimeDevice::SetSampleRate(uint32_t sampleRate) {
 	device->setSampleRate(SOAPY_SDR_RX, 0, (double)sampleRate);
-	return this->sampleRate = sampleRate; // device->getSampleRate(SOAPY_SDR_RX, 0);
+	return device->getSampleRate(SOAPY_SDR_RX, 0);
 }
 
 uint32_t LimeDevice::SetCenterFrequency(uint32_t centerFrequency) {
 	device->setFrequency(SOAPY_SDR_RX, 0, (double)centerFrequency);
-	return this->centerFrequency = device->getFrequency(SOAPY_SDR_RX, 0);
+	return device->getFrequency(SOAPY_SDR_RX, 0);
 }
 
 void LimeDevice::GetSamples(uint16_t samples) {
