@@ -9,3 +9,6 @@ prime
 stage
 tmp
 *.snap
+snap/.snapcraft
+build
+dist

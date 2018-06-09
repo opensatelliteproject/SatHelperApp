@@ -1,5 +1,5 @@
 name: sathelperapp
-version: git
+version-script: cat version
 summary: LRIT/HRIT Demodulator / Decoder
 description: |
   The OpenSatelliteProject Satellite Helper Application! This is currently a LRIT/HRIT Demodulator / Decoder program
