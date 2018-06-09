@@ -11,12 +11,13 @@ BUILD_TIME := $(shell date +"%H:%M:%S")
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
-
+DESTDIR?=/usr/local/bin 
 GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(REPO_VERSION) -X \"$(BUILD_DATE_VAR)=$(BUILD_DATE)\" -X $(BUILD_TIME_VAR)=$(BUILD_TIME)"
 
 .PHONY: all
+.NOTPARALLEL: deps update
 
-all: | $(BASE) update deps build
+all: | $(BASE) deps update build
 
 $(BASE):
 	@echo Linking virtual GOPATH
@@ -42,3 +43,8 @@ update: | $(BASE)
 build: | $(BASE)
 	@echo Building SatHelperApp
 	@cd $(BASE) && go build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+
+install: | $(BASE)
+	@echo Installing
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/SatHelperApp
+	@chmod +x $(DESTDIR)/SatHelperApp

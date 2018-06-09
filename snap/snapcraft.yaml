@@ -1,0 +1,34 @@
+name: sathelperapp
+version: git
+summary: LRIT/HRIT Demodulator / Decoder
+description: |
+  The OpenSatelliteProject Satellite Helper Application! This is currently a LRIT/HRIT Demodulator / Decoder program
+
+grade: devel
+confinement: devmode
+
+parts:
+  sathelperapp:
+    source: .
+    plugin: make
+    build-packages:
+      - libusb-1.0-0
+      - libcorrect
+      - libsathelper
+      - libairspy0
+      - libsoapysdr0.6
+    stage-packages:
+      - libusb-1.0-0
+      - libcorrect
+      - libsathelper
+      - libairspy0
+      - libsoapysdr0.6
+      - libstdc++6
+      - libc6
+      - libudev1
+      - libgcc1
+
+apps:
+  sathelperapp:
+    plugs: [network-bind, network, raw-usb]
+    command: SatHelperApp

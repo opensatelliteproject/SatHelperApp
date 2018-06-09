@@ -56,6 +56,10 @@ typedef _gostring_ swig_type_21;
 typedef _gostring_ swig_type_22;
 extern void _wrap_Swig_free_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_LimeDevice_7f56157f1ee2307f(swig_intgo arg1);
+extern swig_intgo _wrap_logERROR_LimeDevice_7f56157f1ee2307f(void);
+extern swig_intgo _wrap_logWARN_LimeDevice_7f56157f1ee2307f(void);
+extern swig_intgo _wrap_logINFO_LimeDevice_7f56157f1ee2307f(void);
+extern swig_intgo _wrap_logDEBUG_LimeDevice_7f56157f1ee2307f(void);
 extern uintptr_t _wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(int);
 extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_7f56157f1ee2307f(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1ee2307f(uintptr_t, uintptr_t data, swig_intgo length);
@@ -74,6 +78,10 @@ extern void _wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(uintptr_t 
 extern void _wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_4 arg2);
 extern void _wrap_delete_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(void);
+extern uintptr_t _wrap_new_Log_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern uintptr_t _wrap_Log_Get__SWIG_0_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2);
+extern uintptr_t _wrap_Log_Get__SWIG_1_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern void _wrap_delete_Log_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector32u__SWIG_0_LimeDevice_7f56157f1ee2307f(void);
 extern uintptr_t _wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_5 arg1);
 extern swig_type_6 _wrap_Vector32u_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
@@ -182,6 +190,35 @@ func Swig_malloc(arg1 int) (_swig_ret uintptr) {
 const FRONTEND_SAMPLETYPE_FLOATIQ int = 0
 const FRONTEND_SAMPLETYPE_S16IQ int = 1
 const FRONTEND_SAMPLETYPE_S8IQ int = 2
+type TLogLevel int
+func _swig_getlogERROR() (_swig_ret TLogLevel) {
+	var swig_r TLogLevel
+	swig_r = (TLogLevel)(C._wrap_logERROR_LimeDevice_7f56157f1ee2307f())
+	return swig_r
+}
+
+var LogERROR TLogLevel = _swig_getlogERROR()
+func _swig_getlogWARN() (_swig_ret TLogLevel) {
+	var swig_r TLogLevel
+	swig_r = (TLogLevel)(C._wrap_logWARN_LimeDevice_7f56157f1ee2307f())
+	return swig_r
+}
+
+var LogWARN TLogLevel = _swig_getlogWARN()
+func _swig_getlogINFO() (_swig_ret TLogLevel) {
+	var swig_r TLogLevel
+	swig_r = (TLogLevel)(C._wrap_logINFO_LimeDevice_7f56157f1ee2307f())
+	return swig_r
+}
+
+var LogINFO TLogLevel = _swig_getlogINFO()
+func _swig_getlogDEBUG() (_swig_ret TLogLevel) {
+	var swig_r TLogLevel
+	swig_r = (TLogLevel)(C._wrap_logDEBUG_LimeDevice_7f56157f1ee2307f())
+	return swig_r
+}
+
+var LogDEBUG TLogLevel = _swig_getlogDEBUG()
 type _swig_DirectorLimeDeviceCallback struct {
 	SwigcptrLimeDeviceCallback
 	v interface{}
@@ -513,6 +550,59 @@ type LimeDeviceCallback interface {
 	Error(arg2 string)
 	Warn(arg2 string)
 	Debug(arg2 string)
+}
+
+type SwigcptrLog uintptr
+
+func (p SwigcptrLog) Swigcptr() uintptr {
+	return (uintptr)(p)
+}
+
+func (p SwigcptrLog) SwigIsLog() {
+}
+
+func NewLog(arg1 LimeDeviceCallback) (_swig_ret Log) {
+	var swig_r Log
+	_swig_i_0 := arg1.Swigcptr()
+	swig_r = (Log)(SwigcptrLog(C._wrap_new_Log_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))))
+	return swig_r
+}
+
+func (arg1 SwigcptrLog) Get__SWIG_0(arg2 TLogLevel) (_swig_ret Std_ostringstream) {
+	var swig_r Std_ostringstream
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	swig_r = (Std_ostringstream)(SwigcptrStd_ostringstream(C._wrap_Log_Get__SWIG_0_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_intgo(_swig_i_1))))
+	return swig_r
+}
+
+func (arg1 SwigcptrLog) Get__SWIG_1() (_swig_ret Std_ostringstream) {
+	var swig_r Std_ostringstream
+	_swig_i_0 := arg1
+	swig_r = (Std_ostringstream)(SwigcptrStd_ostringstream(C._wrap_Log_Get__SWIG_1_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))))
+	return swig_r
+}
+
+func (p SwigcptrLog) Get(a ...interface{}) Std_ostringstream {
+	argc := len(a)
+	if argc == 0 {
+		return p.Get__SWIG_1()
+	}
+	if argc == 1 {
+		return p.Get__SWIG_0(a[0].(TLogLevel))
+	}
+	panic("No match for overloaded function call")
+}
+
+func DeleteLog(arg1 Log) {
+	_swig_i_0 := arg1.Swigcptr()
+	C._wrap_delete_Log_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))
+}
+
+type Log interface {
+	Swigcptr() uintptr
+	SwigIsLog()
+	Get(a ...interface{}) Std_ostringstream
 }
 
 type SwigcptrVector32u uintptr
@@ -1079,6 +1169,14 @@ type SwigDirector_LimeDeviceCallback interface {
 	Swigcptr() uintptr;
 }
 func (p SwigcptrSwigDirector_LimeDeviceCallback) Swigcptr() uintptr {
+	return uintptr(p)
+}
+
+type SwigcptrStd_ostringstream uintptr
+type Std_ostringstream interface {
+	Swigcptr() uintptr;
+}
+func (p SwigcptrStd_ostringstream) Swigcptr() uintptr {
 	return uintptr(p)
 }
 

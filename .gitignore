@@ -4,3 +4,8 @@ SatHelperApp
 .vscode
 .gopath
 SatHelperApp.cfg
+parts
+prime
+stage
+tmp
+*.snap

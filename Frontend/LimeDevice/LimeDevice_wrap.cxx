@@ -504,6 +504,54 @@ void *_wrap_Swig_malloc_LimeDevice_7f56157f1ee2307f(intgo _swig_go_0) {
 }
 
 
+intgo _wrap_logERROR_LimeDevice_7f56157f1ee2307f() {
+  TLogLevel result;
+  intgo _swig_go_result;
+  
+  
+  result = logERROR;
+  
+  _swig_go_result = (intgo)result; 
+  return _swig_go_result;
+}
+
+
+intgo _wrap_logWARN_LimeDevice_7f56157f1ee2307f() {
+  TLogLevel result;
+  intgo _swig_go_result;
+  
+  
+  result = logWARN;
+  
+  _swig_go_result = (intgo)result; 
+  return _swig_go_result;
+}
+
+
+intgo _wrap_logINFO_LimeDevice_7f56157f1ee2307f() {
+  TLogLevel result;
+  intgo _swig_go_result;
+  
+  
+  result = logINFO;
+  
+  _swig_go_result = (intgo)result; 
+  return _swig_go_result;
+}
+
+
+intgo _wrap_logDEBUG_LimeDevice_7f56157f1ee2307f() {
+  TLogLevel result;
+  intgo _swig_go_result;
+  
+  
+  result = logDEBUG;
+  
+  _swig_go_result = (intgo)result; 
+  return _swig_go_result;
+}
+
+
 GoDeviceCallback *_wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(intgo _swig_go_0) {
   int arg1 ;
   GoDeviceCallback *result = 0 ;
@@ -725,6 +773,57 @@ GoDeviceCallback *_wrap_new_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f() {
   result = (GoDeviceCallback *)new GoDeviceCallback();
   *(GoDeviceCallback **)&_swig_go_result = (GoDeviceCallback *)result; 
   return _swig_go_result;
+}
+
+
+Log *_wrap_new_Log_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  Log *result = 0 ;
+  Log *_swig_go_result;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  
+  result = (Log *)new Log(arg1);
+  *(Log **)&_swig_go_result = (Log *)result; 
+  return _swig_go_result;
+}
+
+
+std::ostringstream *_wrap_Log_Get__SWIG_0_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0, intgo _swig_go_1) {
+  Log *arg1 = (Log *) 0 ;
+  TLogLevel arg2 ;
+  std::ostringstream *result = 0 ;
+  std::ostringstream *_swig_go_result;
+  
+  arg1 = *(Log **)&_swig_go_0; 
+  arg2 = (TLogLevel)_swig_go_1; 
+  
+  result = (std::ostringstream *) &(arg1)->Get(arg2);
+  *(std::ostringstream **)&_swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+std::ostringstream *_wrap_Log_Get__SWIG_1_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0) {
+  Log *arg1 = (Log *) 0 ;
+  std::ostringstream *result = 0 ;
+  std::ostringstream *_swig_go_result;
+  
+  arg1 = *(Log **)&_swig_go_0; 
+  
+  result = (std::ostringstream *) &(arg1)->Get();
+  *(std::ostringstream **)&_swig_go_result = result; 
+  return _swig_go_result;
+}
+
+
+void _wrap_delete_Log_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0) {
+  Log *arg1 = (Log *) 0 ;
+  
+  arg1 = *(Log **)&_swig_go_0; 
+  
+  delete arg1;
+  
 }
 
 
