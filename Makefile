@@ -11,7 +11,7 @@ BUILD_TIME := $(shell date +"%H:%M:%S")
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
-DESTDIR?=/usr/local/bin 
+DESTDIR?=/usr/local/bin
 GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(REPO_VERSION) -X \"$(BUILD_DATE_VAR)=$(BUILD_DATE)\" -X $(BUILD_TIME_VAR)=$(BUILD_TIME)"
 
 .PHONY: all

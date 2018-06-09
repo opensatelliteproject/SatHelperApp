@@ -12,6 +12,9 @@ parts:
   sathelperapp:
     source: .
     plugin: make
+    override-build: |
+      export PATH=$PATH:/usr/lib/go-1.10/bin
+      snapcraftctl build
     build-packages:
       - libusb-1.0-0
       - libcorrect
