@@ -20,7 +20,6 @@ extern "C" {
 }
 
 #include "../DeviceParameters.h"
-
 class AirspyDevice {
 private:
 	static std::string libraryVersion;
@@ -42,7 +41,7 @@ private:
 
 	int SamplesAvailableCallback(airspy_transfer *transfer);
 public:
-	AirspyDevice();
+	AirspyDevice(GoDeviceCallback *cb);
 	virtual ~AirspyDevice();
 
 	static void Initialize();

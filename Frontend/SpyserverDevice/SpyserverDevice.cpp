@@ -10,16 +10,16 @@
 #include <cstring>
 #include <algorithm>
 
-SpyserverDevice::SpyserverDevice(std::string hostname, int port) :
+SpyserverDevice::SpyserverDevice(GoDeviceCallback *cb, std::string hostname, int port) :
     client(hostname, port), terminated(false), streaming(false), gotDeviceInfo(false),
     gotSyncInfo(false), canControl(false), isConnected(false), headerData(new uint8_t[sizeof(MessageHeader)]), bodyBuffer(NULL),
     bodyBufferLength(0), parserPosition(0), lastSequenceNumber(0),
     receiverThread(NULL), hasError(false), hostname(hostname), port(port), streamingMode(STREAM_MODE_IQ_ONLY),
     parserPhase(0), droppedBuffers(0), down_stream_bytes(0), minimumTunableFrequency(0), maximumTunableFrequency(0),
     deviceCenterFrequency(0), channelCenterFrequency(0), channelDecimationStageCount(0), gain(0),
-    dataS8Queue(SAMPLE_BUFFER_SIZE), cb(NULL) {
+    dataS8Queue(SAMPLE_BUFFER_SIZE), cb(cb) {
 
-  // std::cout << "SpyserverDevice(" << hostname << ", " << port << ")" << std::endl;
+  Log(cb).Get(logDEBUG) << "SpyserverDevice(" << hostname << ", " << port << ")";
 }
 
 SpyserverDevice::~SpyserverDevice() {
@@ -28,7 +28,7 @@ SpyserverDevice::~SpyserverDevice() {
 }
 
 void SpyserverDevice::SetBiasT(uint8_t value) {
-  // // std::cerr << "Not supported by OSP" << std::endl;
+  Log(cb).Get(logERROR) << "SpyServer BiasT Not supported by OSP";
 }
 
 
@@ -37,7 +37,7 @@ bool SpyserverDevice::Init() {
     Connect();
     return true;
   } catch (std::exception &e) {
-    // std::cerr << e.what() << std::endl;
+    Log(cb).Get(logERROR) << "Error connecting: " << e.what();
     return false;
   }
 }
@@ -50,10 +50,10 @@ void SpyserverDevice::Connect() {
   if (receiverThread != NULL) {
     return;
   }
-  // std::cout << "SpyServer: Trying to connect" << std::endl;
+  Log(cb).Get(logDEBUG) << "SpyServer: Trying to connect";
   client.Connect();
   isConnected = true;
-  // std::cout << "SpyServer: Connected" << std::endl;
+  Log(cb).Get(logDEBUG) << "SpyServer: Connected";
 
   SayHello();
   Cleanup();
@@ -74,7 +74,7 @@ void SpyserverDevice::Connect() {
       }
 
       if (gotSyncInfo) {
-        // std::cout << "Got sync Info" << std::endl;
+        Log(cb).Get(logDEBUG) << "Got sync Info" << std::endl;
         OnConnect();
         return;
       }
@@ -91,7 +91,6 @@ void SpyserverDevice::Connect() {
 }
 
 void SpyserverDevice::Disconnect() {
-  // std::cerr << "DISCONNECTED" << std::endl;
   terminated = true;
   if (isConnected) {
     client.Close();
@@ -199,6 +198,7 @@ void SpyserverDevice::threadLoop() {
     }
   } catch (SatHelperException &e) {
     error = e;
+    Log(cb).Get(logERROR) << "Error on ThreadLoop: " << e.what();
     // std::cerr << e.what() << std::endl;
   }
   if (bodyBuffer != NULL) {
@@ -258,7 +258,7 @@ void SpyserverDevice::ParseMessage(char *buffer, uint32_t len) {
           lastSequenceNumber = header.SequenceNumber;
           droppedBuffers += gap;
           if (gap > 0) {
-            // std::cerr << "Lost " << gap << " frames from SpyServer!" << std::endl;
+            Log(cb).Get(logWARN) << "Lost " << gap << " frames from SpyServer!";
           }
         }
         HandleNewMessage();
@@ -469,10 +469,10 @@ uint32_t SpyserverDevice::SetSampleRate(uint32_t sampleRate) {
             return GetSampleRate();
     }
   }
-  std::cerr << "Sample rate not supported: " << sampleRate << std::endl;
-  std::cerr << "Supported Sample Rates: " << std::endl;
+  Log(cb).Get(logERROR) << "Sample rate not supported: " << sampleRate;
+  Log(cb).Get(logERROR) << "Supported Sample Rates: ";
   for (uint32_t sr: availableSampleRates) {
-    std::cout << "  " << sr << std::endl;
+    Log(cb).Get(logERROR) << "  " << sr;
   }
   return GetSampleRate();
 }
@@ -504,7 +504,7 @@ void SpyserverDevice::Stop() {
 }
 
 void SpyserverDevice::SetAGC(bool agc) {
-  // std::cerr << "AGC Not Supported" << std::endl;
+  Log(cb).Get(logERROR) << "AGC Not Supported" << std::endl;
 }
 
 void SpyserverDevice::SetLNAGain(uint8_t value) {
@@ -513,11 +513,11 @@ void SpyserverDevice::SetLNAGain(uint8_t value) {
 }
 
 void SpyserverDevice::SetVGAGain(uint8_t value) {
-  // std::cerr << "VGA Gain Not Supported" << std::endl;
+  Log(cb).Get(logERROR) << "VGA Gain Not Supported";
 }
 
 void SpyserverDevice::SetMixerGain(uint8_t value) {
-  // std::cerr << "Mixer Gain Not Supported" << std::endl;
+  Log(cb).Get(logERROR) << "Mixer Gain Not Supported";
 }
 
 uint32_t SpyserverDevice::GetCenterFrequency() {

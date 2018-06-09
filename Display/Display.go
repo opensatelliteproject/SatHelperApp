@@ -6,9 +6,14 @@ import (
 	"github.com/nsf/termbox-go"
 	"strconv"
 	"fmt"
+	"log"
+	"regexp"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 
-type DisplayObjects struct {
+const MaxConsoleLines = 10
+
+type Objects struct {
 	head *ui.Par
 	signalLocked *ui.Par
 	signalQuality *ui.Gauge
@@ -26,27 +31,30 @@ type DisplayObjects struct {
 	centerFrequency *ui.Par
 	demuxer *ui.Par
 	device *ui.Par
+	console *ui.List
 }
 
 var state = struct {
-	signalQuality int
-	signalLocked bool
-	channelPackets [256]int64
-	rsErrors [4] int32
-	displayObjects DisplayObjects
-	syncWord [4]byte
-	scid uint8
-	vcid uint8
-	decoderFifoUsage uint8
+	signalQuality        int
+	signalLocked         bool
+	channelPackets       [256]int64
+	rsErrors             [4] int32
+	displayObjects       Objects
+	syncWord             [4]byte
+	scid                 uint8
+	vcid                 uint8
+	decoderFifoUsage     uint8
 	demodulatorFifoUsage uint8
-	viterbiErrors uint
-	frameSize uint
-	phaseCorrection uint16
-	syncCorrelation uint8
-	centerFreq uint32
-	mode string
-	demuxer string
-	device string
+	viterbiErrors        uint
+	frameSize            uint
+	phaseCorrection      uint16
+	syncCorrelation      uint8
+	centerFreq           uint32
+	mode                 string
+	demuxer              string
+	device               string
+	consoleLines         []string
+	cw                   *ConsoleWritter
 }{
 	signalQuality: 0,
 	rsErrors: [4]int32 {0,0,0,0},
@@ -62,6 +70,7 @@ var state = struct {
 	mode: "Not Selected",
 	device: "None",
 	demuxer: "None",
+	consoleLines: []string {},
 }
 
 var colorBar []uint32
@@ -233,6 +242,13 @@ func InitDisplay() {
 	demuxer.Height = 3
 	demuxer.Align()
 	// endregion
+	// region Console
+	console := ui.NewList()
+	console.Overflow = "wrap"
+	console.Items = [] string {}
+	console.BorderLabel = "Console"
+	console.Height = MaxConsoleLines
+	// endregion
 	// region Save Objects
 	state.displayObjects.head = head
 	state.displayObjects.signalLocked = signalLocked
@@ -251,6 +267,7 @@ func InitDisplay() {
 	state.displayObjects.mode = mode
 	state.displayObjects.device = device
 	state.displayObjects.demuxer = demuxer
+	state.displayObjects.console = console
 	// endregion
 	// region Configure Body
 	ui.Body.AddRows(
@@ -281,11 +298,22 @@ func InitDisplay() {
 			ui.NewCol(6, 0, rsErrors),
 			ui.NewCol(6, 0, channelData),
 		),
+		ui.NewRow(
+			ui.NewCol(12,0, console),
+		),
 	)
 	// endregion
 	// region Create Timers
 	e := ui.NewTimerCh(100 * time.Millisecond)
 	ui.Merge("refresh", e)
+	// endregion
+	// region Callbacks
+	state.cw = NewConsoleWritter(func(data string) (int, error) {
+		AddConsoleLine(data[:len(data)-1])
+		return len(data)-1, nil
+	})
+	log.SetOutput(state.cw)
+	SLog.SetTermUiDisplay(true)
 	// endregion
 }
 
@@ -366,6 +394,9 @@ func updateComponents() {
 	// endregion
 	// region Device
 	state.displayObjects.demuxer.Text = state.demuxer
+	// endregion
+	// region Console
+	state.displayObjects.console.Items = state.consoleLines
 	// endregion
 	// region UI Alignments
 	ui.Body.Align()
@@ -457,4 +488,16 @@ func UpdateDevice(device string) {
 func UpdateDemuxer(demuxer string) {
 	state.demuxer = demuxer
 }
+
+var reg, _ = regexp.Compile("\x1b\\[[0-9;]*m")
+
+func AddConsoleLine(line string) {
+	line = reg.ReplaceAllString(line, "")
+
+	state.consoleLines = append(state.consoleLines, line)
+	if len(state.consoleLines) > MaxConsoleLines {
+		state.consoleLines = state.consoleLines[1:]
+	}
+}
+
 // endregion

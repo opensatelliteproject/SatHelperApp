@@ -31,9 +31,13 @@ LimeDevice::~LimeDevice() {
 }
 
 bool LimeDevice::Init() {
+	try {
 	SoapySDR::setLogLevel(SOAPY_SDR_FATAL);
 	args = SoapySDR::KwargsFromString("driver=lime,device=0");
     device = SoapySDR::Device::make(args);
+  } catch (std::exception &e) {
+  	Log(cb).Get(logERROR) << e.what();
+  }
 	return (bool)device;
 };
 
@@ -46,7 +50,7 @@ void LimeDevice::Start() {
 	if (device != NULL && transfer != NULL) {
 		device->activateStream(transfer);
 	} else {
-		std::cerr << "Device not loaded!" << std::endl;
+		Log(cb).Get(logERROR) << "Device not loaded!" << std::endl;
 	}
 }
 
@@ -55,7 +59,7 @@ void LimeDevice::Stop() {
 		device->deactivateStream(transfer);
 		device->closeStream(transfer);
 	} else {
-		std::cerr << "Device not loaded!" << std::endl;
+		Log(cb).Get(logERROR) << "Device not loaded!" << std::endl;
 	}
 }
 
@@ -90,8 +94,8 @@ void LimeDevice::GetSamples(uint16_t samples) {
 		int flags;
 		long long timeNs;
 		void* buffs[] = {buff};
-		
+
 		device->readStream(transfer, buffs, samples, flags, timeNs);
 		cb->cbFloatIQ(buff, samples);
-	}	
+	}
 }

@@ -18,9 +18,10 @@ func MakeAirspyGoCallbackDirector(callback *GoCallback) AirspyDevice.AirspyDevic
 // endregion
 // region Constructor
 func NewAirspyFrontend() *AirspyFrontend {
-	goCb := GoCallback{}
+	goCb := NewGoCallback()
+	dirCb := MakeAirspyGoCallbackDirector(&goCb)
 	afrnt := AirspyFrontend{
-		device: AirspyDevice.NewAirspyDevice(),
+		device: AirspyDevice.NewAirspyDevice(dirCb),
 		goCb: goCb,
 	}
 

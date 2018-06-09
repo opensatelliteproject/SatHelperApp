@@ -438,6 +438,38 @@ void SwigDirector_SpyserverDeviceCallback::cbS8IQ(void *data, int length) {
   Swig_DirectorSpyserverDeviceCallback_callback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2, swig_arg3);
 }
 
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_Info_SpyserverDevice_62588b4ce09e2d9c(int, _gostring_ arg2);
+void SwigDirector_SpyserverDeviceCallback::Info(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorSpyserverDeviceCallback_callback_Info_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_Error_SpyserverDevice_62588b4ce09e2d9c(int, _gostring_ arg2);
+void SwigDirector_SpyserverDeviceCallback::Error(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorSpyserverDeviceCallback_callback_Error_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_Warn_SpyserverDevice_62588b4ce09e2d9c(int, _gostring_ arg2);
+void SwigDirector_SpyserverDeviceCallback::Warn(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorSpyserverDeviceCallback_callback_Warn_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorSpyserverDeviceCallback_callback_Debug_SpyserverDevice_62588b4ce09e2d9c(int, _gostring_ arg2);
+void SwigDirector_SpyserverDeviceCallback::Debug(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorSpyserverDeviceCallback_callback_Debug_SpyserverDevice_62588b4ce09e2d9c(go_val, swig_arg2);
+}
+
 extern "C" void Swiggo_DeleteDirector_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(intgo);
 SwigDirector_SpyserverDeviceCallback::~SwigDirector_SpyserverDeviceCallback()
 {
@@ -527,6 +559,54 @@ void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbS8IQ_SpyserverDevice_6
 }
 
 
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Info_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Info(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Error_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Error(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Warn_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Warn(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Debug_SpyserverDevice_62588b4ce09e2d9c(SwigDirector_SpyserverDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_SpyserverDeviceCallback *arg1 = (SwigDirector_SpyserverDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_SpyserverDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Debug(arg2);
+  
+}
+
+
 void _wrap_DeleteDirectorSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
@@ -575,6 +655,54 @@ void _wrap_SpyserverDeviceCallback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(GoDev
   arg3 = (int)_swig_go_2; 
   
   (arg1)->cbS8IQ(arg2,arg3);
+  
+}
+
+
+void _wrap_SpyserverDeviceCallback_Info_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Info(arg2);
+  
+}
+
+
+void _wrap_SpyserverDeviceCallback_Error_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Error(arg2);
+  
+}
+
+
+void _wrap_SpyserverDeviceCallback_Warn_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Warn(arg2);
+  
+}
+
+
+void _wrap_SpyserverDeviceCallback_Debug_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Debug(arg2);
   
 }
 
@@ -1228,16 +1356,18 @@ intgo _wrap_SAMPLE_BUFFER_SIZE_SpyserverDevice_62588b4ce09e2d9c() {
 }
 
 
-SpyserverDevice *_wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(_gostring_ _swig_go_0, intgo _swig_go_1) {
-  std::string arg1 ;
-  int arg2 ;
+SpyserverDevice *_wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1, intgo _swig_go_2) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  int arg3 ;
   SpyserverDevice *result = 0 ;
   SpyserverDevice *_swig_go_result;
   
-  (&arg1)->assign(_swig_go_0.p, _swig_go_0.n); 
-  arg2 = (int)_swig_go_1; 
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  arg3 = (int)_swig_go_2; 
   
-  result = (SpyserverDevice *)new SpyserverDevice(arg1,arg2);
+  result = (SpyserverDevice *)new SpyserverDevice(arg1,arg2,arg3);
   *(SpyserverDevice **)&_swig_go_result = (SpyserverDevice *)result; 
   return _swig_go_result;
 }

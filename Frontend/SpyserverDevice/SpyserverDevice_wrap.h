@@ -31,6 +31,22 @@ class SwigDirector_SpyserverDeviceCallback : public GoDeviceCallback
     GoDeviceCallback::cbS8IQ(data,length);
   }
   virtual void cbS8IQ(void *data, int length);
+  void _swig_upcall_Info(std::string arg0) {
+    GoDeviceCallback::Info(arg0);
+  }
+  virtual void Info(std::string arg0);
+  void _swig_upcall_Error(std::string arg0) {
+    GoDeviceCallback::Error(arg0);
+  }
+  virtual void Error(std::string arg0);
+  void _swig_upcall_Warn(std::string arg0) {
+    GoDeviceCallback::Warn(arg0);
+  }
+  virtual void Warn(std::string arg0);
+  void _swig_upcall_Debug(std::string arg0) {
+    GoDeviceCallback::Debug(arg0);
+  }
+  virtual void Debug(std::string arg0);
   virtual ~SwigDirector_SpyserverDeviceCallback();
  private:
   intgo go_val;

@@ -247,7 +247,7 @@ func decoderLoop() {
 				localStats.DemodulatorFifoUsage = demodFifoUsage
 
 				if demuxer != nil {
-					demuxer.SendFrame(rsCorrectedData[:FrameSize-RsParityBlockSize- SyncWordSize])
+					demuxer.SendFrame(rsCorrectedData[:FrameSize - RsParityBlockSize - SyncWordSize])
 				}
 
 			} else {

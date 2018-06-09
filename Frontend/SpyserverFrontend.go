@@ -19,9 +19,10 @@ func MakeSpyserverGoCallbackDirector(callback *GoCallback) SpyserverDevice.Spyse
 // endregion
 // region Constructor
 func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
-	goCb := GoCallback{}
+	goCb := NewGoCallback()
+	dirCb := MakeSpyserverGoCallbackDirector(&goCb)
 	afrnt := SpyserverFrontend{
-		device: SpyserverDevice.NewSpyserverDevice(hostname, port),
+		device: SpyserverDevice.NewSpyserverDevice(dirCb, hostname, port),
 		goCb: goCb,
 	}
 

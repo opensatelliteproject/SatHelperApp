@@ -33,7 +33,7 @@ private:
 	std::complex<float> buff[65535];
 
 public:
-	LimeDevice() {};
+	LimeDevice(GoDeviceCallback *cb) : cb(cb) {};
 	virtual ~LimeDevice();
 
 	const std::string &GetName();

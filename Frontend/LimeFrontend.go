@@ -21,10 +21,11 @@ func LimeMakeGoCallbackDirector(callback *GoCallback) LimeDevice.LimeDeviceCallb
 // endregion
 // region Constructor
 func NewLimeFrontend() *LimeFrontend {
-	goCb := GoCallback{}
+	goCb := NewGoCallback()
+	dirCb := LimeMakeGoCallbackDirector(&goCb)
 	afrnt := LimeFrontend{
 		running: false,
-		device: LimeDevice.NewLimeDevice(),
+		device: LimeDevice.NewLimeDevice(dirCb),
 		goCb: goCb,
 	}
 

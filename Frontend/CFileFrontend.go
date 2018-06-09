@@ -2,12 +2,12 @@ package Frontend
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"time"
 	"bufio"
 	"encoding/binary"
 	. "github.com/logrusorgru/aurora"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 
 const CFileFrontendBufferSize = 65535
@@ -72,18 +72,18 @@ func (f *CFileFrontend) Init() bool {
 func (f *CFileFrontend) Destroy() {}
 func (f *CFileFrontend) Start() {
 	if f.running {
-		log.Println(Red("CFileFrontend is already running."))
+		SLog.Error("CFileFrontend is already running.")
 		return
 	}
 	f.running = true
 	go func(frontend *CFileFrontend) {
-		log.Println(Green("CFileFrontend Routine started"))
+		SLog.Info("CFileFrontend Routine started")
 		f, err := os.Open(f.filename)
 
 		var period = CFileFrontendBufferSize / float32(frontend.sampleRate)
 
 		if err != nil {
-			log.Printf(Red("Error opening file %s: %s").String(), Bold(frontend.filename), Bold(err))
+			SLog.Error("Error opening file %s: %s", Bold(frontend.filename), Bold(err))
 			frontend.running = false
 			return
 		}
@@ -99,13 +99,13 @@ func (f *CFileFrontend) Start() {
 			if float32(time.Now().Sub(frontend.t0).Seconds()) >= period {
 				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)
 				if err != nil {
-					log.Println(Red("Error reading input CFile: %s").String(), Bold(err))
+					SLog.Error("Error reading input CFile: %s", Bold(err))
 					frontend.running = false
 					break
 				}
 				if frontend.cb != nil {
 					var cbData = SampleCallbackData{
-						SampleType:   FrontendSampletypeFloatiq,
+						SampleType:   SampleTypeFloatIQ,
 						NumSamples:   len(frontend.sampleBuffer),
 						ComplexArray: frontend.sampleBuffer,
 					}
@@ -115,13 +115,13 @@ func (f *CFileFrontend) Start() {
 			}
 			time.Sleep(time.Duration((period / 100) * float32(time.Second)))
 		}
-		log.Println(Red("CFileFrontend Routine ended"))
+		SLog.Error("CFileFrontend Routine ended")
 	}(f)
 }
 
 func (f *CFileFrontend) Stop() {
 	if ! f.running {
-		log.Println(Red("CFileFrontend is not running"))
+		SLog.Error("CFileFrontend is not running")
 		return
 	}
 	f.running = false

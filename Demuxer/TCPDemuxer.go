@@ -6,6 +6,7 @@ import (
 	"github.com/prometheus/common/log"
 	"sync"
 	"container/list"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 // region Struct Definition
 type TCPServerDemuxer struct {
@@ -45,10 +46,10 @@ func (f *TCPServerDemuxer) SendFrame(frame []byte) {
 			client := e.Value.(net.Conn)
 			n, err := client.Write(frame)
 			if n != len(frame) || err != nil {
-				log.Error(err)
+				SLog.Error("%s", err)
 				next = e.Next()
 				f.clients.Remove(e)
-				log.Infof("Client disconnected %s", client.RemoteAddr())
+				SLog.Info("Client disconnected %s", client.RemoteAddr())
 			}
 		}
 		f.syncMtx.Unlock()
@@ -62,7 +63,7 @@ func (f *TCPServerDemuxer) GetName() string {
 func (f *TCPServerDemuxer) loop() {
 	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", f.host, f.port))
 	if err != nil {
-		log.Error("Error opening TCP Server Socket: %s\n", err)
+		SLog.Error("Error opening TCP Server Socket: %s\n", err)
 		return
 	}
 	for f.running {
@@ -73,7 +74,7 @@ func (f *TCPServerDemuxer) loop() {
 			f.syncMtx.Lock()
 			f.clients.PushBack(conn)
 			f.syncMtx.Unlock()
-			log.Infof("Client connected from %s", conn.RemoteAddr())
+			SLog.Info("Client connected from %s", conn.RemoteAddr())
 			// go f.handleConnection(conn)
 		}
 	}

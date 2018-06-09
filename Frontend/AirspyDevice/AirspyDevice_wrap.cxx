@@ -438,6 +438,38 @@ void SwigDirector_AirspyDeviceCallback::cbS8IQ(void *data, int length) {
   Swig_DirectorAirspyDeviceCallback_callback_cbS8IQ_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2, swig_arg3);
 }
 
+extern "C" void Swig_DirectorAirspyDeviceCallback_callback_Info_AirspyDevice_1c209d1ee771b908(int, _gostring_ arg2);
+void SwigDirector_AirspyDeviceCallback::Info(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorAirspyDeviceCallback_callback_Info_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorAirspyDeviceCallback_callback_Error_AirspyDevice_1c209d1ee771b908(int, _gostring_ arg2);
+void SwigDirector_AirspyDeviceCallback::Error(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorAirspyDeviceCallback_callback_Error_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorAirspyDeviceCallback_callback_Warn_AirspyDevice_1c209d1ee771b908(int, _gostring_ arg2);
+void SwigDirector_AirspyDeviceCallback::Warn(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorAirspyDeviceCallback_callback_Warn_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorAirspyDeviceCallback_callback_Debug_AirspyDevice_1c209d1ee771b908(int, _gostring_ arg2);
+void SwigDirector_AirspyDeviceCallback::Debug(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorAirspyDeviceCallback_callback_Debug_AirspyDevice_1c209d1ee771b908(go_val, swig_arg2);
+}
+
 extern "C" void Swiggo_DeleteDirector_AirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(intgo);
 SwigDirector_AirspyDeviceCallback::~SwigDirector_AirspyDeviceCallback()
 {
@@ -527,6 +559,54 @@ void _wrap__swig_DirectorAirspyDeviceCallback_upcall_CbS8IQ_AirspyDevice_1c209d1
 }
 
 
+void _wrap__swig_DirectorAirspyDeviceCallback_upcall_Info_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Info(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorAirspyDeviceCallback_upcall_Error_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Error(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorAirspyDeviceCallback_upcall_Warn_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Warn(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorAirspyDeviceCallback_upcall_Debug_AirspyDevice_1c209d1ee771b908(SwigDirector_AirspyDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_AirspyDeviceCallback *arg1 = (SwigDirector_AirspyDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_AirspyDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Debug(arg2);
+  
+}
+
+
 void _wrap_DeleteDirectorAirspyDeviceCallback_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
@@ -575,6 +655,54 @@ void _wrap_AirspyDeviceCallback_cbS8IQ_AirspyDevice_1c209d1ee771b908(GoDeviceCal
   arg3 = (int)_swig_go_2; 
   
   (arg1)->cbS8IQ(arg2,arg3);
+  
+}
+
+
+void _wrap_AirspyDeviceCallback_Info_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Info(arg2);
+  
+}
+
+
+void _wrap_AirspyDeviceCallback_Error_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Error(arg2);
+  
+}
+
+
+void _wrap_AirspyDeviceCallback_Warn_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Warn(arg2);
+  
+}
+
+
+void _wrap_AirspyDeviceCallback_Debug_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Debug(arg2);
   
 }
 
@@ -1192,12 +1320,14 @@ void _wrap_delete_Vector8i_AirspyDevice_1c209d1ee771b908(std::vector< signed cha
 }
 
 
-AirspyDevice *_wrap_new_AirspyDevice_AirspyDevice_1c209d1ee771b908() {
+AirspyDevice *_wrap_new_AirspyDevice_AirspyDevice_1c209d1ee771b908(GoDeviceCallback *_swig_go_0) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   AirspyDevice *result = 0 ;
   AirspyDevice *_swig_go_result;
   
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
   
-  result = (AirspyDevice *)new AirspyDevice();
+  result = (AirspyDevice *)new AirspyDevice(arg1);
   *(AirspyDevice **)&_swig_go_result = (AirspyDevice *)result; 
   return _swig_go_result;
 }

@@ -32,10 +32,10 @@ typedef struct { void* array; intgo len; intgo cap; } _goslice_;
 #cgo CXXFLAGS: -std=c++11
 #cgo LDFLAGS: -lSatHelper
 
-typedef long long swig_type_1;
-typedef long long swig_type_2;
-typedef long long swig_type_3;
-typedef long long swig_type_4;
+typedef _gostring_ swig_type_1;
+typedef _gostring_ swig_type_2;
+typedef _gostring_ swig_type_3;
+typedef _gostring_ swig_type_4;
 typedef long long swig_type_5;
 typedef long long swig_type_6;
 typedef long long swig_type_7;
@@ -48,25 +48,37 @@ typedef long long swig_type_13;
 typedef long long swig_type_14;
 typedef long long swig_type_15;
 typedef long long swig_type_16;
-typedef _gostring_ swig_type_17;
-typedef _gostring_ swig_type_18;
+typedef long long swig_type_17;
+typedef long long swig_type_18;
+typedef long long swig_type_19;
+typedef long long swig_type_20;
+typedef _gostring_ swig_type_21;
+typedef _gostring_ swig_type_22;
 extern void _wrap_Swig_free_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_SpyserverDevice_62588b4ce09e2d9c(swig_intgo arg1);
 extern uintptr_t _wrap__swig_NewDirectorSpyserverDeviceCallbackSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(int);
 extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbS16IQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_CbS8IQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, uintptr_t data, swig_intgo length);
+extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Info_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, swig_type_1 arg0);
+extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Error_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, swig_type_2 arg0);
+extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Warn_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, swig_type_3 arg0);
+extern void _wrap__swig_DirectorSpyserverDeviceCallback_upcall_Debug_SpyserverDevice_62588b4ce09e2d9c(uintptr_t, swig_type_4 arg0);
 extern void _wrap_DeleteDirectorSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_SpyserverDeviceCallback_cbFloatIQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
 extern void _wrap_SpyserverDeviceCallback_cbS16IQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
 extern void _wrap_SpyserverDeviceCallback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
+extern void _wrap_SpyserverDeviceCallback_Info_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_1 arg2);
+extern void _wrap_SpyserverDeviceCallback_Error_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_2 arg2);
+extern void _wrap_SpyserverDeviceCallback_Warn_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_3 arg2);
+extern void _wrap_SpyserverDeviceCallback_Debug_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_4 arg2);
 extern void _wrap_delete_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern uintptr_t _wrap_new_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(void);
 extern uintptr_t _wrap_new_Vector32u__SWIG_0_SpyserverDevice_62588b4ce09e2d9c(void);
-extern uintptr_t _wrap_new_Vector32u__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_1 arg1);
-extern swig_type_2 _wrap_Vector32u_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern swig_type_3 _wrap_Vector32u_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern void _wrap_Vector32u_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_4 arg2);
+extern uintptr_t _wrap_new_Vector32u__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_5 arg1);
+extern swig_type_6 _wrap_Vector32u_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern swig_type_7 _wrap_Vector32u_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern void _wrap_Vector32u_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_8 arg2);
 extern _Bool _wrap_Vector32u_isEmpty_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector32u_clear_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector32u_add_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2);
@@ -74,10 +86,10 @@ extern swig_intgo _wrap_Vector32u_get_SpyserverDevice_62588b4ce09e2d9c(uintptr_t
 extern void _wrap_Vector32u_set_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2, swig_intgo arg3);
 extern void _wrap_delete_Vector32u_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector32f__SWIG_0_SpyserverDevice_62588b4ce09e2d9c(void);
-extern uintptr_t _wrap_new_Vector32f__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_5 arg1);
-extern swig_type_6 _wrap_Vector32f_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern swig_type_7 _wrap_Vector32f_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern void _wrap_Vector32f_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_8 arg2);
+extern uintptr_t _wrap_new_Vector32f__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_9 arg1);
+extern swig_type_10 _wrap_Vector32f_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern swig_type_11 _wrap_Vector32f_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern void _wrap_Vector32f_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_12 arg2);
 extern _Bool _wrap_Vector32f_isEmpty_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector32f_clear_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector32f_add_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, float arg2);
@@ -85,10 +97,10 @@ extern float _wrap_Vector32f_get_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1
 extern void _wrap_Vector32f_set_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2, float arg3);
 extern void _wrap_delete_Vector32f_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector16i__SWIG_0_SpyserverDevice_62588b4ce09e2d9c(void);
-extern uintptr_t _wrap_new_Vector16i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_9 arg1);
-extern swig_type_10 _wrap_Vector16i_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern swig_type_11 _wrap_Vector16i_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern void _wrap_Vector16i_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_12 arg2);
+extern uintptr_t _wrap_new_Vector16i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_13 arg1);
+extern swig_type_14 _wrap_Vector16i_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern swig_type_15 _wrap_Vector16i_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern void _wrap_Vector16i_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_16 arg2);
 extern _Bool _wrap_Vector16i_isEmpty_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector16i_clear_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector16i_add_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, short arg2);
@@ -96,10 +108,10 @@ extern short _wrap_Vector16i_get_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1
 extern void _wrap_Vector16i_set_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2, short arg3);
 extern void _wrap_delete_Vector16i_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector8i__SWIG_0_SpyserverDevice_62588b4ce09e2d9c(void);
-extern uintptr_t _wrap_new_Vector8i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_13 arg1);
-extern swig_type_14 _wrap_Vector8i_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern swig_type_15 _wrap_Vector8i_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern void _wrap_Vector8i_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_16 arg2);
+extern uintptr_t _wrap_new_Vector8i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(swig_type_17 arg1);
+extern swig_type_18 _wrap_Vector8i_size_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern swig_type_19 _wrap_Vector8i_capacity_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern void _wrap_Vector8i_reserve_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_20 arg2);
 extern _Bool _wrap_Vector8i_isEmpty_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector8i_clear_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_Vector8i_add_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, char arg2);
@@ -109,7 +121,7 @@ extern void _wrap_delete_Vector8i_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg
 extern swig_intgo _wrap_AcquiringHeader_SpyserverDevice_62588b4ce09e2d9c(void);
 extern swig_intgo _wrap_ReadingData_SpyserverDevice_62588b4ce09e2d9c(void);
 extern swig_intgo _wrap_SAMPLE_BUFFER_SIZE_SpyserverDevice_62588b4ce09e2d9c(void);
-extern uintptr_t _wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(swig_type_17 arg1, swig_intgo arg2);
+extern uintptr_t _wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_type_21 arg2, swig_intgo arg3);
 extern void _wrap_delete_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern swig_intgo _wrap_SpyserverDevice_SetSampleRate_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2);
 extern swig_intgo _wrap_SpyserverDevice_SetCenterFrequency_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, swig_intgo arg2);
@@ -122,7 +134,7 @@ extern void _wrap_SpyserverDevice_SetVGAGain_SpyserverDevice_62588b4ce09e2d9c(ui
 extern void _wrap_SpyserverDevice_SetMixerGain_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, char arg2);
 extern void _wrap_SpyserverDevice_SetBiasT_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, char arg2);
 extern swig_intgo _wrap_SpyserverDevice_GetCenterFrequency_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
-extern swig_type_18 _wrap_SpyserverDevice_GetName_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
+extern swig_type_22 _wrap_SpyserverDevice_GetName_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern swig_intgo _wrap_SpyserverDevice_GetSampleRate_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
 extern void _wrap_SpyserverDevice_SetSamplesAvailableCallback_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1, uintptr_t arg2);
 extern _Bool _wrap_SpyserverDevice_Init_SpyserverDevice_62588b4ce09e2d9c(uintptr_t arg1);
@@ -276,6 +288,134 @@ func Swig_DirectorSpyserverDeviceCallback_callback_cbS8IQ_SpyserverDevice_62588b
 	swig_p.CbS8IQ(arg2, arg3)
 }
 
+type _swig_DirectorInterfaceSpyserverDeviceCallbackInfo interface {
+	Info(string)
+}
+
+func (swig_p *_swig_DirectorSpyserverDeviceCallback) Info(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceSpyserverDeviceCallbackInfo); swig_ok {
+		swig_g.Info(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Info_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(swig_p.SwigcptrSpyserverDeviceCallback), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorSpyserverDeviceCallbackInfo(p SpyserverDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Info_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(p.(*_swig_DirectorSpyserverDeviceCallback).SwigcptrSpyserverDeviceCallback), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorSpyserverDeviceCallback_callback_Info_SpyserverDevice_62588b4ce09e2d9c
+func Swig_DirectorSpyserverDeviceCallback_callback_Info_SpyserverDevice_62588b4ce09e2d9c(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorSpyserverDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Info(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceSpyserverDeviceCallbackError interface {
+	Error(string)
+}
+
+func (swig_p *_swig_DirectorSpyserverDeviceCallback) Error(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceSpyserverDeviceCallbackError); swig_ok {
+		swig_g.Error(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Error_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(swig_p.SwigcptrSpyserverDeviceCallback), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorSpyserverDeviceCallbackError(p SpyserverDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Error_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(p.(*_swig_DirectorSpyserverDeviceCallback).SwigcptrSpyserverDeviceCallback), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorSpyserverDeviceCallback_callback_Error_SpyserverDevice_62588b4ce09e2d9c
+func Swig_DirectorSpyserverDeviceCallback_callback_Error_SpyserverDevice_62588b4ce09e2d9c(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorSpyserverDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Error(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceSpyserverDeviceCallbackWarn interface {
+	Warn(string)
+}
+
+func (swig_p *_swig_DirectorSpyserverDeviceCallback) Warn(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceSpyserverDeviceCallbackWarn); swig_ok {
+		swig_g.Warn(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Warn_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(swig_p.SwigcptrSpyserverDeviceCallback), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorSpyserverDeviceCallbackWarn(p SpyserverDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Warn_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(p.(*_swig_DirectorSpyserverDeviceCallback).SwigcptrSpyserverDeviceCallback), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorSpyserverDeviceCallback_callback_Warn_SpyserverDevice_62588b4ce09e2d9c
+func Swig_DirectorSpyserverDeviceCallback_callback_Warn_SpyserverDevice_62588b4ce09e2d9c(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorSpyserverDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Warn(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceSpyserverDeviceCallbackDebug interface {
+	Debug(string)
+}
+
+func (swig_p *_swig_DirectorSpyserverDeviceCallback) Debug(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceSpyserverDeviceCallbackDebug); swig_ok {
+		swig_g.Debug(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Debug_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(swig_p.SwigcptrSpyserverDeviceCallback), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorSpyserverDeviceCallbackDebug(p SpyserverDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorSpyserverDeviceCallback_upcall_Debug_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(p.(*_swig_DirectorSpyserverDeviceCallback).SwigcptrSpyserverDeviceCallback), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorSpyserverDeviceCallback_callback_Debug_SpyserverDevice_62588b4ce09e2d9c
+func Swig_DirectorSpyserverDeviceCallback_callback_Debug_SpyserverDevice_62588b4ce09e2d9c(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorSpyserverDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Debug(_swig_i_0)
+}
+
 func DeleteDirectorSpyserverDeviceCallback(arg1 SpyserverDeviceCallback) {
 	_swig_i_0 := arg1.Swigcptr()
 	C._wrap_DeleteDirectorSpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0))
@@ -321,6 +461,42 @@ func (arg1 SwigcptrSpyserverDeviceCallback) CbS8IQ(arg2 uintptr, arg3 int) {
 	C._wrap_SpyserverDeviceCallback_cbS8IQ_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
+func (arg1 SwigcptrSpyserverDeviceCallback) Info(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_SpyserverDeviceCallback_Info_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrSpyserverDeviceCallback) Error(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_SpyserverDeviceCallback_Error_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrSpyserverDeviceCallback) Warn(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_SpyserverDeviceCallback_Warn_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrSpyserverDeviceCallback) Debug(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_SpyserverDeviceCallback_Debug_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
 func DeleteSpyserverDeviceCallback(arg1 SpyserverDeviceCallback) {
 	_swig_i_0 := arg1.Swigcptr()
 	C._wrap_delete_SpyserverDeviceCallback_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0))
@@ -339,6 +515,10 @@ type SpyserverDeviceCallback interface {
 	CbFloatIQ(arg2 uintptr, arg3 int)
 	CbS16IQ(arg2 uintptr, arg3 int)
 	CbS8IQ(arg2 uintptr, arg3 int)
+	Info(arg2 string)
+	Error(arg2 string)
+	Warn(arg2 string)
+	Debug(arg2 string)
 }
 
 type SwigcptrVector32u uintptr
@@ -359,7 +539,7 @@ func NewVector32u__SWIG_0() (_swig_ret Vector32u) {
 func NewVector32u__SWIG_1(arg1 int64) (_swig_ret Vector32u) {
 	var swig_r Vector32u
 	_swig_i_0 := arg1
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_1(_swig_i_0))))
+	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_5(_swig_i_0))))
 	return swig_r
 }
 
@@ -391,7 +571,7 @@ func (arg1 SwigcptrVector32u) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector32u) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32u_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
+	C._wrap_Vector32u_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32u) IsEmpty() (_swig_ret bool) {
@@ -463,7 +643,7 @@ func NewVector32f__SWIG_0() (_swig_ret Vector32f) {
 func NewVector32f__SWIG_1(arg1 int64) (_swig_ret Vector32f) {
 	var swig_r Vector32f
 	_swig_i_0 := arg1
-	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_5(_swig_i_0))))
+	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_9(_swig_i_0))))
 	return swig_r
 }
 
@@ -495,7 +675,7 @@ func (arg1 SwigcptrVector32f) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector32f) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32f_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
+	C._wrap_Vector32f_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32f) IsEmpty() (_swig_ret bool) {
@@ -567,7 +747,7 @@ func NewVector16i__SWIG_0() (_swig_ret Vector16i) {
 func NewVector16i__SWIG_1(arg1 int64) (_swig_ret Vector16i) {
 	var swig_r Vector16i
 	_swig_i_0 := arg1
-	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_9(_swig_i_0))))
+	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_13(_swig_i_0))))
 	return swig_r
 }
 
@@ -599,7 +779,7 @@ func (arg1 SwigcptrVector16i) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector16i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector16i_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
+	C._wrap_Vector16i_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector16i) IsEmpty() (_swig_ret bool) {
@@ -671,7 +851,7 @@ func NewVector8i__SWIG_0() (_swig_ret Vector8i) {
 func NewVector8i__SWIG_1(arg1 int64) (_swig_ret Vector8i) {
 	var swig_r Vector8i
 	_swig_i_0 := arg1
-	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_13(_swig_i_0))))
+	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_SpyserverDevice_62588b4ce09e2d9c(C.swig_type_17(_swig_i_0))))
 	return swig_r
 }
 
@@ -703,7 +883,7 @@ func (arg1 SwigcptrVector8i) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector8i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector8i_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
+	C._wrap_Vector8i_reserve_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), C.swig_type_20(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector8i) IsEmpty() (_swig_ret bool) {
@@ -788,13 +968,14 @@ func (p SwigcptrSpyserverDevice) Swigcptr() uintptr {
 func (p SwigcptrSpyserverDevice) SwigIsSpyserverDevice() {
 }
 
-func NewSpyserverDevice(arg1 string, arg2 int) (_swig_ret SpyserverDevice) {
+func NewSpyserverDevice(arg1 SpyserverDeviceCallback, arg2 string, arg3 int) (_swig_ret SpyserverDevice) {
 	var swig_r SpyserverDevice
-	_swig_i_0 := arg1
+	_swig_i_0 := arg1.Swigcptr()
 	_swig_i_1 := arg2
-	swig_r = (SpyserverDevice)(SwigcptrSpyserverDevice(C._wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(*(*C.swig_type_17)(unsafe.Pointer(&_swig_i_0)), C.swig_intgo(_swig_i_1))))
+	_swig_i_2 := arg3
+	swig_r = (SpyserverDevice)(SwigcptrSpyserverDevice(C._wrap_new_SpyserverDevice_SpyserverDevice_62588b4ce09e2d9c(C.uintptr_t(_swig_i_0), *(*C.swig_type_21)(unsafe.Pointer(&_swig_i_1)), C.swig_intgo(_swig_i_2))))
 	if Swig_escape_always_false {
-		Swig_escape_val = arg1
+		Swig_escape_val = arg2
 	}
 	return swig_r
 }

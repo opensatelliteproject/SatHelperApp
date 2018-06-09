@@ -438,6 +438,38 @@ void SwigDirector_LimeDeviceCallback::cbS8IQ(void *data, int length) {
   Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
 }
 
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+void SwigDirector_LimeDeviceCallback::Info(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+void SwigDirector_LimeDeviceCallback::Error(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+void SwigDirector_LimeDeviceCallback::Warn(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+}
+
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+void SwigDirector_LimeDeviceCallback::Debug(std::string arg0) {
+  _gostring_ swig_arg2;
+  
+  swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
+  Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+}
+
 extern "C" void Swiggo_DeleteDirector_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(intgo);
 SwigDirector_LimeDeviceCallback::~SwigDirector_LimeDeviceCallback()
 {
@@ -527,6 +559,54 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee
 }
 
 
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Info(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Error(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Warn(arg2);
+  
+}
+
+
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(SwigDirector_LimeDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  arg1->_swig_upcall_Debug(arg2);
+  
+}
+
+
 void _wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
@@ -575,6 +655,54 @@ void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallbac
   arg3 = (int)_swig_go_2; 
   
   (arg1)->cbS8IQ(arg2,arg3);
+  
+}
+
+
+void _wrap_LimeDeviceCallback_Info_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Info(arg2);
+  
+}
+
+
+void _wrap_LimeDeviceCallback_Error_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Error(arg2);
+  
+}
+
+
+void _wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Warn(arg2);
+  
+}
+
+
+void _wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
+  std::string arg2 ;
+  
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
+  (&arg2)->assign(_swig_go_1.p, _swig_go_1.n); 
+  
+  (arg1)->Debug(arg2);
   
 }
 
@@ -1192,12 +1320,14 @@ void _wrap_delete_Vector8i_LimeDevice_7f56157f1ee2307f(std::vector< signed char 
 }
 
 
-LimeDevice *_wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f() {
+LimeDevice *_wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+  GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   LimeDevice *result = 0 ;
   LimeDevice *_swig_go_result;
   
+  arg1 = *(GoDeviceCallback **)&_swig_go_0; 
   
-  result = (LimeDevice *)new LimeDevice();
+  result = (LimeDevice *)new LimeDevice(arg1);
   *(LimeDevice **)&_swig_go_result = (LimeDevice *)result; 
   return _swig_go_result;
 }

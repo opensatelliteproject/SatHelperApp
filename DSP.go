@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
 	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	. "github.com/logrusorgru/aurora"
 	"time"
 	"github.com/racerxdl/go.fifo"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 
 func initDSP() {
@@ -14,9 +14,9 @@ func initDSP() {
 	circuitSampleRate := float32(device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
 
-	log.Printf(Cyan("Samples per Symbol: %f").String(), Bold(Green(sps)))
-	log.Printf(Cyan("Circuit Sample Rate: %f").String(), Bold(Green(circuitSampleRate)))
-	log.Printf(Cyan("Low Pass Decimator Cut Frequency: %f").String(), Bold(Green(circuitSampleRate / 2)))
+	SLog.Debug("Samples per Symbol: %f", Bold(Green(sps)))
+	SLog.Debug("Circuit Sample Rate: %f", Bold(Green(circuitSampleRate)))
+	SLog.Debug("Low Pass Decimator Cut Frequency: %f", Bold(Green(circuitSampleRate / 2)))
 
 	rrcTaps := SatHelper.FiltersRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps)
 	decimatorTaps := SatHelper.FiltersLowPass(1, float64(device.GetSampleRate()), float64(circuitSampleRate / 2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
@@ -28,15 +28,15 @@ func initDSP() {
 	rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
 
 
-	log.Printf(Cyan("Center Frequency: %d MHz").String(), Bold(Green(device.GetCenterFrequency())))
-	log.Printf(Cyan("Automatic Gain Control: %t").String(), Bold(Green(CurrentConfig.Base.AGCEnabled)))
+	SLog.Debug("Center Frequency: %d MHz", Bold(Green(device.GetCenterFrequency())))
+	SLog.Debug("Automatic Gain Control: %t", Bold(Green(CurrentConfig.Base.AGCEnabled)))
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
 	switch d.SampleType {
-	case Frontend.FrontendSampletypeFloatiq: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
-	case Frontend.FrontendSampletypeS16iq: AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples); break
-	case Frontend.FrontendSampletypeS8iq: AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples); break
+	case Frontend.SampleTypeFloatIQ: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
+	case Frontend.SampleTypeS16IQ: AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples); break
+	case Frontend.SampleTypeS8IQ: AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples); break
 	}
 }
 
@@ -102,10 +102,10 @@ func processSamples() {
 }
 
 func symbolProcessLoop() {
-	log.Println(Green("Symbol Process Routine started"))
+	SLog.Info("Symbol Process Routine started")
 	for running {
 		processSamples()
 		time.Sleep(time.Microsecond)
 	}
-	log.Println(Red("Symbol Process Routine stopped"))
+	SLog.Error("Symbol Process Routine stopped")
 }

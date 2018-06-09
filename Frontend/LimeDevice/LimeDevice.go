@@ -32,10 +32,10 @@ typedef struct { void* array; intgo len; intgo cap; } _goslice_;
 #cgo CXXFLAGS: -std=c++11
 #cgo LDFLAGS: -lSoapySDR
 
-typedef long long swig_type_1;
-typedef long long swig_type_2;
-typedef long long swig_type_3;
-typedef long long swig_type_4;
+typedef _gostring_ swig_type_1;
+typedef _gostring_ swig_type_2;
+typedef _gostring_ swig_type_3;
+typedef _gostring_ swig_type_4;
 typedef long long swig_type_5;
 typedef long long swig_type_6;
 typedef long long swig_type_7;
@@ -48,25 +48,37 @@ typedef long long swig_type_13;
 typedef long long swig_type_14;
 typedef long long swig_type_15;
 typedef long long swig_type_16;
-typedef _gostring_ swig_type_17;
-typedef _gostring_ swig_type_18;
+typedef long long swig_type_17;
+typedef long long swig_type_18;
+typedef long long swig_type_19;
+typedef long long swig_type_20;
+typedef _gostring_ swig_type_21;
+typedef _gostring_ swig_type_22;
 extern void _wrap_Swig_free_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_Swig_malloc_LimeDevice_7f56157f1ee2307f(swig_intgo arg1);
 extern uintptr_t _wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(int);
 extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_7f56157f1ee2307f(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1ee2307f(uintptr_t, uintptr_t data, swig_intgo length);
 extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee2307f(uintptr_t, uintptr_t data, swig_intgo length);
+extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee2307f(uintptr_t, swig_type_1 arg0);
+extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2307f(uintptr_t, swig_type_2 arg0);
+extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee2307f(uintptr_t, swig_type_3 arg0);
+extern void _wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2307f(uintptr_t, swig_type_4 arg0);
 extern void _wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_LimeDeviceCallback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
 extern void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
 extern void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, uintptr_t arg2, swig_intgo arg3);
+extern void _wrap_LimeDeviceCallback_Info_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_1 arg2);
+extern void _wrap_LimeDeviceCallback_Error_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_2 arg2);
+extern void _wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_3 arg2);
+extern void _wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_4 arg2);
 extern void _wrap_delete_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(void);
 extern uintptr_t _wrap_new_Vector32u__SWIG_0_LimeDevice_7f56157f1ee2307f(void);
-extern uintptr_t _wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_1 arg1);
-extern swig_type_2 _wrap_Vector32u_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern swig_type_3 _wrap_Vector32u_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern void _wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_4 arg2);
+extern uintptr_t _wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_5 arg1);
+extern swig_type_6 _wrap_Vector32u_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern swig_type_7 _wrap_Vector32u_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern void _wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_8 arg2);
 extern _Bool _wrap_Vector32u_isEmpty_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector32u_clear_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector32u_add_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2);
@@ -74,10 +86,10 @@ extern swig_intgo _wrap_Vector32u_get_LimeDevice_7f56157f1ee2307f(uintptr_t arg1
 extern void _wrap_Vector32u_set_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2, swig_intgo arg3);
 extern void _wrap_delete_Vector32u_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector32f__SWIG_0_LimeDevice_7f56157f1ee2307f(void);
-extern uintptr_t _wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_5 arg1);
-extern swig_type_6 _wrap_Vector32f_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern swig_type_7 _wrap_Vector32f_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern void _wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_8 arg2);
+extern uintptr_t _wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_9 arg1);
+extern swig_type_10 _wrap_Vector32f_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern swig_type_11 _wrap_Vector32f_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern void _wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_12 arg2);
 extern _Bool _wrap_Vector32f_isEmpty_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector32f_clear_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector32f_add_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, float arg2);
@@ -85,10 +97,10 @@ extern float _wrap_Vector32f_get_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swi
 extern void _wrap_Vector32f_set_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2, float arg3);
 extern void _wrap_delete_Vector32f_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector16i__SWIG_0_LimeDevice_7f56157f1ee2307f(void);
-extern uintptr_t _wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_9 arg1);
-extern swig_type_10 _wrap_Vector16i_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern swig_type_11 _wrap_Vector16i_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern void _wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_12 arg2);
+extern uintptr_t _wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_13 arg1);
+extern swig_type_14 _wrap_Vector16i_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern swig_type_15 _wrap_Vector16i_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern void _wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_16 arg2);
 extern _Bool _wrap_Vector16i_isEmpty_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector16i_clear_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector16i_add_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, short arg2);
@@ -96,19 +108,19 @@ extern short _wrap_Vector16i_get_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swi
 extern void _wrap_Vector16i_set_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2, short arg3);
 extern void _wrap_delete_Vector16i_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern uintptr_t _wrap_new_Vector8i__SWIG_0_LimeDevice_7f56157f1ee2307f(void);
-extern uintptr_t _wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_13 arg1);
-extern swig_type_14 _wrap_Vector8i_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern swig_type_15 _wrap_Vector8i_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern void _wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_16 arg2);
+extern uintptr_t _wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee2307f(swig_type_17 arg1);
+extern swig_type_18 _wrap_Vector8i_size_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern swig_type_19 _wrap_Vector8i_capacity_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern void _wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_20 arg2);
 extern _Bool _wrap_Vector8i_isEmpty_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector8i_clear_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_Vector8i_add_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, char arg2);
 extern char _wrap_Vector8i_get_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2);
 extern void _wrap_Vector8i_set_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2, char arg3);
 extern void _wrap_delete_Vector8i_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern uintptr_t _wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(void);
+extern uintptr_t _wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_delete_LimeDevice_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
-extern swig_type_17 _wrap_LimeDevice_GetName_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
+extern swig_type_21 _wrap_LimeDevice_GetName_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern swig_intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2);
 extern swig_intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_intgo arg2);
 extern swig_intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
@@ -116,7 +128,7 @@ extern swig_intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_7f56157f1ee2307f(uin
 extern void _wrap_LimeDevice_SetLNAGain_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetTIAGain_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, char arg2);
 extern void _wrap_LimeDevice_SetPGAGain_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, char arg2);
-extern void _wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_18 arg2);
+extern void _wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, swig_type_22 arg2);
 extern void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f56157f1ee2307f(uintptr_t arg1, uintptr_t arg2);
 extern _Bool _wrap_LimeDevice_Init_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
 extern void _wrap_LimeDevice_Destroy_LimeDevice_7f56157f1ee2307f(uintptr_t arg1);
@@ -270,6 +282,134 @@ func Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f
 	swig_p.CbS8IQ(arg2, arg3)
 }
 
+type _swig_DirectorInterfaceLimeDeviceCallbackInfo interface {
+	Info(string)
+}
+
+func (swig_p *_swig_DirectorLimeDeviceCallback) Info(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceLimeDeviceCallbackInfo); swig_ok {
+		swig_g.Info(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee2307f(C.uintptr_t(swig_p.SwigcptrLimeDeviceCallback), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorLimeDeviceCallbackInfo(p LimeDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee2307f(C.uintptr_t(p.(*_swig_DirectorLimeDeviceCallback).SwigcptrLimeDeviceCallback), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f
+func Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Info(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceLimeDeviceCallbackError interface {
+	Error(string)
+}
+
+func (swig_p *_swig_DirectorLimeDeviceCallback) Error(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceLimeDeviceCallbackError); swig_ok {
+		swig_g.Error(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2307f(C.uintptr_t(swig_p.SwigcptrLimeDeviceCallback), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorLimeDeviceCallbackError(p LimeDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2307f(C.uintptr_t(p.(*_swig_DirectorLimeDeviceCallback).SwigcptrLimeDeviceCallback), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f
+func Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Error(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceLimeDeviceCallbackWarn interface {
+	Warn(string)
+}
+
+func (swig_p *_swig_DirectorLimeDeviceCallback) Warn(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceLimeDeviceCallbackWarn); swig_ok {
+		swig_g.Warn(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee2307f(C.uintptr_t(swig_p.SwigcptrLimeDeviceCallback), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorLimeDeviceCallbackWarn(p LimeDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee2307f(C.uintptr_t(p.(*_swig_DirectorLimeDeviceCallback).SwigcptrLimeDeviceCallback), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f
+func Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Warn(_swig_i_0)
+}
+
+type _swig_DirectorInterfaceLimeDeviceCallbackDebug interface {
+	Debug(string)
+}
+
+func (swig_p *_swig_DirectorLimeDeviceCallback) Debug(arg0 string) {
+	if swig_g, swig_ok := swig_p.v.(_swig_DirectorInterfaceLimeDeviceCallbackDebug); swig_ok {
+		swig_g.Debug(arg0)
+		return
+	}
+	_swig_i_0 := arg0
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2307f(C.uintptr_t(swig_p.SwigcptrLimeDeviceCallback), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+func DirectorLimeDeviceCallbackDebug(p LimeDeviceCallback, arg2 string) {
+	_swig_i_0 := arg2
+	C._wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2307f(C.uintptr_t(p.(*_swig_DirectorLimeDeviceCallback).SwigcptrLimeDeviceCallback), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_0)))
+	if Swig_escape_always_false {
+		Swig_escape_val = _swig_i_0
+	}
+}
+
+//export Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f
+func Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f(swig_c int, arg2 string) {
+	var _swig_i_0 string
+	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
+ _swig_i_0 = swigCopyString(arg2) 
+	swig_p.Debug(_swig_i_0)
+}
+
 func DeleteDirectorLimeDeviceCallback(arg1 LimeDeviceCallback) {
 	_swig_i_0 := arg1.Swigcptr()
 	C._wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))
@@ -315,6 +455,42 @@ func (arg1 SwigcptrLimeDeviceCallback) CbS8IQ(arg2 uintptr, arg3 int) {
 	C._wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.uintptr_t(_swig_i_1), C.swig_intgo(_swig_i_2))
 }
 
+func (arg1 SwigcptrLimeDeviceCallback) Info(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDeviceCallback_Info_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_1)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrLimeDeviceCallback) Error(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDeviceCallback_Error_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_2)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrLimeDeviceCallback) Warn(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_3)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
+func (arg1 SwigcptrLimeDeviceCallback) Debug(arg2 string) {
+	_swig_i_0 := arg1
+	_swig_i_1 := arg2
+	C._wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_4)(unsafe.Pointer(&_swig_i_1)))
+	if Swig_escape_always_false {
+		Swig_escape_val = arg2
+	}
+}
+
 func DeleteLimeDeviceCallback(arg1 LimeDeviceCallback) {
 	_swig_i_0 := arg1.Swigcptr()
 	C._wrap_delete_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))
@@ -333,6 +509,10 @@ type LimeDeviceCallback interface {
 	CbFloatIQ(arg2 uintptr, arg3 int)
 	CbS16IQ(arg2 uintptr, arg3 int)
 	CbS8IQ(arg2 uintptr, arg3 int)
+	Info(arg2 string)
+	Error(arg2 string)
+	Warn(arg2 string)
+	Debug(arg2 string)
 }
 
 type SwigcptrVector32u uintptr
@@ -353,7 +533,7 @@ func NewVector32u__SWIG_0() (_swig_ret Vector32u) {
 func NewVector32u__SWIG_1(arg1 int64) (_swig_ret Vector32u) {
 	var swig_r Vector32u
 	_swig_i_0 := arg1
-	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_1(_swig_i_0))))
+	swig_r = (Vector32u)(SwigcptrVector32u(C._wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_5(_swig_i_0))))
 	return swig_r
 }
 
@@ -385,7 +565,7 @@ func (arg1 SwigcptrVector32u) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector32u) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_4(_swig_i_1))
+	C._wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32u) IsEmpty() (_swig_ret bool) {
@@ -457,7 +637,7 @@ func NewVector32f__SWIG_0() (_swig_ret Vector32f) {
 func NewVector32f__SWIG_1(arg1 int64) (_swig_ret Vector32f) {
 	var swig_r Vector32f
 	_swig_i_0 := arg1
-	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_5(_swig_i_0))))
+	swig_r = (Vector32f)(SwigcptrVector32f(C._wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_9(_swig_i_0))))
 	return swig_r
 }
 
@@ -489,7 +669,7 @@ func (arg1 SwigcptrVector32f) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector32f) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_8(_swig_i_1))
+	C._wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector32f) IsEmpty() (_swig_ret bool) {
@@ -561,7 +741,7 @@ func NewVector16i__SWIG_0() (_swig_ret Vector16i) {
 func NewVector16i__SWIG_1(arg1 int64) (_swig_ret Vector16i) {
 	var swig_r Vector16i
 	_swig_i_0 := arg1
-	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_9(_swig_i_0))))
+	swig_r = (Vector16i)(SwigcptrVector16i(C._wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_13(_swig_i_0))))
 	return swig_r
 }
 
@@ -593,7 +773,7 @@ func (arg1 SwigcptrVector16i) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector16i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_12(_swig_i_1))
+	C._wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector16i) IsEmpty() (_swig_ret bool) {
@@ -665,7 +845,7 @@ func NewVector8i__SWIG_0() (_swig_ret Vector8i) {
 func NewVector8i__SWIG_1(arg1 int64) (_swig_ret Vector8i) {
 	var swig_r Vector8i
 	_swig_i_0 := arg1
-	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_13(_swig_i_0))))
+	swig_r = (Vector8i)(SwigcptrVector8i(C._wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee2307f(C.swig_type_17(_swig_i_0))))
 	return swig_r
 }
 
@@ -697,7 +877,7 @@ func (arg1 SwigcptrVector8i) Capacity() (_swig_ret int64) {
 func (arg1 SwigcptrVector8i) Reserve(arg2 int64) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_16(_swig_i_1))
+	C._wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), C.swig_type_20(_swig_i_1))
 }
 
 func (arg1 SwigcptrVector8i) IsEmpty() (_swig_ret bool) {
@@ -760,9 +940,10 @@ func (p SwigcptrLimeDevice) Swigcptr() uintptr {
 func (p SwigcptrLimeDevice) SwigIsLimeDevice() {
 }
 
-func NewLimeDevice() (_swig_ret LimeDevice) {
+func NewLimeDevice(arg1 LimeDeviceCallback) (_swig_ret LimeDevice) {
 	var swig_r LimeDevice
-	swig_r = (LimeDevice)(SwigcptrLimeDevice(C._wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f()))
+	_swig_i_0 := arg1.Swigcptr()
+	swig_r = (LimeDevice)(SwigcptrLimeDevice(C._wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0))))
 	return swig_r
 }
 
@@ -832,7 +1013,7 @@ func (arg1 SwigcptrLimeDevice) SetPGAGain(arg2 byte) {
 func (arg1 SwigcptrLimeDevice) SetAntenna(arg2 string) {
 	_swig_i_0 := arg1
 	_swig_i_1 := arg2
-	C._wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_18)(unsafe.Pointer(&_swig_i_1)))
+	C._wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(C.uintptr_t(_swig_i_0), *(*C.swig_type_22)(unsafe.Pointer(&_swig_i_1)))
 	if Swig_escape_always_false {
 		Swig_escape_val = arg2
 	}

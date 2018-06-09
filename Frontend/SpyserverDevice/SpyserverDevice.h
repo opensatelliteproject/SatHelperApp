@@ -118,7 +118,7 @@ private:
   void threadLoop();
 
 public:
-  SpyserverDevice(std::string hostname, int port);
+  SpyserverDevice(GoDeviceCallback *cb, std::string hostname, int port);
   virtual ~SpyserverDevice();
 
   uint32_t SetSampleRate(uint32_t sampleRate);

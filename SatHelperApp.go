@@ -12,6 +12,7 @@ import (
 	"flag"
 	"os"
 	"runtime/pprof"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
@@ -29,14 +30,14 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	log.Printf("%s %s (%s) - %s %s\n",
+	SLog.Log("%s %s (%s) - %s %s",
 		aurora.Green(aurora.Bold("SatHelperApp")),
 		aurora.Bold(GetVersion()),
 		aurora.Bold(GetRevision()),
 		aurora.Bold(GetCompilationDate()),
 		aurora.Bold(GetCompilationTime()),
 	)
-	log.Printf("%s %s (%s) - %s %s\n",
+	SLog.Log("%s %s (%s) - %s %s",
 		aurora.Green(aurora.Bold("libSatHelper")),
 		aurora.Bold(SatHelper.InfoGetVersion()),
 		aurora.Bold(SatHelper.InfoGetGitSHA1()),
@@ -48,28 +49,28 @@ func main() {
 
 	switch strings.ToLower(CurrentConfig.Base.Mode) {
 		case "lrit":
-			log.Println(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file."))
+			SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
 			SetLRITMode()
 		break
 		case "hrit":
-			log.Println(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file."))
+			SLog.Info(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file.").String())
 			SetHRITMode()
 		break
 		default:
-			log.Println(aurora.Gray("No valid mode selected. Using config file parameters."))
+			SLog.Info(aurora.Gray("No valid mode selected. Using config file parameters.").String())
 	}
 
 	switch strings.ToLower(CurrentConfig.Base.DeviceType) {
 		case "cfile":
-			log.Printf(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
+			SLog.Info(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
 			break
 		case "lime":
-			log.Print(aurora.Cyan("LimeSDR Frontend selected."))
+			SLog.Info(aurora.Cyan("LimeSDR Frontend selected.").String())
 			device = Frontend.NewLimeFrontend()
 
 			if ! device.Init() {
-				log.Println("Error initializing device")
+				SLog.Error("Error initializing device")
 				return
 			}
 			defer device.Destroy()
@@ -79,19 +80,19 @@ func main() {
 			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
 			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
 
-			log.Printf(aurora.Cyan("LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
-			log.Printf(aurora.Cyan("TIA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.TIAGain)))
-			log.Printf(aurora.Cyan("PGA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
-			log.Printf(aurora.Cyan("Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
+			SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			SLog.Info(aurora.Cyan("	TIA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.TIAGain)))
+			SLog.Info(aurora.Cyan("	PGA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+			SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
 			break
 		case "airspy":
-			log.Print(aurora.Cyan("Airspy Frontend selected."))
+			SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
 			Frontend.AirspyInitialize()
 			defer Frontend.AirspyDeinitialize()
 			device = Frontend.NewAirspyFrontend()
 
 			if ! device.Init() {
-				log.Println("Error initializing device")
+				SLog.Error("Error initializing device")
 				return
 			}
 			defer device.Destroy()
@@ -102,37 +103,37 @@ func main() {
 			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
 			break
 		case "spyserver":
-			log.Printf(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
+			SLog.Info(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
 			device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
 			if ! device.Init() {
-				log.Println("Error initializing device")
+				SLog.Error("Error initializing device")
 				return
 			}
 			defer device.Destroy()
 			device.SetGain1(CurrentConfig.SpyserverSource.Gain)
 			break
 		default:
-			log.Println(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
+			SLog.Error(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
 			return
 		break
 	}
 
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
 	case "tcpserver":
-		log.Printf(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
+		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 		break
 	default:
-		log.Printf(aurora.Red("Unknown Demuxer Type %s.").String(), CurrentConfig.Base.DemuxerType)
+		SLog.Error("Unknown Demuxer Type %s.", CurrentConfig.Base.DemuxerType)
 		return
 	}
 
 	if device.SetSampleRate(CurrentConfig.Source.SampleRate) != CurrentConfig.Source.SampleRate {
-		log.Println("Cannot set sample rate.")
+		SLog.Warn("Cannot set sample rate.")
 	}
 
 	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {
-		log.Printf("Cannot set exact frequency. Current Value: %d\n", device.GetCenterFrequency())
+		SLog.Warn("Cannot set exact frequency. Current Value: %d\n", device.GetCenterFrequency())
 	}
 
 	device.SetSamplesAvailableCallback(newSamplesCallback)
@@ -148,12 +149,10 @@ func main() {
 
 	Display.InitDisplay()
 	demuxer.Init()
-
-	log.Println(aurora.Cyan("Starting Source"))
 	device.Start()
 	defer device.Stop()
 
-	log.Println(aurora.Cyan("Starting Main loop"))
+	SLog.Info("Starting main loop")
 
 	demuxer.Start()
 	defer demuxer.Stop()
@@ -164,8 +163,9 @@ func main() {
 	running = true
 
 	stopFunc := func(ui.Event) {
-		log.Println(aurora.Bold(aurora.Red("Got close handler.")))
+		SLog.Warn(aurora.Bold("Got close handler").String())
 		running = false
+		SLog.SetTermUiDisplay(false)
 		ui.StopLoop()
 	}
 

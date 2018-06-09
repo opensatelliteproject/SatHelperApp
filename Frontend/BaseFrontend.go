@@ -2,11 +2,12 @@ package Frontend
 
 import (
 	"unsafe"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 )
 
-const FrontendSampletypeFloatiq = 0
-const FrontendSampletypeS16iq = 1
-const FrontendSampletypeS8iq = 2
+const SampleTypeFloatIQ = 0
+const SampleTypeS16IQ = 1
+const SampleTypeS8IQ = 2
 
 type SampleCallbackData struct {
 	ComplexArray []complex64
@@ -22,6 +23,26 @@ type GoCallback struct {
 	callback SamplesCallback
 }
 
+func NewGoCallback() GoCallback {
+	return GoCallback{}
+}
+
+func (p *GoCallback) Info(str string) {
+	SLog.Info("%s", str)
+}
+
+func (p *GoCallback) Error(str string) {
+	SLog.Error("%s", str)
+}
+
+func (p *GoCallback) Warn(str string) {
+	SLog.Warn("%s", str)
+}
+
+func (p *GoCallback) Debug(str string) {
+	SLog.Debug("%s", str)
+}
+
 func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
 	const arrayLen = 1 << 30
 	arr := (*[arrayLen]complex64)(unsafe.Pointer(data))[:length:length]
@@ -29,7 +50,7 @@ func (p *GoCallback) CbFloatIQ(data uintptr, length int) {
 		p.callback(SampleCallbackData{
 			ComplexArray: arr,
 			NumSamples:   length,
-			SampleType:   FrontendSampletypeFloatiq,
+			SampleType:   SampleTypeFloatIQ,
 		})
 	}
 }
@@ -43,7 +64,7 @@ func (p *GoCallback) CbS16IQ(data uintptr, length int) {
 		p.callback(SampleCallbackData{
 			Int16Array: arr,
 			NumSamples: length,
-			SampleType: FrontendSampletypeS16iq,
+			SampleType: SampleTypeS16IQ,
 		})
 	}
 }
@@ -55,9 +76,9 @@ func (p *GoCallback) CbS8IQ(data uintptr, length int) {
 	arr := (*[arrayLen]int8)(unsafe.Pointer(data))[:pairLength:pairLength]
 	if p.callback != nil {
 		p.callback(SampleCallbackData{
-			Int8Array: arr,
+			Int8Array:  arr,
 			NumSamples: length,
-			SampleType: FrontendSampletypeS8iq,
+			SampleType: SampleTypeS8IQ,
 		})
 	}
 }
