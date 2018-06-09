@@ -8,6 +8,9 @@ REPO_REV := $(shell git rev-parse --sq HEAD)
 BUILD_DATE := $(shell date +"%b %d %Y")
 BUILD_TIME := $(shell date +"%H:%M:%S")
 
+PATH := $(PATH):/usr/lib/go-1.10/bin
+
+GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.10/bin command -v go 2> /dev/null)
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
@@ -15,14 +18,20 @@ DESTDIR?=/usr/local/bin
 GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(REPO_VERSION) -X \"$(BUILD_DATE_VAR)=$(BUILD_DATE)\" -X $(BUILD_TIME_VAR)=$(BUILD_TIME)"
 
 .PHONY: all
-.NOTPARALLEL: deps update
+.NOTPARALLEL: pre deps update
 
-all: | $(BASE) deps update build
+all: | $(BASE) pre deps update build
 
 $(BASE):
 	@echo Linking virtual GOPATH
 	@mkdir -p $(dir $@)
 	@ln -sf $(CURDIR) $@
+
+pre:
+	@echo Prechecking
+ifndef GOBIN
+	$(error "GO executable not found")
+endif
 
 clean:
 	@echo Cleaning virtual GOPATH
@@ -30,7 +39,7 @@ clean:
 
 deps: | $(BASE)
 	@echo Downloading dependencies
-	@cd $(BASE) && go get
+	@cd $(BASE) && $(GOBIN) get
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -42,7 +51,7 @@ update: | $(BASE)
 
 build: | $(BASE)
 	@echo Building SatHelperApp
-	@cd $(BASE) && go build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@cd $(BASE) && $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
 
 install: | $(BASE)
 	@echo Installing
