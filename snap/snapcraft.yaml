@@ -18,6 +18,7 @@ parts:
       - libsathelper
       - libairspy0
       - libsoapysdr0.6
+      - golang-1.10
     stage-packages:
       - libusb-1.0-0
       - libcorrect
