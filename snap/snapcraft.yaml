@@ -19,7 +19,9 @@ parts:
       - libairspy0
       - libsoapysdr0.6
       - golang-1.10
+      - swig
       - swig3.0
+      - libsoapysdr-dev
     stage-packages:
       - libusb-1.0-0
       - libcorrect

@@ -39,7 +39,7 @@ clean:
 
 deps: | $(BASE)
 	@echo Downloading dependencies
-	@cd $(BASE) && $(GOBIN) get
+	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) get
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -51,7 +51,7 @@ update: | $(BASE)
 
 build: | $(BASE)
 	@echo Building SatHelperApp
-	@cd $(BASE) && $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
 
 install: | $(BASE)
 	@echo Installing
