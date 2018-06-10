@@ -15,9 +15,9 @@ parts:
       echo "deb http://ppa.launchpad.net/opensatelliteproject/ppa/ubuntu xenial main" | tee /etc/apt/sources.list.d/opensatelliteproject.list
       echo "deb http://ppa.launchpad.net/myriadrf/drivers/ubuntu xenial main" | tee /etc/apt/sources.list.d/myriadrf-drivers.list
       echo "deb http://ppa.launchpad.net/gophers/archive/ubuntu xenial main"  | tee /etc/apt/sources.list.d/gophers-archive.list
-      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 496DD3727263A7A279F9B349407E8BB01C195687
-      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 11FC2E68126782B43762694F22C627172ECB91FE
-      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C73998DC9DFEA6DCF1241057308C15A29AD198E9
+      apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 496DD3727263A7A279F9B349407E8BB01C195687
+      apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 11FC2E68126782B43762694F22C627172ECB91FE
+      apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C73998DC9DFEA6DCF1241057308C15A29AD198E9
       apt update
       apt install -yy libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev golang-1.10
     prime: [-*]
