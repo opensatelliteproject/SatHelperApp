@@ -1,3 +1,6 @@
+[![Snap Status](https://build.snapcraft.io/badge/opensatelliteproject/SatHelperApp.svg)](https://build.snapcraft.io/user/opensatelliteproject/SatHelperApp)
+
+
 SatHelperApp
 ============
 
