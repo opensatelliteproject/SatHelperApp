@@ -23,6 +23,7 @@ parts:
       - swig3.0
       - libsoapysdr-dev
       - libairspy-dev
+      - libusb-1.0-0-dev
     stage-packages:
       - libusb-1.0-0
       - libcorrect
