@@ -13,8 +13,8 @@ parts:
     plugin: nil
     override-build: |
       echo "deb http://ppa.launchpad.net/opensatelliteproject/ppa/ubuntu xenial main" | tee /etc/apt/sources.list.d/opensatelliteproject.list
-      echo "deb http://ppa.launchpad.net/myriadrf/drivers/ubuntu xenial main" | tee /etc/apt/sources.list.d/myriadrf-drivers.list
-      echo "deb http://ppa.launchpad.net/gophers/archive/ubuntu xenial main"  | tee /etc/apt/sources.list.d/gophers-archive.list
+      echo "deb http://ppa.launchpad.net/opensatelliteproject/drivers/ubuntu xenial main" | tee /etc/apt/sources.list.d/drivers.list
+      echo "deb http://ppa.launchpad.net/gophers/archive/ubuntu xenial main" | tee /etc/apt/sources.list.d/gophers-archive.list
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 496DD3727263A7A279F9B349407E8BB01C195687
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 11FC2E68126782B43762694F22C627172ECB91FE
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C73998DC9DFEA6DCF1241057308C15A29AD198E9
@@ -37,6 +37,7 @@ parts:
       - libairspy0
       - libsoapysdr0.6
       - libstdc++6
+      - soapysdr0.6-module-lms7
       - libc6
       - libudev1
       - libgcc1
