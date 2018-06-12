@@ -1,12 +1,46 @@
 package SLog
 
 import (
-	"log"
 	"fmt"
 	"github.com/logrusorgru/aurora"
+	"flag"
+	"log"
+	"os"
+	"github.com/mitchellh/go-homedir"
 )
 
 var displayOnTermUI = false
+
+var logStarted = false
+var logPath string
+var logPathFlag = flag.String("logdir", "", "Log folder")
+var logFileHandle *os.File
+
+func StartLog() {
+	if ! logStarted {
+		flag.Parse()
+		home, _ := homedir.Dir()
+		logPath = fmt.Sprintf("%s/SatHelperApp/logs", home)
+		if *logPathFlag != "" {
+			logPath = *logPathFlag
+		}
+		logStarted = true
+		os.MkdirAll(logPath, os.ModePerm)
+		file, err := os.Create(fmt.Sprintf("%s/log.txt", logPath))
+		if err != nil {
+			Error("Error opening log file: %s. Won't try again...", err)
+			return
+		}
+		Info(aurora.Bold("Log Started at %s/log.txt . If no message apears please check the log.").String(), logPath)
+		logFileHandle = file
+	}
+}
+
+func EndLog() {
+	if logFileHandle != nil {
+		logFileHandle.Close()
+	}
+}
 
 func SetTermUiDisplay(b bool) {
 	displayOnTermUI = b
@@ -22,6 +56,10 @@ func Log(str string, v ...interface{}) {
 	} else {
 		log.Printf(aurora.Cyan("%s").String(), fmt.Sprintf(str, v...))
 	}
+
+	if logFileHandle != nil {
+		logFileHandle.WriteString(aurora.Cyan(fmt.Sprintf("[I] %s\n", fmt.Sprintf(str, v...))).String())
+	}
 }
 
 func Debug(str string, v ...interface{}) {
@@ -29,6 +67,9 @@ func Debug(str string, v ...interface{}) {
 		log.Printf("[D](fg-bold) [%s](fg-magenta)\n", fmt.Sprintf(str, v...))
 	} else {
 		log.Printf(aurora.Magenta("%s").String(), fmt.Sprintf(str, v...))
+	}
+	if logFileHandle != nil {
+		logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
 	}
 }
 
@@ -38,6 +79,9 @@ func Warn(str string, v ...interface{}) {
 	} else {
 		log.Printf(aurora.Brown("%s").String(), fmt.Sprintf(str, v...))
 	}
+	if logFileHandle != nil {
+		logFileHandle.WriteString(aurora.Brown(fmt.Sprintf("[W] %s\n", fmt.Sprintf(str, v...))).String())
+	}
 }
 
 func Error(str string, v ...interface{}) {
@@ -45,5 +89,8 @@ func Error(str string, v ...interface{}) {
 		log.Printf("[E](fg-bold) [%s](fg-red)\n", fmt.Sprintf(str, v...))
 	} else {
 		log.Printf(aurora.Red("%s").String(), fmt.Sprintf(str, v...))
+	}
+	if logFileHandle != nil {
+		logFileHandle.WriteString(aurora.Red(fmt.Sprintf("[E] %s\n", fmt.Sprintf(str, v...))).String())
 	}
 }

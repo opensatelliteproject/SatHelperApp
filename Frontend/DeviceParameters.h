@@ -42,11 +42,13 @@ public:
   }
 
   ~Log() {
-    switch (this->level) {
-      case logERROR: cb->Error(os.str()); break;
-      case logDEBUG: cb->Debug(os.str()); break;
-      case logWARN: cb->Warn(os.str()); break;
-      default: cb->Info(os.str()); break;
+    if (cb != NULL) {
+        switch (this->level) {
+          case logERROR: cb->Error(os.str()); break;
+          case logDEBUG: cb->Debug(os.str()); break;
+          case logWARN: cb->Warn(os.str()); break;
+          default: cb->Info(os.str()); break;
+        }
     }
   }
 };

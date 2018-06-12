@@ -13,11 +13,19 @@ import (
 	"os"
 	"runtime/pprof"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"time"
 )
 
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 
 func main() {
+	SLog.StartLog()
+	defer SLog.EndLog()
+	err := ui.Init()
+	if err != nil {
+		panic(err)
+	}
+	defer ui.Close()
 
 	flag.Parse()
 	if *cpuprofile != "" {
@@ -141,13 +149,10 @@ func main() {
 	initDSP()
 	initDecoder()
 
-	err := ui.Init()
-	if err != nil {
-		panic(err)
+	if CurrentConfig.Decoder.Display {
+		Display.InitDisplay()
 	}
-	defer ui.Close()
 
-	Display.InitDisplay()
 	demuxer.Init()
 	device.Start()
 	defer device.Stop()
@@ -167,31 +172,33 @@ func main() {
 		running = false
 		SLog.SetTermUiDisplay(false)
 		ui.StopLoop()
+		time.Sleep(1 * time.Second)
 	}
 
 	ui.Handle("/sys/kbd/q", stopFunc)
 	ui.Handle("/sys/kbd/C-c", stopFunc)
-	ui.Handle("/timer/100ms", func (e ui.Event) {
-		stat := GetStats()
-		Display.UpdateSignalQuality(stat.SignalQuality)
-		Display.UpdateLockedState(stat.FrameLock == 1)
-		Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
-		Display.UpdateReedSolomon(stat.RsErrors)
-		Display.UpdateSyncWord(stat.SyncWord)
-		Display.UpdateSCVCID(stat.SCID, stat.VCID)
-		Display.UpdateDecoderFifoUsage(stat.DecoderFifoUsage)
-		Display.UpdateDemodulatorFifoUsage(stat.DemodulatorFifoUsage)
-		Display.UpdateViterbiErrors(uint(stat.VitErrors), uint(stat.FrameBits))
-		Display.UpdatePhaseCorr(stat.PhaseCorrection)
-		Display.UpdateSyncCorrelation(stat.SyncCorrelation)
-		Display.UpdateMode(strings.ToUpper(CurrentConfig.Base.Mode))
-		Display.UpdateCenterFrequency(device.GetCenterFrequency())
-		Display.UpdateDevice(device.GetShortName())
-		Display.UpdateDemuxer(demuxer.GetName())
-		Display.Render()
-	})
 
-	CallClear()
-
+	if CurrentConfig.Decoder.Display {
+		ui.Handle("/timer/100ms", func(e ui.Event) {
+			stat := GetStats()
+			Display.UpdateSignalQuality(stat.SignalQuality)
+			Display.UpdateLockedState(stat.FrameLock == 1)
+			Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
+			Display.UpdateReedSolomon(stat.RsErrors)
+			Display.UpdateSyncWord(stat.SyncWord)
+			Display.UpdateSCVCID(stat.SCID, stat.VCID)
+			Display.UpdateDecoderFifoUsage(decodFifoUsage)
+			Display.UpdateDemodulatorFifoUsage(demodFifoUsage)
+			Display.UpdateViterbiErrors(uint(stat.VitErrors), uint(stat.FrameBits))
+			Display.UpdatePhaseCorr(stat.PhaseCorrection)
+			Display.UpdateSyncCorrelation(stat.SyncCorrelation)
+			Display.UpdateMode(strings.ToUpper(CurrentConfig.Base.Mode))
+			Display.UpdateCenterFrequency(device.GetCenterFrequency())
+			Display.UpdateDevice(device.GetShortName())
+			Display.UpdateDemuxer(demuxer.GetName())
+			Display.Render()
+		})
+		CallClear()
+	}
 	ui.Loop()
 }

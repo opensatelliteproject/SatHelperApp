@@ -48,6 +48,7 @@ var statisticsMutex = &sync.Mutex{}
 var demuxer Demuxer.BaseDemuxer
 
 var demodFifoUsage uint8
+var decodFifoUsage uint8
 
 // endregion
 

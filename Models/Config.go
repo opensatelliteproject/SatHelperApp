@@ -45,8 +45,6 @@ type SourceConfig struct {
 
 type DecoderConfig struct {
 	Display bool
-	VChannelPort int
-	StatisticsPort int
 	UseLastFrameData bool
 }
 

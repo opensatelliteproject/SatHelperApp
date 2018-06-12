@@ -66,6 +66,7 @@ func decoderLoop() {
 
 	for running {
 		if symbolsFifo.Len() >= CodedFrameSize {
+			decodFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
 			if localStats.TotalPackets % AverageLastNSamples == 0 {
 				averageRSCorrections = 0
 				averageVitCorrections = 0
@@ -243,7 +244,7 @@ func decoderLoop() {
 					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets % AverageLastNSamples))
 				}
 				localStats.FrameLock = 1
-				localStats.DecoderFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
+				localStats.DecoderFifoUsage = decodFifoUsage
 				localStats.DemodulatorFifoUsage = demodFifoUsage
 
 				if demuxer != nil {

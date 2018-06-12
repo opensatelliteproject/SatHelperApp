@@ -6,7 +6,16 @@ import (
 	"bytes"
 	"io/ioutil"
 	. "github.com/OpenSatelliteProject/SatHelperApp/Models"
+	"github.com/mitchellh/go-homedir"
+	"flag"
+	"fmt"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"os"
 )
+
+var configFile = flag.String("config", "", "write cpu profile to file")
+
+var finalConfigFilePath string
 
 // region Demodulator Parameters
 // These are the parameters used by the demodulator. Change with care.
@@ -47,9 +56,9 @@ const DefaultMixGain = 5
 const DefaultBiast = false
 
 // FIFO Size in Samples
-// 1024 * 1024 samples is about 4Mb of ram.
+// 10 * 1024 * 1024 samples is about 40Mb of ram.
 // This should be more than enough
-const FifoSize = 1024 * 1024
+const FifoSize = 10 * 1024 * 1024
 
 // endregion
 // region Decoder Parameters
@@ -106,16 +115,31 @@ func LoadDefaults() {
 	CurrentConfig.Source.SampleRate = DefaultSampleRate
 	CurrentConfig.Base.Decimation = DefaultDecimation
 	CurrentConfig.Base.AGCEnabled = true
+	CurrentConfig.Base.DeviceType = "airspy"
+	CurrentConfig.Base.SendConstellation = true
+
+	// Airspy Source Defaults
 	CurrentConfig.AirspySource.LNAGain = DefaultLnaGain
 	CurrentConfig.AirspySource.MixerGain = DefaultMixGain
 	CurrentConfig.AirspySource.VGAGain = DefaultVgaGain
-	CurrentConfig.Base.DeviceType = "airspy"
-	CurrentConfig.Base.SendConstellation = true
 	CurrentConfig.AirspySource.BiasTEnabled = DefaultBiast
+
+	// CFile Source Defaults
+	CurrentConfig.CFileSource.Filename = ""
+
+	// LimeSDR Source Defaults
+	CurrentConfig.LimeSource.LNAGain = 50
+	CurrentConfig.LimeSource.PGAGain = 50
+	CurrentConfig.LimeSource.TIAGain = 50
+	CurrentConfig.LimeSource.Antenna = "LNAH"
+
+	// Spyserver
+	CurrentConfig.SpyserverSource.Hostname = "127.0.0.1"
+	CurrentConfig.SpyserverSource.Port = 5555
+	CurrentConfig.SpyserverSource.Gain = 20
 
 	// Decoder
 	CurrentConfig.Decoder.Display = true
-	CurrentConfig.Decoder.StatisticsPort = DefaultStatisticsPort
 	CurrentConfig.Decoder.UseLastFrameData = true
 
 	// Others
@@ -136,7 +160,8 @@ func SaveConfig() {
 		log.Printf("Cannot save config: %s", err)
 		return
 	}
-	err = ioutil.WriteFile("SatHelperApp.cfg", firstBuffer.Bytes(), 0644)
+	SLog.Info("Saving config file to %s", finalConfigFilePath)
+	err = ioutil.WriteFile(finalConfigFilePath, firstBuffer.Bytes(), 0644)
 	if err != nil {
 		log.Printf("Cannot save config: %s", err)
 		return
@@ -144,9 +169,17 @@ func SaveConfig() {
 }
 
 func LoadConfig() {
-	_, err := toml.DecodeFile("SatHelperApp.cfg", &CurrentConfig)
+	home, _ := homedir.Dir()
+	os.MkdirAll(fmt.Sprintf("%s/SatHelperApp", home), os.ModePerm)
+	finalConfigFilePath = fmt.Sprintf("%s/SatHelperApp/%s", home, "SatHelperApp.cfg")
+	if *configFile != "" {
+		finalConfigFilePath = *configFile
+	}
+
+	SLog.Info("Loading config file from %s", finalConfigFilePath)
+	_, err := toml.DecodeFile(finalConfigFilePath, &CurrentConfig)
 	if err != nil {
-		log.Println("Cannot load file SatHelperApp.cfg. Loading default values.")
+		SLog.Warn("Cannot load file SatHelperApp.cfg. Loading default values.")
 		LoadDefaults()
 	}
 }

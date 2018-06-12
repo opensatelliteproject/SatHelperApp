@@ -29,7 +29,7 @@ private:
 	static SoapySDR::Kwargs args;
 
 	GoDeviceCallback *cb;
-	std::string name = "LimeSDR-Mini";
+	std::string name = "LimeSDR (Soapy)";
 	std::complex<float> buff[65535];
 
 public:

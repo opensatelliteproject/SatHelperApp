@@ -42,6 +42,7 @@ func newSamplesCallback(d Frontend.SampleCallbackData) {
 
 func processSamples() {
 	length := samplesFifo.Len()
+	demodFifoUsage = uint8(100 * float32(length) / float32(FifoSize))
 	if length <= 64 * 1024 {
 		return
 	}
@@ -53,7 +54,6 @@ func processSamples() {
 	for i := 0; i < length; i++ {
 		buffer0[i] = samplesFifo.UnsafeNext().(complex64)
 	}
-	demodFifoUsage = uint8(100 * float32(samplesFifo.UnsafeLen()) / float32(FifoSize))
 	// endregion
 	samplesFifo.UnsafeUnlock()
 
