@@ -19,7 +19,7 @@ GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(
 
 INTSIZE := $(shell getconf LONG_BIT)
 
-.PHONY: all
+.PHONY: all build
 .NOTPARALLEL: pre deps update
 
 all: | $(BASE) pre deps update build
