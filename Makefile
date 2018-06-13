@@ -10,7 +10,7 @@ BUILD_TIME := $(shell date +"%H:%M:%S")
 
 PATH := $(PATH):/usr/lib/go-1.10/bin
 
-GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.10/bin command -v go 2> /dev/null)
+GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.10/bin:/usr/local/Cellar/go/1.10.2/bin command -v go 2> /dev/null)
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
