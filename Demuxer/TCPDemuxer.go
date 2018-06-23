@@ -38,7 +38,7 @@ func (f *TCPServerDemuxer) Start() {
 func (f *TCPServerDemuxer) Stop() {
 	f.running = false
 }
-func (f *TCPServerDemuxer) SendFrame(frame []byte) {
+func (f *TCPServerDemuxer) ProcessFrame(frame []byte) {
 	go func() {
 		f.syncMtx.Lock()
 		var next *list.Element
