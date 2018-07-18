@@ -128,7 +128,7 @@ func LoadDefaults() {
 	CurrentConfig.CFileSource.Filename = ""
 
 	// LimeSDR Source Defaults
-	CurrentConfig.LimeSource.LNAGain = 35
+	CurrentConfig.LimeSource.LNAGain = 10
 	CurrentConfig.LimeSource.Antenna = "LNAH"
 
 	// Spyserver

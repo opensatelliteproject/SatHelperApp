@@ -52,23 +52,21 @@ bool LimeDevice::Init() {
 		Log(cb).Get(logERROR) << "Error initializing device.";
 		return false;
 	}
+
+	if (LMS_SetLPFBW(device, LMS_CH_RX, 0, 3e6) != 0) {
+		Log(cb).Get(logERROR) << "Error setting analog filter.";
+		return false;
+	}
+
+	if (LMS_Calibrate(device, LMS_CH_RX, 0, 3e6, 0) != 0) {
+		Log(cb).Get(logERROR) << "Error calibrating device. Maybe the port is saturated.";
+		return false;
+	}
     	
 	return (bool)device;
 };
 
 void LimeDevice::Start() {
-	// Set Filters
-    if (LMS_SetLPFBW(device, LMS_CH_RX, 0, 3e6) != 0) {
-		Log(cb).Get(logERROR) << "Error setting analog filter.";
-		return;
-	}
-
-    if (LMS_Calibrate(device, LMS_CH_RX, 0, 3e6, 0) != 0) {
-		Log(cb).Get(logWARN) << "Error calibrating device.";
-		return;
-	}
-        
-	// Set Stream
     transfer.channel = 0;
     transfer.fifoSize = 1024 * 1024;
     transfer.throughputVsLatency = 1.0;
