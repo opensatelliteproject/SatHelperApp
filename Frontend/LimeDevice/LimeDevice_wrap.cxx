@@ -408,72 +408,72 @@ SwigDirector_LimeDeviceCallback::SwigDirector_LimeDeviceCallback(int swig_p)
       go_val(swig_p), swig_mem(0)
 { }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(int, void *arg2, intgo arg3);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbFloatIQ_LimeDevice_d4a3c903ea87caf4(int, void *arg2, intgo arg3);
 void SwigDirector_LimeDeviceCallback::cbFloatIQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorLimeDeviceCallback_callback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorLimeDeviceCallback_callback_cbFloatIQ_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_7f56157f1ee2307f(int, void *arg2, intgo arg3);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_d4a3c903ea87caf4(int, void *arg2, intgo arg3);
 void SwigDirector_LimeDeviceCallback::cbS16IQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorLimeDeviceCallback_callback_cbS16IQ_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(int, void *arg2, intgo arg3);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_d4a3c903ea87caf4(int, void *arg2, intgo arg3);
 void SwigDirector_LimeDeviceCallback::cbS8IQ(void *data, int length) {
   void *swig_arg2;
   intgo swig_arg3;
   
   *(void **)&swig_arg2 = (void *)data; 
   swig_arg3 = (int)length; 
-  Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2, swig_arg3);
+  Swig_DirectorLimeDeviceCallback_callback_cbS8IQ_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2, swig_arg3);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_d4a3c903ea87caf4(int, _gostring_ arg2);
 void SwigDirector_LimeDeviceCallback::Info(std::string arg0) {
   _gostring_ swig_arg2;
   
   swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
-  Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+  Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_d4a3c903ea87caf4(int, _gostring_ arg2);
 void SwigDirector_LimeDeviceCallback::Error(std::string arg0) {
   _gostring_ swig_arg2;
   
   swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
-  Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+  Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_d4a3c903ea87caf4(int, _gostring_ arg2);
 void SwigDirector_LimeDeviceCallback::Warn(std::string arg0) {
   _gostring_ swig_arg2;
   
   swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
-  Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+  Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2);
 }
 
-extern "C" void Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f(int, _gostring_ arg2);
+extern "C" void Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_d4a3c903ea87caf4(int, _gostring_ arg2);
 void SwigDirector_LimeDeviceCallback::Debug(std::string arg0) {
   _gostring_ swig_arg2;
   
   swig_arg2 = Swig_AllocateString((&arg0)->data(), (&arg0)->length()); 
-  Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_7f56157f1ee2307f(go_val, swig_arg2);
+  Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_d4a3c903ea87caf4(go_val, swig_arg2);
 }
 
-extern "C" void Swiggo_DeleteDirector_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(intgo);
+extern "C" void Swiggo_DeleteDirector_LimeDeviceCallback_LimeDevice_d4a3c903ea87caf4(intgo);
 SwigDirector_LimeDeviceCallback::~SwigDirector_LimeDeviceCallback()
 {
-  Swiggo_DeleteDirector_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(go_val);
+  Swiggo_DeleteDirector_LimeDeviceCallback_LimeDevice_d4a3c903ea87caf4(go_val);
   delete swig_mem;
 }
 
@@ -481,7 +481,7 @@ SwigDirector_LimeDeviceCallback::~SwigDirector_LimeDeviceCallback()
 extern "C" {
 #endif
 
-void _wrap_Swig_free_LimeDevice_7f56157f1ee2307f(void *_swig_go_0) {
+void _wrap_Swig_free_LimeDevice_d4a3c903ea87caf4(void *_swig_go_0) {
   void *arg1 = (void *) 0 ;
   
   arg1 = *(void **)&_swig_go_0; 
@@ -491,7 +491,7 @@ void _wrap_Swig_free_LimeDevice_7f56157f1ee2307f(void *_swig_go_0) {
 }
 
 
-void *_wrap_Swig_malloc_LimeDevice_7f56157f1ee2307f(intgo _swig_go_0) {
+void *_wrap_Swig_malloc_LimeDevice_d4a3c903ea87caf4(intgo _swig_go_0) {
   int arg1 ;
   void *result = 0 ;
   void *_swig_go_result;
@@ -504,7 +504,7 @@ void *_wrap_Swig_malloc_LimeDevice_7f56157f1ee2307f(intgo _swig_go_0) {
 }
 
 
-intgo _wrap_logERROR_LimeDevice_7f56157f1ee2307f() {
+intgo _wrap_logERROR_LimeDevice_d4a3c903ea87caf4() {
   TLogLevel result;
   intgo _swig_go_result;
   
@@ -516,7 +516,7 @@ intgo _wrap_logERROR_LimeDevice_7f56157f1ee2307f() {
 }
 
 
-intgo _wrap_logWARN_LimeDevice_7f56157f1ee2307f() {
+intgo _wrap_logWARN_LimeDevice_d4a3c903ea87caf4() {
   TLogLevel result;
   intgo _swig_go_result;
   
@@ -528,7 +528,7 @@ intgo _wrap_logWARN_LimeDevice_7f56157f1ee2307f() {
 }
 
 
-intgo _wrap_logINFO_LimeDevice_7f56157f1ee2307f() {
+intgo _wrap_logINFO_LimeDevice_d4a3c903ea87caf4() {
   TLogLevel result;
   intgo _swig_go_result;
   
@@ -540,7 +540,7 @@ intgo _wrap_logINFO_LimeDevice_7f56157f1ee2307f() {
 }
 
 
-intgo _wrap_logDEBUG_LimeDevice_7f56157f1ee2307f() {
+intgo _wrap_logDEBUG_LimeDevice_d4a3c903ea87caf4() {
   TLogLevel result;
   intgo _swig_go_result;
   
@@ -552,7 +552,7 @@ intgo _wrap_logDEBUG_LimeDevice_7f56157f1ee2307f() {
 }
 
 
-GoDeviceCallback *_wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(intgo _swig_go_0) {
+GoDeviceCallback *_wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_LimeDevice_d4a3c903ea87caf4(intgo _swig_go_0) {
   int arg1 ;
   GoDeviceCallback *result = 0 ;
   GoDeviceCallback *_swig_go_result;
@@ -565,7 +565,7 @@ GoDeviceCallback *_wrap__swig_NewDirectorLimeDeviceCallbackLimeDeviceCallback_Li
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -579,7 +579,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbFloatIQ_LimeDevice_7f56157f
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -593,7 +593,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS16IQ_LimeDevice_7f56157f1e
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -607,7 +607,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_CbS8IQ_LimeDevice_7f56157f1ee
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -619,7 +619,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_Info_LimeDevice_7f56157f1ee23
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -631,7 +631,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_Error_LimeDevice_7f56157f1ee2
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -643,7 +643,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_Warn_LimeDevice_7f56157f1ee23
 }
 
 
-void _wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2307f(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_d4a3c903ea87caf4(SwigDirector_LimeDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   SwigDirector_LimeDeviceCallback *arg1 = (SwigDirector_LimeDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -655,7 +655,7 @@ void _wrap__swig_DirectorLimeDeviceCallback_upcall_Debug_LimeDevice_7f56157f1ee2
 }
 
 
-void _wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+void _wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
@@ -665,7 +665,7 @@ void _wrap_DeleteDirectorLimeDeviceCallback_LimeDevice_7f56157f1ee2307f(GoDevice
 }
 
 
-void _wrap_LimeDeviceCallback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_LimeDeviceCallback_cbFloatIQ_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -679,7 +679,7 @@ void _wrap_LimeDeviceCallback_cbFloatIQ_LimeDevice_7f56157f1ee2307f(GoDeviceCall
 }
 
 
-void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -693,7 +693,7 @@ void _wrap_LimeDeviceCallback_cbS16IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallba
 }
 
 
-void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
+void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, void *_swig_go_1, intgo _swig_go_2) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   void *arg2 = (void *) 0 ;
   int arg3 ;
@@ -707,7 +707,7 @@ void _wrap_LimeDeviceCallback_cbS8IQ_LimeDevice_7f56157f1ee2307f(GoDeviceCallbac
 }
 
 
-void _wrap_LimeDeviceCallback_Info_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_LimeDeviceCallback_Info_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -719,7 +719,7 @@ void _wrap_LimeDeviceCallback_Info_LimeDevice_7f56157f1ee2307f(GoDeviceCallback 
 }
 
 
-void _wrap_LimeDeviceCallback_Error_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_LimeDeviceCallback_Error_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -731,7 +731,7 @@ void _wrap_LimeDeviceCallback_Error_LimeDevice_7f56157f1ee2307f(GoDeviceCallback
 }
 
 
-void _wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_LimeDeviceCallback_Warn_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -743,7 +743,7 @@ void _wrap_LimeDeviceCallback_Warn_LimeDevice_7f56157f1ee2307f(GoDeviceCallback 
 }
 
 
-void _wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_LimeDeviceCallback_Debug_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0, _gostring_ _swig_go_1) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   std::string arg2 ;
   
@@ -755,7 +755,7 @@ void _wrap_LimeDeviceCallback_Debug_LimeDevice_7f56157f1ee2307f(GoDeviceCallback
 }
 
 
-void _wrap_delete_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+void _wrap_delete_LimeDeviceCallback_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   
   arg1 = *(GoDeviceCallback **)&_swig_go_0; 
@@ -765,7 +765,7 @@ void _wrap_delete_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f(GoDeviceCallbac
 }
 
 
-GoDeviceCallback *_wrap_new_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f() {
+GoDeviceCallback *_wrap_new_LimeDeviceCallback_LimeDevice_d4a3c903ea87caf4() {
   GoDeviceCallback *result = 0 ;
   GoDeviceCallback *_swig_go_result;
   
@@ -776,7 +776,7 @@ GoDeviceCallback *_wrap_new_LimeDeviceCallback_LimeDevice_7f56157f1ee2307f() {
 }
 
 
-Log *_wrap_new_Log_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+Log *_wrap_new_Log_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   Log *result = 0 ;
   Log *_swig_go_result;
@@ -789,7 +789,7 @@ Log *_wrap_new_Log_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
 }
 
 
-std::ostringstream *_wrap_Log_Get__SWIG_0_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0, intgo _swig_go_1) {
+std::ostringstream *_wrap_Log_Get__SWIG_0_LimeDevice_d4a3c903ea87caf4(Log *_swig_go_0, intgo _swig_go_1) {
   Log *arg1 = (Log *) 0 ;
   TLogLevel arg2 ;
   std::ostringstream *result = 0 ;
@@ -804,7 +804,7 @@ std::ostringstream *_wrap_Log_Get__SWIG_0_LimeDevice_7f56157f1ee2307f(Log *_swig
 }
 
 
-std::ostringstream *_wrap_Log_Get__SWIG_1_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0) {
+std::ostringstream *_wrap_Log_Get__SWIG_1_LimeDevice_d4a3c903ea87caf4(Log *_swig_go_0) {
   Log *arg1 = (Log *) 0 ;
   std::ostringstream *result = 0 ;
   std::ostringstream *_swig_go_result;
@@ -817,7 +817,7 @@ std::ostringstream *_wrap_Log_Get__SWIG_1_LimeDevice_7f56157f1ee2307f(Log *_swig
 }
 
 
-void _wrap_delete_Log_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0) {
+void _wrap_delete_Log_LimeDevice_d4a3c903ea87caf4(Log *_swig_go_0) {
   Log *arg1 = (Log *) 0 ;
   
   arg1 = *(Log **)&_swig_go_0; 
@@ -827,7 +827,7 @@ void _wrap_delete_Log_LimeDevice_7f56157f1ee2307f(Log *_swig_go_0) {
 }
 
 
-std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_LimeDevice_7f56157f1ee2307f() {
+std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_LimeDevice_d4a3c903ea87caf4() {
   std::vector< uint32_t > *result = 0 ;
   std::vector< unsigned int > *_swig_go_result;
   
@@ -838,7 +838,7 @@ std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_0_LimeDevice_7f56157f1ee2
 }
 
 
-std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2307f(long long _swig_go_0) {
+std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_LimeDevice_d4a3c903ea87caf4(long long _swig_go_0) {
   std::vector< unsigned int >::size_type arg1 ;
   std::vector< uint32_t > *result = 0 ;
   std::vector< unsigned int > *_swig_go_result;
@@ -851,7 +851,7 @@ std::vector< unsigned int > *_wrap_new_Vector32u__SWIG_1_LimeDevice_7f56157f1ee2
 }
 
 
-long long _wrap_Vector32u_size_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0) {
+long long _wrap_Vector32u_size_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type result;
   long long _swig_go_result;
@@ -864,7 +864,7 @@ long long _wrap_Vector32u_size_LimeDevice_7f56157f1ee2307f(std::vector< unsigned
 }
 
 
-long long _wrap_Vector32u_capacity_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0) {
+long long _wrap_Vector32u_capacity_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type result;
   long long _swig_go_result;
@@ -877,7 +877,7 @@ long long _wrap_Vector32u_capacity_LimeDevice_7f56157f1ee2307f(std::vector< unsi
 }
 
 
-void _wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector32u_reserve_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0, long long _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::size_type arg2 ;
   
@@ -889,7 +889,7 @@ void _wrap_Vector32u_reserve_LimeDevice_7f56157f1ee2307f(std::vector< unsigned i
 }
 
 
-bool _wrap_Vector32u_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0) {
+bool _wrap_Vector32u_isEmpty_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -902,7 +902,7 @@ bool _wrap_Vector32u_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< unsigned i
 }
 
 
-void _wrap_Vector32u_clear_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0) {
+void _wrap_Vector32u_clear_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   
   arg1 = *(std::vector< uint32_t > **)&_swig_go_0; 
@@ -912,7 +912,7 @@ void _wrap_Vector32u_clear_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int
 }
 
 
-void _wrap_Vector32u_add_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
+void _wrap_Vector32u_add_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   std::vector< unsigned int >::value_type *arg2 = 0 ;
   
@@ -924,7 +924,7 @@ void _wrap_Vector32u_add_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int >
 }
 
 
-intgo _wrap_Vector32u_get_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
+intgo _wrap_Vector32u_get_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   int arg2 ;
   std::vector< unsigned int >::value_type *result = 0 ;
@@ -945,7 +945,7 @@ intgo _wrap_Vector32u_get_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int 
 }
 
 
-void _wrap_Vector32u_set_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1, intgo _swig_go_2) {
+void _wrap_Vector32u_set_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0, intgo _swig_go_1, intgo _swig_go_2) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   int arg2 ;
   std::vector< unsigned int >::value_type *arg3 = 0 ;
@@ -965,7 +965,7 @@ void _wrap_Vector32u_set_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int >
 }
 
 
-void _wrap_delete_Vector32u_LimeDevice_7f56157f1ee2307f(std::vector< unsigned int > *_swig_go_0) {
+void _wrap_delete_Vector32u_LimeDevice_d4a3c903ea87caf4(std::vector< unsigned int > *_swig_go_0) {
   std::vector< uint32_t > *arg1 = (std::vector< uint32_t > *) 0 ;
   
   arg1 = *(std::vector< uint32_t > **)&_swig_go_0; 
@@ -975,7 +975,7 @@ void _wrap_delete_Vector32u_LimeDevice_7f56157f1ee2307f(std::vector< unsigned in
 }
 
 
-std::vector< float > *_wrap_new_Vector32f__SWIG_0_LimeDevice_7f56157f1ee2307f() {
+std::vector< float > *_wrap_new_Vector32f__SWIG_0_LimeDevice_d4a3c903ea87caf4() {
   std::vector< float > *result = 0 ;
   std::vector< float > *_swig_go_result;
   
@@ -986,7 +986,7 @@ std::vector< float > *_wrap_new_Vector32f__SWIG_0_LimeDevice_7f56157f1ee2307f() 
 }
 
 
-std::vector< float > *_wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(long long _swig_go_0) {
+std::vector< float > *_wrap_new_Vector32f__SWIG_1_LimeDevice_d4a3c903ea87caf4(long long _swig_go_0) {
   std::vector< float >::size_type arg1 ;
   std::vector< float > *result = 0 ;
   std::vector< float > *_swig_go_result;
@@ -999,7 +999,7 @@ std::vector< float > *_wrap_new_Vector32f__SWIG_1_LimeDevice_7f56157f1ee2307f(lo
 }
 
 
-long long _wrap_Vector32f_size_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0) {
+long long _wrap_Vector32f_size_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type result;
   long long _swig_go_result;
@@ -1012,7 +1012,7 @@ long long _wrap_Vector32f_size_LimeDevice_7f56157f1ee2307f(std::vector< float > 
 }
 
 
-long long _wrap_Vector32f_capacity_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0) {
+long long _wrap_Vector32f_capacity_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type result;
   long long _swig_go_result;
@@ -1025,7 +1025,7 @@ long long _wrap_Vector32f_capacity_LimeDevice_7f56157f1ee2307f(std::vector< floa
 }
 
 
-void _wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector32f_reserve_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0, long long _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::size_type arg2 ;
   
@@ -1037,7 +1037,7 @@ void _wrap_Vector32f_reserve_LimeDevice_7f56157f1ee2307f(std::vector< float > *_
 }
 
 
-bool _wrap_Vector32f_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0) {
+bool _wrap_Vector32f_isEmpty_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -1050,7 +1050,7 @@ bool _wrap_Vector32f_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< float > *_
 }
 
 
-void _wrap_Vector32f_clear_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0) {
+void _wrap_Vector32f_clear_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   
   arg1 = *(std::vector< float > **)&_swig_go_0; 
@@ -1060,7 +1060,7 @@ void _wrap_Vector32f_clear_LimeDevice_7f56157f1ee2307f(std::vector< float > *_sw
 }
 
 
-void _wrap_Vector32f_add_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0, float _swig_go_1) {
+void _wrap_Vector32f_add_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0, float _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   std::vector< float >::value_type *arg2 = 0 ;
   
@@ -1072,7 +1072,7 @@ void _wrap_Vector32f_add_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig
 }
 
 
-float _wrap_Vector32f_get_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0, intgo _swig_go_1) {
+float _wrap_Vector32f_get_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0, intgo _swig_go_1) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   int arg2 ;
   std::vector< float >::value_type *result = 0 ;
@@ -1093,7 +1093,7 @@ float _wrap_Vector32f_get_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swi
 }
 
 
-void _wrap_Vector32f_set_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0, intgo _swig_go_1, float _swig_go_2) {
+void _wrap_Vector32f_set_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0, intgo _swig_go_1, float _swig_go_2) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   int arg2 ;
   std::vector< float >::value_type *arg3 = 0 ;
@@ -1113,7 +1113,7 @@ void _wrap_Vector32f_set_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig
 }
 
 
-void _wrap_delete_Vector32f_LimeDevice_7f56157f1ee2307f(std::vector< float > *_swig_go_0) {
+void _wrap_delete_Vector32f_LimeDevice_d4a3c903ea87caf4(std::vector< float > *_swig_go_0) {
   std::vector< float > *arg1 = (std::vector< float > *) 0 ;
   
   arg1 = *(std::vector< float > **)&_swig_go_0; 
@@ -1123,7 +1123,7 @@ void _wrap_delete_Vector32f_LimeDevice_7f56157f1ee2307f(std::vector< float > *_s
 }
 
 
-std::vector< short > *_wrap_new_Vector16i__SWIG_0_LimeDevice_7f56157f1ee2307f() {
+std::vector< short > *_wrap_new_Vector16i__SWIG_0_LimeDevice_d4a3c903ea87caf4() {
   std::vector< int16_t > *result = 0 ;
   std::vector< short > *_swig_go_result;
   
@@ -1134,7 +1134,7 @@ std::vector< short > *_wrap_new_Vector16i__SWIG_0_LimeDevice_7f56157f1ee2307f() 
 }
 
 
-std::vector< short > *_wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(long long _swig_go_0) {
+std::vector< short > *_wrap_new_Vector16i__SWIG_1_LimeDevice_d4a3c903ea87caf4(long long _swig_go_0) {
   std::vector< short >::size_type arg1 ;
   std::vector< int16_t > *result = 0 ;
   std::vector< short > *_swig_go_result;
@@ -1147,7 +1147,7 @@ std::vector< short > *_wrap_new_Vector16i__SWIG_1_LimeDevice_7f56157f1ee2307f(lo
 }
 
 
-long long _wrap_Vector16i_size_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0) {
+long long _wrap_Vector16i_size_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type result;
   long long _swig_go_result;
@@ -1160,7 +1160,7 @@ long long _wrap_Vector16i_size_LimeDevice_7f56157f1ee2307f(std::vector< short > 
 }
 
 
-long long _wrap_Vector16i_capacity_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0) {
+long long _wrap_Vector16i_capacity_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type result;
   long long _swig_go_result;
@@ -1173,7 +1173,7 @@ long long _wrap_Vector16i_capacity_LimeDevice_7f56157f1ee2307f(std::vector< shor
 }
 
 
-void _wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector16i_reserve_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0, long long _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::size_type arg2 ;
   
@@ -1185,7 +1185,7 @@ void _wrap_Vector16i_reserve_LimeDevice_7f56157f1ee2307f(std::vector< short > *_
 }
 
 
-bool _wrap_Vector16i_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0) {
+bool _wrap_Vector16i_isEmpty_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -1198,7 +1198,7 @@ bool _wrap_Vector16i_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< short > *_
 }
 
 
-void _wrap_Vector16i_clear_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0) {
+void _wrap_Vector16i_clear_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   
   arg1 = *(std::vector< int16_t > **)&_swig_go_0; 
@@ -1208,7 +1208,7 @@ void _wrap_Vector16i_clear_LimeDevice_7f56157f1ee2307f(std::vector< short > *_sw
 }
 
 
-void _wrap_Vector16i_add_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0, short _swig_go_1) {
+void _wrap_Vector16i_add_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0, short _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   std::vector< short >::value_type *arg2 = 0 ;
   
@@ -1220,7 +1220,7 @@ void _wrap_Vector16i_add_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig
 }
 
 
-short _wrap_Vector16i_get_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0, intgo _swig_go_1) {
+short _wrap_Vector16i_get_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0, intgo _swig_go_1) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   int arg2 ;
   std::vector< short >::value_type *result = 0 ;
@@ -1241,7 +1241,7 @@ short _wrap_Vector16i_get_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swi
 }
 
 
-void _wrap_Vector16i_set_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0, intgo _swig_go_1, short _swig_go_2) {
+void _wrap_Vector16i_set_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0, intgo _swig_go_1, short _swig_go_2) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   int arg2 ;
   std::vector< short >::value_type *arg3 = 0 ;
@@ -1261,7 +1261,7 @@ void _wrap_Vector16i_set_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig
 }
 
 
-void _wrap_delete_Vector16i_LimeDevice_7f56157f1ee2307f(std::vector< short > *_swig_go_0) {
+void _wrap_delete_Vector16i_LimeDevice_d4a3c903ea87caf4(std::vector< short > *_swig_go_0) {
   std::vector< int16_t > *arg1 = (std::vector< int16_t > *) 0 ;
   
   arg1 = *(std::vector< int16_t > **)&_swig_go_0; 
@@ -1271,7 +1271,7 @@ void _wrap_delete_Vector16i_LimeDevice_7f56157f1ee2307f(std::vector< short > *_s
 }
 
 
-std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_LimeDevice_7f56157f1ee2307f() {
+std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_LimeDevice_d4a3c903ea87caf4() {
   std::vector< int8_t > *result = 0 ;
   std::vector< signed char > *_swig_go_result;
   
@@ -1282,7 +1282,7 @@ std::vector< signed char > *_wrap_new_Vector8i__SWIG_0_LimeDevice_7f56157f1ee230
 }
 
 
-std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee2307f(long long _swig_go_0) {
+std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_LimeDevice_d4a3c903ea87caf4(long long _swig_go_0) {
   std::vector< signed char >::size_type arg1 ;
   std::vector< int8_t > *result = 0 ;
   std::vector< signed char > *_swig_go_result;
@@ -1295,7 +1295,7 @@ std::vector< signed char > *_wrap_new_Vector8i__SWIG_1_LimeDevice_7f56157f1ee230
 }
 
 
-long long _wrap_Vector8i_size_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0) {
+long long _wrap_Vector8i_size_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type result;
   long long _swig_go_result;
@@ -1308,7 +1308,7 @@ long long _wrap_Vector8i_size_LimeDevice_7f56157f1ee2307f(std::vector< signed ch
 }
 
 
-long long _wrap_Vector8i_capacity_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0) {
+long long _wrap_Vector8i_capacity_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type result;
   long long _swig_go_result;
@@ -1321,7 +1321,7 @@ long long _wrap_Vector8i_capacity_LimeDevice_7f56157f1ee2307f(std::vector< signe
 }
 
 
-void _wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0, long long _swig_go_1) {
+void _wrap_Vector8i_reserve_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0, long long _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::size_type arg2 ;
   
@@ -1333,7 +1333,7 @@ void _wrap_Vector8i_reserve_LimeDevice_7f56157f1ee2307f(std::vector< signed char
 }
 
 
-bool _wrap_Vector8i_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0) {
+bool _wrap_Vector8i_isEmpty_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -1346,7 +1346,7 @@ bool _wrap_Vector8i_isEmpty_LimeDevice_7f56157f1ee2307f(std::vector< signed char
 }
 
 
-void _wrap_Vector8i_clear_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0) {
+void _wrap_Vector8i_clear_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   
   arg1 = *(std::vector< int8_t > **)&_swig_go_0; 
@@ -1356,7 +1356,7 @@ void _wrap_Vector8i_clear_LimeDevice_7f56157f1ee2307f(std::vector< signed char >
 }
 
 
-void _wrap_Vector8i_add_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0, char _swig_go_1) {
+void _wrap_Vector8i_add_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0, char _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   std::vector< signed char >::value_type *arg2 = 0 ;
   
@@ -1368,7 +1368,7 @@ void _wrap_Vector8i_add_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *
 }
 
 
-char _wrap_Vector8i_get_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0, intgo _swig_go_1) {
+char _wrap_Vector8i_get_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0, intgo _swig_go_1) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   int arg2 ;
   std::vector< signed char >::value_type *result = 0 ;
@@ -1389,7 +1389,7 @@ char _wrap_Vector8i_get_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *
 }
 
 
-void _wrap_Vector8i_set_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
+void _wrap_Vector8i_set_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0, intgo _swig_go_1, char _swig_go_2) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   int arg2 ;
   std::vector< signed char >::value_type *arg3 = 0 ;
@@ -1409,7 +1409,7 @@ void _wrap_Vector8i_set_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *
 }
 
 
-void _wrap_delete_Vector8i_LimeDevice_7f56157f1ee2307f(std::vector< signed char > *_swig_go_0) {
+void _wrap_delete_Vector8i_LimeDevice_d4a3c903ea87caf4(std::vector< signed char > *_swig_go_0) {
   std::vector< int8_t > *arg1 = (std::vector< int8_t > *) 0 ;
   
   arg1 = *(std::vector< int8_t > **)&_swig_go_0; 
@@ -1419,7 +1419,7 @@ void _wrap_delete_Vector8i_LimeDevice_7f56157f1ee2307f(std::vector< signed char 
 }
 
 
-LimeDevice *_wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_swig_go_0) {
+LimeDevice *_wrap_new_LimeDevice_LimeDevice_d4a3c903ea87caf4(GoDeviceCallback *_swig_go_0) {
   GoDeviceCallback *arg1 = (GoDeviceCallback *) 0 ;
   LimeDevice *result = 0 ;
   LimeDevice *_swig_go_result;
@@ -1432,7 +1432,7 @@ LimeDevice *_wrap_new_LimeDevice_LimeDevice_7f56157f1ee2307f(GoDeviceCallback *_
 }
 
 
-void _wrap_delete_LimeDevice_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+void _wrap_delete_LimeDevice_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
@@ -1442,20 +1442,20 @@ void _wrap_delete_LimeDevice_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0)
 }
 
 
-_gostring_ _wrap_LimeDevice_GetName_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+_gostring_ _wrap_LimeDevice_GetName_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
-  std::string *result = 0 ;
+  std::string result;
   _gostring_ _swig_go_result;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
   
-  result = (std::string *) &(arg1)->GetName();
-  _swig_go_result = Swig_AllocateString((*result).data(), (*result).length()); 
+  result = (arg1)->GetName();
+  _swig_go_result = Swig_AllocateString((&result)->data(), (&result)->length()); 
   return _swig_go_result;
 }
 
 
-intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, intgo _swig_go_1) {
+intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, intgo _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint32_t arg2 ;
   uint32_t result;
@@ -1470,7 +1470,7 @@ intgo _wrap_LimeDevice_SetSampleRate_LimeDevice_7f56157f1ee2307f(LimeDevice *_sw
 }
 
 
-intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, intgo _swig_go_1) {
+intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, intgo _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint32_t arg2 ;
   uint32_t result;
@@ -1485,7 +1485,7 @@ intgo _wrap_LimeDevice_SetCenterFrequency_LimeDevice_7f56157f1ee2307f(LimeDevice
 }
 
 
-intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint32_t result;
   intgo _swig_go_result;
@@ -1498,7 +1498,7 @@ intgo _wrap_LimeDevice_GetCenterFrequency_LimeDevice_7f56157f1ee2307f(LimeDevice
 }
 
 
-intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint32_t result;
   intgo _swig_go_result;
@@ -1511,7 +1511,7 @@ intgo _wrap_LimeDevice_GetSampleRate_LimeDevice_7f56157f1ee2307f(LimeDevice *_sw
 }
 
 
-void _wrap_LimeDevice_SetLNAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, char _swig_go_1) {
+void _wrap_LimeDevice_SetLNAGain_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, char _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint8_t arg2 ;
   
@@ -1523,7 +1523,7 @@ void _wrap_LimeDevice_SetLNAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_g
 }
 
 
-void _wrap_LimeDevice_SetTIAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, char _swig_go_1) {
+void _wrap_LimeDevice_SetTIAGain_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, char _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint8_t arg2 ;
   
@@ -1535,7 +1535,7 @@ void _wrap_LimeDevice_SetTIAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_g
 }
 
 
-void _wrap_LimeDevice_SetPGAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, char _swig_go_1) {
+void _wrap_LimeDevice_SetPGAGain_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, char _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint8_t arg2 ;
   
@@ -1547,7 +1547,7 @@ void _wrap_LimeDevice_SetPGAGain_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_g
 }
 
 
-void _wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, _gostring_ _swig_go_1) {
+void _wrap_LimeDevice_SetAntenna_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, _gostring_ _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   std::string arg2 ;
   
@@ -1559,7 +1559,7 @@ void _wrap_LimeDevice_SetAntenna_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_g
 }
 
 
-void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, GoDeviceCallback *_swig_go_1) {
+void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, GoDeviceCallback *_swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   GoDeviceCallback *arg2 = (GoDeviceCallback *) 0 ;
   
@@ -1571,7 +1571,7 @@ void _wrap_LimeDevice_SetSamplesAvailableCallback_LimeDevice_7f56157f1ee2307f(Li
 }
 
 
-bool _wrap_LimeDevice_Init_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+bool _wrap_LimeDevice_Init_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   bool result;
   bool _swig_go_result;
@@ -1584,7 +1584,7 @@ bool _wrap_LimeDevice_Init_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
 }
 
 
-void _wrap_LimeDevice_Destroy_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+void _wrap_LimeDevice_Destroy_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
@@ -1594,7 +1594,7 @@ void _wrap_LimeDevice_Destroy_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0
 }
 
 
-void _wrap_LimeDevice_Start_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+void _wrap_LimeDevice_Start_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
@@ -1604,7 +1604,7 @@ void _wrap_LimeDevice_Start_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) 
 }
 
 
-void _wrap_LimeDevice_Stop_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
+void _wrap_LimeDevice_Stop_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   
   arg1 = *(LimeDevice **)&_swig_go_0; 
@@ -1614,7 +1614,7 @@ void _wrap_LimeDevice_Stop_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0) {
 }
 
 
-void _wrap_LimeDevice_GetSamples_LimeDevice_7f56157f1ee2307f(LimeDevice *_swig_go_0, short _swig_go_1) {
+void _wrap_LimeDevice_GetSamples_LimeDevice_d4a3c903ea87caf4(LimeDevice *_swig_go_0, short _swig_go_1) {
   LimeDevice *arg1 = (LimeDevice *) 0 ;
   uint16_t arg2 ;
   

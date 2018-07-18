@@ -4,7 +4,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/LimeDevice"
 )
 
-const LimeFrontendBufferSize = 65535
+const LimeFrontendBufferSize = 8192
 
 // region Struct Definition
 type LimeFrontend struct {

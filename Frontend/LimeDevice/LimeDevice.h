@@ -8,10 +8,6 @@
 #ifndef SRC_LIMEDEVICE_H_
 #define SRC_LIMEDEVICE_H_
 
-#include <SoapySDR/Device.hpp>
-#include <SoapySDR/Formats.hpp>
-#include <SoapySDR/Errors.hpp>
-#include <SoapySDR/Logger.hpp>
 #include <cstdint>
 #include <iostream>
 #include <sstream>
@@ -19,27 +15,29 @@
 #include <string>
 #include <functional>
 
+#include <lime/LimeSuite.h>
+#include <SatHelper/exceptions/SatHelperException.h>
+
 #include "../DeviceParameters.h"
 
 class LimeDevice {
 private:
 	static std::string libraryVersion;
-	static SoapySDR::Device* device;
-	static SoapySDR::Stream* transfer;
-	static SoapySDR::Kwargs args;
+	static lms_device_t* device;
+	static lms_stream_t transfer;
 
 	GoDeviceCallback *cb;
-	std::string name = "LimeSDR (Soapy)";
-	std::complex<float> buff[65535];
+	std::string name = "LimeSDR (LMS7)";
+	float buff[16384];
 
 public:
 	LimeDevice(GoDeviceCallback *cb) : cb(cb) {};
 	virtual ~LimeDevice();
 
-	const std::string &GetName();
+	const std::string GetName();
 	
-	uint32_t SetSampleRate(uint32_t sampleRate);
-	uint32_t SetCenterFrequency(uint32_t centerFrequency);
+	uint32_t SetSampleRate(uint32_t wishedSampleRate);
+	uint32_t SetCenterFrequency(uint32_t wishedFrequency);
 
 	uint32_t GetCenterFrequency();
 	uint32_t GetSampleRate();
