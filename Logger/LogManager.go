@@ -72,7 +72,7 @@ func Debug(str string, v ...interface{}) {
 		logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
 	}
 }
-
+ 
 func Warn(str string, v ...interface{}) {
 	if displayOnTermUI {
 		log.Printf("[W](fg-bold) [%s](fg-yellow)\n", fmt.Sprintf(str, v...))

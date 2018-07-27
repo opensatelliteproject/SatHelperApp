@@ -84,13 +84,9 @@ func main() {
 			defer device.Destroy()
 
 			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
-			device.SetGain2(CurrentConfig.LimeSource.TIAGain)
-			device.SetGain3(CurrentConfig.LimeSource.PGAGain)
 			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
 
 			SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
-			SLog.Info(aurora.Cyan("	TIA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.TIAGain)))
-			SLog.Info(aurora.Cyan("	PGA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
 			SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
 			break
 		case "airspy":
@@ -141,7 +137,7 @@ func main() {
 	}
 
 	if device.SetCenterFrequency(CurrentConfig.Source.Frequency) != CurrentConfig.Source.Frequency {
-		SLog.Warn("Cannot set exact frequency. Current Value: %d\n", device.GetCenterFrequency())
+		SLog.Warn("Cannot set exact frequency. Current Value: %d", device.GetCenterFrequency())
 	}
 
 	device.SetSamplesAvailableCallback(newSamplesCallback)

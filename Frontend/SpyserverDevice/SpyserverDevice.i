@@ -4,7 +4,7 @@
 %}
 
 %insert(cgo_comment_typedefs) %{
-#cgo CXXFLAGS: -std=c++11 -O0
+#cgo CXXFLAGS: -std=c++11 -O3
 #cgo LDFLAGS: -lSatHelper
 %}
 
