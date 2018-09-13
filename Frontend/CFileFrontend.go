@@ -104,6 +104,10 @@ func (f *CFileFrontend) Start() {
 
 		var reader = bufio.NewReader(f)
 
+		if frontend.fastAsPossible {
+			period /= 8 // Avoid lock up
+		}
+
 		for frontend.running {
 			if float32(time.Now().Sub(frontend.t0).Seconds()) >= period {
 				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)

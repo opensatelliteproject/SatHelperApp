@@ -73,6 +73,7 @@ func main() {
 		SLog.Info(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
 		device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
 		if CurrentConfig.CFileSource.FastAsPossible {
+			SLog.Info(aurora.Cyan("Fast as possible enabled!").String())
 			device.(*Frontend.CFileFrontend).EnableFastAsPossible()
 		}
 		break
