@@ -10,5 +10,5 @@ func (w *ConsoleWritter) Write(p []byte) (n int, err error) {
 }
 
 func NewConsoleWritter(writeFunc func(string) (int, error)) *ConsoleWritter {
-	return &ConsoleWritter{ writeFunc: writeFunc }
+	return &ConsoleWritter{writeFunc: writeFunc}
 }

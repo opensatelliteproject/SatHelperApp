@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/racerxdl/go.fifo"
 	"log"
-	"runtime"
-	"os/exec"
 	"os"
+	"os/exec"
+	"runtime"
 )
 
 func AddToFifoC64(fifo *fifo.Queue, arr []complex64, length int) {
@@ -29,7 +29,7 @@ func AddToFifoS16toC64(fifo *fifo.Queue, arr []int16, length int) {
 			break
 		}
 
-		var c = complex(float32(arr[i*2]) / 32768.0, float32(arr[i*2+1]) / 32768.0)
+		var c = complex(float32(arr[i*2])/32768.0, float32(arr[i*2+1])/32768.0)
 		fifo.UnsafeAdd(c)
 	}
 }
@@ -42,7 +42,7 @@ func AddToFifoS8toC64(fifo *fifo.Queue, arr []int8, length int) {
 			log.Printf("FIFO Overflowing!!")
 			break
 		}
-		var c = complex(float32(arr[i*2]) / 128, float32(arr[i*2+1]) / 128)
+		var c = complex(float32(arr[i*2])/128, float32(arr[i*2+1])/128)
 		fifo.UnsafeAdd(c)
 	}
 }
@@ -68,13 +68,13 @@ func shiftWithConstantSize(arr *[]byte, pos int, length int) {
 	}
 }
 
-var clear = map[string]func() {
+var clear = map[string]func(){
 	"linux": func() {
 		cmd := exec.Command("clear") //Linux example, its tested
 		cmd.Stdout = os.Stdout
 		cmd.Run()
 	},
-	"windows" : func() {
+	"windows": func() {
 		cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
 		cmd.Stdout = os.Stdout
 		cmd.Run()
@@ -83,8 +83,8 @@ var clear = map[string]func() {
 
 func CallClear() {
 	value, ok := clear[runtime.GOOS] //runtime.GOOS -> linux, windows, darwin etc.
-	if ok { //if we defined a clear func for that platform:
-		value()  //we execute it
+	if ok {                          //if we defined a clear func for that platform:
+		value() //we execute it
 	} else { //unsupported platform
 		clear["linux"]()
 	}

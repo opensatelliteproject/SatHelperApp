@@ -9,8 +9,8 @@ const LimeFrontendBufferSize = 8192
 // region Struct Definition
 type LimeFrontend struct {
 	running bool
-	device LimeDevice.LimeDevice
-	goCb GoCallback
+	device  LimeDevice.LimeDevice
+	goCb    GoCallback
 	goDirCb LimeDevice.LimeDeviceCallback
 }
 
@@ -25,12 +25,13 @@ func NewLimeFrontend() *LimeFrontend {
 	dirCb := LimeMakeGoCallbackDirector(&goCb)
 	afrnt := LimeFrontend{
 		running: false,
-		device: LimeDevice.NewLimeDevice(dirCb),
-		goCb: goCb,
+		device:  LimeDevice.NewLimeDevice(dirCb),
+		goCb:    goCb,
 	}
 
 	return &afrnt
 }
+
 // endregion
 // region Getters
 func (f *LimeFrontend) GetName() string {
@@ -42,9 +43,10 @@ func (f *LimeFrontend) GetShortName() string {
 func (f *LimeFrontend) GetCenterFrequency() uint32 {
 	return uint32(f.device.GetCenterFrequency())
 }
-func (f *LimeFrontend)  GetSampleRate() uint32 {
+func (f *LimeFrontend) GetSampleRate() uint32 {
 	return uint32(f.device.GetSampleRate())
 }
+
 // endregion
 // region Setters
 func (f *LimeFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
@@ -58,6 +60,7 @@ func (f *LimeFrontend) SetSampleRate(sampleRate uint32) uint32 {
 func (f *LimeFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 	return uint32(f.device.SetCenterFrequency(uint(centerFrequency)))
 }
+
 // endregion
 // region Commands
 func (f *LimeFrontend) Start() {
@@ -93,6 +96,7 @@ func (f *LimeFrontend) Destroy() {
 }
 
 func (f *LimeFrontend) GetAvailableSampleRates() []uint32 { return nil }
-func (f *LimeFrontend) SetAGC(agc bool) {}
-func (f *LimeFrontend) SetBiasT(biast bool) {}
+func (f *LimeFrontend) SetAGC(agc bool)                   {}
+func (f *LimeFrontend) SetBiasT(biast bool)               {}
+
 // endregion

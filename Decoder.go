@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/libsathelper"
-	"github.com/racerxdl/go.fifo"
-	"time"
-	"log"
-	. "github.com/logrusorgru/aurora"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
+	"github.com/OpenSatelliteProject/libsathelper"
+	. "github.com/logrusorgru/aurora"
+	"github.com/racerxdl/go.fifo"
+	"log"
+	"time"
 )
 
 func initDecoder() {
@@ -67,7 +67,7 @@ func decoderLoop() {
 	for running {
 		if symbolsFifo.Len() >= CodedFrameSize {
 			decodFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
-			if localStats.TotalPackets % AverageLastNSamples == 0 {
+			if localStats.TotalPackets%AverageLastNSamples == 0 {
 				averageRSCorrections = 0
 				averageVitCorrections = 0
 			}
@@ -88,7 +88,7 @@ func decoderLoop() {
 			} else {
 				// If we got a good lock before, let's just check if the sync is in correct pos.
 
-				correlator.Correlate(&codedData[0], CodedFrameSize/ 16)
+				correlator.Correlate(&codedData[0], CodedFrameSize/16)
 				if correlator.GetHighestCorrelationPosition() != 0 {
 					// Oh no, that means something happened :/
 					correlator.Correlate(&codedData[0], CodedFrameSize)
@@ -129,7 +129,6 @@ func decoderLoop() {
 				packetFixer.FixPacket(&codedData[0], CodedFrameSize, phaseShift, false)
 			}
 
-
 			if CurrentConfig.Decoder.UseLastFrameData {
 				for i := 0; i < LastFrameDataBits; i++ {
 					viterbiData[i] = lastFrameEnd[i]
@@ -161,18 +160,18 @@ func decoderLoop() {
 			averageVitCorrections += float32(viterbi.GetBER())
 
 			if CurrentConfig.Decoder.UseLastFrameData {
-				shiftWithConstantSize(&decodedData, LastFrameData/ 2, FrameSize+ LastFrameData/ 2)
+				shiftWithConstantSize(&decodedData, LastFrameData/2, FrameSize+LastFrameData/2)
 				for i := 0; i < LastFrameDataBits; i++ {
-					lastFrameEnd[i] = viterbiData[CodedFrameSize+ i]
+					lastFrameEnd[i] = viterbiData[CodedFrameSize+i]
 				}
 			}
 
-			for i:=0; i<SyncWordSize; i++ {
+			for i := 0; i < SyncWordSize; i++ {
 				syncWord[i] = decodedData[i]
 				localStats.SyncWord[i] = decodedData[i]
 			}
 
-			shiftWithConstantSize(&decodedData, SyncWordSize, FrameSize- SyncWordSize)
+			shiftWithConstantSize(&decodedData, SyncWordSize, FrameSize-SyncWordSize)
 
 			localStats.AverageVitCorrections += uint16(viterbi.GetBER())
 			localStats.TotalPackets += 1
@@ -200,16 +199,15 @@ func decoderLoop() {
 				lastFrameOk = true
 			}
 
-
-			scid := ((rsCorrectedData[0] & 0x3F) << 2) | (rsCorrectedData[1] & 0xC0) >> 6
+			scid := ((rsCorrectedData[0] & 0x3F) << 2) | (rsCorrectedData[1]&0xC0)>>6
 			vcid := rsCorrectedData[1] & 0x3F
 			counter := uint(rsCorrectedData[2])
 			counter = SatHelper.ToolsSwapEndianess(counter)
 			counter &= 0xFFFFFF00
 			counter >>= 8
 
-			if ! isCorrupted {
-				if lastPacketCount[vcid] + 1 != int64(counter) && lastPacketCount[vcid] > -1 {
+			if !isCorrupted {
+				if lastPacketCount[vcid]+1 != int64(counter) && lastPacketCount[vcid] > -1 {
 					lostCount := int(int64(counter) - lastPacketCount[vcid] - 1)
 					localStats.LostPackets += uint64(lostCount)
 					lostPacketsPerChannel[vcid] += int64(lostCount)
@@ -230,25 +228,33 @@ func decoderLoop() {
 				localStats.SignalQuality = signalQuality
 				localStats.SyncCorrelation = uint8(corr)
 				switch phaseShift {
-					case SatHelper.DEG_0: localStats.PhaseCorrection = 0; break
-					case SatHelper.DEG_90: localStats.PhaseCorrection = 1; break
-					case SatHelper.DEG_180: localStats.PhaseCorrection = 2; break
-					case SatHelper.DEG_270: localStats.PhaseCorrection = 3; break
+				case SatHelper.DEG_0:
+					localStats.PhaseCorrection = 0
+					break
+				case SatHelper.DEG_90:
+					localStats.PhaseCorrection = 1
+					break
+				case SatHelper.DEG_180:
+					localStats.PhaseCorrection = 2
+					break
+				case SatHelper.DEG_270:
+					localStats.PhaseCorrection = 3
+					break
 				}
 
-				if localStats.TotalPackets % AverageLastNSamples == 0 {
+				if localStats.TotalPackets%AverageLastNSamples == 0 {
 					localStats.AverageRSCorrections = uint8(averageRSCorrections / 4)
 					localStats.AverageVitCorrections = uint16(averageVitCorrections)
 				} else {
-					localStats.AverageRSCorrections = uint8(averageRSCorrections / float32(4*(localStats.TotalPackets % AverageLastNSamples)))
-					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets % AverageLastNSamples))
+					localStats.AverageRSCorrections = uint8(averageRSCorrections / float32(4*(localStats.TotalPackets%AverageLastNSamples)))
+					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets%AverageLastNSamples))
 				}
 				localStats.FrameLock = 1
 				localStats.DecoderFifoUsage = decodFifoUsage
 				localStats.DemodulatorFifoUsage = demodFifoUsage
 
 				if demuxer != nil {
-					demuxer.SendFrame(rsCorrectedData[:FrameSize - RsParityBlockSize - SyncWordSize])
+					demuxer.SendFrame(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
 				}
 
 			} else {

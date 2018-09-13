@@ -1,31 +1,34 @@
 package Demuxer
 
 import (
-	"net"
-	"fmt"
-	"github.com/prometheus/common/log"
-	"sync"
 	"container/list"
+	"fmt"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/prometheus/common/log"
+	"net"
+	"sync"
 )
+
 // region Struct Definition
 type TCPServerDemuxer struct {
-	port int
-	host string
+	port       int
+	host       string
 	connection net.Listener
-	clients *list.List
-	syncMtx *sync.Mutex
-	running bool
+	clients    *list.List
+	syncMtx    *sync.Mutex
+	running    bool
 }
+
 // endregion
 // region Constructor
 func NewTCPDemuxer(host string, port int) *TCPServerDemuxer {
 	return &TCPServerDemuxer{
-		port: port,
-		host: host,
+		port:    port,
+		host:    host,
 		syncMtx: &sync.Mutex{},
 	}
 }
+
 // endregion
 // region BaseDemuxer Methods
 func (f *TCPServerDemuxer) Init() {
@@ -58,6 +61,7 @@ func (f *TCPServerDemuxer) SendFrame(frame []byte) {
 func (f *TCPServerDemuxer) GetName() string {
 	return "TCP Server"
 }
+
 // endregion
 // region Loop Function
 func (f *TCPServerDemuxer) loop() {
@@ -83,4 +87,5 @@ func (f *TCPServerDemuxer) loop() {
 func (f *TCPServerDemuxer) handleConnection(conn net.Conn) {
 	// TODO: Needed?
 }
+
 // endregion

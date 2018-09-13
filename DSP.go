@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
-	. "github.com/logrusorgru/aurora"
-	"time"
-	"github.com/racerxdl/go.fifo"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/OpenSatelliteProject/libsathelper"
+	. "github.com/logrusorgru/aurora"
+	"github.com/racerxdl/go.fifo"
+	"time"
 )
 
 func initDSP() {
@@ -16,10 +16,10 @@ func initDSP() {
 
 	SLog.Debug("Samples per Symbol: %f", Bold(Green(sps)))
 	SLog.Debug("Circuit Sample Rate: %f", Bold(Green(circuitSampleRate)))
-	SLog.Debug("Low Pass Decimator Cut Frequency: %f", Bold(Green(circuitSampleRate / 2)))
+	SLog.Debug("Low Pass Decimator Cut Frequency: %f", Bold(Green(circuitSampleRate/2)))
 
 	rrcTaps := SatHelper.FiltersRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps)
-	decimatorTaps := SatHelper.FiltersLowPass(1, float64(device.GetSampleRate()), float64(circuitSampleRate / 2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
+	decimatorTaps := SatHelper.FiltersLowPass(1, float64(device.GetSampleRate()), float64(circuitSampleRate/2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
 
 	decimator = SatHelper.NewFirFilter(uint(CurrentConfig.Base.Decimation), decimatorTaps)
 	agc = SatHelper.NewAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
@@ -27,23 +27,28 @@ func initDSP() {
 	clockRecovery = SatHelper.NewClockRecovery(sps, ClockGainOmega, ClockMu, ClockAlpha, ClockOmegaLimit)
 	rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
 
-
 	SLog.Debug("Center Frequency: %d MHz", Bold(Green(device.GetCenterFrequency())))
 	SLog.Debug("Automatic Gain Control: %t", Bold(Green(CurrentConfig.Base.AGCEnabled)))
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
 	switch d.SampleType {
-	case Frontend.SampleTypeFloatIQ: AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples); break
-	case Frontend.SampleTypeS16IQ: AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples); break
-	case Frontend.SampleTypeS8IQ: AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples); break
+	case Frontend.SampleTypeFloatIQ:
+		AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples)
+		break
+	case Frontend.SampleTypeS16IQ:
+		AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples)
+		break
+	case Frontend.SampleTypeS8IQ:
+		AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples)
+		break
 	}
 }
 
 func processSamples() {
 	length := samplesFifo.Len()
 	demodFifoUsage = uint8(100 * float32(length) / float32(FifoSize))
-	if length <= 64 * 1024 {
+	if length <= 64*1024 {
 		return
 	}
 

@@ -4,11 +4,10 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/SpyserverDevice"
 )
 
-
 // region Struct Definition
 type SpyserverFrontend struct {
-	device SpyserverDevice.SpyserverDevice
-	goCb GoCallback
+	device  SpyserverDevice.SpyserverDevice
+	goCb    GoCallback
 	goDirCb SpyserverDevice.SpyserverDeviceCallback
 }
 
@@ -23,11 +22,12 @@ func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
 	dirCb := MakeSpyserverGoCallbackDirector(&goCb)
 	afrnt := SpyserverFrontend{
 		device: SpyserverDevice.NewSpyserverDevice(dirCb, hostname, port),
-		goCb: goCb,
+		goCb:   goCb,
 	}
 
 	return &afrnt
 }
+
 // endregion
 // region Getters
 func (f *SpyserverFrontend) GetName() string {
@@ -48,9 +48,10 @@ func (f *SpyserverFrontend) GetAvailableSampleRates() []uint32 {
 func (f *SpyserverFrontend) GetCenterFrequency() uint32 {
 	return uint32(f.device.GetCenterFrequency())
 }
-func (f *SpyserverFrontend)  GetSampleRate() uint32 {
+func (f *SpyserverFrontend) GetSampleRate() uint32 {
 	return uint32(f.device.GetSampleRate())
 }
+
 // endregion
 // region Setters
 func (f *SpyserverFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
@@ -64,6 +65,7 @@ func (f *SpyserverFrontend) SetSampleRate(sampleRate uint32) uint32 {
 func (f *SpyserverFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 	return uint32(f.device.SetCenterFrequency(uint(centerFrequency)))
 }
+
 // endregion
 // region Commands
 func (f *SpyserverFrontend) Start() {
@@ -100,4 +102,5 @@ func (f *SpyserverFrontend) Destroy() {
 }
 
 func (f *SpyserverFrontend) SetAntenna(string) {}
+
 // endregion

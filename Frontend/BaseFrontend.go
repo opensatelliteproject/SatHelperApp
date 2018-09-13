@@ -1,8 +1,8 @@
 package Frontend
 
 import (
-	"unsafe"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"unsafe"
 )
 
 const SampleTypeFloatIQ = 0
@@ -11,10 +11,10 @@ const SampleTypeS8IQ = 2
 
 type SampleCallbackData struct {
 	ComplexArray []complex64
-	Int16Array []int16
-	Int8Array []int8
-	SampleType int
-	NumSamples int
+	Int16Array   []int16
+	Int8Array    []int8
+	SampleType   int
+	NumSamples   int
 }
 
 type SamplesCallback func(data SampleCallbackData)

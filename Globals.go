@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/racerxdl/go.fifo"
-	"github.com/OpenSatelliteProject/libsathelper"
+	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
+	"github.com/OpenSatelliteProject/libsathelper"
+	"github.com/racerxdl/go.fifo"
 	"sync"
-	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 )
+
 // region Global Globals
 var running = false
 
@@ -23,6 +24,7 @@ var rrcFilter SatHelper.FirFilter
 var costasLoop SatHelper.CostasLoop
 var clockRecovery SatHelper.ClockRecovery
 var device Frontend.BaseFrontend
+
 // endregion
 // region Decoder Globals
 var symbolsFifo *fifo.Queue

@@ -1,39 +1,43 @@
 package Frontend
 
 import (
-	"fmt"
-	"os"
-	"time"
 	"bufio"
 	"encoding/binary"
-	. "github.com/logrusorgru/aurora"
+	"fmt"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	. "github.com/logrusorgru/aurora"
+	"os"
+	"time"
 )
 
 const CFileFrontendBufferSize = 65535
 
 // region Struct Definition
 type CFileFrontend struct {
-	running bool
-	filename string
-	cb SamplesCallback
-	sampleRate uint32
+	running         bool
+	filename        string
+	cb              SamplesCallback
+	sampleRate      uint32
 	centerFrequency uint32
-	sampleBuffer []complex64
-	fileHandler *os.File
-	t0 time.Time
+	sampleBuffer    []complex64
+	fileHandler     *os.File
+	t0              time.Time
+	fastAsPossible  bool
 }
+
 // endregion
 // region Constructor
 func NewCFileFrontend(filename string) *CFileFrontend {
 	return &CFileFrontend{
-		filename: filename,
-		running: false,
-		sampleRate: 0,
+		filename:        filename,
+		running:         false,
+		sampleRate:      0,
 		centerFrequency: 0,
-		cb: nil,
+		cb:              nil,
+		fastAsPossible:  false,
 	}
 }
+
 // endregion
 // region Getters
 func (f *CFileFrontend) GetName() string {
@@ -48,9 +52,13 @@ func (f *CFileFrontend) GetAvailableSampleRates() []uint32 {
 func (f *CFileFrontend) GetCenterFrequency() uint32 {
 	return f.centerFrequency
 }
-func (f *CFileFrontend)  GetSampleRate() uint32 {
+func (f *CFileFrontend) GetSampleRate() uint32 {
 	return f.sampleRate
 }
+func (f *CFileFrontend) EnableFastAsPossible() {
+	f.fastAsPossible = true
+}
+
 // endregion
 // region Setters
 func (f *CFileFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
@@ -64,6 +72,7 @@ func (f *CFileFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 	f.centerFrequency = centerFrequency
 	return centerFrequency
 }
+
 // endregion
 // region Commands
 func (f *CFileFrontend) Init() bool {
@@ -113,14 +122,16 @@ func (f *CFileFrontend) Start() {
 				}
 				frontend.t0 = time.Now()
 			}
-			time.Sleep(time.Duration((period / 100) * float32(time.Second)))
+			if !frontend.fastAsPossible {
+				time.Sleep(time.Duration((period / 100) * float32(time.Second)))
+			}
 		}
 		SLog.Error("CFileFrontend Routine ended")
 	}(f)
 }
 
 func (f *CFileFrontend) Stop() {
-	if ! f.running {
+	if !f.running {
 		SLog.Error("CFileFrontend is not running")
 		return
 	}
@@ -128,9 +139,10 @@ func (f *CFileFrontend) Stop() {
 }
 
 func (f *CFileFrontend) SetAntenna(string) {}
-func (f *CFileFrontend) SetAGC(bool) {}
-func (f *CFileFrontend) SetGain1(uint8) {}
-func (f *CFileFrontend) SetGain2(uint8) {}
-func (f *CFileFrontend) SetGain3(uint8) {}
-func (f *CFileFrontend) SetBiasT(bool) {}
+func (f *CFileFrontend) SetAGC(bool)       {}
+func (f *CFileFrontend) SetGain1(uint8)    {}
+func (f *CFileFrontend) SetGain2(uint8)    {}
+func (f *CFileFrontend) SetGain3(uint8)    {}
+func (f *CFileFrontend) SetBiasT(bool)     {}
+
 // endregion

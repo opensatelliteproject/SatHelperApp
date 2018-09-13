@@ -1,8 +1,8 @@
 package main
 
 var (
-	VersionString string
-	RevString     string
+	VersionString   string
+	RevString       string
 	CompilationTime string
 	CompilationDate string
 )

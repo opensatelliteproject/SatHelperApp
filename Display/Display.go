@@ -1,44 +1,44 @@
 package Display
 
 import (
-	ui "github.com/airking05/termui"
-	"time"
-	"github.com/nsf/termbox-go"
-	"strconv"
 	"fmt"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	ui "github.com/airking05/termui"
+	"github.com/nsf/termbox-go"
 	"log"
 	"regexp"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"strconv"
+	"time"
 )
 
 const MaxConsoleLines = 10
 
 type Objects struct {
-	head *ui.Par
-	signalLocked *ui.Par
-	signalQuality *ui.Gauge
-	channelData *ui.BarChart
-	rsErrors *ui.BarChart
-	syncWord *ui.Par
-	scid *ui.Par
-	vcid *ui.Par
-	decoderFifoUsage *ui.Gauge
+	head                 *ui.Par
+	signalLocked         *ui.Par
+	signalQuality        *ui.Gauge
+	channelData          *ui.BarChart
+	rsErrors             *ui.BarChart
+	syncWord             *ui.Par
+	scid                 *ui.Par
+	vcid                 *ui.Par
+	decoderFifoUsage     *ui.Gauge
 	demodulatorFifoUsage *ui.Gauge
-	viterbiErrors *ui.Par
-	syncCorrelation *ui.Par
-	phaseCorrection *ui.Par
-	mode *ui.Par
-	centerFrequency *ui.Par
-	demuxer *ui.Par
-	device *ui.Par
-	console *ui.List
+	viterbiErrors        *ui.Par
+	syncCorrelation      *ui.Par
+	phaseCorrection      *ui.Par
+	mode                 *ui.Par
+	centerFrequency      *ui.Par
+	demuxer              *ui.Par
+	device               *ui.Par
+	console              *ui.List
 }
 
 var state = struct {
 	signalQuality        int
 	signalLocked         bool
 	channelPackets       [256]int64
-	rsErrors             [4] int32
+	rsErrors             [4]int32
 	displayObjects       Objects
 	syncWord             [4]byte
 	scid                 uint8
@@ -56,31 +56,30 @@ var state = struct {
 	consoleLines         []string
 	cw                   *ConsoleWritter
 }{
-	signalQuality: 0,
-	rsErrors: [4]int32 {0,0,0,0},
-	signalLocked: false,
-	syncWord: [4]byte {0,0,0,0},
-	scid: 0,
-	vcid: 0,
-	decoderFifoUsage: 0,
+	signalQuality:        0,
+	rsErrors:             [4]int32{0, 0, 0, 0},
+	signalLocked:         false,
+	syncWord:             [4]byte{0, 0, 0, 0},
+	scid:                 0,
+	vcid:                 0,
+	decoderFifoUsage:     0,
 	demodulatorFifoUsage: 0,
-	phaseCorrection: 0,
-	syncCorrelation: 0,
-	centerFreq: 0,
-	mode: "Not Selected",
-	device: "None",
-	demuxer: "None",
-	consoleLines: []string {},
+	phaseCorrection:      0,
+	syncCorrelation:      0,
+	centerFreq:           0,
+	mode:                 "Not Selected",
+	device:               "None",
+	demuxer:              "None",
+	consoleLines:         []string{},
 }
 
 var colorBar []uint32
-
 
 func AlignCenter(p *ui.Par) {
 	totalWidth := p.Width
 	originalText := p.Text
 	padTotal := totalWidth - len(originalText)
-	p.PaddingLeft = padTotal / 2 - 1
+	p.PaddingLeft = padTotal/2 - 1
 }
 
 func InitDisplay() {
@@ -88,7 +87,7 @@ func InitDisplay() {
 	termbox.SetOutputMode(termbox.Output256)
 	// region Color Bar
 	colorBar = make([]uint32, 101)
-	for i:=0;i<100;i++ {
+	for i := 0; i < 100; i++ {
 		colorBar[i] = uint32(i)
 	}
 	// endregion
@@ -135,7 +134,7 @@ func InitDisplay() {
 	// region RS Errors
 	rsErrors := ui.NewBarChart()
 	rsErrors.BorderLabel = "ReedSolomon Errors"
-	rsErrors.Data = []int{0,0,0,0}
+	rsErrors.Data = []int{0, 0, 0, 0}
 	rsErrors.Width = 50
 	rsErrors.Height = 10
 	rsErrors.BarWidth = 8
@@ -245,7 +244,7 @@ func InitDisplay() {
 	// region Console
 	console := ui.NewList()
 	console.Overflow = "wrap"
-	console.Items = [] string {}
+	console.Items = []string{}
 	console.BorderLabel = "Console"
 	console.Height = MaxConsoleLines
 	// endregion
@@ -276,30 +275,30 @@ func InitDisplay() {
 		),
 		ui.NewRow(
 			ui.NewCol(3, 0, signalLocked),
-			ui.NewCol(3,0,signalQuality),
-			ui.NewCol(2,0, syncWord),
-			ui.NewCol(2,0,vcid),
-			ui.NewCol(2,0,scid),
+			ui.NewCol(3, 0, signalQuality),
+			ui.NewCol(2, 0, syncWord),
+			ui.NewCol(2, 0, vcid),
+			ui.NewCol(2, 0, scid),
 		),
 		ui.NewRow(
 			ui.NewCol(3, 0, decoderFifoUsage),
-			ui.NewCol(3,0, demodulatorFifoUsage),
-			ui.NewCol(2,0,viterbiErrors),
-			ui.NewCol(2,0,syncCorrelation),
-			ui.NewCol(2,0,phaseCorrection),
+			ui.NewCol(3, 0, demodulatorFifoUsage),
+			ui.NewCol(2, 0, viterbiErrors),
+			ui.NewCol(2, 0, syncCorrelation),
+			ui.NewCol(2, 0, phaseCorrection),
 		),
 		ui.NewRow(
 			ui.NewCol(3, 0, centerFrequency),
 			ui.NewCol(2, 0, mode),
-			ui.NewCol(3,0, demuxer),
-			ui.NewCol(4,0, device),
+			ui.NewCol(3, 0, demuxer),
+			ui.NewCol(4, 0, device),
 		),
 		ui.NewRow(
 			ui.NewCol(6, 0, rsErrors),
 			ui.NewCol(6, 0, channelData),
 		),
 		ui.NewRow(
-			ui.NewCol(12,0, console),
+			ui.NewCol(12, 0, console),
 		),
 	)
 	// endregion
@@ -310,7 +309,7 @@ func InitDisplay() {
 	// region Callbacks
 	state.cw = NewConsoleWritter(func(data string) (int, error) {
 		AddConsoleLine(data[:len(data)-1])
-		return len(data)-1, nil
+		return len(data) - 1, nil
 	})
 	log.SetOutput(state.cw)
 	SLog.SetTermUiDisplay(true)
@@ -339,13 +338,13 @@ func updateComponents() {
 	// endregion
 	// region Signal Quality
 	signalQualityColor := colorBar[state.signalQuality]
-	state.displayObjects.signalQuality.BarColor = ui.Attribute( GetXTermColorHVal(signalQualityColor) + 1  )
+	state.displayObjects.signalQuality.BarColor = ui.Attribute(GetXTermColorHVal(signalQualityColor) + 1)
 	// endregion
 	// region Channel Packets
 	data := make([]int, 0)
 	label := make([]string, 0)
 
-	for i:=0; i< 256; i++ {
+	for i := 0; i < 256; i++ {
 		if state.channelPackets[i] != 0 {
 			label = append(label, strconv.FormatInt(int64(i), 10))
 			data = append(data, int(state.channelPackets[i])) // Overflow Alert!! TODO
@@ -438,11 +437,11 @@ func UpdateReedSolomon(d [4]int32) {
 	state.rsErrors = d
 }
 
-func UpdateSyncWord (d [4]byte) {
+func UpdateSyncWord(d [4]byte) {
 	state.syncWord = d
 }
 
-func UpdateSCVCID (scid byte, vcid byte) {
+func UpdateSCVCID(scid byte, vcid byte) {
 	state.vcid = vcid
 	state.scid = scid
 }
@@ -466,10 +465,18 @@ func UpdateSyncCorrelation(corr uint8) {
 
 func UpdatePhaseCorr(corr uint8) {
 	switch corr {
-	case 0: state.phaseCorrection = 0; break
-	case 1: state.phaseCorrection = 90; break
-	case 2: state.phaseCorrection = 180; break
-	case 3: state.phaseCorrection = 270; break
+	case 0:
+		state.phaseCorrection = 0
+		break
+	case 1:
+		state.phaseCorrection = 90
+		break
+	case 2:
+		state.phaseCorrection = 180
+		break
+	case 3:
+		state.phaseCorrection = 270
+		break
 	}
 }
 

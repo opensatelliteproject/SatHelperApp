@@ -1,15 +1,15 @@
 package main
 
 import (
-	"log"
-	"github.com/BurntSushi/toml"
 	"bytes"
-	"io/ioutil"
-	. "github.com/OpenSatelliteProject/SatHelperApp/Models"
-	"github.com/mitchellh/go-homedir"
 	"flag"
 	"fmt"
+	"github.com/BurntSushi/toml"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	. "github.com/OpenSatelliteProject/SatHelperApp/Models"
+	"github.com/mitchellh/go-homedir"
+	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -79,7 +79,6 @@ const RsParityBlockSize = RsParitySize * RsBlocks
 const LastFrameDataBits = 64
 const LastFrameData = LastFrameDataBits / 8
 
-
 const DefaultFlywheelRecheck = 4
 const DefaultVchannelPort = 5001
 const DefaultStatisticsPort = 5002
@@ -126,6 +125,7 @@ func LoadDefaults() {
 
 	// CFile Source Defaults
 	CurrentConfig.CFileSource.Filename = ""
+	CurrentConfig.CFileSource.FastAsPossible = false
 
 	// LimeSDR Source Defaults
 	CurrentConfig.LimeSource.LNAGain = 10
@@ -181,4 +181,5 @@ func LoadConfig() {
 		LoadDefaults()
 	}
 }
+
 // endregion

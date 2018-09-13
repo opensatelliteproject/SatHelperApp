@@ -151,28 +151,26 @@ import "unsafe"
 import _ "runtime/cgo"
 import "sync"
 
-
 type _ unsafe.Pointer
-
-
 
 var Swig_escape_always_false bool
 var Swig_escape_val interface{}
 
-
 type _swig_fnptr *byte
 type _swig_memberptr *byte
 
-
 type _ sync.Mutex
 
+type swig_gostring struct {
+	p uintptr
+	n int
+}
 
-type swig_gostring struct { p uintptr; n int }
 func swigCopyString(s string) string {
-  p := *(*swig_gostring)(unsafe.Pointer(&s))
-  r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
-  Swig_free(p.p)
-  return r
+	p := *(*swig_gostring)(unsafe.Pointer(&s))
+	r := string((*[0x7fffffff]byte)(unsafe.Pointer(p.p))[:p.n])
+	Swig_free(p.p)
+	return r
 }
 
 func Swig_free(arg1 uintptr) {
@@ -190,7 +188,9 @@ func Swig_malloc(arg1 int) (_swig_ret uintptr) {
 const FRONTEND_SAMPLETYPE_FLOATIQ int = 0
 const FRONTEND_SAMPLETYPE_S16IQ int = 1
 const FRONTEND_SAMPLETYPE_S8IQ int = 2
+
 type TLogLevel int
+
 func _swig_getlogERROR() (_swig_ret TLogLevel) {
 	var swig_r TLogLevel
 	swig_r = (TLogLevel)(C._wrap_logERROR_LimeDevice_d4a3c903ea87caf4())
@@ -198,6 +198,7 @@ func _swig_getlogERROR() (_swig_ret TLogLevel) {
 }
 
 var LogERROR TLogLevel = _swig_getlogERROR()
+
 func _swig_getlogWARN() (_swig_ret TLogLevel) {
 	var swig_r TLogLevel
 	swig_r = (TLogLevel)(C._wrap_logWARN_LimeDevice_d4a3c903ea87caf4())
@@ -205,6 +206,7 @@ func _swig_getlogWARN() (_swig_ret TLogLevel) {
 }
 
 var LogWARN TLogLevel = _swig_getlogWARN()
+
 func _swig_getlogINFO() (_swig_ret TLogLevel) {
 	var swig_r TLogLevel
 	swig_r = (TLogLevel)(C._wrap_logINFO_LimeDevice_d4a3c903ea87caf4())
@@ -212,6 +214,7 @@ func _swig_getlogINFO() (_swig_ret TLogLevel) {
 }
 
 var LogINFO TLogLevel = _swig_getlogINFO()
+
 func _swig_getlogDEBUG() (_swig_ret TLogLevel) {
 	var swig_r TLogLevel
 	swig_r = (TLogLevel)(C._wrap_logDEBUG_LimeDevice_d4a3c903ea87caf4())
@@ -219,6 +222,7 @@ func _swig_getlogDEBUG() (_swig_ret TLogLevel) {
 }
 
 var LogDEBUG TLogLevel = _swig_getlogDEBUG()
+
 type _swig_DirectorLimeDeviceCallback struct {
 	SwigcptrLimeDeviceCallback
 	v interface{}
@@ -347,7 +351,7 @@ func DirectorLimeDeviceCallbackInfo(p LimeDeviceCallback, arg2 string) {
 func Swig_DirectorLimeDeviceCallback_callback_Info_LimeDevice_d4a3c903ea87caf4(swig_c int, arg2 string) {
 	var _swig_i_0 string
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
- _swig_i_0 = swigCopyString(arg2) 
+	_swig_i_0 = swigCopyString(arg2)
 	swig_p.Info(_swig_i_0)
 }
 
@@ -379,7 +383,7 @@ func DirectorLimeDeviceCallbackError(p LimeDeviceCallback, arg2 string) {
 func Swig_DirectorLimeDeviceCallback_callback_Error_LimeDevice_d4a3c903ea87caf4(swig_c int, arg2 string) {
 	var _swig_i_0 string
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
- _swig_i_0 = swigCopyString(arg2) 
+	_swig_i_0 = swigCopyString(arg2)
 	swig_p.Error(_swig_i_0)
 }
 
@@ -411,7 +415,7 @@ func DirectorLimeDeviceCallbackWarn(p LimeDeviceCallback, arg2 string) {
 func Swig_DirectorLimeDeviceCallback_callback_Warn_LimeDevice_d4a3c903ea87caf4(swig_c int, arg2 string) {
 	var _swig_i_0 string
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
- _swig_i_0 = swigCopyString(arg2) 
+	_swig_i_0 = swigCopyString(arg2)
 	swig_p.Warn(_swig_i_0)
 }
 
@@ -443,7 +447,7 @@ func DirectorLimeDeviceCallbackDebug(p LimeDeviceCallback, arg2 string) {
 func Swig_DirectorLimeDeviceCallback_callback_Debug_LimeDevice_d4a3c903ea87caf4(swig_c int, arg2 string) {
 	var _swig_i_0 string
 	swig_p := swigDirectorLookup(swig_c).(*_swig_DirectorLimeDeviceCallback)
- _swig_i_0 = swigCopyString(arg2) 
+	_swig_i_0 = swigCopyString(arg2)
 	swig_p.Debug(_swig_i_0)
 }
 
@@ -1048,7 +1052,7 @@ func (arg1 SwigcptrLimeDevice) GetName() (_swig_ret string) {
 	swig_r_p := C._wrap_LimeDevice_GetName_LimeDevice_d4a3c903ea87caf4(C.uintptr_t(_swig_i_0))
 	swig_r = *(*string)(unsafe.Pointer(&swig_r_p))
 	var swig_r_1 string
- swig_r_1 = swigCopyString(swig_r) 
+	swig_r_1 = swigCopyString(swig_r)
 	return swig_r_1
 }
 
@@ -1163,24 +1167,23 @@ type LimeDevice interface {
 	GetSamples(arg2 uint16)
 }
 
-
 type SwigcptrSwigDirector_LimeDeviceCallback uintptr
 type SwigDirector_LimeDeviceCallback interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrSwigDirector_LimeDeviceCallback) Swigcptr() uintptr {
 	return uintptr(p)
 }
 
 type SwigcptrStd_ostringstream uintptr
 type Std_ostringstream interface {
-	Swigcptr() uintptr;
+	Swigcptr() uintptr
 }
+
 func (p SwigcptrStd_ostringstream) Swigcptr() uintptr {
 	return uintptr(p)
 }
-
-
 
 var swigDirectorTrack struct {
 	sync.Mutex
@@ -1222,5 +1225,3 @@ func swigDirectorDelete(c int) {
 	}
 	delete(swigDirectorTrack.m, c)
 }
-
-

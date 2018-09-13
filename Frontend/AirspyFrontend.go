@@ -6,8 +6,8 @@ import (
 
 // region Struct Definition
 type AirspyFrontend struct {
-	device AirspyDevice.AirspyDevice
-	goCb GoCallback
+	device  AirspyDevice.AirspyDevice
+	goCb    GoCallback
 	goDirCb AirspyDevice.AirspyDeviceCallback
 }
 
@@ -22,7 +22,7 @@ func NewAirspyFrontend() *AirspyFrontend {
 	dirCb := MakeAirspyGoCallbackDirector(&goCb)
 	afrnt := AirspyFrontend{
 		device: AirspyDevice.NewAirspyDevice(dirCb),
-		goCb: goCb,
+		goCb:   goCb,
 	}
 
 	return &afrnt
@@ -33,6 +33,7 @@ func AirspyInitialize() {
 func AirspyDeinitialize() {
 	AirspyDevice.AirspyDeviceDeInitialize()
 }
+
 // endregion
 // region Getters
 func (f *AirspyFrontend) GetName() string {
@@ -53,9 +54,10 @@ func (f *AirspyFrontend) GetAvailableSampleRates() []uint32 {
 func (f *AirspyFrontend) GetCenterFrequency() uint32 {
 	return uint32(f.device.GetCenterFrequency())
 }
-func (f *AirspyFrontend)  GetSampleRate() uint32 {
+func (f *AirspyFrontend) GetSampleRate() uint32 {
 	return uint32(f.device.GetSampleRate())
 }
+
 // endregion
 // region Setters
 func (f *AirspyFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
@@ -69,6 +71,7 @@ func (f *AirspyFrontend) SetSampleRate(sampleRate uint32) uint32 {
 func (f *AirspyFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
 	return uint32(f.device.SetCenterFrequency(uint(centerFrequency)))
 }
+
 // endregion
 // region Commands
 func (f *AirspyFrontend) Start() {
@@ -104,4 +107,5 @@ func (f *AirspyFrontend) Destroy() {
 }
 
 func (f *AirspyFrontend) SetAntenna(string) {}
+
 // endregion

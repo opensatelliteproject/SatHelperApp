@@ -1,12 +1,12 @@
 package SLog
 
 import (
+	"flag"
 	"fmt"
 	"github.com/logrusorgru/aurora"
-	"flag"
+	"github.com/mitchellh/go-homedir"
 	"log"
 	"os"
-	"github.com/mitchellh/go-homedir"
 )
 
 var displayOnTermUI = false
@@ -17,7 +17,7 @@ var logPathFlag = flag.String("logdir", "", "Log folder")
 var logFileHandle *os.File
 
 func StartLog() {
-	if ! logStarted {
+	if !logStarted {
 		flag.Parse()
 		home, _ := homedir.Dir()
 		logPath = fmt.Sprintf("%s/SatHelperApp/logs", home)
@@ -46,8 +46,8 @@ func SetTermUiDisplay(b bool) {
 	displayOnTermUI = b
 }
 
-func Info(str string, v ... interface{}) {
-	Log(str, v ...)
+func Info(str string, v ...interface{}) {
+	Log(str, v...)
 }
 
 func Log(str string, v ...interface{}) {
@@ -72,7 +72,7 @@ func Debug(str string, v ...interface{}) {
 		logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
 	}
 }
- 
+
 func Warn(str string, v ...interface{}) {
 	if displayOnTermUI {
 		log.Printf("[W](fg-bold) [%s](fg-yellow)\n", fmt.Sprintf(str, v...))

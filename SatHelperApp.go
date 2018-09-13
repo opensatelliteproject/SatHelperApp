@@ -1,18 +1,18 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/libsathelper"
-	"log"
+	"flag"
+	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
+	"github.com/OpenSatelliteProject/SatHelperApp/Display"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/OpenSatelliteProject/libsathelper"
 	ui "github.com/airking05/termui"
 	"github.com/logrusorgru/aurora"
-	"github.com/OpenSatelliteProject/SatHelperApp/Display"
-	"strings"
-	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
-	"flag"
+	"log"
 	"os"
 	"runtime/pprof"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"strings"
 	"time"
 )
 
@@ -56,69 +56,72 @@ func main() {
 	LoadConfig()
 
 	switch strings.ToLower(CurrentConfig.Base.Mode) {
-		case "lrit":
-			SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
-			SetLRITMode()
+	case "lrit":
+		SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
+		SetLRITMode()
 		break
-		case "hrit":
-			SLog.Info(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file.").String())
-			SetHRITMode()
+	case "hrit":
+		SLog.Info(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file.").String())
+		SetHRITMode()
 		break
-		default:
-			SLog.Info(aurora.Gray("No valid mode selected. Using config file parameters.").String())
+	default:
+		SLog.Info(aurora.Gray("No valid mode selected. Using config file parameters.").String())
 	}
 
 	switch strings.ToLower(CurrentConfig.Base.DeviceType) {
-		case "cfile":
-			SLog.Info(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
-			device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
-			break
-		case "lime":
-			SLog.Info(aurora.Cyan("LimeSDR Frontend selected.").String())
-			device = Frontend.NewLimeFrontend()
+	case "cfile":
+		SLog.Info(aurora.Cyan("CFile Frontend selected. File Name: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.CFileSource.Filename)))
+		device = Frontend.NewCFileFrontend(CurrentConfig.CFileSource.Filename)
+		if CurrentConfig.CFileSource.FastAsPossible {
+			device.(*Frontend.CFileFrontend).EnableFastAsPossible()
+		}
+		break
+	case "lime":
+		SLog.Info(aurora.Cyan("LimeSDR Frontend selected.").String())
+		device = Frontend.NewLimeFrontend()
 
-			if ! device.Init() {
-				SLog.Error("Error initializing device")
-				return
-			}
-			defer device.Destroy()
-
-			device.SetGain1(CurrentConfig.LimeSource.LNAGain)
-			device.SetAntenna(CurrentConfig.LimeSource.Antenna)
-
-			SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
-			SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
-			break
-		case "airspy":
-			SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
-			Frontend.AirspyInitialize()
-			defer Frontend.AirspyDeinitialize()
-			device = Frontend.NewAirspyFrontend()
-
-			if ! device.Init() {
-				SLog.Error("Error initializing device")
-				return
-			}
-			defer device.Destroy()
-
-			device.SetGain1(CurrentConfig.AirspySource.LNAGain)
-			device.SetGain2(CurrentConfig.AirspySource.VGAGain)
-			device.SetGain3(CurrentConfig.AirspySource.MixerGain)
-			device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
-			break
-		case "spyserver":
-			SLog.Info(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
-			device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
-			if ! device.Init() {
-				SLog.Error("Error initializing device")
-				return
-			}
-			defer device.Destroy()
-			device.SetGain1(CurrentConfig.SpyserverSource.Gain)
-			break
-		default:
-			SLog.Error(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
+		if !device.Init() {
+			SLog.Error("Error initializing device")
 			return
+		}
+		defer device.Destroy()
+
+		device.SetGain1(CurrentConfig.LimeSource.LNAGain)
+		device.SetAntenna(CurrentConfig.LimeSource.Antenna)
+
+		SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
+		SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
+		break
+	case "airspy":
+		SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
+		Frontend.AirspyInitialize()
+		defer Frontend.AirspyDeinitialize()
+		device = Frontend.NewAirspyFrontend()
+
+		if !device.Init() {
+			SLog.Error("Error initializing device")
+			return
+		}
+		defer device.Destroy()
+
+		device.SetGain1(CurrentConfig.AirspySource.LNAGain)
+		device.SetGain2(CurrentConfig.AirspySource.VGAGain)
+		device.SetGain3(CurrentConfig.AirspySource.MixerGain)
+		device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
+		break
+	case "spyserver":
+		SLog.Info(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
+		device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
+		if !device.Init() {
+			SLog.Error("Error initializing device")
+			return
+		}
+		defer device.Destroy()
+		device.SetGain1(CurrentConfig.SpyserverSource.Gain)
+		break
+	default:
+		SLog.Error(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
+		return
 		break
 	}
 
