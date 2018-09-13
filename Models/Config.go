@@ -51,6 +51,10 @@ type TCPServerDemuxerConfig struct {
 	Host string
 }
 
+type FileDemuxerConfig struct {
+	Filename string
+}
+
 type AppConfig struct {
 	Title            string
 	Base             BaseConfig
@@ -60,6 +64,7 @@ type AppConfig struct {
 	LimeSource       LimeSourceConfig
 	CFileSource      CFileSourceConfig
 	TCPServerDemuxer TCPServerDemuxerConfig
+	FileDemuxer      FileDemuxerConfig
 	SpyserverSource  SpyserverSourceConfig
 }
 

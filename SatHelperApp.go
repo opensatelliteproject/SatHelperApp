@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 	"github.com/OpenSatelliteProject/SatHelperApp/Display"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
@@ -130,6 +131,13 @@ func main() {
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
+		break
+	case "file":
+		if CurrentConfig.FileDemuxer.Filename == "" {
+			CurrentConfig.FileDemuxer.Filename = fmt.Sprintf("demuxdump-%d.bin", time.Now().Unix())
+		}
+		SLog.Info(aurora.Cyan("File Demuxer selected. Will write to %s").String(), aurora.Bold(CurrentConfig.FileDemuxer.Filename))
+		demuxer = Demuxer.NewFileDemuxer(CurrentConfig.FileDemuxer.Filename)
 		break
 	default:
 		SLog.Error("Unknown Demuxer Type %s.", CurrentConfig.Base.DemuxerType)

@@ -147,6 +147,9 @@ func LoadDefaults() {
 	CurrentConfig.TCPServerDemuxer.Port = DefaultVchannelPort
 	CurrentConfig.TCPServerDemuxer.Host = ""
 
+	// FileDemuxer
+	CurrentConfig.FileDemuxer.Filename = ""
+
 	SaveConfig()
 }
 
