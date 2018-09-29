@@ -25,7 +25,10 @@ func StartLog() {
 			logPath = *logPathFlag
 		}
 		logStarted = true
-		os.MkdirAll(logPath, os.ModePerm)
+		err := os.MkdirAll(logPath, os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
 		file, err := os.Create(fmt.Sprintf("%s/log.txt", logPath))
 		if err != nil {
 			Error("Error opening log file: %s. Won't try again...", err)
@@ -58,7 +61,10 @@ func Log(str string, v ...interface{}) {
 	}
 
 	if logFileHandle != nil {
-		logFileHandle.WriteString(aurora.Cyan(fmt.Sprintf("[I] %s\n", fmt.Sprintf(str, v...))).String())
+		_, err := logFileHandle.WriteString(aurora.Cyan(fmt.Sprintf("[I] %s\n", fmt.Sprintf(str, v...))).String())
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -69,7 +75,10 @@ func Debug(str string, v ...interface{}) {
 		log.Printf(aurora.Magenta("%s").String(), fmt.Sprintf(str, v...))
 	}
 	if logFileHandle != nil {
-		logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
+		_, err := logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -80,7 +89,10 @@ func Warn(str string, v ...interface{}) {
 		log.Printf(aurora.Brown("%s").String(), fmt.Sprintf(str, v...))
 	}
 	if logFileHandle != nil {
-		logFileHandle.WriteString(aurora.Brown(fmt.Sprintf("[W] %s\n", fmt.Sprintf(str, v...))).String())
+		_, err := logFileHandle.WriteString(aurora.Brown(fmt.Sprintf("[W] %s\n", fmt.Sprintf(str, v...))).String())
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -91,6 +103,9 @@ func Error(str string, v ...interface{}) {
 		log.Printf(aurora.Red("%s").String(), fmt.Sprintf(str, v...))
 	}
 	if logFileHandle != nil {
-		logFileHandle.WriteString(aurora.Red(fmt.Sprintf("[E] %s\n", fmt.Sprintf(str, v...))).String())
+		_, err := logFileHandle.WriteString(aurora.Red(fmt.Sprintf("[E] %s\n", fmt.Sprintf(str, v...))).String())
+		if err != nil {
+			panic(err)
+		}
 	}
 }

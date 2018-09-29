@@ -13,7 +13,6 @@ import (
 type TCPServerDemuxer struct {
 	port       int
 	host       string
-	connection net.Listener
 	clients    *list.List
 	syncMtx    *sync.Mutex
 	running    bool
@@ -84,8 +83,8 @@ func (f *TCPServerDemuxer) loop() {
 	}
 
 }
-func (f *TCPServerDemuxer) handleConnection(conn net.Conn) {
-	// TODO: Needed?
-}
+//func (f *TCPServerDemuxer) handleConnection(conn net.Conn) {
+//	// TODO: Needed?
+//}
 
 // endregion

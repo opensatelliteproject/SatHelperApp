@@ -35,7 +35,10 @@ func main() {
 			log.Println(err)
 			return
 		}
-		pprof.StartCPUProfile(f)
+		err = pprof.StartCPUProfile(f)
+		if err != nil {
+			panic(err)
+		}
 		defer pprof.StopCPUProfile()
 	}
 
@@ -60,11 +63,9 @@ func main() {
 	case "lrit":
 		SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
 		SetLRITMode()
-		break
 	case "hrit":
 		SLog.Info(aurora.Cyan("Selected HRIT mode. Ignoring parameters from config file.").String())
 		SetHRITMode()
-		break
 	default:
 		SLog.Info(aurora.Gray("No valid mode selected. Using config file parameters.").String())
 	}
@@ -77,7 +78,6 @@ func main() {
 			SLog.Info(aurora.Cyan("Fast as possible enabled!").String())
 			device.(*Frontend.CFileFrontend).EnableFastAsPossible()
 		}
-		break
 	case "lime":
 		SLog.Info(aurora.Cyan("LimeSDR Frontend selected.").String())
 		device = Frontend.NewLimeFrontend()
@@ -93,7 +93,6 @@ func main() {
 
 		SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.LNAGain)))
 		SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(CurrentConfig.LimeSource.Antenna)))
-		break
 	case "airspy":
 		SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
 		Frontend.AirspyInitialize()
@@ -110,7 +109,6 @@ func main() {
 		device.SetGain2(CurrentConfig.AirspySource.VGAGain)
 		device.SetGain3(CurrentConfig.AirspySource.MixerGain)
 		device.SetBiasT(CurrentConfig.AirspySource.BiasTEnabled)
-		break
 	case "spyserver":
 		SLog.Info(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(CurrentConfig.SpyserverSource.Hostname), aurora.Bold(CurrentConfig.SpyserverSource.Port))
 		device = Frontend.NewSpyserverFrontend(CurrentConfig.SpyserverSource.Hostname, CurrentConfig.SpyserverSource.Port)
@@ -120,25 +118,21 @@ func main() {
 		}
 		defer device.Destroy()
 		device.SetGain1(CurrentConfig.SpyserverSource.Gain)
-		break
 	default:
 		SLog.Error(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(CurrentConfig.Base.DeviceType))
 		return
-		break
 	}
 
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
 		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
-		break
 	case "file":
 		if CurrentConfig.FileDemuxer.Filename == "" {
 			CurrentConfig.FileDemuxer.Filename = fmt.Sprintf("demuxdump-%d.bin", time.Now().Unix())
 		}
 		SLog.Info(aurora.Cyan("File Demuxer selected. Will write to %s").String(), aurora.Bold(CurrentConfig.FileDemuxer.Filename))
 		demuxer = Demuxer.NewFileDemuxer(CurrentConfig.FileDemuxer.Filename)
-		break
 	default:
 		SLog.Error("Unknown Demuxer Type %s.", CurrentConfig.Base.DemuxerType)
 		return

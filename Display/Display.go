@@ -470,16 +470,12 @@ func UpdatePhaseCorr(corr uint8) {
 	switch corr {
 	case 0:
 		state.phaseCorrection = 0
-		break
 	case 1:
 		state.phaseCorrection = 90
-		break
 	case 2:
 		state.phaseCorrection = 180
-		break
 	case 3:
 		state.phaseCorrection = 270
-		break
 	}
 }
 

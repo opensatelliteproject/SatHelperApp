@@ -35,13 +35,10 @@ func newSamplesCallback(d Frontend.SampleCallbackData) {
 	switch d.SampleType {
 	case Frontend.SampleTypeFloatIQ:
 		AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples)
-		break
 	case Frontend.SampleTypeS16IQ:
 		AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples)
-		break
 	case Frontend.SampleTypeS8IQ:
 		AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples)
-		break
 	}
 }
 

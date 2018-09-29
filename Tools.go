@@ -72,12 +72,18 @@ var clear = map[string]func(){
 	"linux": func() {
 		cmd := exec.Command("clear") //Linux example, its tested
 		cmd.Stdout = os.Stdout
-		cmd.Run()
+		err := cmd.Run()
+		if err != nil {
+			panic(err)
+		}
 	},
 	"windows": func() {
 		cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
 		cmd.Stdout = os.Stdout
-		cmd.Run()
+		err := cmd.Run()
+		if err != nil {
+			panic(err)
+		}
 	},
 }
 

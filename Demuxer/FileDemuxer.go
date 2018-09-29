@@ -2,7 +2,6 @@ package Demuxer
 
 import (
 	"container/list"
-	"net"
 	"os"
 	"sync"
 )
@@ -10,7 +9,6 @@ import (
 // region Struct Definition
 type FileDemuxer struct {
 	filename   string
-	connection net.Listener
 	clients    *list.List
 	syncMtx    *sync.Mutex
 	running    bool
@@ -48,7 +46,10 @@ func (f *FileDemuxer) Stop() {
 	}
 }
 func (f *FileDemuxer) SendFrame(frame []byte) {
-	f.handle.Write(frame)
+	_, err := f.handle.Write(frame)
+	if err != nil {
+		panic(err)
+	}
 }
 func (f *FileDemuxer) GetName() string {
 	return "File"

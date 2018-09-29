@@ -284,50 +284,50 @@ var HVals []uint32
 
 var HValToHex map[uint32]uint32
 
-func hsv2rgb(H float32, S float32, V float32) (float32, float32, float32) {
-	var r, g, b float32
-	if S == 0 {
-		r = V
-		g = V
-		b = V
-	} else {
-		h := H * 6
-		if h == 6 {
-			h = 0
-		}
-		i := float32(math.Floor(float64(h)))
-		v1 := V * (1 - S)
-		v2 := V * (1 - S*(h-i))
-		v3 := V * (1 - S*(1-(h-i)))
-
-		if i == 0 {
-			r = V
-			g = v3
-			b = v1
-		} else if i == 1 {
-			r = v2
-			g = V
-			b = v1
-		} else if i == 2 {
-			r = v1
-			g = V
-			b = v3
-		} else if i == 3 {
-			r = v1
-			g = v2
-			b = V
-		} else if i == 4 {
-			r = v3
-			g = v1
-			b = V
-		} else {
-			r = V
-			g = v1
-			b = v2
-		}
-	}
-	return r, g, b
-}
+//func hsv2rgb(H float32, S float32, V float32) (float32, float32, float32) {
+//	var r, g, b float32
+//	if S == 0 {
+//		r = V
+//		g = V
+//		b = V
+//	} else {
+//		h := H * 6
+//		if h == 6 {
+//			h = 0
+//		}
+//		i := float32(math.Floor(float64(h)))
+//		v1 := V * (1 - S)
+//		v2 := V * (1 - S*(h-i))
+//		v3 := V * (1 - S*(1-(h-i)))
+//
+//		if i == 0 {
+//			r = V
+//			g = v3
+//			b = v1
+//		} else if i == 1 {
+//			r = v2
+//			g = V
+//			b = v1
+//		} else if i == 2 {
+//			r = v1
+//			g = V
+//			b = v3
+//		} else if i == 3 {
+//			r = v1
+//			g = v2
+//			b = V
+//		} else if i == 4 {
+//			r = v3
+//			g = v1
+//			b = V
+//		} else {
+//			r = V
+//			g = v1
+//			b = v2
+//		}
+//	}
+//	return r, g, b
+//}
 
 func getApproxHex(v uint32) uint32 {
 	var lastValue uint32 = 0
@@ -379,9 +379,9 @@ func InitLut() {
 		hexToPos[item.hexColor] = i
 		hexValues[i] = item.hexColor
 		c := colorful.Color{
-			float64((item.hexColor&0xFF0000)>>16) / 255,
-			float64((item.hexColor&0xFF00)>>8) / 255,
-			float64(item.hexColor&0xFF) / 255,
+			R: float64((item.hexColor&0xFF0000)>>16) / 255,
+			G: float64((item.hexColor&0xFF00)>>8) / 255,
+			B: float64(item.hexColor&0xFF) / 255,
 		}
 
 		h, _, v := c.Hsv()

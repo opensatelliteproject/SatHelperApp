@@ -109,7 +109,7 @@ func (f *CFileFrontend) Start() {
 		}
 
 		for frontend.running {
-			if float32(time.Now().Sub(frontend.t0).Seconds()) >= period {
+			if float32(time.Since(frontend.t0).Seconds()) >= period {
 				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)
 				if err != nil {
 					SLog.Error("Error reading input CFile: %s", Bold(err))

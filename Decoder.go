@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
 	"github.com/OpenSatelliteProject/libsathelper"
 	. "github.com/logrusorgru/aurora"
@@ -53,7 +54,7 @@ func initDecoder() {
 }
 
 func decoderLoop() {
-	isCorrupted := false
+	var isCorrupted bool
 	lastFrameOk := false
 
 	var localStats Models.Statistics
@@ -92,7 +93,7 @@ func decoderLoop() {
 				if correlator.GetHighestCorrelationPosition() != 0 {
 					// Oh no, that means something happened :/
 					correlator.Correlate(&codedData[0], CodedFrameSize)
-					lastFrameOk = false
+					//lastFrameOk = false // GoLintCLI says this useless?
 					flywheelCount = 0
 				}
 			}
@@ -107,7 +108,7 @@ func decoderLoop() {
 			}
 
 			if corr < MinCorrelationBits {
-				// log.Printf(Red("Correlation didn't match criteria of %d bits. Got %d\n").String(), Bold(MinCorrelationBits), Bold(corr))
+				SLog.Error("Correlation didn't match criteria of %d bits. Got %d\n", Bold(MinCorrelationBits), Bold(corr))
 			}
 
 			if pos != 0 {
@@ -157,7 +158,7 @@ func decoderLoop() {
 			signalErrors = 100 - (signalErrors * 10)
 			signalQuality := uint8(signalErrors)
 
-			if signalQuality > 100 || signalQuality < 0 {
+			if signalQuality > 100 {
 				signalQuality = 0
 			}
 
@@ -225,16 +226,12 @@ func decoderLoop() {
 			switch phaseShift {
 			case SatHelper.DEG_0:
 				localStats.PhaseCorrection = 0
-				break
 			case SatHelper.DEG_90:
 				localStats.PhaseCorrection = 1
-				break
 			case SatHelper.DEG_180:
 				localStats.PhaseCorrection = 2
-				break
 			case SatHelper.DEG_270:
 				localStats.PhaseCorrection = 3
-				break
 			}
 
 			if !isCorrupted {

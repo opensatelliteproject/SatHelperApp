@@ -37,17 +37,17 @@ const PllAlpha float32 = 0.001
 const ClockAlpha float32 = 0.0037
 const ClockMu float32 = 0.5
 const ClockOmegaLimit float32 = 0.005
-const ClockGainOmega float32 = (ClockAlpha * ClockAlpha) / 4.0
+const ClockGainOmega = (ClockAlpha * ClockAlpha) / 4.0
 const AgcRate float32 = 0.01
 const AgcReference float32 = 0.5
 const AgcGain float32 = 1.0
 const AgcMaxGain float32 = 4000
 
 const AirspyMiniDefaultSamplerate = 3000000
-const AirspyR2DefaultSamplerate = 2500000
+//const AirspyR2DefaultSamplerate = 2500000
 const DefaultSampleRate = AirspyMiniDefaultSamplerate
 const DefaultDecimation = 1
-const DefaultDeviceNumber = 0
+//const DefaultDeviceNumber = 0
 
 const DefaultLnaGain = 5
 const DefaultVgaGain = 5
@@ -81,7 +81,7 @@ const LastFrameData = LastFrameDataBits / 8
 
 const DefaultFlywheelRecheck = 4
 const DefaultVchannelPort = 5001
-const DefaultStatisticsPort = 5002
+//const DefaultStatisticsPort = 5002
 
 const AverageLastNSamples = 10000
 
@@ -171,14 +171,21 @@ func SaveConfig() {
 
 func LoadConfig() {
 	home, _ := homedir.Dir()
-	os.MkdirAll(fmt.Sprintf("%s/SatHelperApp", home), os.ModePerm)
+
+	err := os.MkdirAll(fmt.Sprintf("%s/SatHelperApp", home), os.ModePerm)
+	if err != nil {
+		panic(err)
+	}
+
 	finalConfigFilePath = fmt.Sprintf("%s/SatHelperApp/%s", home, "SatHelperApp.cfg")
+
 	if *configFile != "" {
 		finalConfigFilePath = *configFile
 	}
 
 	SLog.Info("Loading config file from %s", finalConfigFilePath)
-	_, err := toml.DecodeFile(finalConfigFilePath, &CurrentConfig)
+	_, err = toml.DecodeFile(finalConfigFilePath, &CurrentConfig)
+
 	if err != nil {
 		SLog.Warn("Cannot load file SatHelperApp.cfg. Loading default values.")
 		LoadDefaults()
