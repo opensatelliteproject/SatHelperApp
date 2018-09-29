@@ -9,12 +9,12 @@ import (
 
 // region Struct Definition
 type FileDemuxer struct {
-	filename	string
+	filename   string
 	connection net.Listener
 	clients    *list.List
 	syncMtx    *sync.Mutex
 	running    bool
-	handle 	*os.File
+	handle     *os.File
 }
 
 // endregion
@@ -22,7 +22,7 @@ type FileDemuxer struct {
 func NewFileDemuxer(filename string) *FileDemuxer {
 	return &FileDemuxer{
 		filename: filename,
-		syncMtx: &sync.Mutex{},
+		syncMtx:  &sync.Mutex{},
 	}
 }
 

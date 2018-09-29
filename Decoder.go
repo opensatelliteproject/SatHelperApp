@@ -222,7 +222,6 @@ func decoderLoop() {
 			localStats.SignalQuality = signalQuality
 			localStats.SyncCorrelation = uint8(corr)
 
-
 			switch phaseShift {
 			case SatHelper.DEG_0:
 				localStats.PhaseCorrection = 0
