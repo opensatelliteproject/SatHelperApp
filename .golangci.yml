@@ -1,0 +1,23 @@
+# This file contains all available configuration options
+# with their default values.
+
+# options for analysis running
+run:
+
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  deadline: 1m
+
+  # exit code when at least one issue was found, default is 1
+  issues-exit-code: 1
+
+  skip-files: # SWIG Auto-generated files
+  - Frontend/AirspyDevice/AirspyDevice.go
+  - Frontend/LimeDevice/LimeDevice.go
+  - Frontend/SpyserverDevice/SpyserverDevice.go
+
+  skip-dirs: # Snap and temp folders
+  - snap
+  - parts
+  - stage
+  - tmp
+  - prime
