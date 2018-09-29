@@ -28,7 +28,6 @@ parts:
     after: [ppaadd]
     build-packages:
       - libusb-1.0-0
-      - liblimesuite-dev
       - swig
       - swig3.0
     stage-packages:

@@ -17,8 +17,9 @@ git:
 
 script:
 - cd /home/travis/gopath
-- mv /home/travis/gopath/src/github.com/opensatelliteproject /home/travis/gopath/src/github.com/OpenSatelliteProject
+- mv /home/travis/gopath/src/github.com/opensatelliteproject /home/travis/gopath/src/github.com/OpenSatelliteProject # Fix Naming
 - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
+- go get
 - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.10.2
 - golangci-lint run       # run a bunch of code checkers/linters in parallel
 - go test -v -race ./...  # Run all the tests with the race detector enabled
