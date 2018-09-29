@@ -44,9 +44,11 @@ const AgcGain float32 = 1.0
 const AgcMaxGain float32 = 4000
 
 const AirspyMiniDefaultSamplerate = 3000000
+
 //const AirspyR2DefaultSamplerate = 2500000
 const DefaultSampleRate = AirspyMiniDefaultSamplerate
 const DefaultDecimation = 1
+
 //const DefaultDeviceNumber = 0
 
 const DefaultLnaGain = 5
@@ -81,6 +83,7 @@ const LastFrameData = LastFrameDataBits / 8
 
 const DefaultFlywheelRecheck = 4
 const DefaultVchannelPort = 5001
+
 //const DefaultStatisticsPort = 5002
 
 const AverageLastNSamples = 10000

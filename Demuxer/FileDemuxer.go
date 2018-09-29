@@ -8,11 +8,11 @@ import (
 
 // region Struct Definition
 type FileDemuxer struct {
-	filename   string
-	clients    *list.List
-	syncMtx    *sync.Mutex
-	running    bool
-	handle     *os.File
+	filename string
+	clients  *list.List
+	syncMtx  *sync.Mutex
+	running  bool
+	handle   *os.File
 }
 
 // endregion

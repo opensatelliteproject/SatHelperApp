@@ -11,11 +11,11 @@ import (
 
 // region Struct Definition
 type TCPServerDemuxer struct {
-	port       int
-	host       string
-	clients    *list.List
-	syncMtx    *sync.Mutex
-	running    bool
+	port    int
+	host    string
+	clients *list.List
+	syncMtx *sync.Mutex
+	running bool
 }
 
 // endregion
@@ -83,6 +83,7 @@ func (f *TCPServerDemuxer) loop() {
 	}
 
 }
+
 //func (f *TCPServerDemuxer) handleConnection(conn net.Conn) {
 //	// TODO: Needed?
 //}
