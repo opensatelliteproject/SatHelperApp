@@ -19,7 +19,7 @@ parts:
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 11FC2E68126782B43762694F22C627172ECB91FE
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C73998DC9DFEA6DCF1241057308C15A29AD198E9
       apt update
-      apt install -yy  limesuite libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev golang-1.10
+      apt install -yy  limesuite liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev golang-1.10
     prime: [-*]
 
   sathelperapp:
@@ -28,6 +28,7 @@ parts:
     after: [ppaadd]
     build-packages:
       - libusb-1.0-0
+      - liblimesuite-dev
       - swig
       - swig3.0
     stage-packages:
@@ -42,6 +43,7 @@ parts:
       - libc6
       - libudev1
       - libgcc1
+      - limesuite
 
 apps:
   sathelperapp:
