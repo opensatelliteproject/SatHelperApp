@@ -43,7 +43,6 @@ parts:
       - libc6
       - libudev1
       - libgcc1
-      - limesuite
 
 apps:
   sathelperapp:
