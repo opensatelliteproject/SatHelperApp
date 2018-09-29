@@ -90,6 +90,9 @@ func InitDisplay() {
 	for i := 0; i < 100; i++ {
 		colorBar[i] = uint32(i)
 	}
+	for i := 100; i < 256; i++ { // Invalid values are no signal.
+		colorBar[i] = 0
+	}
 	// endregion
 	// region HEAD
 	head := ui.NewPar("SatHelper Application")

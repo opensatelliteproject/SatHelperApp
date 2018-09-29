@@ -13,3 +13,5 @@ snap/.snapcraft
 build
 dist
 sathelperapp_source.tar.bz2
+demuxdump*
+*.zip

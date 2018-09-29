@@ -157,6 +157,10 @@ func decoderLoop() {
 			signalErrors = 100 - (signalErrors * 10)
 			signalQuality := uint8(signalErrors)
 
+			if signalQuality > 100 || signalQuality < 0 {
+				signalQuality = 0
+			}
+
 			averageVitCorrections += float32(viterbi.GetBER())
 
 			if CurrentConfig.Decoder.UseLastFrameData {
@@ -206,6 +210,34 @@ func decoderLoop() {
 			counter &= 0xFFFFFF00
 			counter >>= 8
 
+			localStats.DecoderFifoUsage = decodFifoUsage
+			localStats.DemodulatorFifoUsage = demodFifoUsage
+
+			localStats.SCID = scid
+			localStats.VCID = vcid
+
+			localStats.PacketNumber = uint64(counter)
+			localStats.VitErrors = uint16(viterbi.GetBER())
+			localStats.FrameBits = FrameBits
+			localStats.SignalQuality = signalQuality
+			localStats.SyncCorrelation = uint8(corr)
+
+
+			switch phaseShift {
+			case SatHelper.DEG_0:
+				localStats.PhaseCorrection = 0
+				break
+			case SatHelper.DEG_90:
+				localStats.PhaseCorrection = 1
+				break
+			case SatHelper.DEG_180:
+				localStats.PhaseCorrection = 2
+				break
+			case SatHelper.DEG_270:
+				localStats.PhaseCorrection = 3
+				break
+			}
+
 			if !isCorrupted {
 				if lastPacketCount[vcid]+1 != int64(counter) && lastPacketCount[vcid] > -1 {
 					lostCount := int(int64(counter) - lastPacketCount[vcid] - 1)
@@ -219,29 +251,6 @@ func decoderLoop() {
 					receivedPacketsPerChannel[vcid] = receivedPacketsPerChannel[vcid] + 1
 				}
 
-				localStats.SCID = scid
-				localStats.VCID = vcid
-
-				localStats.PacketNumber = uint64(counter)
-				localStats.VitErrors = uint16(viterbi.GetBER())
-				localStats.FrameBits = FrameBits
-				localStats.SignalQuality = signalQuality
-				localStats.SyncCorrelation = uint8(corr)
-				switch phaseShift {
-				case SatHelper.DEG_0:
-					localStats.PhaseCorrection = 0
-					break
-				case SatHelper.DEG_90:
-					localStats.PhaseCorrection = 1
-					break
-				case SatHelper.DEG_180:
-					localStats.PhaseCorrection = 2
-					break
-				case SatHelper.DEG_270:
-					localStats.PhaseCorrection = 3
-					break
-				}
-
 				if localStats.TotalPackets%AverageLastNSamples == 0 {
 					localStats.AverageRSCorrections = uint8(averageRSCorrections / 4)
 					localStats.AverageVitCorrections = uint16(averageVitCorrections)
@@ -250,21 +259,17 @@ func decoderLoop() {
 					localStats.AverageVitCorrections = uint16(averageVitCorrections / float32(localStats.TotalPackets%AverageLastNSamples))
 				}
 				localStats.FrameLock = 1
-				localStats.DecoderFifoUsage = decodFifoUsage
-				localStats.DemodulatorFifoUsage = demodFifoUsage
-
+				for i := 0; i < 256; i++ {
+					localStats.ReceivedPacketsPerChannel[i] = receivedPacketsPerChannel[i]
+					localStats.LostPacketsPerChannel[i] = lostPacketsPerChannel[i]
+				}
 				if demuxer != nil {
 					demuxer.SendFrame(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
 				}
-
 			} else {
 				localStats.FrameLock = 0
 			}
 
-			for i := 0; i < 256; i++ {
-				localStats.ReceivedPacketsPerChannel[i] = receivedPacketsPerChannel[i]
-				localStats.LostPacketsPerChannel[i] = lostPacketsPerChannel[i]
-			}
 			SetStats(localStats)
 		} else {
 			time.Sleep(5 * time.Microsecond)
