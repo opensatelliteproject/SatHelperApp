@@ -42,6 +42,8 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
+	startTime = uint32(time.Now().Unix() & 0xFFFFFFFF)
+
 	SLog.Log("%s %s (%s) - %s %s",
 		aurora.Green(aurora.Bold("SatHelperApp")),
 		aurora.Bold(GetVersion()),

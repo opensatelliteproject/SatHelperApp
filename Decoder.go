@@ -213,6 +213,8 @@ func decoderLoop() {
 			counter &= 0xFFFFFF00
 			counter >>= 8
 
+			localStats.StartTime = startTime
+
 			localStats.DecoderFifoUsage = decodFifoUsage
 			localStats.DemodulatorFifoUsage = demodFifoUsage
 

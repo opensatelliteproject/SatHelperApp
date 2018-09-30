@@ -60,6 +60,8 @@ var decodFifoUsage uint8
 var lastConstellationSend time.Time
 var constellationBuffer []byte
 
+var startTime uint32
+
 // endregion
 
 func GetStats() Models.Statistics {
