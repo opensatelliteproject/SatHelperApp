@@ -59,6 +59,11 @@ func main() {
 
 	LoadConfig()
 
+	statisticsServer = NewTCPServer("", CurrentConfig.Base.StatisticsPort)
+
+	statisticsServer.Start()
+	defer statisticsServer.Stop()
+
 	switch strings.ToLower(CurrentConfig.Base.Mode) {
 	case "lrit":
 		SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
@@ -126,7 +131,7 @@ func main() {
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
-		demuxer = Demuxer.NewTCPDemuxer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
+		demuxer = NewTCPServer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 	case "file":
 		if CurrentConfig.FileDemuxer.Filename == "" {
 			CurrentConfig.FileDemuxer.Filename = fmt.Sprintf("demuxdump-%d.bin", time.Now().Unix())

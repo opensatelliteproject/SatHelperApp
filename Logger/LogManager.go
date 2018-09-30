@@ -63,7 +63,7 @@ func Log(str string, v ...interface{}) {
 	if logFileHandle != nil {
 		_, err := logFileHandle.WriteString(aurora.Cyan(fmt.Sprintf("[I] %s\n", fmt.Sprintf(str, v...))).String())
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	}
 }
@@ -77,7 +77,7 @@ func Debug(str string, v ...interface{}) {
 	if logFileHandle != nil {
 		_, err := logFileHandle.WriteString(aurora.Magenta(fmt.Sprintf("[D] %s\n", fmt.Sprintf(str, v...))).String())
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	}
 }
@@ -91,7 +91,7 @@ func Warn(str string, v ...interface{}) {
 	if logFileHandle != nil {
 		_, err := logFileHandle.WriteString(aurora.Brown(fmt.Sprintf("[W] %s\n", fmt.Sprintf(str, v...))).String())
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	}
 }
@@ -105,7 +105,7 @@ func Error(str string, v ...interface{}) {
 	if logFileHandle != nil {
 		_, err := logFileHandle.WriteString(aurora.Red(fmt.Sprintf("[E] %s\n", fmt.Sprintf(str, v...))).String())
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 	}
 }

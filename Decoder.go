@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/binary"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
 	"github.com/OpenSatelliteProject/libsathelper"
@@ -260,13 +262,19 @@ func decoderLoop() {
 					localStats.LostPacketsPerChannel[i] = lostPacketsPerChannel[i]
 				}
 				if demuxer != nil {
-					demuxer.SendFrame(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
+					demuxer.SendData(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
 				}
 			} else {
 				localStats.FrameLock = 0
 			}
 
 			SetStats(localStats)
+
+			if statisticsServer != nil {
+				var statBuff bytes.Buffer
+				binary.Write(&statBuff, binary.LittleEndian, localStats)
+				statisticsServer.SendData(statBuff.Bytes())
+			}
 		} else {
 			time.Sleep(5 * time.Microsecond)
 		}

@@ -45,7 +45,7 @@ func (f *FileDemuxer) Stop() {
 		f.handle = nil
 	}
 }
-func (f *FileDemuxer) SendFrame(frame []byte) {
+func (f *FileDemuxer) SendData(frame []byte) {
 	_, err := f.handle.Write(frame)
 	if err != nil {
 		panic(err)

@@ -11,6 +11,7 @@ type BaseConfig struct {
 	SendConstellation bool
 	PLLAlpha          float32
 	DemuxerType       string
+	StatisticsPort    int
 }
 
 type CFileSourceConfig struct {

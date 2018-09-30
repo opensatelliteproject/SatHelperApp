@@ -86,7 +86,7 @@ func InitDisplay() {
 	InitLut()
 	termbox.SetOutputMode(termbox.Output256)
 	// region Color Bar
-	colorBar = make([]uint32, 101)
+	colorBar = make([]uint32, 256)
 	for i := 0; i < 100; i++ {
 		colorBar[i] = uint32(i)
 	}

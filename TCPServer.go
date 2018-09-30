@@ -1,4 +1,4 @@
-package Demuxer
+package main
 
 import (
 	"container/list"
@@ -10,7 +10,7 @@ import (
 )
 
 // region Struct Definition
-type TCPServerDemuxer struct {
+type TCPServer struct {
 	port    int
 	host    string
 	clients *list.List
@@ -20,34 +20,38 @@ type TCPServerDemuxer struct {
 
 // endregion
 // region Constructor
-func NewTCPDemuxer(host string, port int) *TCPServerDemuxer {
-	return &TCPServerDemuxer{
+func NewTCPServer(host string, port int) *TCPServer {
+	var tcp = &TCPServer{
 		port:    port,
 		host:    host,
 		syncMtx: &sync.Mutex{},
 	}
+
+	tcp.Init()
+
+	return tcp
 }
 
 // endregion
 // region BaseDemuxer Methods
-func (f *TCPServerDemuxer) Init() {
+func (f *TCPServer) Init() {
 	f.clients = list.New()
 }
-func (f *TCPServerDemuxer) Start() {
+func (f *TCPServer) Start() {
 	f.running = true
 	go f.loop()
 }
-func (f *TCPServerDemuxer) Stop() {
+func (f *TCPServer) Stop() {
 	f.running = false
 }
-func (f *TCPServerDemuxer) SendFrame(frame []byte) {
+func (f *TCPServer) SendData(data []byte) {
 	go func() {
 		f.syncMtx.Lock()
 		var next *list.Element
 		for e := f.clients.Front(); e != nil; e = next {
 			client := e.Value.(net.Conn)
-			n, err := client.Write(frame)
-			if n != len(frame) || err != nil {
+			n, err := client.Write(data)
+			if n != len(data) || err != nil {
 				SLog.Error("%s", err)
 				next = e.Next()
 				f.clients.Remove(e)
@@ -57,13 +61,13 @@ func (f *TCPServerDemuxer) SendFrame(frame []byte) {
 		f.syncMtx.Unlock()
 	}()
 }
-func (f *TCPServerDemuxer) GetName() string {
+func (f *TCPServer) GetName() string {
 	return "TCP Server"
 }
 
 // endregion
 // region Loop Function
-func (f *TCPServerDemuxer) loop() {
+func (f *TCPServer) loop() {
 	ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", f.host, f.port))
 	if err != nil {
 		SLog.Error("Error opening TCP Server Socket: %s\n", err)
@@ -84,7 +88,7 @@ func (f *TCPServerDemuxer) loop() {
 
 }
 
-//func (f *TCPServerDemuxer) handleConnection(conn net.Conn) {
+//func (f *TCPServer) handleConnection(conn net.Conn) {
 //	// TODO: Needed?
 //}
 

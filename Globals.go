@@ -48,6 +48,7 @@ var statistics Models.Statistics
 var statisticsMutex = &sync.Mutex{}
 
 var demuxer Demuxer.BaseDemuxer
+var statisticsServer *TCPServer
 
 var demodFifoUsage uint8
 var decodFifoUsage uint8
