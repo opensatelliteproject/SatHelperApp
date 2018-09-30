@@ -7,6 +7,7 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/racerxdl/go.fifo"
 	"sync"
+	"time"
 )
 
 // region Global Globals
@@ -28,6 +29,7 @@ var device Frontend.BaseFrontend
 // endregion
 // region Decoder Globals
 var symbolsFifo *fifo.Queue
+var constellationFifo *fifo.Queue
 
 var viterbiData []byte
 var decodedData []byte
@@ -47,11 +49,16 @@ var packetFixer SatHelper.PacketFixer
 var statistics Models.Statistics
 var statisticsMutex = &sync.Mutex{}
 
+var constellationServer *UDPServer
+
 var demuxer Demuxer.BaseDemuxer
 var statisticsServer *TCPServer
 
 var demodFifoUsage uint8
 var decodFifoUsage uint8
+
+var lastConstellationSend time.Time
+var constellationBuffer []byte
 
 // endregion
 

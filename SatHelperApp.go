@@ -64,6 +64,10 @@ func main() {
 	statisticsServer.Start()
 	defer statisticsServer.Stop()
 
+	constellationServer = NewUDPServer("localhost", 9000)
+	constellationServer.Start()
+	defer constellationServer.Stop()
+
 	switch strings.ToLower(CurrentConfig.Base.Mode) {
 	case "lrit":
 		SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())

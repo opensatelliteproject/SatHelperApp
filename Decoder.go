@@ -272,7 +272,10 @@ func decoderLoop() {
 
 			if statisticsServer != nil {
 				var statBuff bytes.Buffer
-				binary.Write(&statBuff, binary.LittleEndian, localStats)
+				err := binary.Write(&statBuff, binary.LittleEndian, localStats)
+				if err != nil {
+					SLog.Error("Error parsing statistics: %s", err)
+				}
 				statisticsServer.SendData(statBuff.Bytes())
 			}
 		} else {

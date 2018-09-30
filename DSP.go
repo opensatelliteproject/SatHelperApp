@@ -10,7 +10,10 @@ import (
 )
 
 func initDSP() {
+	lastConstellationSend = time.Now()
 	samplesFifo = fifo.NewQueue()
+	constellationFifo = fifo.NewQueue()
+	constellationBuffer = make([]byte, 1024)
 	circuitSampleRate := float32(device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
 
@@ -39,6 +42,16 @@ func newSamplesCallback(d Frontend.SampleCallbackData) {
 		AddToFifoS16toC64(samplesFifo, d.Int16Array, d.NumSamples)
 	case Frontend.SampleTypeS8IQ:
 		AddToFifoS8toC64(samplesFifo, d.Int8Array, d.NumSamples)
+	}
+}
+
+func sendConstellation() {
+	if constellationServer != nil && constellationFifo.UnsafeLen() >= 1024 && time.Since(lastConstellationSend) > (time.Millisecond*10) {
+		for i := 0; i < 1024; i++ {
+			constellationBuffer[i] = constellationFifo.UnsafeNext().(uint8)
+		}
+		constellationServer.SendData(constellationBuffer)
+		lastConstellationSend = time.Now()
 	}
 }
 
@@ -89,7 +102,9 @@ func processSamples() {
 	}
 
 	symbolsFifo.UnsafeLock()
+	constellationFifo.UnsafeLock()
 	defer symbolsFifo.UnsafeUnlock()
+	defer constellationFifo.UnsafeUnlock()
 	for i := 0; i < symbols; i++ {
 		z := (*ob)[i]
 		v := imag(z) * 127
@@ -100,6 +115,25 @@ func processSamples() {
 		}
 
 		symbolsFifo.UnsafeAdd(byte(v))
+
+		if CurrentConfig.Base.SendConstellation {
+			v2 := real(z) * 127
+			if v2 > 127 {
+				v2 = 127
+			} else if v2 < -128 {
+				v2 = -128
+			}
+
+			constellationFifo.UnsafeAdd(uint8(v2))
+			constellationFifo.UnsafeAdd(uint8(v))
+			if constellationFifo.UnsafeLen() > 1024 {
+				_ = constellationFifo.UnsafeNext()
+				_ = constellationFifo.UnsafeNext()
+			}
+		}
+	}
+	if CurrentConfig.Base.SendConstellation {
+		sendConstellation()
 	}
 }
 
