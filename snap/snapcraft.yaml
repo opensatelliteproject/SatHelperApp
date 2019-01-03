@@ -8,6 +8,10 @@ description: |
 grade: devel
 confinement: devmode
 
+architectures:
+  - build-on: [arm64, armhf, amd64, i386]
+    run-on: [arm64, armhf, amd64, i386]
+
 parts:
   ppaadd:
     plugin: nil
