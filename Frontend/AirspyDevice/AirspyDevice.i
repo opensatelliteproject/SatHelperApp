@@ -5,7 +5,7 @@
 
 %insert(cgo_comment_typedefs) %{
 #cgo CXXFLAGS: -std=c++11 -O3
-#cgo LDFLAGS: -lairspy -lusb-1.0
+#cgo LDFLAGS: -l:libairspy.a -lusb-1.0
 %}
 
 %include "stdint.i"

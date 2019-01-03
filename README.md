@@ -74,3 +74,31 @@ SatHelperApp
 This should create a `SatHelperApp.cfg` file in the same folder you ran `SatHelperApp`. You can edit it and tune for your needs.
 
 Have fun!
+
+
+## Static libLimeSuite
+
+LimeSuite by default only compiles dynamic libraries (see https://github.com/myriadrf/LimeSuite/issues/241), so the default behaviour of SatHelperApp wrapper is to dynamic link. However is possible to statically link the libLimeSuite so no external .so / .dll is needed.
+
+To do that, build the `libLimeSuite` with `-DBUILD_SHARED_LIBS=OFF` to generate `libLimeSuite.a` file.
+
+```bash
+# Compile Static
+cmake .. -DBUILD_SHARED_LIBS=OFF
+make -j8
+sudo make install
+```
+
+Then change [LimeDevice.go](Frontend/LimeDevice/LimeDevice.go) ldflags line from:
+
+```go
+#cgo LDFLAGS: -lLimeSuite
+```
+
+to
+
+```go
+#cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0
+```
+
+And then compile SatHelperApp as normal.
