@@ -149,7 +149,7 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 }
 
 func (fa *FileAssembler) handleFile(vcid int, filename string) {
-	SLog.Debug("File to handle: %s", filename)
+	//SLog.Debug("File to handle: %s", filename)
 	xh, err := XRIT.ParseFile(filename)
 
 	if err != nil {
@@ -158,13 +158,20 @@ func (fa *FileAssembler) handleFile(vcid int, filename string) {
 		return
 	}
 
-	outBase := path.Join(fa.outFolder, strconv.FormatInt(int64(vcid), 10))
+	pathName := fmt.Sprintf("VCID-%d", vcid)
+	n, ok := XRIT.VCID2Name[vcid]
+
+	if ok {
+		pathName = n
+	}
+
+	outBase := path.Join(fa.outFolder, pathName)
 
 	if !osutil.Exists(outBase) {
 		_ = os.MkdirAll(outBase, 0777)
 	}
 
-	SLog.Debug("New file: %s", xh.ToNameString())
+	SLog.Info("New file (%s): %s", xh.ToNameString(), path.Join(pathName, xh.Filename()))
 	newPath := path.Join(outBase, xh.Filename())
 	SLog.Debug("Moving %s to %s", filename, newPath)
 	err = os.Rename(filename, newPath)
