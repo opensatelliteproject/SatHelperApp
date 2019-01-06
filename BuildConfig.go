@@ -1,4 +1,4 @@
-package main
+package SatHelperApp
 
 var (
 	VersionString   string

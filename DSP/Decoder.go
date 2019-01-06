@@ -1,4 +1,4 @@
-package main
+package DSP
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func initDecoder() {
+func InitDecoder() {
 	if CurrentConfig.Decoder.UseLastFrameData {
 		viterbiData = make([]byte, CodedFrameSize+LastFrameDataBits)
 		decodedData = make([]byte, FrameSize+LastFrameData)
@@ -271,8 +271,8 @@ func decoderLoop() {
 					localStats.ReceivedPacketsPerChannel[i] = receivedPacketsPerChannel[i]
 					localStats.LostPacketsPerChannel[i] = lostPacketsPerChannel[i]
 				}
-				if demuxer != nil {
-					demuxer.SendData(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
+				if SDemuxer != nil {
+					SDemuxer.SendData(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
 				}
 			} else {
 				localStats.FrameLock = 0
@@ -280,13 +280,13 @@ func decoderLoop() {
 
 			SetStats(localStats)
 
-			if statisticsServer != nil {
+			if StatisticsServer != nil {
 				var statBuff bytes.Buffer
 				err := binary.Write(&statBuff, binary.LittleEndian, localStats)
 				if err != nil {
 					SLog.Error("Error parsing statistics: %s", err)
 				}
-				statisticsServer.SendData(statBuff.Bytes())
+				StatisticsServer.SendData(statBuff.Bytes())
 			}
 		} else {
 			time.Sleep(5 * time.Microsecond)

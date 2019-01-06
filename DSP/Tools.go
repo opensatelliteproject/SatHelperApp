@@ -1,12 +1,7 @@
-package main
+package DSP
 
-import (
-	"github.com/racerxdl/go.fifo"
-	"log"
-	"os"
-	"os/exec"
-	"runtime"
-)
+import "log"
+import "github.com/racerxdl/go.fifo"
 
 func AddToFifoC64(fifo *fifo.Queue, arr []complex64, length int) {
 	fifo.UnsafeLock()
@@ -65,33 +60,5 @@ func checkAndResizeBuffers(length int) {
 func shiftWithConstantSize(arr *[]byte, pos int, length int) {
 	for i := 0; i < length-pos; i++ {
 		(*arr)[i] = (*arr)[pos+i]
-	}
-}
-
-var clear = map[string]func(){
-	"linux": func() {
-		cmd := exec.Command("clear") //Linux example, its tested
-		cmd.Stdout = os.Stdout
-		err := cmd.Run()
-		if err != nil {
-			panic(err)
-		}
-	},
-	"windows": func() {
-		cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
-		cmd.Stdout = os.Stdout
-		err := cmd.Run()
-		if err != nil {
-			panic(err)
-		}
-	},
-}
-
-func CallClear() {
-	value, ok := clear[runtime.GOOS] //runtime.GOOS -> linux, windows, darwin etc.
-	if ok {                          //if we defined a clear func for that platform:
-		value() //we execute it
-	} else { //unsupported platform
-		clear["linux"]()
 	}
 }

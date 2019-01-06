@@ -1,13 +1,26 @@
 package Structs
 
-import "time"
+import (
+	"encoding/binary"
+	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+	"time"
+)
 
 type TimestampRecord struct {
-	Type byte
-	Size uint16
-
+	Type         byte
 	Days         uint16
 	Milisseconds uint32
+}
+
+func MakeTimestampRecord(data []byte) *TimestampRecord {
+	v := TimestampRecord{}
+
+	v.Type = PacketData.TimestampRecord
+
+	v.Days = binary.BigEndian.Uint16(data[0:2])
+	v.Milisseconds = binary.BigEndian.Uint32(data[2:6])
+
+	return &v
 }
 
 func (tr *TimestampRecord) GetDateTime() time.Time {
