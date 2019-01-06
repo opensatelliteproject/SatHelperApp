@@ -1,6 +1,9 @@
 package ccsds
 
-import "time"
+import (
+	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"time"
+)
 
 const MSDUTimeout = 15 * 60 // 15 minutes
 
@@ -9,6 +12,7 @@ type MSDUInfo struct {
 	ReceivedTime     time.Time
 	FileName         string
 	LastPacketNumber int
+	Header           *XRIT.Header
 }
 
 func MakeMSDUInfo() *MSDUInfo {

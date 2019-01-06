@@ -17,7 +17,7 @@ func MakeNOAAProductWithName(id int, name string) NOAAProduct {
 func MakeNOAAProductWithSubProductsAndName(id int, name string, subProducts map[int]NOAASubProduct) NOAAProduct {
 	return NOAAProduct{
 		ID:          id,
-		Name:        "",
+		Name:        name,
 		SubProducts: subProducts,
 	}
 }

@@ -3,6 +3,9 @@ package ccsds
 import (
 	"fmt"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+	"github.com/OpenSatelliteProject/goaec/szwrap"
 	"github.com/mewkiz/pkg/osutil"
 	"io/ioutil"
 	"os"
@@ -47,6 +50,12 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 		minfo.APID = msdu.APID
 		minfo.FileName = fmt.Sprintf("%03x.lrittmp", msdu.APID)
 		minfo.LastPacketNumber = msdu.PacketNumber
+		head, err := XRIT.MemoryParseFile(msdu.Data[10:])
+		if err != nil {
+			SLog.Error("Error parsing XRIT Header: %s", err.Error())
+			minfo.Header = XRIT.MakeXRITHeader()
+		}
+		minfo.Header = head
 
 		fa.msduCache[minfo.APID] = minfo
 	} else if msdu.Sequence == SequenceLastSegment || msdu.Sequence == SequenceContinuedSegment {
@@ -75,30 +84,89 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 		dataToSave = dataToSave[10:]
 	}
 
-	// TODO Handle Compression and other stuff
+	if msduInfo.Header.Compression() == PacketData.LRIT_RICE && !firstOrSinglePacket {
+		missedPackets := msduInfo.LastPacketNumber - msdu.PacketNumber - 1
 
-	mode := os.ModeAppend
-
-	if firstOrSinglePacket {
-		f, err := os.Create(filename)
-		if err != nil {
-			SLog.Error("Error creating file: %s", err)
-			return
+		if msduInfo.LastPacketNumber == 16383 && msdu.PacketNumber == 0 {
+			missedPackets = 0
 		}
-		_ = f.Close()
+
+		if missedPackets > 0 {
+			SLog.Warn("Missed %d packets on image. Filling with null bytes. Last Packet Number %d and current %d", missedPackets, msduInfo.LastPacketNumber, msdu.PacketNumber)
+			fill := make([]byte, msduInfo.Header.ImageStructureHeader.Columns)
+			for missedPackets > 0 {
+				_ = ioutil.WriteFile(filename, fill, os.ModeAppend)
+			}
+		}
+
+		if msduInfo.Header.RiceCompressionHeader == nil { // Fix bug for GOES-15 TX after GOES-16 Switch. Weird but let's try defaults
+			d, err := szwrap.NOAADecompress(dataToSave, 8, 16, int(msduInfo.Header.ImageStructureHeader.Columns), szwrap.SZ_ALLOW_K13_OPTION_MASK|szwrap.SZ_MSB_OPTION_MASK|szwrap.SZ_NN_OPTION_MASK)
+			if err != nil {
+				SLog.Error("Error decompressing: %s", err.Error())
+				return
+			}
+			dataToSave = d
+		} else {
+			d, err := szwrap.NOAADecompress(dataToSave, 8, int(msduInfo.Header.RiceCompressionHeader.Pixel), int(msduInfo.Header.ImageStructureHeader.Columns), int(msduInfo.Header.RiceCompressionHeader.Flags))
+			if err != nil {
+				SLog.Error("Error decompressing: %s", err.Error())
+				return
+			}
+			dataToSave = d
+		}
 	}
 
-	err := ioutil.WriteFile(filename, dataToSave, mode)
+	msduInfo.LastPacketNumber = msdu.PacketNumber
+
+	mode := os.O_WRONLY
+
+	if firstOrSinglePacket {
+		mode |= os.O_CREATE
+	} else {
+		mode |= os.O_APPEND
+	}
+
+	defer func() {
+		if msdu.Sequence == SequenceLastSegment || msdu.Sequence == SequenceSingleData {
+			fa.handleFile(filename)
+			fa.msduCache[msdu.APID] = nil
+		}
+	}()
+
+	f, err := os.OpenFile(filename, mode, 0777)
+	if err != nil {
+		SLog.Error(err.Error())
+		return
+	}
+
+	n, err := f.Write(dataToSave)
 	if err != nil {
 		SLog.Error(err.Error())
 	}
-
-	if msdu.Sequence == SequenceLastSegment || msdu.Sequence == SequenceSingleData {
-		fa.handleFile(filename)
-		fa.msduCache[msdu.APID] = nil
+	if n != len(dataToSave) {
+		SLog.Error("Error saving all data. Expected %d bytes saved %d bytes", len(dataToSave), n)
 	}
 }
 
 func (fa *FileAssembler) handleFile(filename string) {
 	SLog.Debug("File to handle: %s", filename)
+	xh, err := XRIT.ParseFile(filename)
+
+	if err != nil {
+		SLog.Error("Error parsing file %s: %s", filename, err)
+		_ = os.Remove(filename)
+		return
+	}
+
+	if !osutil.Exists(fa.outFolder) {
+		_ = os.MkdirAll(fa.outFolder, 0777)
+	}
+
+	SLog.Debug("New file: %s", xh.ToNameString())
+	newPath := path.Join(fa.outFolder, xh.Filename())
+	SLog.Debug("Moving %s to %s", filename, newPath)
+	err = os.Rename(filename, newPath)
+	if err != nil {
+		SLog.Error("Error moving file %s to %s: %s", filename, newPath, err)
+	}
 }

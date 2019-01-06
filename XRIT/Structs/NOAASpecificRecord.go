@@ -24,7 +24,7 @@ func MakeNOAASpecificRecord(data []byte) *NOAASpecificRecord {
 	v.ProductID = binary.BigEndian.Uint16(data[4:6])
 	v.ProductSubID = binary.BigEndian.Uint16(data[6:8])
 	v.ProductSubID = binary.BigEndian.Uint16(data[8:10])
-	v.Compression = data[11]
+	v.Compression = data[10]
 
 	return &v
 }

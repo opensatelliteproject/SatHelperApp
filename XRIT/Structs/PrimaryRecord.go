@@ -20,7 +20,7 @@ func MakePrimaryRecord(data []byte) *PrimaryRecord {
 
 	v.FileTypeCode = data[0]
 	v.HeaderLength = binary.BigEndian.Uint32(data[1:5])
-	v.DataLength = binary.BigEndian.Uint64(data[6:14])
+	v.DataLength = binary.BigEndian.Uint64(data[5:13])
 
 	return &v
 }

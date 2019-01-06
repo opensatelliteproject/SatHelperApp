@@ -1,6 +1,7 @@
 package XRIT
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
@@ -8,6 +9,16 @@ import (
 	"io"
 	"os"
 )
+
+type fpReader interface {
+	Seek(offset int64, whence int) (int64, error)
+	Read(p []byte) (n int, err error)
+}
+
+func MemoryParseFile(data []byte) (*Header, error) {
+	breader := bytes.NewReader(data)
+	return parseFileFromReader(breader)
+}
 
 func ParseFile(filename string) (*Header, error) {
 	f, err := os.Open(filename)
@@ -17,7 +28,12 @@ func ParseFile(filename string) (*Header, error) {
 
 	defer f.Close()
 
-	headerType, _, data, err := readHeader(f)
+	return parseFileFromReader(f)
+}
+
+func parseFileFromReader(reader fpReader) (*Header, error) {
+
+	headerType, _, data, err := readHeader(reader)
 
 	if err != nil {
 		return nil, err
@@ -29,15 +45,15 @@ func ParseFile(filename string) (*Header, error) {
 
 	primaryHeader := Structs.MakePrimaryRecord(data)
 
-	pos, _ := f.Seek(0, io.SeekCurrent)
+	pos, _ := reader.Seek(0, io.SeekCurrent)
 	max := int64(primaryHeader.HeaderLength)
 
 	xh := MakeXRITHeader()
 	xh.SetHeader(primaryHeader)
 
 	for pos < max {
-		headerType, _, data, err = readHeader(f)
-		if headerType != PacketData.PrimaryHeader {
+		headerType, _, data, err = readHeader(reader)
+		if err != nil {
 			return xh, err
 		}
 
@@ -66,13 +82,15 @@ func ParseFile(filename string) (*Header, error) {
 			header = Structs.MakeSegmentIdentificationRecord(data)
 		case PacketData.TimestampRecord:
 			header = Structs.MakeTimestampRecord(data)
+		case PacketData.PrimaryHeader:
+			header = Structs.MakePrimaryRecord(data)
 		default:
 			header = Structs.MakeUnknownHeader(headerType, data)
 		}
 
 		xh.SetHeader(header)
 
-		pos, _ = f.Seek(0, io.SeekCurrent)
+		pos, _ = reader.Seek(0, io.SeekCurrent)
 	}
 
 	return xh, nil
@@ -92,7 +110,7 @@ func readHeader(reader io.Reader) (headerType byte, size uint16, data []byte, er
 	}
 
 	headerType = head[0]
-	size = binary.BigEndian.Uint16(head[1:])
+	size = binary.BigEndian.Uint16(head[1:]) - 3 // Already read 3 bytes
 
 	data = make([]byte, size)
 	n, err = reader.Read(data)
