@@ -14,7 +14,7 @@ dist
 sathelperapp_source.tar.bz2
 demuxdump*
 *.zip
-cmd/SatHelperApp/SatHelperApp/
+cmd/SatHelperApp/SatHelperApp
 cmd/SatHelperApp/tmp/
 cmd/SatHelperApp/out/
 SatHelperApp
