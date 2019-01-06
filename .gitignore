@@ -1,6 +1,5 @@
 .idea
 .DS_Store
-SatHelperApp
 .vscode
 .gopath
 SatHelperApp.cfg
@@ -15,6 +14,7 @@ dist
 sathelperapp_source.tar.bz2
 demuxdump*
 *.zip
-cmd/SatHelperApp/SatHelperApp
-cmd/SatHelperApp/tmp
-cmd/SatHelperApp/out
+cmd/SatHelperApp/SatHelperApp/
+cmd/SatHelperApp/tmp/
+cmd/SatHelperApp/out/
+SatHelperApp
