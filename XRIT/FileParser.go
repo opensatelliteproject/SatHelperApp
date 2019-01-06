@@ -19,6 +19,10 @@ func ParseFile(filename string) (*Header, error) {
 
 	headerType, _, data, err := readHeader(f)
 
+	if err != nil {
+		return nil, err
+	}
+
 	if headerType != PacketData.PrimaryHeader {
 		return nil, fmt.Errorf("first header is not primary (type == %d)", PacketData.PrimaryHeader)
 	}

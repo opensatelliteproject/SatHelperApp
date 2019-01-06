@@ -42,6 +42,8 @@ clean:
 deps: | $(BASE)
 	@echo Downloading dependencies
 	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) get
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -53,7 +55,10 @@ update: | $(BASE)
 
 build: | $(BASE)
 	@echo Building SatHelperApp
-	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@echo Building DemuxReplay
+	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
+
 
 install: | $(BASE)
 	@echo Installing

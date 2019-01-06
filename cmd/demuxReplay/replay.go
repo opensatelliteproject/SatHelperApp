@@ -1,4 +1,4 @@
-package demuxReplay
+package main
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/ccsds"
