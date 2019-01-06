@@ -42,7 +42,7 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 			SLog.Warn("Received first segment to %03x but last data wasn't saved to disk yet! Forcing dump.", msdu.APID)
 			ofilename := path.Join(fa.tmpFolder, strconv.FormatInt(int64(msdu.ChannelId), 10))
 			ofilename = path.Join(ofilename, minfo.FileName)
-			fa.handleFile(ofilename)
+			fa.handleFile(msdu.ChannelId, ofilename)
 			fa.msduCache[msdu.APID] = nil
 		}
 
@@ -128,7 +128,7 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 
 	defer func() {
 		if msdu.Sequence == SequenceLastSegment || msdu.Sequence == SequenceSingleData {
-			fa.handleFile(filename)
+			fa.handleFile(msdu.ChannelId, filename)
 			fa.msduCache[msdu.APID] = nil
 		}
 	}()
@@ -148,7 +148,7 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 	}
 }
 
-func (fa *FileAssembler) handleFile(filename string) {
+func (fa *FileAssembler) handleFile(vcid int, filename string) {
 	SLog.Debug("File to handle: %s", filename)
 	xh, err := XRIT.ParseFile(filename)
 
@@ -158,12 +158,14 @@ func (fa *FileAssembler) handleFile(filename string) {
 		return
 	}
 
-	if !osutil.Exists(fa.outFolder) {
-		_ = os.MkdirAll(fa.outFolder, 0777)
+	outBase := path.Join(fa.outFolder, strconv.FormatInt(int64(vcid), 10))
+
+	if !osutil.Exists(outBase) {
+		_ = os.MkdirAll(outBase, 0777)
 	}
 
 	SLog.Debug("New file: %s", xh.ToNameString())
-	newPath := path.Join(fa.outFolder, xh.Filename())
+	newPath := path.Join(outBase, xh.Filename())
 	SLog.Debug("Moving %s to %s", filename, newPath)
 	err = os.Rename(filename, newPath)
 	if err != nil {
