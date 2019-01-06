@@ -64,3 +64,5 @@ install: | $(BASE)
 	@echo Installing
 	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/SatHelperApp
 	@chmod +x $(DESTDIR)/SatHelperApp
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/DemuxReplay
+	@chmod +x $(DESTDIR)/DemuxReplay

@@ -1,25 +1,30 @@
 dist: xenial
 
 before_install:
-- sudo add-apt-repository ppa:opensatelliteproject/ppa -y
-- sudo add-apt-repository ppa:opensatelliteproject/drivers -y
-- sudo add-apt-repository ppa:myriadrf/gnuradio -y
-- sudo apt-get -qq update
-- sudo apt-get install -y  limesuite liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev
+  - sudo add-apt-repository ppa:opensatelliteproject/ppa -y
+  - sudo add-apt-repository ppa:opensatelliteproject/drivers -y
+  - sudo add-apt-repository ppa:myriadrf/gnuradio -y
+  - sudo apt-get -qq update
+  - sudo apt-get install -y  limesuite liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev
 
 language: go
 
 go:
-- 1.10.x
+  - 1.10.x
 
 git:
   depth: 1
 
 script:
-- cd /home/travis/gopath
-- mv /home/travis/gopath/src/github.com/opensatelliteproject /home/travis/gopath/src/github.com/OpenSatelliteProject # Fix Naming
-- cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
-- go get
-- curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.10.2
-- golangci-lint run       # run a bunch of code checkers/linters in parallel
-- go test -v -race $(go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ )  # Run all the tests with the race detector enabled
+  - cd /home/travis/gopath
+  - mv /home/travis/gopath/src/github.com/opensatelliteproject /home/travis/gopath/src/github.com/OpenSatelliteProject # Fix Naming
+  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
+  - go get
+  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp/cmd/SatHelperApp
+  - go get
+  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp/cmd/demuxReplay
+  - go get
+  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
+  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.10.2
+  - golangci-lint run       # run a bunch of code checkers/linters in parallel
+  - go test -v -race $(go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ )  # Run all the tests with the race detector enabled
