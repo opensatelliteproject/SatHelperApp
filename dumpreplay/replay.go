@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/ccsds"
-	"log"
 	"os"
 )
 
@@ -24,9 +23,7 @@ func main() {
 
 	size := finfo.Size()
 
-	dm := ccsds.MakeDemuxer(func(msdu *ccsds.MSDU) {
-		log.Printf("Received MSDU for %d priority %d\n", msdu.APID, msdu.Priority)
-	})
+	dm := ccsds.MakeDemuxer()
 
 	bytesRead := int64(0)
 	buffer := make([]byte, 892)

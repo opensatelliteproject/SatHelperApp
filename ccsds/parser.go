@@ -15,18 +15,27 @@ type Demuxer struct {
 
 	cbNewVCID     func(int)
 	cbOnFrameLost func(channelId, currentFrame, lastFrame int)
-	cbOnMSDU      func(*MSDU)
+
+	fileAssembler *FileAssembler
 }
 
-func MakeDemuxer(onMSDU func(*MSDU)) *Demuxer {
+func MakeDemuxer() *Demuxer {
 	return &Demuxer{
-		frameSize:   892,
-		lastFrame:   make(map[int]int),
-		framesLost:  make(map[int]uint64),
-		frameBuffer: make([]byte, 0),
-		transports:  make(map[int]*TransportParser),
-		cbOnMSDU:    onMSDU,
+		frameSize:     892,
+		lastFrame:     make(map[int]int),
+		framesLost:    make(map[int]uint64),
+		frameBuffer:   make([]byte, 0),
+		transports:    make(map[int]*TransportParser),
+		fileAssembler: MakeFileAssembler(),
 	}
+}
+
+func (dm *Demuxer) SetTemporaryFolder(folder string) {
+	dm.fileAssembler.SetTemporaryFolder(folder)
+}
+
+func (dm *Demuxer) SetOutputFolder(folder string) {
+	dm.fileAssembler.SetOutputFolder(folder)
 }
 
 func (dm *Demuxer) SetOnFrameLost(cb func(channelId, currentFrame, lastFrame int)) {
@@ -47,9 +56,7 @@ func (dm *Demuxer) WriteBytes(data []byte) {
 }
 
 func (dm *Demuxer) onMSDU(msdu *MSDU) {
-	if dm.cbOnMSDU != nil {
-		dm.cbOnMSDU(msdu)
-	}
+	dm.fileAssembler.PutMSDU(msdu)
 }
 
 func (dm *Demuxer) incFrameLost(channelId, count int) {

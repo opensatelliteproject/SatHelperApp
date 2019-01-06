@@ -48,8 +48,8 @@ func (tp *TransportParser) closeFrame() {
 
 func (tp *TransportParser) parseFrame(data []byte) {
 	if len(data) == 0 {
-	    /* Ignore */
-	    return
+		/* Ignore */
+		return
 	}
 	//SLog.Debug("TransportParser[%d]::parseFrame([%d]byte)", tp.id, len(data))
 	if tp.tmpMSDU != nil {
