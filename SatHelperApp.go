@@ -61,12 +61,12 @@ func main() {
 
 	LoadConfig()
 
-	statisticsServer = NewTCPServer("", CurrentConfig.Base.StatisticsPort)
+	statisticsServer = Demuxer.NewTCPServer("", CurrentConfig.Base.StatisticsPort)
 
 	statisticsServer.Start()
 	defer statisticsServer.Stop()
 
-	constellationServer = NewUDPServer("localhost", 9000)
+	constellationServer = Demuxer.NewUDPServer("localhost", 9000)
 	constellationServer.Start()
 	defer constellationServer.Stop()
 
@@ -135,9 +135,12 @@ func main() {
 	}
 
 	switch strings.ToLower(CurrentConfig.Base.DemuxerType) {
+	case "direct":
+		SLog.Info(aurora.Cyan("Direct Internal Demuxer selected.").String())
+		demuxer = Demuxer.MakeDirectDemuxer()
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(CurrentConfig.TCPServerDemuxer.Port))
-		demuxer = NewTCPServer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
+		demuxer = Demuxer.NewTCPServer(CurrentConfig.TCPServerDemuxer.Host, CurrentConfig.TCPServerDemuxer.Port)
 	case "file":
 		if CurrentConfig.FileDemuxer.Filename == "" {
 			CurrentConfig.FileDemuxer.Filename = fmt.Sprintf("demuxdump-%d.bin", time.Now().Unix())

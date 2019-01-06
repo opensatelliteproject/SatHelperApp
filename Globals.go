@@ -49,10 +49,10 @@ var packetFixer SatHelper.PacketFixer
 var statistics Models.Statistics
 var statisticsMutex = &sync.Mutex{}
 
-var constellationServer *UDPServer
+var constellationServer *Demuxer.UDPServer
 
 var demuxer Demuxer.BaseDemuxer
-var statisticsServer *TCPServer
+var statisticsServer *Demuxer.TCPServer
 
 var demodFifoUsage uint8
 var decodFifoUsage uint8

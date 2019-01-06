@@ -221,8 +221,16 @@ func decoderLoop() {
 			localStats.SCID = scid
 			localStats.VCID = vcid
 
+			vitBitErr := viterbi.GetBER()
+
+			vitBitErr -= LastFrameDataBits / 2
+
+			if vitBitErr < 0 { // Dont account for last frame data bit errors
+				vitBitErr = 0
+			}
+
 			localStats.PacketNumber = uint64(counter)
-			localStats.VitErrors = uint16(viterbi.GetBER())
+			localStats.VitErrors = uint16(vitBitErr)
 			localStats.FrameBits = FrameBits
 			localStats.SignalQuality = signalQuality
 			localStats.SyncCorrelation = uint8(corr)

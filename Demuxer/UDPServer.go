@@ -1,4 +1,4 @@
-package main
+package Demuxer
 
 import (
 	"container/list"
