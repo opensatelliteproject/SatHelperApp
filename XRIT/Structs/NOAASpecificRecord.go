@@ -33,6 +33,11 @@ func (nsr *NOAASpecificRecord) Product() PacketData.NOAAProduct {
 	return Presets.GetProductById(int(nsr.ProductID))
 }
 
+func (nsr *NOAASpecificRecord) SubProduct() PacketData.NOAASubProduct {
+	v := nsr.Product()
+	return v.GetSubProduct(int(nsr.ProductSubID))
+}
+
 func (nsr *NOAASpecificRecord) GetType() int {
 	return int(nsr.Type)
 }

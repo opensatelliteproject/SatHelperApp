@@ -1,5 +1,7 @@
 package PacketData
 
+import "fmt"
+
 // FileTypeCode
 const (
 	UNKNOWN = -1
@@ -18,3 +20,24 @@ const (
 	DCS   = 130
 	EMWIN = 214
 )
+
+var FileTypeCode = map[int]string{
+	UNKNOWN:             "Unknown",
+	IMAGE:               "Image",
+	MESSAGES:            "Messages",
+	TEXT:                "Text",
+	ENCRYPTION_KEY:      "Encryption Key",
+	RESERVED4:           "Reserved",
+	METEOROLOGICAL_DATA: "Meteorological Data",
+	DCS:                 "DCS",
+	EMWIN:               "EMWIN",
+}
+
+func GetFileTypeCodeString(fileTypeCode int) string {
+	v, ok := FileTypeCode[fileTypeCode]
+	if ok {
+		return v
+	}
+
+	return fmt.Sprintf("Unknown (%d)", fileTypeCode)
+}

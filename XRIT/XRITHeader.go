@@ -23,6 +23,8 @@ type Header struct {
 	SegmentIdentificationHeader *Structs.SegmentIdentificationRecord
 	TimestampHeader             *Structs.TimestampRecord
 	UnknownHeaders              []*Structs.UnknownHeader
+
+	AllHeaders []Structs.BaseRecord
 }
 
 func (xh *Header) Product() *PacketData.NOAAProduct {
@@ -64,9 +66,9 @@ func (xh *Header) IsFullDisk() bool {
 func (xh *Header) Filename() string {
 	fname := ""
 	if xh.DCSFilenameHeader != nil {
-		fname = xh.DCSFilenameHeader.Filename
+		fname = xh.DCSFilenameHeader.StringData
 	} else if xh.AnnotationHeader != nil {
-		fname = xh.AnnotationHeader.Filename
+		fname = xh.AnnotationHeader.StringData
 	}
 
 	if fname != "" {
@@ -93,7 +95,9 @@ func (xh *Header) IsCompressed() bool {
 }
 
 func MakeXRITHeader() *Header {
-	return &Header{}
+	return &Header{
+		AllHeaders: make([]Structs.BaseRecord, 0),
+	}
 }
 
 func MakeXRITHeaderWithHeaders(records []Structs.BaseRecord) *Header {
@@ -135,6 +139,8 @@ func (xh *Header) SetHeader(record Structs.BaseRecord) {
 	default:
 		xh.UnknownHeaders = append(xh.UnknownHeaders, record.(*Structs.UnknownHeader))
 	}
+
+	xh.AllHeaders = append(xh.AllHeaders, record)
 }
 
 func (xh *Header) ToNameString() string {

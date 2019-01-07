@@ -18,3 +18,4 @@ cmd/SatHelperApp/SatHelperApp
 cmd/SatHelperApp/tmp/
 cmd/SatHelperApp/out/
 SatHelperApp
+cmd/xritparse/xritparse
