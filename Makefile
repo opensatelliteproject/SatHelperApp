@@ -44,6 +44,7 @@ deps: | $(BASE)
 	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) get
 	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) get
 	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) get
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -58,6 +59,8 @@ build: | $(BASE)
 	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
 	@echo Building DemuxReplay
 	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
+	@echo Building xritparse
+	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritparse
 
 
 install: | $(BASE)
@@ -66,3 +69,5 @@ install: | $(BASE)
 	@chmod +x $(DESTDIR)/SatHelperApp
 	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/DemuxReplay
 	@chmod +x $(DESTDIR)/DemuxReplay
+	@cd $(BASE) && cp $(BASEDIR)/xritparse $(DESTDIR)/xritparse
+	@chmod +x $(DESTDIR)/xritparse
