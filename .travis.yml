@@ -5,7 +5,7 @@ before_install:
   - sudo add-apt-repository ppa:opensatelliteproject/drivers -y
   - sudo add-apt-repository ppa:myriadrf/gnuradio -y
   - sudo apt-get -qq update
-  - sudo apt-get install -y  limesuite liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev
+  - sudo apt-get install -y  limesuite libaec-dev libaec0 liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev libusb-1.0-0-dev
 
 language: go
 
