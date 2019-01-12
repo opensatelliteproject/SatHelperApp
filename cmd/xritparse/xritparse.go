@@ -7,6 +7,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Structs"
 	"gopkg.in/alecthomas/kingpin.v2"
+	"os"
 )
 
 func printHeaders(header *XRIT.Header, printStructuredHeader, printImageDataRecord bool) {
@@ -18,19 +19,14 @@ func printHeaders(header *XRIT.Header, printStructuredHeader, printImageDataReco
 			PrintAnnotationRecord(v.(*Structs.AnnotationRecord), printStructuredHeader, printImageDataRecord)
 		case PacketData.DCSFileNameRecord:
 			PrintDCSFilenameRecord(v.(*Structs.DCSFilenameRecord), printStructuredHeader, printImageDataRecord)
-			//xh.DCSFilenameHeader =
 		case PacketData.HeaderStructuredRecord:
 			PrintHeaderStructuredRecord(v.(*Structs.HeaderStructuredRecord), printStructuredHeader, printImageDataRecord)
-			//xh.HeaderStructuredHeader = v.(*Structs.HeaderStructuredRecord)
 		case PacketData.ImageDataFunctionRecord:
 			PrintImageDataFunctionRecord(v.(*Structs.ImageDataFunctionRecord), printStructuredHeader, printImageDataRecord)
-			//xh.ImageDataFunctionHeader = v.(*Structs.ImageDataFunctionRecord)
 		case PacketData.ImageNavigationRecord:
 			PrintImageNavigationRecord(v.(*Structs.ImageNavigationRecord), printStructuredHeader, printImageDataRecord)
-			//xh.ImageNavigationHeader = v.(*Structs.ImageNavigationRecord)
 		case PacketData.ImageStructureRecord:
 			PrintImageStructureRecord(v.(*Structs.ImageStructureRecord), printStructuredHeader, printImageDataRecord)
-			//xh.ImageStructureHeader = v.(*Structs.ImageStructureRecord)
 		case PacketData.NOAASpecificHeader:
 			PrintNOAASpecificRecord(v.(*Structs.NOAASpecificRecord), printStructuredHeader, printImageDataRecord)
 		case PacketData.PrimaryHeader:
@@ -52,6 +48,7 @@ func parseFile(filename string, printStructuredHeader, printImageDataRecord bool
 	xh, err := XRIT.ParseFile(filename)
 	if err != nil {
 		fmt.Printf("Error parsing file %s: %s\n", filename, err)
+		os.Exit(1)
 	}
 
 	printHeaders(xh, printStructuredHeader, printImageDataRecord)
