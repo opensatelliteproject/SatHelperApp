@@ -17,6 +17,7 @@ type DCSPacket struct {
 	DataQualNominal string
 	Channel         string
 	SourceCode      string
+	Data            []byte
 }
 
 func DCSDateToTime(date string) time.Time {
@@ -44,6 +45,7 @@ func MakeDCSPacket(data []byte) *DCSPacket {
 		DataQualNominal: string(data[26]),
 		Channel:         string(data[27:31]),
 		SourceCode:      string(data[31:33]),
+		Data:            data[33:],
 	}
 }
 
