@@ -1,4 +1,4 @@
-package main
+package Demuxer
 
 import (
 	"container/list"
@@ -40,11 +40,15 @@ func (f *UDPServer) Init() {
 	f.clients = list.New()
 }
 func (f *UDPServer) Start() {
+	f.syncMtx.Lock()
 	f.running = true
 	go f.loop()
+	f.syncMtx.Unlock()
 }
 func (f *UDPServer) Stop() {
+	f.syncMtx.Lock()
 	f.running = false
+	f.syncMtx.Unlock()
 }
 func (f *UDPServer) SendData(data []byte) {
 	go func() {
@@ -62,20 +66,29 @@ func (f *UDPServer) GetName() string {
 	return "UDP Server"
 }
 
+func (f *UDPServer) isRunning() bool {
+	f.syncMtx.Lock()
+	defer f.syncMtx.Unlock()
+	return f.running
+}
+
 // endregion
 // region Loop Function
 func (f *UDPServer) loop() {
+	f.syncMtx.Lock()
 	SLog.Info("Starting UDP Server at port %d", f.port)
 	serverAddr, err := net.ResolveUDPAddr("udp", fmt.Sprintf(":%d", 9001))
 
 	if err != nil {
 		SLog.Error("Error opening UDP Server Socket: %s\n", err)
+		f.syncMtx.Unlock()
 		return
 	}
 
 	ln, err := net.ListenUDP("udp", serverAddr)
 	if err != nil {
 		SLog.Error("Error opening UDP Server Socket: %s\n", err)
+		f.syncMtx.Unlock()
 		return
 	}
 	defer ln.Close()
@@ -84,20 +97,19 @@ func (f *UDPServer) loop() {
 
 	if err != nil {
 		SLog.Error("Error opening UDP Server Socket: %s\n", err)
+		f.syncMtx.Unlock()
 		return
 	}
 
 	SLog.Info("UDP Server Started")
 	f.conn = ln
 	f.target = target
-	for f.running {
+	f.syncMtx.Unlock()
+
+	for f.isRunning() {
 		time.Sleep(time.Millisecond * 100)
 	}
 
 }
-
-//func (f *TCPServer) handleConnection(conn net.Conn) {
-//	// TODO: Needed?
-//}
 
 // endregion

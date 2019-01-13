@@ -1,4 +1,4 @@
-package main
+package DSP
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
@@ -6,15 +6,24 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
+	"sync"
 	"time"
 )
 
-func initDSP() {
+var dspLock = sync.Mutex{}
+
+func InitAll() {
+	InitDSP()
+	InitDecoder()
+}
+
+func InitDSP() {
+	Device.SetSamplesAvailableCallback(newSamplesCallback)
 	lastConstellationSend = time.Now()
 	samplesFifo = fifo.NewQueue()
 	constellationFifo = fifo.NewQueue()
 	constellationBuffer = make([]byte, 1024)
-	circuitSampleRate := float32(device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
+	circuitSampleRate := float32(Device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
 
 	SLog.Debug("Samples per Symbol: %f", Bold(Green(sps)))
@@ -22,7 +31,7 @@ func initDSP() {
 	SLog.Debug("Low Pass Decimator Cut Frequency: %f", Bold(Green(circuitSampleRate/2)))
 
 	rrcTaps := SatHelper.FiltersRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps)
-	decimatorTaps := SatHelper.FiltersLowPass(1, float64(device.GetSampleRate()), float64(circuitSampleRate/2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
+	decimatorTaps := SatHelper.FiltersLowPass(1, float64(Device.GetSampleRate()), float64(circuitSampleRate/2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
 
 	decimator = SatHelper.NewFirFilter(uint(CurrentConfig.Base.Decimation), decimatorTaps)
 	agc = SatHelper.NewAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
@@ -30,7 +39,7 @@ func initDSP() {
 	clockRecovery = SatHelper.NewClockRecovery(sps, ClockGainOmega, ClockMu, ClockAlpha, ClockOmegaLimit)
 	rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
 
-	SLog.Debug("Center Frequency: %d MHz", Bold(Green(device.GetCenterFrequency())))
+	SLog.Debug("Center Frequency: %d MHz", Bold(Green(Device.GetCenterFrequency())))
 	SLog.Debug("Automatic Gain Control: %t", Bold(Green(CurrentConfig.Base.AGCEnabled)))
 }
 
@@ -46,18 +55,21 @@ func newSamplesCallback(d Frontend.SampleCallbackData) {
 }
 
 func sendConstellation() {
-	if constellationServer != nil && constellationFifo.UnsafeLen() >= 1024 && time.Since(lastConstellationSend) > (time.Millisecond*10) {
+	if ConstellationServer != nil && constellationFifo.UnsafeLen() >= 1024 && time.Since(lastConstellationSend) > (time.Millisecond*10) {
 		for i := 0; i < 1024; i++ {
 			constellationBuffer[i] = constellationFifo.UnsafeNext().(uint8)
 		}
-		constellationServer.SendData(constellationBuffer)
+		ConstellationServer.SendData(constellationBuffer)
 		lastConstellationSend = time.Now()
 	}
 }
 
 func processSamples() {
+	dspLock.Lock()
 	length := samplesFifo.Len()
 	demodFifoUsage = uint8(100 * float32(length) / float32(FifoSize))
+	dspLock.Unlock()
+
 	if length <= 64*1024 {
 		return
 	}
@@ -137,11 +149,43 @@ func processSamples() {
 	}
 }
 
+func GetDemodFIFOUsage() uint8 {
+	dspLock.Lock()
+	defer dspLock.Unlock()
+	return demodFifoUsage
+}
+
+func GetDecoderFIFOUsage() uint8 {
+	dspLock.Lock()
+	defer dspLock.Unlock()
+	return decodFifoUsage
+}
+
+func SetRunning(r bool) {
+	dspLock.Lock()
+	running = r
+	dspLock.Unlock()
+}
+
+func IsRunning() bool {
+	dspLock.Lock()
+	defer dspLock.Unlock()
+	return running
+}
+
 func symbolProcessLoop() {
 	SLog.Info("Symbol Process Routine started")
-	for running {
+
+	for IsRunning() {
 		processSamples()
 		time.Sleep(time.Microsecond)
 	}
+
 	SLog.Error("Symbol Process Routine stopped")
+}
+
+func StartDSPLoops() {
+	startTime = uint32(time.Now().Unix() & 0xFFFFFFFF)
+	go symbolProcessLoop()
+	go decoderLoop()
 }

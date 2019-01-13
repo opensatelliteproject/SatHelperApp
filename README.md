@@ -91,13 +91,13 @@ sudo make install
 
 Then change [LimeDevice.go](Frontend/LimeDevice/LimeDevice.go) ldflags line from:
 
-```go
+```
 #cgo LDFLAGS: -lLimeSuite
 ```
 
 to
 
-```go
+```
 #cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0
 ```
 

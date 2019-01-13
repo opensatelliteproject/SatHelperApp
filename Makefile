@@ -42,6 +42,9 @@ clean:
 deps: | $(BASE)
 	@echo Downloading dependencies
 	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) get
 
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -53,9 +56,30 @@ update: | $(BASE)
 
 build: | $(BASE)
 	@echo Building SatHelperApp
-	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@echo Building DemuxReplay
+	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
+	@echo Building xritparse
+	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritparse
+	@echo Building xritcat
+	@cd $(BASE)/cmd/xritcat && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritcat
+	@echo Building xritimg
+	@cd $(BASE)/cmd/xritimg && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritimg
+	@echo Building xritpdcs
+	@cd $(BASE)/cmd/xritpdcs && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritpdcs
+
 
 install: | $(BASE)
 	@echo Installing
 	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/SatHelperApp
 	@chmod +x $(DESTDIR)/SatHelperApp
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/DemuxReplay
+	@chmod +x $(DESTDIR)/DemuxReplay
+	@cd $(BASE) && cp $(BASEDIR)/xritparse $(DESTDIR)/xritparse
+	@chmod +x $(DESTDIR)/xritparse
+	@cd $(BASE) && cp $(BASEDIR)/xritcat $(DESTDIR)/xritcat
+	@chmod +x $(DESTDIR)/xritcat
+	@cd $(BASE) && cp $(BASEDIR)/xritimg $(DESTDIR)/xritimg
+	@chmod +x $(DESTDIR)/xritimg
+	@cd $(BASE) && cp $(BASEDIR)/xritpdcs $(DESTDIR)/xritpdcs
+	@chmod +x $(DESTDIR)/xritpdcs

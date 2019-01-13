@@ -1,4 +1,4 @@
-package main
+package Demuxer
 
 import (
 	"container/list"
@@ -35,14 +35,20 @@ func NewTCPServer(host string, port int) *TCPServer {
 // endregion
 // region BaseDemuxer Methods
 func (f *TCPServer) Init() {
+	f.syncMtx.Lock()
 	f.clients = list.New()
+	f.syncMtx.Unlock()
 }
 func (f *TCPServer) Start() {
+	f.syncMtx.Lock()
 	f.running = true
 	go f.loop()
+	f.syncMtx.Unlock()
 }
 func (f *TCPServer) Stop() {
+	f.syncMtx.Lock()
 	f.running = false
+	f.syncMtx.Unlock()
 }
 func (f *TCPServer) SendData(data []byte) {
 	go func() {
@@ -65,6 +71,12 @@ func (f *TCPServer) GetName() string {
 	return "TCP Server"
 }
 
+func (f *TCPServer) isRunning() bool {
+	f.syncMtx.Lock()
+	defer f.syncMtx.Unlock()
+	return f.running
+}
+
 // endregion
 // region Loop Function
 func (f *TCPServer) loop() {
@@ -73,7 +85,7 @@ func (f *TCPServer) loop() {
 		SLog.Error("Error opening TCP Server Socket: %s\n", err)
 		return
 	}
-	for f.running {
+	for f.isRunning() {
 		conn, err := ln.Accept()
 		if err != nil {
 			log.Error(err)
@@ -82,14 +94,9 @@ func (f *TCPServer) loop() {
 			f.clients.PushBack(conn)
 			f.syncMtx.Unlock()
 			SLog.Info("Client connected from %s", conn.RemoteAddr())
-			// go f.handleConnection(conn)
 		}
 	}
 
 }
-
-//func (f *TCPServer) handleConnection(conn net.Conn) {
-//	// TODO: Needed?
-//}
 
 // endregion

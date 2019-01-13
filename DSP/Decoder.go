@@ -1,4 +1,4 @@
-package main
+package DSP
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func initDecoder() {
+func InitDecoder() {
 	if CurrentConfig.Decoder.UseLastFrameData {
 		viterbiData = make([]byte, CodedFrameSize+LastFrameDataBits)
 		decodedData = make([]byte, FrameSize+LastFrameData)
@@ -67,7 +67,7 @@ func decoderLoop() {
 	var receivedPacketsPerChannel [256]int64
 	var flywheelCount = 0
 
-	for running {
+	for IsRunning() {
 		if symbolsFifo.Len() >= CodedFrameSize {
 			decodFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
 			if localStats.TotalPackets%AverageLastNSamples == 0 {
@@ -215,14 +215,22 @@ func decoderLoop() {
 
 			localStats.StartTime = startTime
 
-			localStats.DecoderFifoUsage = decodFifoUsage
-			localStats.DemodulatorFifoUsage = demodFifoUsage
+			localStats.DecoderFifoUsage = GetDecoderFIFOUsage()
+			localStats.DemodulatorFifoUsage = GetDemodFIFOUsage()
 
 			localStats.SCID = scid
 			localStats.VCID = vcid
 
+			vitBitErr := viterbi.GetBER()
+
+			vitBitErr -= LastFrameDataBits / 2
+
+			if vitBitErr < 0 { // Dont account for last frame data bit errors
+				vitBitErr = 0
+			}
+
 			localStats.PacketNumber = uint64(counter)
-			localStats.VitErrors = uint16(viterbi.GetBER())
+			localStats.VitErrors = uint16(vitBitErr)
 			localStats.FrameBits = FrameBits
 			localStats.SignalQuality = signalQuality
 			localStats.SyncCorrelation = uint8(corr)
@@ -263,8 +271,8 @@ func decoderLoop() {
 					localStats.ReceivedPacketsPerChannel[i] = receivedPacketsPerChannel[i]
 					localStats.LostPacketsPerChannel[i] = lostPacketsPerChannel[i]
 				}
-				if demuxer != nil {
-					demuxer.SendData(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
+				if SDemuxer != nil {
+					SDemuxer.SendData(rsCorrectedData[:FrameSize-RsParityBlockSize-SyncWordSize])
 				}
 			} else {
 				localStats.FrameLock = 0
@@ -272,13 +280,13 @@ func decoderLoop() {
 
 			SetStats(localStats)
 
-			if statisticsServer != nil {
+			if StatisticsServer != nil {
 				var statBuff bytes.Buffer
 				err := binary.Write(&statBuff, binary.LittleEndian, localStats)
 				if err != nil {
 					SLog.Error("Error parsing statistics: %s", err)
 				}
-				statisticsServer.SendData(statBuff.Bytes())
+				StatisticsServer.SendData(statBuff.Bytes())
 			}
 		} else {
 			time.Sleep(5 * time.Microsecond)

@@ -1,4 +1,4 @@
-package main
+package DSP
 
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
@@ -24,7 +24,7 @@ var agc SatHelper.AGC
 var rrcFilter SatHelper.FirFilter
 var costasLoop SatHelper.CostasLoop
 var clockRecovery SatHelper.ClockRecovery
-var device Frontend.BaseFrontend
+var Device Frontend.BaseFrontend
 
 // endregion
 // region Decoder Globals
@@ -49,10 +49,10 @@ var packetFixer SatHelper.PacketFixer
 var statistics Models.Statistics
 var statisticsMutex = &sync.Mutex{}
 
-var constellationServer *UDPServer
+var ConstellationServer *Demuxer.UDPServer
 
-var demuxer Demuxer.BaseDemuxer
-var statisticsServer *TCPServer
+var SDemuxer Demuxer.BaseDemuxer
+var StatisticsServer *Demuxer.TCPServer
 
 var demodFifoUsage uint8
 var decodFifoUsage uint8

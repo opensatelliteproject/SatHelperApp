@@ -19,8 +19,8 @@ typedef void *swig_voidp;
 #include <stdint.h>
 
 
-typedef int intgo;
-typedef unsigned int uintgo;
+typedef long long intgo;
+typedef unsigned long long uintgo;
 
 
 
