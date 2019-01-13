@@ -19,6 +19,14 @@ var CompressionType = map[int]string{
 	ZIP:            "ZIP",
 }
 
+var CompressionTypeExtension = map[int]string{
+	NO_COMPRESSION: ".bin",
+	LRIT_RICE:      ".bin",
+	JPEG:           ".jpg",
+	GIF:            ".gif",
+	ZIP:            ".zip",
+}
+
 func GetCompressionTypeString(compressionType int) string {
 	v, ok := CompressionType[compressionType]
 	if ok {
@@ -26,4 +34,13 @@ func GetCompressionTypeString(compressionType int) string {
 	}
 
 	return fmt.Sprintf("Unknown (%d)", compressionType)
+}
+
+func GetCompressionTypeExtension(compressionType int) string {
+	v, ok := CompressionTypeExtension[compressionType]
+	if ok {
+		return v
+	}
+
+	return ".data"
 }
