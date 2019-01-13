@@ -67,7 +67,7 @@ func decoderLoop() {
 	var receivedPacketsPerChannel [256]int64
 	var flywheelCount = 0
 
-	for running {
+	for IsRunning() {
 		if symbolsFifo.Len() >= CodedFrameSize {
 			decodFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
 			if localStats.TotalPackets%AverageLastNSamples == 0 {
@@ -215,8 +215,8 @@ func decoderLoop() {
 
 			localStats.StartTime = startTime
 
-			localStats.DecoderFifoUsage = decodFifoUsage
-			localStats.DemodulatorFifoUsage = demodFifoUsage
+			localStats.DecoderFifoUsage = GetDecoderFIFOUsage()
+			localStats.DemodulatorFifoUsage = GetDemodFIFOUsage()
 
 			localStats.SCID = scid
 			localStats.VCID = vcid

@@ -10,12 +10,13 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/libsathelper"
-	ui "github.com/airking05/termui"
 	"github.com/logrusorgru/aurora"
 	"log"
 	"os"
+	"os/signal"
 	"runtime/pprof"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -24,11 +25,11 @@ var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 func main() {
 	SLog.StartLog()
 	defer SLog.EndLog()
-	err := ui.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer ui.Close()
+	//err := ui.Init()
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer ui.Close()
 
 	flag.Parse()
 	if *cpuprofile != "" {
@@ -177,38 +178,53 @@ func main() {
 
 	DSP.StartDSPLoops()
 	DSP.SetRunning(true)
-	stopFunc := func(ui.Event) {
-		SLog.Warn(aurora.Bold("Got close handler").String())
+
+	x := make(chan bool)
+
+	//stopFunc := func(ui.Event) {
+	//	SLog.Warn(aurora.Bold("Got close handler").String())
+	//	DSP.SetRunning(false)
+	//	SLog.SetTermUiDisplay(false)
+	//	ui.StopLoop()
+	//	time.Sleep(1 * time.Second)
+	//	x <- true
+	//}
+
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
 		DSP.SetRunning(false)
 		SLog.SetTermUiDisplay(false)
-		ui.StopLoop()
 		time.Sleep(1 * time.Second)
-	}
+		x <- true
+	}()
 
-	ui.Handle("/sys/kbd/q", stopFunc)
-	ui.Handle("/sys/kbd/C-c", stopFunc)
+	<-x
+	//ui.Handle("/sys/kbd/q", stopFunc)
+	//ui.Handle("/sys/kbd/C-c", stopFunc)
 
-	if DSP.CurrentConfig.Decoder.Display {
-		ui.Handle("/timer/100ms", func(e ui.Event) {
-			stat := DSP.GetStats()
-			Display.UpdateSignalQuality(stat.SignalQuality)
-			Display.UpdateLockedState(stat.FrameLock == 1)
-			Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
-			Display.UpdateReedSolomon(stat.RsErrors)
-			Display.UpdateSyncWord(stat.SyncWord)
-			Display.UpdateSCVCID(stat.SCID, stat.VCID)
-			Display.UpdateDecoderFifoUsage(DSP.GetDecoderFIFOUsage())
-			Display.UpdateDemodulatorFifoUsage(DSP.GetDemodFIFOUsage())
-			Display.UpdateViterbiErrors(uint(stat.VitErrors), uint(stat.FrameBits))
-			Display.UpdatePhaseCorr(stat.PhaseCorrection)
-			Display.UpdateSyncCorrelation(stat.SyncCorrelation)
-			Display.UpdateMode(strings.ToUpper(DSP.CurrentConfig.Base.Mode))
-			Display.UpdateCenterFrequency(DSP.Device.GetCenterFrequency())
-			Display.UpdateDevice(DSP.Device.GetShortName())
-			Display.UpdateDemuxer(DSP.SDemuxer.GetName())
-			Display.Render()
-		})
-		CallClear()
-	}
-	ui.Loop()
+	//if DSP.CurrentConfig.Decoder.Display {
+	//	ui.Handle("/timer/100ms", func(e ui.Event) {
+	//		stat := DSP.GetStats()
+	//		Display.UpdateSignalQuality(stat.SignalQuality)
+	//		Display.UpdateLockedState(stat.FrameLock == 1)
+	//		Display.UpdateChannelData(stat.ReceivedPacketsPerChannel)
+	//		Display.UpdateReedSolomon(stat.RsErrors)
+	//		Display.UpdateSyncWord(stat.SyncWord)
+	//		Display.UpdateSCVCID(stat.SCID, stat.VCID)
+	//		Display.UpdateDecoderFifoUsage(DSP.GetDecoderFIFOUsage())
+	//		Display.UpdateDemodulatorFifoUsage(DSP.GetDemodFIFOUsage())
+	//		Display.UpdateViterbiErrors(uint(stat.VitErrors), uint(stat.FrameBits))
+	//		Display.UpdatePhaseCorr(stat.PhaseCorrection)
+	//		Display.UpdateSyncCorrelation(stat.SyncCorrelation)
+	//		Display.UpdateMode(strings.ToUpper(DSP.CurrentConfig.Base.Mode))
+	//		Display.UpdateCenterFrequency(DSP.Device.GetCenterFrequency())
+	//		Display.UpdateDevice(DSP.Device.GetShortName())
+	//		Display.UpdateDemuxer(DSP.SDemuxer.GetName())
+	//		Display.Render()
+	//	})
+	//	// CallClear()
+	//}
+	// ui.Loop()
 }

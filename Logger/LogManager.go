@@ -7,6 +7,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"log"
 	"os"
+	"sync"
 )
 
 var displayOnTermUI = false
@@ -15,6 +16,7 @@ var logStarted = false
 var logPath string
 var logPathFlag = flag.String("logdir", "", "Log folder")
 var logFileHandle *os.File
+var logMtx = sync.Mutex{}
 
 func StartLog() {
 	if !logStarted {
@@ -40,12 +42,17 @@ func StartLog() {
 }
 
 func EndLog() {
+	logMtx.Lock()
+	defer logMtx.Unlock()
+
 	if logFileHandle != nil {
 		logFileHandle.Close()
 	}
 }
 
 func SetTermUiDisplay(b bool) {
+	logMtx.Lock()
+	defer logMtx.Unlock()
 	displayOnTermUI = b
 }
 
@@ -54,6 +61,9 @@ func Info(str string, v ...interface{}) {
 }
 
 func Log(str string, v ...interface{}) {
+	logMtx.Lock()
+	defer logMtx.Unlock()
+
 	if displayOnTermUI {
 		log.Printf("[I](fg-bold) [%s](fg-cyan)\n", fmt.Sprintf(str, v...))
 	} else {
@@ -69,6 +79,9 @@ func Log(str string, v ...interface{}) {
 }
 
 func Debug(str string, v ...interface{}) {
+	logMtx.Lock()
+	defer logMtx.Unlock()
+
 	if displayOnTermUI {
 		log.Printf("[D](fg-bold) [%s](fg-magenta)\n", fmt.Sprintf(str, v...))
 	} else {
@@ -83,6 +96,9 @@ func Debug(str string, v ...interface{}) {
 }
 
 func Warn(str string, v ...interface{}) {
+	logMtx.Lock()
+	defer logMtx.Unlock()
+
 	if displayOnTermUI {
 		log.Printf("[W](fg-bold) [%s](fg-yellow)\n", fmt.Sprintf(str, v...))
 	} else {
@@ -97,6 +113,9 @@ func Warn(str string, v ...interface{}) {
 }
 
 func Error(str string, v ...interface{}) {
+	logMtx.Lock()
+	defer logMtx.Unlock()
+
 	if displayOnTermUI {
 		log.Printf("[E](fg-bold) [%s](fg-red)\n", fmt.Sprintf(str, v...))
 	} else {

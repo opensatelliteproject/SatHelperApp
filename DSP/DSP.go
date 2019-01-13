@@ -6,8 +6,11 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
+	"sync"
 	"time"
 )
+
+var dspLock = sync.Mutex{}
 
 func InitAll() {
 	InitDSP()
@@ -62,8 +65,11 @@ func sendConstellation() {
 }
 
 func processSamples() {
+	dspLock.Lock()
 	length := samplesFifo.Len()
 	demodFifoUsage = uint8(100 * float32(length) / float32(FifoSize))
+	dspLock.Unlock()
+
 	if length <= 64*1024 {
 		return
 	}
@@ -144,23 +150,37 @@ func processSamples() {
 }
 
 func GetDemodFIFOUsage() uint8 {
+	dspLock.Lock()
+	defer dspLock.Unlock()
 	return demodFifoUsage
 }
 
 func GetDecoderFIFOUsage() uint8 {
+	dspLock.Lock()
+	defer dspLock.Unlock()
 	return decodFifoUsage
 }
 
 func SetRunning(r bool) {
+	dspLock.Lock()
 	running = r
+	dspLock.Unlock()
+}
+
+func IsRunning() bool {
+	dspLock.Lock()
+	defer dspLock.Unlock()
+	return running
 }
 
 func symbolProcessLoop() {
 	SLog.Info("Symbol Process Routine started")
-	for running {
+
+	for IsRunning() {
 		processSamples()
 		time.Sleep(time.Microsecond)
 	}
+
 	SLog.Error("Symbol Process Routine stopped")
 }
 

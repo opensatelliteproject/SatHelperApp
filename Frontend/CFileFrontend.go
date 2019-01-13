@@ -7,6 +7,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	. "github.com/logrusorgru/aurora"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -14,6 +15,7 @@ const CFileFrontendBufferSize = 65535
 
 // region Struct Definition
 type CFileFrontend struct {
+	sync.Mutex
 	running         bool
 	filename        string
 	cb              SamplesCallback
@@ -79,12 +81,22 @@ func (f *CFileFrontend) Init() bool {
 	return true
 }
 func (f *CFileFrontend) Destroy() {}
+func (f *CFileFrontend) isRunning() bool {
+	f.Lock()
+	defer f.Unlock()
+	return f.running
+}
 func (f *CFileFrontend) Start() {
+	f.Lock()
+	defer f.Unlock()
+
 	if f.running {
 		SLog.Error("CFileFrontend is already running.")
 		return
 	}
+
 	f.running = true
+
 	go func(frontend *CFileFrontend) {
 		SLog.Info("CFileFrontend Routine started")
 		f, err := os.Open(f.filename)
@@ -108,7 +120,7 @@ func (f *CFileFrontend) Start() {
 			period /= 8 // Avoid lock up
 		}
 
-		for frontend.running {
+		for frontend.isRunning() {
 			if float32(time.Since(frontend.t0).Seconds()) >= period {
 				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)
 				if err != nil {
@@ -135,10 +147,14 @@ func (f *CFileFrontend) Start() {
 }
 
 func (f *CFileFrontend) Stop() {
+	f.Lock()
+	defer f.Unlock()
+
 	if !f.running {
 		SLog.Error("CFileFrontend is not running")
 		return
 	}
+
 	f.running = false
 }
 
