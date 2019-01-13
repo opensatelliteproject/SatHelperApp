@@ -11,9 +11,11 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"sync"
 )
 
 type FileAssembler struct {
+	sync.Mutex
 	tmpFolder string
 	outFolder string
 	msduCache map[int]*MSDUInfo
@@ -84,13 +86,13 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 		dataToSave = dataToSave[10:]
 	}
 
+	missedPackets := msduInfo.LastPacketNumber - msdu.PacketNumber - 1
+
+	if msduInfo.LastPacketNumber == 16383 && msdu.PacketNumber == 0 {
+		missedPackets = 0
+	}
+
 	if msduInfo.Header.Compression() == PacketData.LRIT_RICE && !firstOrSinglePacket {
-		missedPackets := msduInfo.LastPacketNumber - msdu.PacketNumber - 1
-
-		if msduInfo.LastPacketNumber == 16383 && msdu.PacketNumber == 0 {
-			missedPackets = 0
-		}
-
 		if missedPackets > 0 {
 			SLog.Warn("Missed %d packets on image. Filling with null bytes. Last Packet Number %d and current %d", missedPackets, msduInfo.LastPacketNumber, msdu.PacketNumber)
 			fill := make([]byte, msduInfo.Header.ImageStructureHeader.Columns)
@@ -143,9 +145,12 @@ func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 	if err != nil {
 		SLog.Error(err.Error())
 	}
+
 	if n != len(dataToSave) {
 		SLog.Error("Error saving all data. Expected %d bytes saved %d bytes", len(dataToSave), n)
 	}
+
+	_ = f.Close()
 }
 
 func (fa *FileAssembler) handleFile(vcid int, filename string) {
@@ -153,7 +158,7 @@ func (fa *FileAssembler) handleFile(vcid int, filename string) {
 	xh, err := XRIT.ParseFile(filename)
 
 	if err != nil {
-		SLog.Error("Error parsing file %s: %s", filename, err)
+		SLog.Error("FileAssembler::handleFile - Error parsing file %s: %s", filename, err)
 		_ = os.Remove(filename)
 		return
 	}
@@ -173,7 +178,7 @@ func (fa *FileAssembler) handleFile(vcid int, filename string) {
 
 	SLog.Info("New file (%s): %s", xh.ToNameString(), path.Join(pathName, xh.Filename()))
 	newPath := path.Join(outBase, xh.Filename())
-	SLog.Debug("Moving %s to %s", filename, newPath)
+	//SLog.Debug("Moving %s to %s", filename, newPath)
 	err = os.Rename(filename, newPath)
 	if err != nil {
 		SLog.Error("Error moving file %s to %s: %s", filename, newPath, err)

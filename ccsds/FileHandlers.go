@@ -16,7 +16,7 @@ func PostHandleFile(filename, outBase string) {
 	xh, err := XRIT.ParseFile(filename)
 
 	if err != nil {
-		SLog.Error("Error parsing file %s: %s", filename, err)
+		SLog.Error("PostHandleFile - Error parsing file %s: %s", filename, err)
 		_ = os.Remove(filename)
 		return
 	}
@@ -26,16 +26,26 @@ func PostHandleFile(filename, outBase string) {
 		SLog.Debug("File %s is a zip. Decompressing it.", filename)
 		stripFileHeader(filename, int64(xh.PrimaryHeader.HeaderLength))
 		handleZipFile(filename, outBase)
+		return
 	case PacketData.GIF:
-		handleRawFileStrip(filename, xh)
+		newName := strings.Replace(filename, ".lrit", PacketData.GetCompressionTypeExtension(xh.Compression()), 1)
+		handleRawFileStrip(filename, newName, xh)
+		return
 	case PacketData.JPEG:
-		handleRawFileStrip(filename, xh)
+		newName := strings.Replace(filename, ".lrit", PacketData.GetCompressionTypeExtension(xh.Compression()), 1)
+		handleRawFileStrip(filename, newName, xh)
+		return
+	}
+
+	switch xh.PrimaryHeader.FileTypeCode {
+	case PacketData.TEXT:
+		newName := strings.Replace(filename, ".lrit", ".txt", 1)
+		handleRawFileStrip(filename, newName, xh)
 	}
 }
 
-func handleRawFileStrip(filename string, xh *XRIT.Header) {
+func handleRawFileStrip(filename string, newName string, xh *XRIT.Header) {
 	SLog.Debug("File %s is a %s.", filename, PacketData.GetCompressionTypeString(xh.Compression()))
-	newName := strings.Replace(filename, ".lrit", PacketData.GetCompressionTypeExtension(xh.Compression()), 1)
 	stripFileHeader(filename, int64(xh.PrimaryHeader.HeaderLength))
 	err := os.Rename(filename, newName)
 	if err != nil {

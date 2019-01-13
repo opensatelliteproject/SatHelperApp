@@ -13,6 +13,8 @@ type Demuxer struct {
 	lastFrame  map[int]int
 	framesLost map[int]uint64
 
+	skipVcids []int
+
 	cbNewVCID     func(int)
 	cbOnFrameLost func(channelId, currentFrame, lastFrame int)
 
@@ -27,7 +29,22 @@ func MakeDemuxer() *Demuxer {
 		frameBuffer:   make([]byte, 0),
 		transports:    make(map[int]*TransportParser),
 		fileAssembler: MakeFileAssembler(),
+		skipVcids:     make([]int, 0),
 	}
+}
+
+func (dm *Demuxer) AddSkipVCID(vcid int) {
+	dm.skipVcids = append(dm.skipVcids, vcid)
+}
+
+func (dm *Demuxer) shouldSkip(vcid int) bool {
+	for _, v := range dm.skipVcids {
+		if v == vcid {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (dm *Demuxer) SetTemporaryFolder(folder string) {
@@ -56,7 +73,9 @@ func (dm *Demuxer) WriteBytes(data []byte) {
 }
 
 func (dm *Demuxer) onMSDU(msdu *MSDU) {
-	dm.fileAssembler.PutMSDU(msdu)
+	if !dm.shouldSkip(msdu.ChannelId) {
+		dm.fileAssembler.PutMSDU(msdu)
+	}
 }
 
 func (dm *Demuxer) incFrameLost(channelId, count int) {

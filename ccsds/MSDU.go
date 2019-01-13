@@ -121,9 +121,11 @@ func (msdu *MSDU) finalize() {
 		data = data[6:]
 
 		msdu.lengthValid = msdu.PacketLength == len(data)
-		msdu.CRC = binary.BigEndian.Uint16(data[len(data)-2:])
-
-		msdu.CalculatedCRC = CRC(data[:len(data)-2])
+		if len(data) > 2 {
+			msdu.CRC = binary.BigEndian.Uint16(data[len(data)-2:])
+			msdu.CalculatedCRC = CRC(data[:len(data)-2])
+			data = data[:len(data)-2]
+		}
 
 		msdu.Data = data
 		msdu.closed = true
