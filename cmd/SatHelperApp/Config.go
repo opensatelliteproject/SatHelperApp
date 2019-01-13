@@ -62,6 +62,10 @@ func LoadDefaults() {
 	// FileDemuxer
 	DSP.CurrentConfig.FileDemuxer.Filename = ""
 
+	// Direct Demuxer
+	DSP.CurrentConfig.DirectDemuxer.OutputFolder = "out"
+	DSP.CurrentConfig.DirectDemuxer.TemporaryFolder = "tmp"
+
 	SaveConfig()
 }
 

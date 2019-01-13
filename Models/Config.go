@@ -56,6 +56,11 @@ type FileDemuxerConfig struct {
 	Filename string
 }
 
+type DirectDemuxerConfig struct {
+	OutputFolder    string
+	TemporaryFolder string
+}
+
 type AppConfig struct {
 	Title            string
 	Base             BaseConfig
@@ -67,6 +72,7 @@ type AppConfig struct {
 	TCPServerDemuxer TCPServerDemuxerConfig
 	FileDemuxer      FileDemuxerConfig
 	SpyserverSource  SpyserverSourceConfig
+	DirectDemuxer    DirectDemuxerConfig
 }
 
 // endregion

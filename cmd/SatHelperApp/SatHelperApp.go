@@ -137,7 +137,7 @@ func main() {
 	switch strings.ToLower(DSP.CurrentConfig.Base.DemuxerType) {
 	case "direct":
 		SLog.Info(aurora.Cyan("Direct Internal Demuxer selected.").String())
-		DSP.SDemuxer = Demuxer.MakeDirectDemuxer()
+		DSP.SDemuxer = Demuxer.MakeDirectDemuxer(DSP.CurrentConfig.DirectDemuxer.OutputFolder, DSP.CurrentConfig.DirectDemuxer.TemporaryFolder)
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(DSP.CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(DSP.CurrentConfig.TCPServerDemuxer.Port))
 		DSP.SDemuxer = Demuxer.NewTCPServer(DSP.CurrentConfig.TCPServerDemuxer.Host, DSP.CurrentConfig.TCPServerDemuxer.Port)
