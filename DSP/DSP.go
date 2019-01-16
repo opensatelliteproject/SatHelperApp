@@ -119,7 +119,7 @@ func processSamples() {
 	defer constellationFifo.UnsafeUnlock()
 	for i := 0; i < symbols; i++ {
 		z := (*ob)[i]
-		v := imag(z) * 127
+		v := real(z) * 127
 		if v > 127 {
 			v = 127
 		} else if v < -128 {
