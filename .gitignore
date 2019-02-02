@@ -21,3 +21,5 @@ SatHelperApp
 cmd/xritparse/xritparse
 cmd/demuxReplay/replay
 release*
+bins
+zips
