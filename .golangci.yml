@@ -14,7 +14,7 @@ run:
   - Frontend/AirspyDevice/AirspyDevice.go
   - Frontend/LimeDevice/LimeDevice.go
   - Frontend/SpyserverDevice/SpyserverDevice.go
-
+  - Frontend/RTLSDRDevice/RTLSDRDevice.go
   skip-dirs: # Snap and temp folders
   - snap
   - parts
