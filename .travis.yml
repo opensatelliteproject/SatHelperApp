@@ -9,6 +9,14 @@ before_install:
   - sudo add-apt-repository ppa:myriadrf/gnuradio -y
   - sudo apt-get -qq update
   - sudo apt-get install -y  limesuite libaec-dev libaec0 liblimesuite-dev libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev
+  - echo "Building RTLSDR"
+  - git clone https://github.com/librtlsdr/librtlsdr.git
+  - cd librtlsdr
+  - mkdir build && cd build
+  - cmake ..
+  - make -j10
+  - sudo make install
+  - sudo ldconfig
 
 language: go
 

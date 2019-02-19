@@ -26,6 +26,13 @@ type AirspySourceConfig struct {
 	BiasTEnabled bool
 }
 
+type RTLSDRSourceConfig struct {
+	MixerGain    uint8
+	LNAGain      uint8
+	VGAGain      uint8
+	BiasTEnabled bool
+}
+
 type LimeSourceConfig struct {
 	LNAGain uint8
 	Antenna string
@@ -73,6 +80,7 @@ type AppConfig struct {
 	FileDemuxer      FileDemuxerConfig
 	SpyserverSource  SpyserverSourceConfig
 	DirectDemuxer    DirectDemuxerConfig
+	RtlsdrSource     RTLSDRSourceConfig
 }
 
 // endregion

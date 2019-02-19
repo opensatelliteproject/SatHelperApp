@@ -54,6 +54,9 @@ update: | $(BASE)
 	@echo Updating LimeDevice Wrapper
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/LimeDevice/LimeDevice.i
 
+	@echo Updating RTLSDR Wrappper
+	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/RTLSDRDevice/RTLSDRDevice.i
+
 build: | $(BASE)
 	@echo Building SatHelperApp
 	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp

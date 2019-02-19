@@ -104,6 +104,20 @@ func main() {
 
 		SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(DSP.CurrentConfig.LimeSource.LNAGain)))
 		SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(DSP.CurrentConfig.LimeSource.Antenna)))
+	case "rtlsdr":
+		SLog.Info(aurora.Cyan("RTLSDR Frontend selected.").String())
+		DSP.Device = Frontend.NewRTLSDRFrontend()
+
+		if !DSP.Device.Init() {
+			SLog.Error("Error initializing device")
+			return
+		}
+		defer DSP.Device.Destroy()
+
+		DSP.Device.SetGain1(DSP.CurrentConfig.RtlsdrSource.LNAGain)
+		DSP.Device.SetGain2(DSP.CurrentConfig.RtlsdrSource.VGAGain)
+		DSP.Device.SetGain3(DSP.CurrentConfig.RtlsdrSource.MixerGain)
+		DSP.Device.SetBiasT(DSP.CurrentConfig.RtlsdrSource.BiasTEnabled)
 	case "airspy":
 		SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
 		Frontend.AirspyInitialize()

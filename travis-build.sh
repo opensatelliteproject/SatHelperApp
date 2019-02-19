@@ -2,13 +2,26 @@
 
 TAG=`git describe --exact-match --tags HEAD`
 
-if [ $? -eq 0 ];
+if [[ $? -eq 0 ]];
 then
   echo "Releasing for tag ${TAG}"
   ORIGINAL_FOLDER="`pwd`"
   echo "I'm in `pwd`"
   mkdir -p bins
   mkdir -p zips
+ 
+  echo "Building RTLSDR"
+  git clone https://github.com/librtlsdr/librtlsdr.git
+  cd librtlsdr
+  mkdir build && cd build
+  cmake ..
+  make -j10
+  sudo make install
+  sudo ldconfig
+  cd ..
+
+  echo "Going back to $ORIGINAL_FOLDER"
+  cd "$ORIGINAL_FOLDER"
 
   echo "Building Static LimeSuite"
   git clone https://github.com/myriadrf/LimeSuite.git
@@ -32,9 +45,9 @@ then
   for i in *
   do
     echo "Building $i"
-    cd $i
-    echo go build -o ../../bins/$i
-    go build -o ../../bins/$i
+    cd ${i}
+    echo go build -o ../../bins/${i}
+    go build -o ../../bins/${i}
     echo "Zipping ${i}-${TAG}-linux-amd64.zip"
     zip -r "../../zips/${i}-${TAG}-linux-amd64.zip" ../../bins/$i
     cd ..
