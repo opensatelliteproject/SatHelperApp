@@ -12,6 +12,7 @@ var VCID2Name = map[int]string{
 	13: "GOES-ABI", // Band 13
 	14: "GOES-ABI", // Band 14
 	15: "GOES-ABI", // Band 15
+	17: "GOES17",
 	20: "EMWIN",
 	21: "EMWIN",
 	22: "EMWIN",
@@ -24,3 +25,27 @@ var VCID2Name = map[int]string{
 	32: "DCS",
 	60: "Himawari",
 }
+
+/*
+    0             Imagery    Admin Text Messages
+    1             Imagery    Mesoscale (ch. 2, 7, 13)
+    2             Imagery    Band 2 - Red
+    6             Imagery    GOES-15
+    7             Imagery    Band 7 - Shortwave Window
+    8             Imagery    Band 8
+    9             Imagery    Band 9 - Mid-Level Trop
+   13             Imagery    Band 13
+   14             Imagery    Band 14 - IR
+   15             Imagery    Band 15
+   20             EMWIN      Priority
+   21             EMWIN      Graphics
+   22             EMWIN      Other
+   23             Imagery    NWS Products
+   24             Imagery    NHC Graphics Products
+   25             Imagery    GOES-R JPG Products
+   26             Imagery    International Graphics Products
+   30             DCS        DCS Admin
+   31             DCS        DCS Data
+   60             Imagery    Himawari
+
+*/
