@@ -110,7 +110,8 @@ func decoderLoop() {
 			}
 
 			if corr < MinCorrelationBits {
-				SLog.Error("Correlation didn't match criteria of %d bits. Got %d\n", Bold(MinCorrelationBits), Bold(corr))
+				SLog.Error("Correlation didn't match criteria of %d bits. Got %d", Bold(MinCorrelationBits), Bold(corr))
+				continue
 			}
 
 			if pos != 0 {

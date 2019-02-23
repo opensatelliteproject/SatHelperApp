@@ -89,6 +89,22 @@ func main() {
 			SLog.Info(aurora.Cyan("Fast as possible enabled!").String())
 			DSP.Device.(*Frontend.CFileFrontend).EnableFastAsPossible()
 		}
+	case "limedrv":
+		SLog.Info(aurora.Cyan("LimeDRV Frontend selected.").String())
+		//limefront := Frontend.NewLimeDrvFrontend()
+		DSP.Device = Frontend.NewLimeDrvFrontend()
+
+		if !DSP.Device.Init() {
+			SLog.Error("Error initializing device")
+			return
+		}
+		defer DSP.Device.Destroy()
+
+		DSP.Device.SetGain1(DSP.CurrentConfig.LimeSource.LNAGain)
+		DSP.Device.SetAntenna(DSP.CurrentConfig.LimeSource.Antenna)
+
+		SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(DSP.CurrentConfig.LimeSource.LNAGain)))
+		SLog.Info(aurora.Cyan("	Antenna: %s").String(), aurora.Bold(aurora.Green(DSP.CurrentConfig.LimeSource.Antenna)))
 	case "lime":
 		SLog.Info(aurora.Cyan("LimeSDR Frontend selected.").String())
 		DSP.Device = Frontend.NewLimeFrontend()
