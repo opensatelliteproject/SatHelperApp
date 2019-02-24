@@ -8,6 +8,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
 	"github.com/OpenSatelliteProject/SatHelperApp/Display"
 	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
+	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/libsathelper"
 	ui "github.com/airking05/termui"
@@ -69,6 +70,8 @@ func main() {
 	DSP.ConstellationServer = Demuxer.NewUDPServer("localhost", 9000)
 	DSP.ConstellationServer.Start()
 	defer DSP.ConstellationServer.Stop()
+
+	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)
 
 	switch strings.ToLower(DSP.CurrentConfig.Base.Mode) {
 	case "lrit":
@@ -167,7 +170,11 @@ func main() {
 	switch strings.ToLower(DSP.CurrentConfig.Base.DemuxerType) {
 	case "direct":
 		SLog.Info(aurora.Cyan("Direct Internal Demuxer selected.").String())
-		DSP.SDemuxer = Demuxer.MakeDirectDemuxer(DSP.CurrentConfig.DirectDemuxer.OutputFolder, DSP.CurrentConfig.DirectDemuxer.TemporaryFolder)
+		dd := Demuxer.MakeDirectDemuxer(DSP.CurrentConfig.DirectDemuxer.OutputFolder, DSP.CurrentConfig.DirectDemuxer.TemporaryFolder)
+		for _, v := range DSP.CurrentConfig.DirectDemuxer.SkipVCID {
+			dd.AddSkipVCID(v)
+		}
+		DSP.SDemuxer = dd
 	case "tcpserver":
 		SLog.Info(aurora.Cyan("TCP Server Demuxer selected. Will listen %s:%d").String(), aurora.Bold(DSP.CurrentConfig.TCPServerDemuxer.Host), aurora.Bold(DSP.CurrentConfig.TCPServerDemuxer.Port))
 		DSP.SDemuxer = Demuxer.NewTCPServer(DSP.CurrentConfig.TCPServerDemuxer.Host, DSP.CurrentConfig.TCPServerDemuxer.Port)

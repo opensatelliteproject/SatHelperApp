@@ -36,5 +36,9 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 		SLog.Info("New image %s", outname)
 
 		delete(ip.MultiSegmentCache, name)
+
+		if purgeFiles {
+			ms.Purge()
+		}
 	}
 }

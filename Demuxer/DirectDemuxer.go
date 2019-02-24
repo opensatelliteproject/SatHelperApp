@@ -31,12 +31,17 @@ func MakeDirectDemuxer(outFolder, tmpFolder string) *DirectDemuxer {
 	return d
 }
 
-func (f *DirectDemuxer) Init()  {}
-func (f *DirectDemuxer) Start() {}
-func (f *DirectDemuxer) Stop()  {}
-func (f *DirectDemuxer) SendData(data []byte) {
-	f.demux.WriteBytes(data)
+func (dd *DirectDemuxer) AddSkipVCID(vcid int) {
+	SLog.Info("Adding VCID %d to skip list.", vcid)
+	dd.demux.AddSkipVCID(vcid)
 }
-func (f *DirectDemuxer) GetName() string {
+
+func (dd *DirectDemuxer) Init()  {}
+func (dd *DirectDemuxer) Start() {}
+func (dd *DirectDemuxer) Stop()  {}
+func (dd *DirectDemuxer) SendData(data []byte) {
+	dd.demux.WriteBytes(data)
+}
+func (dd *DirectDemuxer) GetName() string {
 	return "Direct"
 }

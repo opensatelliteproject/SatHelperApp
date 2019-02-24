@@ -7,6 +7,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/OpenSatelliteProject/SatHelperApp/DSP"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/mewkiz/pkg/osutil"
 	"github.com/mitchellh/go-homedir"
 	"io/ioutil"
 	"log"
@@ -16,7 +17,7 @@ import (
 var configFile = flag.String("config", "", "write cpu profile to file")
 var finalConfigFilePath string
 
-func LoadDefaults() {
+func LoadDefaults(save bool) {
 	DSP.CurrentConfig.Title = "SatHelperApp"
 
 	DSP.SetHRITMode()
@@ -65,8 +66,12 @@ func LoadDefaults() {
 	// Direct Demuxer
 	DSP.CurrentConfig.DirectDemuxer.OutputFolder = "out"
 	DSP.CurrentConfig.DirectDemuxer.TemporaryFolder = "tmp"
+	DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess = false
+	DSP.CurrentConfig.DirectDemuxer.SkipVCID = make([]int, 0)
 
-	SaveConfig()
+	if save {
+		SaveConfig()
+	}
 }
 
 func SaveConfig() {
@@ -99,11 +104,16 @@ func LoadConfig() {
 		finalConfigFilePath = *configFile
 	}
 
-	SLog.Info("Loading config file from %s", finalConfigFilePath)
-	_, err = toml.DecodeFile(finalConfigFilePath, &DSP.CurrentConfig)
+	if !osutil.Exists(finalConfigFilePath) {
+		SLog.Warn("Config file %s does not exists. Creating one with defaults.", finalConfigFilePath)
+		LoadDefaults(true)
+	} else {
+		SLog.Info("Loading config file from %s", finalConfigFilePath)
+		_, err = toml.DecodeFile(finalConfigFilePath, &DSP.CurrentConfig)
 
-	if err != nil {
-		SLog.Warn("Cannot load file SatHelperApp.cfg. Loading default values.")
-		LoadDefaults()
+		if err != nil {
+			SLog.Warn("Cannot load file SatHelperApp.cfg. Loading default values.")
+			LoadDefaults(false)
+		}
 	}
 }

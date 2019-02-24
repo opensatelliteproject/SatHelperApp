@@ -4,6 +4,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"os"
 )
 
 func PlainLRITImage(_ *ImageProcessor, filename string, _ *XRIT.Header) {
@@ -11,5 +12,12 @@ func PlainLRITImage(_ *ImageProcessor, filename string, _ *XRIT.Header) {
 	err := ImageTools.DumpImage(filename)
 	if err != nil {
 		SLog.Error("Error processing %s: %s", filename, err)
+	}
+
+	if purgeFiles {
+		err = os.Remove(filename)
+		if err != nil {
+			SLog.Error("Error erasing %s: %s", filename, err)
+		}
 	}
 }

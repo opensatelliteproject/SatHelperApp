@@ -64,8 +64,10 @@ type FileDemuxerConfig struct {
 }
 
 type DirectDemuxerConfig struct {
-	OutputFolder    string
-	TemporaryFolder string
+	OutputFolder           string
+	TemporaryFolder        string
+	PurgeFilesAfterProcess bool
+	SkipVCID               []int
 }
 
 type AppConfig struct {

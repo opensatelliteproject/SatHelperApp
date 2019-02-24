@@ -3,6 +3,7 @@ package Structs
 import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"os"
 	"sync"
 	"time"
 )
@@ -82,4 +83,14 @@ func (msi *MultiSegmentImage) Done() bool {
 	defer msi.lock.Unlock()
 
 	return len(msi.Files) == msi.MaxSegments
+}
+
+func (msi *MultiSegmentImage) Purge() {
+	for _, v := range msi.Files {
+		SLog.Debug("Removing %s", v)
+		err := os.Remove(v)
+		if err != nil {
+			SLog.Error("Error erasing %s: %s", err)
+		}
+	}
 }

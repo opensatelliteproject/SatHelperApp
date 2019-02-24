@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+const maxViterbiErrors = 500
+
 func InitDecoder() {
 	if CurrentConfig.Decoder.UseLastFrameData {
 		viterbiData = make([]byte, CodedFrameSize+LastFrameDataBits)
@@ -157,15 +159,30 @@ func decoderLoop() {
 				SatHelper.DifferentialEncodingNrzmDecode(&decodedData[0], nrzmDecodeSize)
 			}
 
-			signalErrors := float32(viterbi.GetPercentBER())
-			signalErrors = 100 - (signalErrors * 10)
-			signalQuality := uint8(signalErrors)
+			vitBitErr := viterbi.GetBER()
+			vitBitErr -= LastFrameDataBits / 2
 
+			if vitBitErr < 0 { // Dont account for last frame data bit errors
+				vitBitErr = 0
+			}
+
+			signalQuality := 100 * ((float32(maxViterbiErrors) - float32(vitBitErr)) / float32(maxViterbiErrors))
 			if signalQuality > 100 {
+				signalQuality = 100
+			} else if signalQuality < 0 {
 				signalQuality = 0
 			}
 
-			averageVitCorrections += float32(viterbi.GetBER())
+			percentBER := 100 - signalQuality
+
+			if percentBER > 100 {
+				percentBER = 100
+			}
+
+			signalErrors := percentBER
+			signalErrors = 100 - (signalErrors * 10)
+
+			averageVitCorrections += float32(vitBitErr)
 
 			if CurrentConfig.Decoder.UseLastFrameData {
 				shiftWithConstantSize(&decodedData, LastFrameData/2, FrameSize+LastFrameData/2)
@@ -181,7 +198,7 @@ func decoderLoop() {
 
 			shiftWithConstantSize(&decodedData, SyncWordSize, FrameSize-SyncWordSize)
 
-			localStats.AverageVitCorrections += uint16(viterbi.GetBER())
+			localStats.AverageVitCorrections += uint16(vitBitErr)
 			localStats.TotalPackets += 1
 
 			SatHelper.DeRandomizerDeRandomize(&decodedData[0], FrameSize-SyncWordSize)
@@ -222,18 +239,10 @@ func decoderLoop() {
 			localStats.SCID = scid
 			localStats.VCID = vcid
 
-			vitBitErr := viterbi.GetBER()
-
-			vitBitErr -= LastFrameDataBits / 2
-
-			if vitBitErr < 0 { // Dont account for last frame data bit errors
-				vitBitErr = 0
-			}
-
 			localStats.PacketNumber = uint64(counter)
 			localStats.VitErrors = uint16(vitBitErr)
 			localStats.FrameBits = FrameBits
-			localStats.SignalQuality = signalQuality
+			localStats.SignalQuality = uint8(signalQuality)
 			localStats.SyncCorrelation = uint8(corr)
 
 			switch phaseShift {

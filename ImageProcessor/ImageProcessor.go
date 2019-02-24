@@ -9,6 +9,8 @@ import (
 	"sync"
 )
 
+var purgeFiles = false
+
 type ImageProcessor struct {
 	sync.Mutex
 	MultiSegmentCache map[string]*Structs.MultiSegmentImage
@@ -47,6 +49,14 @@ func (ip *ImageProcessor) checkExpired() {
 		if v.Expired() {
 			SLog.Warn("Image %s timed out waiting segments. Removing from cache.", k)
 			delete(ip.MultiSegmentCache, k)
+			if purgeFiles {
+				v.Purge()
+			}
 		}
 	}
+}
+
+func SetPurgeFiles(purge bool) {
+	purgeFiles = purge
+	SLog.Info("Set Purge Files changed to %v", purge)
 }
