@@ -162,7 +162,7 @@ func (xh *Header) ToNameString() string {
 		baseName = xh.Product().Name + " - " + xh.SubProduct().Name
 
 		if xh.SegmentIdentificationHeader != nil {
-			baseName = fmt.Sprintf("%s (ID: %d Seg: %d/%d)", baseName, xh.SegmentIdentificationHeader.ImageID, xh.SegmentIdentificationHeader.Sequence, xh.SegmentIdentificationHeader.MaxSegments)
+			baseName = fmt.Sprintf("%s (ID: %d Seg: %d/%d)", baseName, xh.SegmentIdentificationHeader.ImageID, xh.SegmentIdentificationHeader.Sequence, xh.SegmentIdentificationHeader.MaxSegments-1)
 		}
 	}
 
