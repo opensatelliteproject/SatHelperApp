@@ -6,6 +6,7 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/Models"
 	"github.com/OpenSatelliteProject/libsathelper"
 	"github.com/racerxdl/go.fifo"
+	"github.com/racerxdl/segdsp/dsp"
 	"sync"
 	"time"
 )
@@ -19,12 +20,21 @@ var samplesFifo *fifo.Queue
 var buffer0 []complex64
 var buffer1 []complex64
 
-var decimator SatHelper.FirFilter
+//var decimator SatHelper.FirFilter
 var agc SatHelper.AGC
-var rrcFilter SatHelper.FirFilter
+
+//var rrcFilter SatHelper.FirFilter
 var costasLoop SatHelper.CostasLoop
 var clockRecovery SatHelper.ClockRecovery
 var Device Frontend.BaseFrontend
+
+// region SegDSP Blocks
+var agcNew *dsp.SimpleAGC
+var rrcFilterNew *dsp.FirFilter
+var decimatorNew *dsp.FirFilter
+var costasLoopNew dsp.CostasLoop
+
+// endregion
 
 // endregion
 // region Decoder Globals

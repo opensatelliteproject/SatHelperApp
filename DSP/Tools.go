@@ -42,7 +42,10 @@ func AddToFifoS8toC64(fifo *fifo.Queue, arr []int8, length int) {
 	}
 }
 
-func swapBuffers(a **complex64, b **complex64) {
+func swapAndTrimSlices(a *[]complex64, b *[]complex64, length int) {
+	*a = (*a)[:length]
+	*b = (*b)[:length]
+
 	c := *b
 	*b = *a
 	*a = c

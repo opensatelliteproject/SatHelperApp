@@ -6,6 +6,7 @@ import (
 	"github.com/OpenSatelliteProject/libsathelper"
 	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
+	"github.com/racerxdl/segdsp/dsp"
 	"sync"
 	"time"
 )
@@ -16,6 +17,8 @@ func InitAll() {
 	InitDSP()
 	InitDecoder()
 }
+
+const defaultTransitionWidth = 200e3
 
 func InitDSP() {
 	Device.SetSamplesAvailableCallback(newSamplesCallback)
@@ -30,17 +33,27 @@ func InitDSP() {
 	SLog.Debug("Circuit Sample Rate: %f", Bold(Green(circuitSampleRate)))
 	SLog.Debug("Low Pass Decimator Cut Frequency: %f", Bold(Green(circuitSampleRate/2)))
 
-	rrcTaps := SatHelper.FiltersRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps)
-	decimatorTaps := SatHelper.FiltersLowPass(1, float64(Device.GetSampleRate()), float64(circuitSampleRate/2), 100e3, SatHelper.FFTWindowsHAMMING, 6.76)
+	//rrcTaps := SatHelper.FiltersRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps)
+	//decimatorTaps := SatHelper.FiltersLowPass(1, float64(Device.GetSampleRate()), float64(circuitSampleRate/2) - defaultTransitionWidth / 2, defaultTransitionWidth, SatHelper.FFTWindowsHAMMING, 6.76)
 
-	decimator = SatHelper.NewFirFilter(uint(CurrentConfig.Base.Decimation), decimatorTaps)
+	//decimator = SatHelper.NewFirFilter(uint(CurrentConfig.Base.Decimation), decimatorTaps)
 	agc = SatHelper.NewAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
 	costasLoop = SatHelper.NewCostasLoop(PllAlpha, LoopOrder)
 	clockRecovery = SatHelper.NewClockRecovery(sps, ClockGainOmega, ClockMu, ClockAlpha, ClockOmegaLimit)
-	rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
+	//rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
 
 	SLog.Debug("Center Frequency: %d MHz", Bold(Green(Device.GetCenterFrequency())))
 	SLog.Debug("Automatic Gain Control: %t", Bold(Green(CurrentConfig.Base.AGCEnabled)))
+
+	// region SegDSP
+	agcNew = dsp.MakeSimpleAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
+	rrcFilterNew = dsp.MakeFirFilter(dsp.MakeRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps))
+
+	newDecimatorTaps := dsp.MakeLowPass(1, float64(Device.GetSampleRate()), float64(circuitSampleRate/2)-defaultTransitionWidth/2, defaultTransitionWidth)
+	decimatorNew = dsp.MakeDecimationFirFilter(int(CurrentConfig.Base.Decimation), newDecimatorTaps)
+
+	costasLoopNew = dsp.MakeCostasLoop2(PllAlpha)
+	// endregion
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
@@ -84,26 +97,43 @@ func processSamples() {
 	// endregion
 	samplesFifo.UnsafeUnlock()
 
-	ba := &buffer0[0]
-	bb := &buffer1[0]
+	ban := buffer0
+	bbn := buffer1
+
+	ba := &ban[0]
+	bb := &bbn[0]
 
 	if CurrentConfig.Base.Decimation > 1 {
-		length /= int(CurrentConfig.Base.Decimation)
-		decimator.Work(ba, bb, length)
-		swapBuffers(&ba, &bb)
+		//length /= int(CurrentConfig.Base.Decimation)
+		length = decimatorNew.WorkBuffer(ban, bbn)
+		//decimator.Work(ba, bb, length)
+		swapAndTrimSlices(&ban, &bbn, length)
+		ba = &ban[0]
+		bb = &bbn[0]
 	}
 
+	//length = agcNew.WorkBuffer(ban, bbn)
 	agc.Work(ba, bb, length)
-	swapBuffers(&ba, &bb)
+	swapAndTrimSlices(&ban, &bbn, length)
+	//ba = &ban[0]
+	//bb = &bbn[0]
 
-	rrcFilter.Work(ba, bb, length)
-	swapBuffers(&ba, &bb)
+	length = rrcFilterNew.WorkBuffer(ban, bbn)
+	//rrcFilter.Work(ba, bb, length)
+	swapAndTrimSlices(&ban, &bbn, length)
+	//ba = &ban[0]
+	//bb = &bbn[0]
 
-	costasLoop.Work(ba, bb, length)
-	swapBuffers(&ba, &bb)
+	//costasLoop.Work(ba, bb, length)
+	length = costasLoopNew.WorkBuffer(ban, bbn)
+	swapAndTrimSlices(&ban, &bbn, length)
+	ba = &ban[0]
+	bb = &bbn[0]
 
 	symbols := clockRecovery.Work(ba, bb, length)
-	swapBuffers(&ba, &bb)
+	swapAndTrimSlices(&ban, &bbn, length)
+	//ba = &ban[0]
+	//bb = &bbn[0]
 
 	var ob *[]complex64
 

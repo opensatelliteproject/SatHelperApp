@@ -68,7 +68,7 @@ const RsParityBlockSize = RsParitySize * RsBlocks
 const LastFrameDataBits = 64
 const LastFrameData = LastFrameDataBits / 8
 
-const DefaultFlywheelRecheck = 4
+const DefaultFlywheelRecheck = 100
 const DefaultVchannelPort = 5001
 
 const DefaultStatisticsPort = 5002

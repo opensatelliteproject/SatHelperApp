@@ -93,7 +93,7 @@ func decoderLoop() {
 			} else {
 				// If we got a good lock before, let's just check if the sync is in correct pos.
 
-				correlator.Correlate(&codedData[0], CodedFrameSize/16)
+				correlator.Correlate(&codedData[0], CodedFrameSize/64)
 				if correlator.GetHighestCorrelationPosition() != 0 {
 					// Oh no, that means something happened :/
 					correlator.Correlate(&codedData[0], CodedFrameSize)
@@ -113,6 +113,7 @@ func decoderLoop() {
 
 			if corr < MinCorrelationBits {
 				SLog.Error("Correlation didn't match criteria of %d bits. Got %d", Bold(MinCorrelationBits), Bold(corr))
+				lastFrameOk = false
 				continue
 			}
 
@@ -172,15 +173,6 @@ func decoderLoop() {
 			} else if signalQuality < 0 {
 				signalQuality = 0
 			}
-
-			percentBER := 100 - signalQuality
-
-			if percentBER > 100 {
-				percentBER = 100
-			}
-
-			signalErrors := percentBER
-			signalErrors = 100 - (signalErrors * 10)
 
 			averageVitCorrections += float32(vitBitErr)
 
