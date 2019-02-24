@@ -2,6 +2,7 @@ package ccsds
 
 import (
 	"archive/zip"
+	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
@@ -12,7 +13,7 @@ import (
 	"strings"
 )
 
-func PostHandleFile(filename, outBase string) {
+func PostHandleFile(filename, outBase string, vcid int, ip *ImageProcessor.ImageProcessor) {
 	xh, err := XRIT.ParseFile(filename)
 
 	if err != nil {
@@ -41,6 +42,8 @@ func PostHandleFile(filename, outBase string) {
 	case PacketData.TEXT:
 		newName := strings.Replace(filename, ".lrit", ".txt", 1)
 		handleRawFileStrip(filename, newName, xh)
+	case PacketData.IMAGE:
+		ip.ProcessImage(filename)
 	}
 }
 

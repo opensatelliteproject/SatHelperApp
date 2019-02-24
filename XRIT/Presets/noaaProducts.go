@@ -6,24 +6,24 @@ import (
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/ScannerSubProduct"
 )
 
-var noaaProducts = map[int]PacketData.NOAAProduct{}
+var NOAAProducts = map[int]PacketData.NOAAProduct{}
 
 func init() {
-	noaaProducts[NOAAProductID.NOAA_TEXT] = PacketData.MakeNOAAProductWithName(NOAAProductID.NOAA_TEXT, "NOAA Text")
+	NOAAProducts[NOAAProductID.NOAA_TEXT] = PacketData.MakeNOAAProductWithName(NOAAProductID.NOAA_TEXT, "NOAA Text")
 
-	noaaProducts[NOAAProductID.OTHER_SATELLITES_1] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.OTHER_SATELLITES_1, "Other Satellites", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.OTHER_SATELLITES_1] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.OTHER_SATELLITES_1, "Other Satellites", map[int]PacketData.NOAASubProduct{
 		0: PacketData.MakeSubProduct(0, "None"),
 		1: PacketData.MakeSubProduct(1, "Infrared Full Disk"),
 		2: PacketData.MakeSubProduct(3, "Visible Full Disk"),
 	})
 
-	noaaProducts[NOAAProductID.WEATHER_DATA] = PacketData.MakeNOAAProductWithName(NOAAProductID.WEATHER_DATA, "Weather Data")
+	NOAAProducts[NOAAProductID.WEATHER_DATA] = PacketData.MakeNOAAProductWithName(NOAAProductID.WEATHER_DATA, "Weather Data")
 
-	noaaProducts[NOAAProductID.DCS] = PacketData.MakeNOAAProductWithName(NOAAProductID.DCS, "DCS")
+	NOAAProducts[NOAAProductID.DCS] = PacketData.MakeNOAAProductWithName(NOAAProductID.DCS, "DCS")
 
-	noaaProducts[NOAAProductID.HRIT_EMWIN] = PacketData.MakeNOAAProductWithName(NOAAProductID.HRIT_EMWIN, "HRIT EMWIN Text")
+	NOAAProducts[NOAAProductID.HRIT_EMWIN] = PacketData.MakeNOAAProductWithName(NOAAProductID.HRIT_EMWIN, "HRIT EMWIN Text")
 
-	noaaProducts[NOAAProductID.ABI_RELAY] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.ABI_RELAY, "ABI RELAY", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.ABI_RELAY] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.ABI_RELAY, "ABI RELAY", map[int]PacketData.NOAASubProduct{
 		ScannerSubProduct.NONE:                         PacketData.MakeSubProduct(ScannerSubProduct.NONE, "None"),
 		ScannerSubProduct.INFRARED_FULLDISK:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_FULLDISK, "Infrared Fulldisk"),
 		ScannerSubProduct.INFRARED_NORTHERN:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_NORTHERN, "Infrared Northern Hemisphere"),
@@ -42,7 +42,7 @@ func init() {
 		ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST: PacketData.MakeSubProduct(ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST, "Water Vapour Area of Interest"),
 	})
 
-	noaaProducts[NOAAProductID.GOES13_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES13_ABI, "GOES 13 ABI", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.GOES13_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES13_ABI, "GOES 13 ABI", map[int]PacketData.NOAASubProduct{
 		ScannerSubProduct.NONE:                         PacketData.MakeSubProduct(ScannerSubProduct.NONE, "None"),
 		ScannerSubProduct.INFRARED_FULLDISK:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_FULLDISK, "Infrared Full Disk"),
 		ScannerSubProduct.INFRARED_NORTHERN:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_NORTHERN, "Infrared Northern Hemisphere"),
@@ -61,7 +61,7 @@ func init() {
 		ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST: PacketData.MakeSubProduct(ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST, "Water Vapour Area of Interest"),
 	})
 
-	noaaProducts[NOAAProductID.GOES15_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES15_ABI, "GOES 15 ABI", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.GOES15_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES15_ABI, "GOES 15 ABI", map[int]PacketData.NOAASubProduct{
 		ScannerSubProduct.NONE:                         PacketData.MakeSubProduct(ScannerSubProduct.NONE, "None"),
 		ScannerSubProduct.INFRARED_FULLDISK:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_FULLDISK, "Infrared Full Disk"),
 		ScannerSubProduct.INFRARED_NORTHERN:            PacketData.MakeSubProduct(ScannerSubProduct.INFRARED_NORTHERN, "Infrared Northern Hemisphere"),
@@ -80,7 +80,7 @@ func init() {
 		ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST: PacketData.MakeSubProduct(ScannerSubProduct.WATERVAPOUR_AREA_OF_INTEREST, "Water Vapour Area of Interest"),
 	})
 
-	noaaProducts[NOAAProductID.GOES16_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES16_ABI, "GOES 16 ABI", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.GOES16_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES16_ABI, "GOES 16 ABI", map[int]PacketData.NOAASubProduct{
 		0:  PacketData.MakeSubProduct(0, "None"),
 		1:  PacketData.MakeSubProduct(1, "Channel 1"),
 		2:  PacketData.MakeSubProduct(2, "Channel 2"),
@@ -100,7 +100,7 @@ func init() {
 		16: PacketData.MakeSubProduct(16, "Channel 16"),
 	})
 
-	noaaProducts[NOAAProductID.GOES17_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES17_ABI, "GOES 17 ABI", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.GOES17_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.GOES17_ABI, "GOES 17 ABI", map[int]PacketData.NOAASubProduct{
 		0:  PacketData.MakeSubProduct(0, "None"),
 		1:  PacketData.MakeSubProduct(1, "Channel 1"),
 		2:  PacketData.MakeSubProduct(2, "Channel 2"),
@@ -120,7 +120,7 @@ func init() {
 		16: PacketData.MakeSubProduct(16, "Channel 16"),
 	})
 
-	noaaProducts[NOAAProductID.HIMAWARI8_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.HIMAWARI8_ABI, "Himawari ABI", map[int]PacketData.NOAASubProduct{
+	NOAAProducts[NOAAProductID.HIMAWARI8_ABI] = PacketData.MakeNOAAProductWithSubProductsAndName(NOAAProductID.HIMAWARI8_ABI, "Himawari ABI", map[int]PacketData.NOAASubProduct{
 		0:  PacketData.MakeSubProduct(0, "None"),
 		1:  PacketData.MakeSubProduct(1, "Channel 1"),
 		2:  PacketData.MakeSubProduct(2, "Channel 2"),
@@ -140,11 +140,11 @@ func init() {
 		16: PacketData.MakeSubProduct(16, "Channel 16"),
 	})
 
-	noaaProducts[NOAAProductID.EMWIN] = PacketData.MakeNOAAProductWithName(NOAAProductID.EMWIN, "EMWIN")
+	NOAAProducts[NOAAProductID.EMWIN] = PacketData.MakeNOAAProductWithName(NOAAProductID.EMWIN, "EMWIN")
 }
 
 func GetProductById(productId int) PacketData.NOAAProduct {
-	val, ok := noaaProducts[productId]
+	val, ok := NOAAProducts[productId]
 	if !ok {
 		return PacketData.MakeNOAAProduct(productId)
 	}

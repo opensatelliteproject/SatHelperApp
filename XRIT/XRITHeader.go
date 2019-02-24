@@ -71,6 +71,10 @@ func (xh *Header) Filename() string {
 		fname = xh.AnnotationHeader.StringData
 	}
 
+	if xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.MaxSegments != 1 {
+		fname += fmt.Sprintf("seg%03d", xh.SegmentIdentificationHeader.Sequence)
+	}
+
 	if fname != "" {
 		if len(strings.Split(fname, ".")) == 1 {
 			fname = fname + ".lrit"

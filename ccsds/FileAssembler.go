@@ -2,6 +2,7 @@ package ccsds
 
 import (
 	"fmt"
+	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
 	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
@@ -19,6 +20,7 @@ type FileAssembler struct {
 	tmpFolder string
 	outFolder string
 	msduCache map[int]*MSDUInfo
+	ip        *ImageProcessor.ImageProcessor
 }
 
 func MakeFileAssembler() *FileAssembler {
@@ -26,6 +28,7 @@ func MakeFileAssembler() *FileAssembler {
 		tmpFolder: "tmp",
 		outFolder: "out",
 		msduCache: make(map[int]*MSDUInfo),
+		ip:        ImageProcessor.MakeImageProcessor(),
 	}
 }
 
@@ -176,6 +179,10 @@ func (fa *FileAssembler) handleFile(vcid int, filename string) {
 		_ = os.MkdirAll(outBase, 0777)
 	}
 
+	if xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.MaxSegments != 1 {
+		xh.Filename()
+	}
+
 	SLog.Info("New file (%s): %s", xh.ToNameString(), path.Join(pathName, xh.Filename()))
 	newPath := path.Join(outBase, xh.Filename())
 	//SLog.Debug("Moving %s to %s", filename, newPath)
@@ -184,5 +191,5 @@ func (fa *FileAssembler) handleFile(vcid int, filename string) {
 		SLog.Error("Error moving file %s to %s: %s", filename, newPath, err)
 	}
 
-	go PostHandleFile(newPath, outBase)
+	go PostHandleFile(newPath, outBase, vcid, fa.ip)
 }
