@@ -22,7 +22,6 @@ func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
 	afrnt := SpyserverFrontend{
 		ss: ss,
 	}
-
 	ss.SetCallback(&afrnt)
 
 	return &afrnt

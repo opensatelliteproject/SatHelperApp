@@ -57,7 +57,6 @@ func InitDSP() {
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
-	SLog.Error("Samples: %d %d %d", d.SampleType, len(d.Int16Array), d.NumSamples)
 	switch d.SampleType {
 	case Frontend.SampleTypeFloatIQ:
 		AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples)
@@ -133,8 +132,8 @@ func processSamples() {
 
 	symbols := clockRecovery.Work(ba, bb, length)
 	swapAndTrimSlices(&ban, &bbn, length)
-	//ba = &ban[0]
-	//bb = &bbn[0]
+	ba = &ban[0]
+	bb = &bbn[0]
 
 	var ob *[]complex64
 

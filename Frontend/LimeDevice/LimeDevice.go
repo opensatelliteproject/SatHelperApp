@@ -30,7 +30,9 @@ typedef struct { void* array; intgo len; intgo cap; } _goslice_;
 
 
 #cgo CXXFLAGS: -std=c++11 -O3
-#cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0
+//#cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0
+
+#cgo LDFLAGS: -lLimeSuite
 
 typedef _gostring_ swig_type_1;
 typedef _gostring_ swig_type_2;
