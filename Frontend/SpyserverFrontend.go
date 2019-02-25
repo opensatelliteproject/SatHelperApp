@@ -1,6 +1,8 @@
 package Frontend
 
 import (
+	"fmt"
+	"github.com/OpenSatelliteProject/SatHelperApp"
 	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
 	"github.com/racerxdl/spy2go/spyserver"
 	"github.com/racerxdl/spy2go/spytypes"
@@ -15,8 +17,8 @@ type SpyserverFrontend struct {
 // endregion
 // region Constructor
 func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
+	spyserver.SoftwareID = fmt.Sprintf("SatHelperApp %s.%s", SatHelperApp.GetVersion(), SatHelperApp.GetRevision())
 	ss := spyserver.MakeSpyserver(hostname, port)
-
 	afrnt := SpyserverFrontend{
 		ss: ss,
 	}
@@ -30,22 +32,27 @@ func (f *SpyserverFrontend) OnData(dType int, data interface{}) {
 	cbData := SampleCallbackData{}
 
 	if dType == spytypes.SamplesComplex64 {
+		cbData.SampleType = SampleTypeFloatIQ
 		cbData.ComplexArray = data.([]complex64)
 		cbData.NumSamples = len(cbData.ComplexArray)
 	} else if dType == spytypes.SamplesComplex32 {
 		samples := data.([]spytypes.ComplexInt16)
+		cbData.SampleType = SampleTypeS16IQ
 		cbData.Int16Array = make([]int16, len(samples)*2)
+		cbData.NumSamples = len(samples)
 		for i := 0; i < len(samples); i++ {
 			cbData.Int16Array[i*2] = samples[i].Real
 			cbData.Int16Array[i*2+1] = samples[i].Imag
 		}
 	} else if dType == spytypes.SamplesComplexUInt8 {
+		cbData.SampleType = SampleTypeS8IQ
 		samples := data.([]spytypes.ComplexUInt8)
 		cbData.Int8Array = make([]int8, len(samples)*2)
 		for i := 0; i < len(samples); i++ {
 			cbData.Int8Array[i*2] = int8(samples[i].Real)
 			cbData.Int8Array[i*2+1] = int8(samples[i].Imag)
 		}
+		cbData.NumSamples = len(samples)
 	} else if dType == spytypes.DeviceSync {
 		SLog.Info("Got device sync!")
 		return
