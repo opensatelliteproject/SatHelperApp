@@ -38,7 +38,6 @@ script:
   - go test -v -race $(go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ )
   - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
   - ./travis-build.sh
-  - ln -s /home/travis/gopath/src/github.com/OpenSatelliteProject /home/travis/gopath/src/github.com/opensatelliteproject
 
 deploy:
   provider: releases

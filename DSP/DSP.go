@@ -133,7 +133,7 @@ func processSamples() {
 	symbols := clockRecovery.Work(ba, bb, length)
 	swapAndTrimSlices(&ban, &bbn, length)
 	ba = &ban[0]
-	bb = &bbn[0]
+	//bb = &bbn[0]
 
 	var ob *[]complex64
 
