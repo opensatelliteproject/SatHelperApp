@@ -57,6 +57,7 @@ func InitDSP() {
 }
 
 func newSamplesCallback(d Frontend.SampleCallbackData) {
+	SLog.Error("Samples: %d %d %d", d.SampleType, len(d.Int16Array), d.NumSamples)
 	switch d.SampleType {
 	case Frontend.SampleTypeFloatIQ:
 		AddToFifoC64(samplesFifo, d.ComplexArray, d.NumSamples)

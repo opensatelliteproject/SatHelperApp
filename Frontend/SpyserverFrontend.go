@@ -1,104 +1,117 @@
 package Frontend
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/SpyserverDevice"
+	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/racerxdl/spy2go/spyserver"
+	"github.com/racerxdl/spy2go/spytypes"
 )
 
 // region Struct Definition
 type SpyserverFrontend struct {
-	device  SpyserverDevice.SpyserverDevice
-	goCb    GoCallback
-	goDirCb SpyserverDevice.SpyserverDeviceCallback
-}
-
-func MakeSpyserverGoCallbackDirector(callback *GoCallback) SpyserverDevice.SpyserverDeviceCallback {
-	return SpyserverDevice.NewDirectorSpyserverDeviceCallback(callback)
+	ss *spyserver.Spyserver
+	cb SamplesCallback
 }
 
 // endregion
 // region Constructor
 func NewSpyserverFrontend(hostname string, port int) *SpyserverFrontend {
-	goCb := NewGoCallback()
-	dirCb := MakeSpyserverGoCallbackDirector(&goCb)
+	ss := spyserver.MakeSpyserver(hostname, port)
+
 	afrnt := SpyserverFrontend{
-		device: SpyserverDevice.NewSpyserverDevice(dirCb, hostname, port),
-		goCb:   goCb,
+		ss: ss,
 	}
 
+	ss.SetCallback(&afrnt)
+
 	return &afrnt
+}
+
+func (f *SpyserverFrontend) OnData(dType int, data interface{}) {
+	cbData := SampleCallbackData{}
+
+	if dType == spytypes.SamplesComplex64 {
+		cbData.ComplexArray = data.([]complex64)
+		cbData.NumSamples = len(cbData.ComplexArray)
+	} else if dType == spytypes.SamplesComplex32 {
+		samples := data.([]spytypes.ComplexInt16)
+		cbData.Int16Array = make([]int16, len(samples)*2)
+		for i := 0; i < len(samples); i++ {
+			cbData.Int16Array[i*2] = samples[i].Real
+			cbData.Int16Array[i*2+1] = samples[i].Imag
+		}
+	} else if dType == spytypes.SamplesComplexUInt8 {
+		samples := data.([]spytypes.ComplexUInt8)
+		cbData.Int8Array = make([]int8, len(samples)*2)
+		for i := 0; i < len(samples); i++ {
+			cbData.Int8Array[i*2] = int8(samples[i].Real)
+			cbData.Int8Array[i*2+1] = int8(samples[i].Imag)
+		}
+	} else if dType == spytypes.DeviceSync {
+		SLog.Info("Got device sync!")
+		return
+	}
+
+	if f.cb != nil {
+		f.cb(cbData)
+	}
 }
 
 // endregion
 // region Getters
 func (f *SpyserverFrontend) GetName() string {
-	return f.device.GetName()
+	return f.ss.GetName()
 }
 func (f *SpyserverFrontend) GetShortName() string {
-	return f.device.GetName()
+	return f.ss.GetName()
 }
 func (f *SpyserverFrontend) GetAvailableSampleRates() []uint32 {
-	var sampleRates = f.device.GetAvailableSampleRates()
-	var sr = make([]uint32, sampleRates.Size())
-	for i := 0; i < int(sampleRates.Size()); i++ {
-		sr[i] = uint32(sampleRates.Get(i))
-	}
-
-	return sr
+	return f.ss.GetAvailableSampleRates()
 }
 func (f *SpyserverFrontend) GetCenterFrequency() uint32 {
-	return uint32(f.device.GetCenterFrequency())
+	return f.ss.GetCenterFrequency()
 }
 func (f *SpyserverFrontend) GetSampleRate() uint32 {
-	return uint32(f.device.GetSampleRate())
+	return f.ss.GetSampleRate()
 }
 
 // endregion
 // region Setters
 func (f *SpyserverFrontend) SetSamplesAvailableCallback(cb SamplesCallback) {
-	f.goCb.callback = cb
-	f.goDirCb = MakeSpyserverGoCallbackDirector(&f.goCb)
-	f.device.SetSamplesAvailableCallback(f.goDirCb)
+	f.cb = cb
 }
 func (f *SpyserverFrontend) SetSampleRate(sampleRate uint32) uint32 {
-	return uint32(f.device.SetSampleRate(uint(sampleRate)))
+	return f.ss.SetSampleRate(sampleRate)
 }
 func (f *SpyserverFrontend) SetCenterFrequency(centerFrequency uint32) uint32 {
-	return uint32(f.device.SetCenterFrequency(uint(centerFrequency)))
+	return f.ss.SetCenterFrequency(centerFrequency)
 }
 
 // endregion
 // region Commands
 func (f *SpyserverFrontend) Start() {
-	f.device.Start()
+	f.ss.Start()
 }
 func (f *SpyserverFrontend) Stop() {
-	f.device.Stop()
+	f.ss.Stop()
 }
 func (f *SpyserverFrontend) SetAGC(agc bool) {
-	f.device.SetAGC(agc)
+	SLog.Warn("AGC not supported by SpyServer Frontend")
 }
 func (f *SpyserverFrontend) SetGain1(gain uint8) {
-	f.device.SetLNAGain(gain)
+	f.ss.SetGain(uint32(gain))
 }
-func (f *SpyserverFrontend) SetGain2(gain uint8) {
-	f.device.SetVGAGain(gain)
-}
-func (f *SpyserverFrontend) SetGain3(gain uint8) {
-	f.device.SetMixerGain(gain)
-}
+func (f *SpyserverFrontend) SetGain2(gain uint8) {}
+func (f *SpyserverFrontend) SetGain3(gain uint8) {}
 func (f *SpyserverFrontend) SetBiasT(biast bool) {
-	val := uint8(0)
-	if biast {
-		val = 1
-	}
-	f.device.SetBiasT(val)
+	SLog.Warn("BiasT not supported by SpyServer Frontend")
 }
 func (f *SpyserverFrontend) Init() bool {
-	return f.device.Init()
+	f.ss.Connect()
+	return f.ss.IsConnected
 }
 
 func (f *SpyserverFrontend) Destroy() {
-	f.device.Destroy()
+	f.ss.Disconnect()
 }
 
 func (f *SpyserverFrontend) SetAntenna(string) {}
