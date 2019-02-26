@@ -2,8 +2,8 @@ package Frontend
 
 import (
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/racerxdl/spy2go/spyserver"
 	"github.com/racerxdl/spy2go/spytypes"
 )

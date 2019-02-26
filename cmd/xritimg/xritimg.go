@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp"
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/ImageTools"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 

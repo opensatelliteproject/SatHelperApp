@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Structs"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Structs"
 	"strings"
 )
 

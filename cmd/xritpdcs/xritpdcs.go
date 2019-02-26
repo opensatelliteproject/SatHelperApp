@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Structs"
+	"github.com/opensatelliteproject/SatHelperApp"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Structs"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"io"
 	"io/ioutil"

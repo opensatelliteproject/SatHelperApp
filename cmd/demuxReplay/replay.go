@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/ccsds"
+	"github.com/opensatelliteproject/SatHelperApp/ccsds"
 	"log"
 	"os"
 )

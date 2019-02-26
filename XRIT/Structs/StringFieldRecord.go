@@ -1,6 +1,6 @@
 package Structs
 
-import "github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+import "github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 
 type StringFieldRecord struct {
 	Type       byte

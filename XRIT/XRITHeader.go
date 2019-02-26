@@ -2,10 +2,10 @@ package XRIT
 
 import (
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/NOAAProductID"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/ScannerSubProduct"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Structs"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/NOAAProductID"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/ScannerSubProduct"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Structs"
 	"strings"
 )
 

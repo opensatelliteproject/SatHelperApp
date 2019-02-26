@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Structs"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Structs"
 	"io"
 	"os"
 )

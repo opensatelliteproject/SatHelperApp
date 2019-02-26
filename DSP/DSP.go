@@ -1,9 +1,9 @@
 package DSP
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/libsathelper"
+	"github.com/opensatelliteproject/SatHelperApp/Frontend"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/libsathelper"
 	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
 	"github.com/racerxdl/segdsp/dsp"

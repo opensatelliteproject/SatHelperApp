@@ -2,7 +2,7 @@ package ccsds
 
 import (
 	"encoding/binary"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 )
 
 var skipChannels = []int{63, 2047}

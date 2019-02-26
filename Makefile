@@ -86,3 +86,6 @@ install: | $(BASE)
 	@chmod +x $(DESTDIR)/xritimg
 	@cd $(BASE) && cp $(BASEDIR)/xritpdcs $(DESTDIR)/xritpdcs
 	@chmod +x $(DESTDIR)/xritpdcs
+
+test:
+	go test -v -race $(shell go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ | grep -v /librtlsdr/ )

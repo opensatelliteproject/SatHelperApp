@@ -2,10 +2,10 @@ package ccsds
 
 import (
 	"archive/zip"
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"io"
 	"io/ioutil"
 	"os"

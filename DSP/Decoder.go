@@ -3,9 +3,9 @@ package DSP
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/Models"
-	"github.com/OpenSatelliteProject/libsathelper"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Models"
+	"github.com/opensatelliteproject/libsathelper"
 	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
 	"log"

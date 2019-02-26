@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp"
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/ImageTools"
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/Structs"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"os"
 	"path"

@@ -2,6 +2,7 @@ dist: xenial
 env:
   global:
   - COMMIT=${TRAVIS_COMMIT::8}
+  - GO111MODULE=on
 
 before_install:
   - sudo add-apt-repository ppa:opensatelliteproject/ppa -y
@@ -28,27 +29,20 @@ before_install:
   - sudo make install
   - sudo ldconfig
   - cd ../..
-
+  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.15.0
 
 language: go
 
 go:
-  - 1.10.x
+  - 1.11.x
 
 git:
   depth: 1
 
 script:
-  - cd /home/travis/gopath
-  - mv /home/travis/gopath/src/github.com/opensatelliteproject /home/travis/gopath/src/github.com/OpenSatelliteProject
-  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
   - go get
-  - for i in /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp/cmd/*; do echo "Go Getting $i"; cd $i; go get; cd ../..; done
-  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
-  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.10.2
+  - make test
   - golangci-lint run
-  - go test -v -race $(go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ )
-  - cd /home/travis/gopath/src/github.com/OpenSatelliteProject/SatHelperApp
   - ./travis-build.sh
 
 deploy:
@@ -61,4 +55,3 @@ deploy:
   on:
     tags: true
     repo: opensatelliteproject/SatHelperApp
-

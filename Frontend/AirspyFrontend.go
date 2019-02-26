@@ -1,7 +1,7 @@
 package Frontend
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/AirspyDevice"
+	"github.com/opensatelliteproject/SatHelperApp/Frontend/AirspyDevice"
 )
 
 // region Struct Definition

@@ -3,7 +3,7 @@ package Demuxer
 import (
 	"container/list"
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/prometheus/common/log"
 	"net"
 	"sync"

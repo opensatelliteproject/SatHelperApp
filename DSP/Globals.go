@@ -1,10 +1,10 @@
 package DSP
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Demuxer"
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend"
-	"github.com/OpenSatelliteProject/SatHelperApp/Models"
-	"github.com/OpenSatelliteProject/libsathelper"
+	"github.com/opensatelliteproject/SatHelperApp/Demuxer"
+	"github.com/opensatelliteproject/SatHelperApp/Frontend"
+	"github.com/opensatelliteproject/SatHelperApp/Models"
+	"github.com/opensatelliteproject/libsathelper"
 	"github.com/racerxdl/go.fifo"
 	"github.com/racerxdl/segdsp/dsp"
 	"sync"
