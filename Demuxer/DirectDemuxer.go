@@ -1,9 +1,9 @@
 package Demuxer
 
 import (
+	"github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/ccsds"
-	"github.com/logrusorgru/aurora"
 )
 
 type DirectDemuxer struct {

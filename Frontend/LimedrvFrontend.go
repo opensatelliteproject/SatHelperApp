@@ -1,8 +1,8 @@
 package Frontend
 
 import (
-	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/myriadrf/limedrv"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"math"
 )
 

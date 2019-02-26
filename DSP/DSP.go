@@ -1,10 +1,10 @@
 package DSP
 
 import (
+	. "github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Frontend"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/libsathelper"
-	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
 	"github.com/racerxdl/segdsp/dsp"
 	"sync"

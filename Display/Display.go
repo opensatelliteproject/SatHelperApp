@@ -2,9 +2,9 @@ package Display
 
 import (
 	"fmt"
-	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	ui "github.com/airking05/termui"
 	"github.com/nsf/termbox-go"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"log"
 	"regexp"
 	"strconv"

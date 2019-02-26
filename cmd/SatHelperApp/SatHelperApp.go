@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	ui "github.com/airking05/termui"
+	"github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp"
 	"github.com/opensatelliteproject/SatHelperApp/DSP"
 	"github.com/opensatelliteproject/SatHelperApp/Demuxer"
@@ -11,8 +13,6 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/libsathelper"
-	ui "github.com/airking05/termui"
-	"github.com/logrusorgru/aurora"
 	"log"
 	"os"
 	"runtime/pprof"

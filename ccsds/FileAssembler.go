@@ -2,12 +2,12 @@ package ccsds
 
 import (
 	"fmt"
+	"github.com/mewkiz/pkg/osutil"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"github.com/opensatelliteproject/goaec/szwrap"
-	"github.com/mewkiz/pkg/osutil"
 	"io/ioutil"
 	"os"
 	"path"

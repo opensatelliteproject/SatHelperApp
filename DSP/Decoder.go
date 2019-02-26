@@ -3,10 +3,10 @@ package DSP
 import (
 	"bytes"
 	"encoding/binary"
+	. "github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/Models"
 	"github.com/opensatelliteproject/libsathelper"
-	. "github.com/logrusorgru/aurora"
 	"github.com/racerxdl/go.fifo"
 	"log"
 	"time"
