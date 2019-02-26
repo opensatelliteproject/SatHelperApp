@@ -56,7 +56,7 @@ func (f *UDPServer) SendData(data []byte) {
 		if f.conn != nil {
 			_, err := f.conn.WriteToUDP(data, f.target)
 			if err != nil {
-				SLog.Error("Error sending payload to client: ", err)
+				SLog.Error("Error sending payload to client: %s", err)
 			}
 		}
 		f.syncMtx.Unlock()

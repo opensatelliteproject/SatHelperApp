@@ -90,7 +90,7 @@ func (msi *MultiSegmentImage) Purge() {
 		SLog.Debug("Removing %s", v)
 		err := os.Remove(v)
 		if err != nil {
-			SLog.Error("Error erasing %s: %s", err)
+			SLog.Error("Error erasing %s: %s", v, err)
 		}
 	}
 }
