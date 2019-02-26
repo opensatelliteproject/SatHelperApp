@@ -9,7 +9,7 @@ then
   echo "I'm in `pwd`"
   mkdir -p bins
   mkdir -p zips
- 
+
   echo "Building RTLSDR"
   git clone https://github.com/librtlsdr/librtlsdr.git
   cd librtlsdr
@@ -61,4 +61,3 @@ then
 else
   echo "No tags for current commit. Skipping releases."
 fi
-

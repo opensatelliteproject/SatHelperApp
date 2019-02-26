@@ -2,7 +2,7 @@ package ccsds
 
 import (
 	"encoding/binary"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 )
 
 type MSDU struct {

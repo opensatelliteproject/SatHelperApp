@@ -1,8 +1,8 @@
 package Demuxer
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/ccsds"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/ccsds"
 	"github.com/logrusorgru/aurora"
 )
 

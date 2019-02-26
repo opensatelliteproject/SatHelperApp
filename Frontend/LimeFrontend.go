@@ -1,7 +1,7 @@
 package Frontend
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/LimeDevice"
+	"github.com/opensatelliteproject/SatHelperApp/Frontend/LimeDevice"
 )
 
 const LimeFrontendBufferSize = 8192

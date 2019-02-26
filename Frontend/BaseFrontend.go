@@ -1,7 +1,7 @@
 package Frontend
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"unsafe"
 )
 

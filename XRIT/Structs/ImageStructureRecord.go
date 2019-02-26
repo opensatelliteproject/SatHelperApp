@@ -2,7 +2,7 @@ package Structs
 
 import (
 	"encoding/binary"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 )
 
 type ImageStructureRecord struct {

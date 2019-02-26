@@ -1,9 +1,9 @@
 package ImageProcessor
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/ImageTools"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"os"
 )
 

@@ -1,7 +1,7 @@
 package ccsds
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"time"
 )
 

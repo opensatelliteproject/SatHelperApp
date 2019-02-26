@@ -1,7 +1,7 @@
 package DSP
 
 import (
-	. "github.com/OpenSatelliteProject/SatHelperApp/Models"
+	. "github.com/opensatelliteproject/SatHelperApp/Models"
 )
 
 // region Demodulator Parameters

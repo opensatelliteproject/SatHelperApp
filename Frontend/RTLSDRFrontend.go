@@ -1,7 +1,7 @@
 package Frontend
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/Frontend/RTLSDRDevice"
+	"github.com/opensatelliteproject/SatHelperApp/Frontend/RTLSDRDevice"
 )
 
 // region Struct Definition

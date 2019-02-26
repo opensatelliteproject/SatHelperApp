@@ -2,7 +2,7 @@ package Display
 
 import (
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	ui "github.com/airking05/termui"
 	"github.com/nsf/termbox-go"
 	"log"

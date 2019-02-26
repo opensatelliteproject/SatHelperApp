@@ -2,10 +2,10 @@ package ImageTools
 
 import (
 	"fmt"
-	"github.com/OpenSatelliteProject/SatHelperApp/ImageProcessor/Structs"
-	"github.com/OpenSatelliteProject/SatHelperApp/Logger"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
+	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"image"
 	"image/png"
 	"io"

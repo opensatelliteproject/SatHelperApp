@@ -1,9 +1,9 @@
 package Presets
 
 import (
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/NOAAProductID"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/ScannerSubProduct"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/NOAAProductID"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/ScannerSubProduct"
 )
 
 var NOAAProducts = map[int]PacketData.NOAAProduct{}

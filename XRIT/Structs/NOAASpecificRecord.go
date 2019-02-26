@@ -2,8 +2,8 @@ package Structs
 
 import (
 	"encoding/binary"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/PacketData"
-	"github.com/OpenSatelliteProject/SatHelperApp/XRIT/Presets"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Presets"
 )
 
 type NOAASpecificRecord struct {
