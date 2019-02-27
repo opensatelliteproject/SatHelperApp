@@ -21,10 +21,49 @@ func DrawGray8At(data []byte, px, py int, image *image.Gray) {
 	copy(image.Pix[p:], data)
 }
 
-func DumpMultiSegment(msi *Structs.MultiSegmentImage) (error, string) {
+func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 	width := int(msi.FirstSegmentHeader.SegmentIdentificationHeader.MaxColumns)
 	height := int(msi.FirstSegmentHeader.SegmentIdentificationHeader.MaxRows)
+	img := image.NewGray(image.Rect(0, 0, width, height))
 
+	for _, filename := range msi.Files {
+		xh, err := XRIT.ParseFile(filename)
+		if err != nil {
+			return err, nil
+		}
+
+		if xh.PrimaryHeader.FileTypeCode != PacketData.IMAGE {
+			return fmt.Errorf("the specified file is not an image container"), nil
+		}
+
+		offset := xh.PrimaryHeader.HeaderLength
+
+		f, err := os.Open(filename)
+
+		if err != nil {
+			return err, nil
+		}
+
+		_, err = f.Seek(int64(offset), io.SeekStart)
+		if err != nil {
+			return err, nil
+		}
+
+		data, err := ioutil.ReadAll(f)
+		if err != nil {
+			return err, nil
+		}
+
+		px := int(xh.SegmentIdentificationHeader.StartColumn)
+		py := int(xh.SegmentIdentificationHeader.StartLine)
+
+		DrawGray8At(data, px, py, img)
+	}
+
+	return nil, img
+}
+
+func DumpMultiSegment(msi *Structs.MultiSegmentImage) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
@@ -37,40 +76,10 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage) (error, string) {
 
 	defer f.Close()
 
-	img := image.NewGray(image.Rect(0, 0, width, height))
+	err, img := MultiSegmentAssemble(msi)
 
-	for _, filename := range msi.Files {
-		xh, err := XRIT.ParseFile(filename)
-		if err != nil {
-			return err, ""
-		}
-
-		if xh.PrimaryHeader.FileTypeCode != PacketData.IMAGE {
-			return fmt.Errorf("the specified file is not an image container"), ""
-		}
-
-		offset := xh.PrimaryHeader.HeaderLength
-
-		f, err := os.Open(filename)
-
-		if err != nil {
-			return err, ""
-		}
-
-		_, err = f.Seek(int64(offset), io.SeekStart)
-		if err != nil {
-			return err, ""
-		}
-
-		data, err := ioutil.ReadAll(f)
-		if err != nil {
-			return err, ""
-		}
-
-		px := int(xh.SegmentIdentificationHeader.StartColumn)
-		py := int(xh.SegmentIdentificationHeader.StartLine)
-
-		DrawGray8At(data, px, py, img)
+	if err != nil {
+		return err, ""
 	}
 
 	err = png.Encode(f, img)
