@@ -1,6 +1,12 @@
 package Geo
 
-import "math"
+import (
+	"fmt"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
+	"math"
+	"regexp"
+	"strconv"
+)
 
 type Converter struct {
 	satelliteLongitude float64 // Satellite Longitude
@@ -35,6 +41,32 @@ func MakeGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac flo
 		aspectRatio:        cfac / lfac,
 		cropLeft:           coff - int(math.Min(float64(imageWidth-coff), float64(coff))),
 	}
+}
+
+// MakeGeoConverterFromXRIT Creates a new instance of GeoConverter from a XRIT File Header
+func MakeGeoConverterFromXRIT(xh *XRIT.Header) (*Converter, error) {
+
+	x := regexp.MustCompile(`.*\((.*)\)`)
+
+	regMatch := x.FindStringSubmatch(xh.ImageNavigationHeader.ProjectionName)
+	if len(regMatch) < 2 {
+		return nil, fmt.Errorf("cannot find projection lon at %s", xh.ImageNavigationHeader.ProjectionName)
+	}
+
+	lon, err := strconv.ParseFloat(regMatch[1], 64)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if xh.ImageNavigationHeader == nil {
+		return nil, fmt.Errorf("no image navigation header")
+	}
+
+	inh := xh.ImageNavigationHeader
+
+	return MakeSimpleGeoConverter(lon, int(inh.ColumnOffset), int(inh.LineOffset), float64(inh.ColumnScalingFactor), float64(inh.LineScalingFactor)), nil
+
 }
 
 // MakeSimpleGeoConverter Creates a new instance of GeoConverter

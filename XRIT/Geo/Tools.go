@@ -15,11 +15,11 @@ const radiusEquator = 6378.1370
 const vehicleDistance = 42142.5833
 
 func Deg2Rad(deg float64) float64 {
-	return deg * math.Pi / 180
+	return (deg * math.Pi) / 180
 }
 
 func Rad2Deg(rad float64) float64 {
-	return rad * 180 / math.Pi
+	return (rad * 180) / math.Pi
 }
 
 func LonLat2XY(satLon, lon, lat float64, coff int, cfac float64, loff int, lfac float64) (c, l int) {
@@ -46,12 +46,12 @@ func LonLat2XYf(satLon, lon, lat float64, coff int, cfac float64, loff int, lfac
 
 	rn := math.Sqrt(r1*r1 + r2*r2 + r3*r3)
 	x := math.Atan(-1 * r2 / r1)
-	y := math.Asin(-1 * r2 / rn)
+	y := math.Asin(-1 * r3 / rn)
 	x = Rad2Deg(x)
 	y = Rad2Deg(y)
 
-	c = float64(coff) + x*float64(cfac)/0x10000
-	l = float64(loff) + y*float64(lfac)/0x10000
+	c = float64(coff) + (x*float64(cfac))/0x10000
+	l = float64(loff) + (y*float64(lfac))/0x10000
 
 	return
 }

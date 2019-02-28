@@ -16,6 +16,7 @@ import (
 func main() {
 	kingpin.Version(SatHelperApp.GetVersion())
 
+	reproject := kingpin.Flag("linear", "Reproject to linear").Bool()
 	files := kingpin.Arg("filenames", "File names to dump image").Required().ExistingFiles()
 
 	kingpin.Parse()
@@ -58,7 +59,7 @@ func main() {
 
 	if msi.Done() {
 		SLog.Info("Got all segments, generating image.")
-		err, outname := ImageTools.DumpMultiSegment(msi)
+		err, outname := ImageTools.DumpMultiSegment(msi, *reproject)
 		if err != nil {
 			SLog.Error("Error dumping image: %s", err)
 			os.Exit(1)

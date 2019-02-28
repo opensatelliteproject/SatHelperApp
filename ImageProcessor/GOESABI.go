@@ -28,7 +28,7 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 
 	if ms.Done() {
 		SLog.Info("Got all segments for %s", name)
-		err, outname := ImageTools.DumpMultiSegment(ms)
+		err, outname := ImageTools.DumpMultiSegment(ms, false)
 		if err != nil {
 			SLog.Error("Error dumping Multi Segment Image %s: %s", name, err)
 		}

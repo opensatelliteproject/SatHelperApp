@@ -2,9 +2,11 @@ package ImageTools
 
 import (
 	"fmt"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"image"
 	"image/png"
@@ -63,7 +65,7 @@ func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 	return nil, img
 }
 
-func DumpMultiSegment(msi *Structs.MultiSegmentImage) (error, string) {
+func DumpMultiSegment(msi *Structs.MultiSegmentImage, reproject bool) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
@@ -80,6 +82,18 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage) (error, string) {
 
 	if err != nil {
 		return err, ""
+	}
+
+	if reproject {
+		SLog.Info("Reprojecting Image to Linear")
+		gc, err := Geo.MakeGeoConverterFromXRIT(msi.FirstSegmentHeader)
+		if err != nil {
+			return err, ""
+		}
+
+		proj := Projector.MakeProjector(gc)
+		img2 := proj.ReprojectLinearMultiThread(img)
+		img = img2
 	}
 
 	err = png.Encode(f, img)
