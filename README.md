@@ -102,3 +102,28 @@ to
 ```
 
 And then compile SatHelperApp as normal.
+
+
+Thanks
+======
+
+I need to say thanks to all people that helped me with the project:
+
+- [@hdoverobinson](https://github.com/hdoverobinson)
+- [@usa_satcom](https://twitter.com/usa_satcom)
+- [@devnulling](https://twitter.com/devnulling/)
+
+- And many more other people that I can't get the twitter or I don't know how to mention it. Also if forgot about you, let me know to put your name here!
+
+
+And also the people that contributed with:
+
+-   [@hdoverobinson](https://github.com/hdoverobinson)
+-   [@luigifreitas](https://github.com/luigifreitas)
+-   [@Gonzih](https://github.com/Gonzih)
+
+Also thank to these companies for providing hardware for testing OpenSatelliteProject:
+
+-   [LimeMicro](https://limemicro.com/)
+-   [SDRPlay](https://www.sdrplay.com/)
+-   [Airspy](https://airspy.com/)
