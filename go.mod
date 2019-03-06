@@ -3,6 +3,8 @@ module github.com/opensatelliteproject/SatHelperApp
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/airking05/termui v2.2.0+incompatible
+	github.com/jonas-p/go-shp v0.1.1 // indirect
+	github.com/llgcode/draw2d v0.0.0-20180825133448-f52c8a71aff0 // indirect
 	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e
 	github.com/lucasb-eyer/go-colorful v0.0.0-20181028223441-12d3b2882a08
 	github.com/maruel/panicparse v1.1.1 // indirect
