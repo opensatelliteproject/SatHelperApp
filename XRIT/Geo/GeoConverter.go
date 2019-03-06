@@ -1,6 +1,7 @@
 package Geo
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"math"
@@ -171,6 +172,14 @@ func (gc *Converter) TrimLongitude() float64 {
 // TrimLatitude returns Latitude Trim parameter for removing artifacts on Reprojection (in degrees)
 func (gc *Converter) TrimLatitude() float64 {
 	return 16
+}
+
+func (gc *Converter) Hash() string {
+	s := fmt.Sprintf("%f%d%d%f%f%v%d%v", gc.satelliteLongitude, gc.coff, gc.loff, gc.lfac, gc.cfac, gc.fixAspect, gc.imageWidth, gc.cropLeft)
+	h := sha256.New()
+	_, _ = h.Write([]byte(s))
+
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 // endregion
