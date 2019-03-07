@@ -1,6 +1,8 @@
 package ImageProcessor
 
 import (
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
@@ -14,11 +16,13 @@ var purgeFiles = false
 type ImageProcessor struct {
 	sync.Mutex
 	MultiSegmentCache map[string]*Structs.MultiSegmentImage
+	mapDrawer         *MapDrawer.MapDrawer
 }
 
 func MakeImageProcessor() *ImageProcessor {
 	return &ImageProcessor{
 		MultiSegmentCache: make(map[string]*Structs.MultiSegmentImage),
+		mapDrawer:         ImageData.GetDefaultMapDrawer(),
 	}
 }
 

@@ -2,6 +2,7 @@ package ImageTools
 
 import (
 	"fmt"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
@@ -9,6 +10,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"image"
+	"image/draw"
 	"image/png"
 	"io"
 	"io/ioutil"
@@ -65,7 +67,7 @@ func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 	return nil, img
 }
 
-func DumpMultiSegment(msi *Structs.MultiSegmentImage, reproject bool) (error, string) {
+func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, reproject bool) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
@@ -79,17 +81,25 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, reproject bool) (error, st
 	defer f.Close()
 
 	err, img := MultiSegmentAssemble(msi)
-
 	if err != nil {
 		return err, ""
 	}
 
+	gc, err := Geo.MakeGeoConverterFromXRIT(msi.FirstSegmentHeader)
+	if err != nil {
+		return err, ""
+	}
+
+	if mapDrawer != nil {
+		SLog.Debug("Map Drawer enabled. Drawing maps...")
+		newImg := image.NewRGBA(img.Bounds())
+		draw.Draw(newImg, img.Bounds(), img, img.Bounds().Min, draw.Src)
+		mapDrawer.DrawMap(newImg, gc)
+		img = newImg
+	}
+
 	if reproject {
-		SLog.Info("Reprojecting Image to Linear")
-		gc, err := Geo.MakeGeoConverterFromXRIT(msi.FirstSegmentHeader)
-		if err != nil {
-			return err, ""
-		}
+		SLog.Debug("Reprojecting Image to Linear")
 
 		proj := Projector.MakeProjector(gc)
 		img2 := proj.ReprojectLinearMultiThread(img)

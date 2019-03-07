@@ -2,7 +2,9 @@ package main
 
 import (
 	"github.com/opensatelliteproject/SatHelperApp"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
@@ -17,6 +19,7 @@ func main() {
 	kingpin.Version(SatHelperApp.GetVersion())
 
 	reproject := kingpin.Flag("linear", "Reproject to linear").Bool()
+	drawMap := kingpin.Flag("drawMap", "Draw Map Overlay").Bool()
 	files := kingpin.Arg("filenames", "File names to dump image").Required().ExistingFiles()
 
 	kingpin.Parse()
@@ -57,9 +60,15 @@ func main() {
 		}
 	}
 
+	var mapDrawer *MapDrawer.MapDrawer
+
+	if *drawMap {
+		mapDrawer = ImageData.GetDefaultMapDrawer()
+	}
+
 	if msi.Done() {
 		SLog.Info("Got all segments, generating image.")
-		err, outname := ImageTools.DumpMultiSegment(msi, *reproject)
+		err, outname := ImageTools.DumpMultiSegment(msi, mapDrawer, *reproject)
 		if err != nil {
 			SLog.Error("Error dumping image: %s", err)
 			os.Exit(1)
