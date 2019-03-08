@@ -40,6 +40,14 @@ func (fa *FileAssembler) SetOutputFolder(folder string) {
 	fa.outFolder = folder
 }
 
+func (fa *FileAssembler) SetDrawMap(drawMap bool) {
+	fa.ip.SetDrawMap(drawMap)
+}
+
+func (fa *FileAssembler) SetReprojectImages(reproject bool) {
+	fa.ip.SetReproject(reproject)
+}
+
 func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 	if msdu.Sequence == SequenceFirstSegment || msdu.Sequence == SequenceSingleData {
 		if fa.msduCache[msdu.APID] != nil {

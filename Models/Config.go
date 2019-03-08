@@ -68,6 +68,8 @@ type DirectDemuxerConfig struct {
 	TemporaryFolder        string
 	PurgeFilesAfterProcess bool
 	SkipVCID               []int
+	ReprojectImages        bool
+	DrawMap                bool
 }
 
 type AppConfig struct {

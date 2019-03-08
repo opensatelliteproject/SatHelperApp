@@ -1,6 +1,7 @@
 package ImageTools
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
@@ -110,6 +111,18 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 
 	if err != nil {
 		return err, ""
+	}
+
+	meta, err := json.MarshalIndent(msi.FirstSegmentHeader, "", "   ")
+
+	if err != nil {
+		SLog.Error("Cannot generate JSON for metadata file: %s", err)
+	} else {
+		metaName := path.Join(folder, msi.Name+".json")
+		err := ioutil.WriteFile(metaName, meta, os.ModePerm)
+		if err != nil {
+			SLog.Error("Cannot write Meta file %s: %s", metaName, err)
+		}
 	}
 
 	return nil, newFilename

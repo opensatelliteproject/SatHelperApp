@@ -14,7 +14,7 @@ import (
 	"os"
 )
 
-var configFile = flag.String("config", "", "write cpu profile to file")
+var configFile = flag.String("config", "", "Configuration File (defaults to $HOME/SatHelperApp/SatHelperApp.cfg)")
 var finalConfigFilePath string
 
 func LoadDefaults(save bool) {
@@ -68,6 +68,8 @@ func LoadDefaults(save bool) {
 	DSP.CurrentConfig.DirectDemuxer.TemporaryFolder = "tmp"
 	DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess = false
 	DSP.CurrentConfig.DirectDemuxer.SkipVCID = make([]int, 0)
+	DSP.CurrentConfig.DirectDemuxer.DrawMap = false
+	DSP.CurrentConfig.DirectDemuxer.ReprojectImages = false
 
 	if save {
 		SaveConfig()

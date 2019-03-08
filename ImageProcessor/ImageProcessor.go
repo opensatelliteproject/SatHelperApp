@@ -17,13 +17,41 @@ type ImageProcessor struct {
 	sync.Mutex
 	MultiSegmentCache map[string]*Structs.MultiSegmentImage
 	mapDrawer         *MapDrawer.MapDrawer
+	reproject         bool
+	drawmap           bool
 }
 
 func MakeImageProcessor() *ImageProcessor {
 	return &ImageProcessor{
 		MultiSegmentCache: make(map[string]*Structs.MultiSegmentImage),
 		mapDrawer:         ImageData.GetDefaultMapDrawer(),
+		reproject:         false,
+		drawmap:           false,
 	}
+}
+
+func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
+	ip.drawmap = drawMap
+}
+
+func (ip *ImageProcessor) SetReproject(reproject bool) {
+	ip.reproject = reproject
+}
+
+func (ip *ImageProcessor) GetDrawMap() bool {
+	return ip.drawmap
+}
+
+func (ip *ImageProcessor) GetReproject() bool {
+	return ip.reproject
+}
+
+func (ip *ImageProcessor) GetMapDrawer() *MapDrawer.MapDrawer {
+	if ip.drawmap {
+		return ip.mapDrawer
+	}
+
+	return nil
 }
 
 func (ip *ImageProcessor) ProcessImage(filename string) {

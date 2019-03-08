@@ -15,7 +15,7 @@ Building
 That's a standard go project. Make sure you have `libSatHelper` and `libairspy` installed and run:
 
 ```bash
-go get github.com/OpenSatelliteProject/SatHelperApp
+go get github.com/OpenSatelliteProject/SatHelperApp/cmd/SatHelperApp
 ```
 
 It will be installed into your `${GOPATH}/bin`. If you have it it on your path, just run `SatHelperApp` 
