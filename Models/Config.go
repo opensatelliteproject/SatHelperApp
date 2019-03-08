@@ -70,6 +70,7 @@ type DirectDemuxerConfig struct {
 	SkipVCID               []int
 	ReprojectImages        bool
 	DrawMap                bool
+	FalseColor             bool
 }
 
 type AppConfig struct {

@@ -2,6 +2,7 @@ package ImageProcessor
 
 import (
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
@@ -19,6 +20,7 @@ type ImageProcessor struct {
 	mapDrawer         *MapDrawer.MapDrawer
 	reproject         bool
 	drawmap           bool
+	falsecolor        bool
 }
 
 func MakeImageProcessor() *ImageProcessor {
@@ -27,7 +29,17 @@ func MakeImageProcessor() *ImageProcessor {
 		mapDrawer:         ImageData.GetDefaultMapDrawer(),
 		reproject:         false,
 		drawmap:           false,
+		falsecolor:        false,
 	}
+}
+
+func (ip *ImageProcessor) SetFalseColor(fsclr bool) {
+	ip.falsecolor = fsclr
+	if fsclr {
+		SLog.Warn("False color is enabled, so it will also save plain images with no map")
+		ImageTools.SetSaveNoMap(true) // Needed for FSCLR
+	}
+
 }
 
 func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
@@ -36,6 +48,10 @@ func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
 
 func (ip *ImageProcessor) SetReproject(reproject bool) {
 	ip.reproject = reproject
+}
+
+func (ip *ImageProcessor) GetFalseColor() bool {
+	return ip.falsecolor
 }
 
 func (ip *ImageProcessor) GetDrawMap() bool {

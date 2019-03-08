@@ -1,6 +1,7 @@
 package XRIT
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/NOAAProductID"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
@@ -104,6 +105,15 @@ func MakeXRITHeader() *Header {
 	}
 }
 
+func MakeFromJSON(data string) (*Header, error) {
+	var xh *Header
+	err := json.Unmarshal([]byte(data), xh)
+	if err != nil {
+		return nil, err
+	}
+	return xh, nil
+}
+
 func MakeXRITHeaderWithHeaders(records []Structs.BaseRecord) *Header {
 	xh := MakeXRITHeader()
 
@@ -167,4 +177,17 @@ func (xh *Header) ToNameString() string {
 	}
 
 	return baseName
+}
+
+func (xh *Header) IsFalseColorPiece() bool {
+	if xh.Product().ID == NOAAProductID.GOES16_ABI || xh.Product().ID == NOAAProductID.GOES17_ABI {
+		return xh.SubProduct().ID == 2 || xh.SubProduct().ID == 14
+	}
+
+	return false
+}
+
+func (xh *Header) ToJSON() string {
+	data, _ := json.MarshalIndent(xh, "", "   ")
+	return string(data)
 }

@@ -70,6 +70,7 @@ func LoadDefaults(save bool) {
 	DSP.CurrentConfig.DirectDemuxer.SkipVCID = make([]int, 0)
 	DSP.CurrentConfig.DirectDemuxer.DrawMap = false
 	DSP.CurrentConfig.DirectDemuxer.ReprojectImages = false
+	DSP.CurrentConfig.DirectDemuxer.FalseColor = false
 
 	if save {
 		SaveConfig()

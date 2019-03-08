@@ -6,6 +6,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"image"
+	"image/draw"
 	"image/jpeg"
 	"io"
 	"io/ioutil"
@@ -90,7 +91,7 @@ func DumpRaw(newFileName string, data []byte, xh *XRIT.Header) error {
 func DumpDirectly(newFileName string, data []byte) error {
 	err := ioutil.WriteFile(newFileName, data, os.ModePerm)
 	if err != nil {
-		fmt.Printf("Error saving file: %s\n", err)
+		SLog.Error("Error saving file: %s\n", err)
 		return err
 	}
 
@@ -133,4 +134,40 @@ func DumpImage(filename string) error {
 	} else {
 		return DumpDirectly(newFileName, data)
 	}
+}
+
+func LoadImage(filename string) (image.Image, error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	defer f.Close()
+
+	src, _, err := image.Decode(f)
+	if err != nil {
+		return nil, err
+	}
+
+	return src, nil
+}
+
+func LoadImageGrayScale(filename string) (*image.Gray, error) {
+	img, err := LoadImage(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	switch i := img.(type) {
+	case *image.Gray:
+		return i, nil
+	default:
+		return Image2Gray(img), nil
+	}
+}
+
+func Image2Gray(img image.Image) *image.Gray {
+	gray := image.NewGray(img.Bounds())
+	draw.Draw(gray, img.Bounds(), img, img.Bounds().Min, draw.Src)
+	return gray
 }

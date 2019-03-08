@@ -1,12 +1,12 @@
 package ImageTools
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/Tools"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
@@ -18,6 +18,17 @@ import (
 	"os"
 	"path"
 )
+
+var saveNoMap = false
+var saveNoProj = false
+
+func SetSaveNoMap(s bool) {
+	saveNoMap = s
+}
+
+func SetSaveNoProj(s bool) {
+	saveNoProj = s
+}
 
 func DrawGray8At(data []byte, px, py int, image *image.Gray) {
 	b := image.Bounds()
@@ -68,18 +79,44 @@ func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 	return nil, img
 }
 
+func SaveImage(filename string, img image.Image) error {
+	f, err := os.Create(filename)
+	if err != nil {
+		SLog.Error("Error creating file %s: %s\n", filename, err)
+		return err
+	}
+
+	defer f.Close()
+
+	err = png.Encode(f, img)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func GetNoMapName(filename string) string {
+	// Remove file timestamp
+	return filename[:len(filename)-16] + "-nomap.png"
+}
+func GetNoProjName(filename string) string {
+	// Remove file timestamp
+	return filename[:len(filename)-16] + "-noproj.png"
+}
+
 func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, reproject bool) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
+	newFilenameNoMap := path.Join(folder, GetNoMapName(msi.Name))
+	newFilenameNoProj := path.Join(folder, GetNoProjName(msi.Name))
 
-	f, err := os.Create(newFilename)
-	if err != nil {
-		SLog.Error("Error creating file %s: %s\n", newFilename, err)
-		return err, ""
+	if Tools.Exists(newFilename) {
+		SLog.Info("File %s already exists, skipping...", newFilename)
+		return nil, newFilename
 	}
-
-	defer f.Close()
 
 	err, img := MultiSegmentAssemble(msi)
 	if err != nil {
@@ -92,6 +129,13 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 	}
 
 	if mapDrawer != nil {
+		if saveNoMap && !Tools.Exists(newFilenameNoMap) {
+			SLog.Debug("Saving No Map Image: %s", newFilenameNoMap)
+			err := SaveImage(newFilenameNoMap, img)
+			if err != nil {
+				SLog.Error("Error saving %s: %s", newFilenameNoMap, err)
+			}
+		}
 		SLog.Debug("Map Drawer enabled. Drawing maps...")
 		newImg := image.NewRGBA(img.Bounds())
 		draw.Draw(newImg, img.Bounds(), img, img.Bounds().Min, draw.Src)
@@ -100,6 +144,13 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 	}
 
 	if reproject {
+		if saveNoProj && !Tools.Exists(newFilenameNoProj) {
+			SLog.Debug("Saving No Projection Image: %s", newFilenameNoProj)
+			err := SaveImage(newFilenameNoProj, img)
+			if err != nil {
+				SLog.Error("Error saving %s: %s", newFilenameNoProj, err)
+			}
+		}
 		SLog.Debug("Reprojecting Image to Linear")
 
 		proj := Projector.MakeProjector(gc)
@@ -107,22 +158,16 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 		img = img2
 	}
 
-	err = png.Encode(f, img)
+	err = SaveImage(newFilename, img)
 
 	if err != nil {
 		return err, ""
 	}
 
-	meta, err := json.MarshalIndent(msi.FirstSegmentHeader, "", "   ")
-
+	metaName := path.Join(folder, msi.Name+".json")
+	err = ioutil.WriteFile(metaName, []byte(msi.FirstSegmentHeader.ToJSON()), os.ModePerm)
 	if err != nil {
-		SLog.Error("Cannot generate JSON for metadata file: %s", err)
-	} else {
-		metaName := path.Join(folder, msi.Name+".json")
-		err := ioutil.WriteFile(metaName, meta, os.ModePerm)
-		if err != nil {
-			SLog.Error("Cannot write Meta file %s: %s", metaName, err)
-		}
+		SLog.Error("Cannot write Meta file %s: %s", metaName, err)
 	}
 
 	return nil, newFilename

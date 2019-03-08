@@ -55,6 +55,18 @@ func (dm *Demuxer) SetOutputFolder(folder string) {
 	dm.fileAssembler.SetOutputFolder(folder)
 }
 
+func (dm *Demuxer) SetDrawMap(d bool) {
+	dm.fileAssembler.SetDrawMap(d)
+}
+
+func (dm *Demuxer) SetReprojectImage(r bool) {
+	dm.fileAssembler.SetReprojectImages(r)
+}
+
+func (dm *Demuxer) SetFalseColor(r bool) {
+	dm.fileAssembler.SetFalseColor(r)
+}
+
 func (dm *Demuxer) SetOnFrameLost(cb func(channelId, currentFrame, lastFrame int)) {
 	dm.Lock()
 	dm.cbOnFrameLost = cb

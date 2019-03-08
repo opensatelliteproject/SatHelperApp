@@ -1,6 +1,7 @@
 package ImageData
 
 import (
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"io/ioutil"
@@ -11,8 +12,11 @@ import (
 
 const shpFileName = "ne_50m_admin_0_countries.shp"
 const dbfFileName = "ne_50m_admin_0_countries.dbf"
+const falseColorLutName = "wx-star.com_GOES-R_ABI_False-Color-LUT.png"
 
 var mapDrawer *MapDrawer.MapDrawer
+var fsclrLut *ImageTools.Lut2D
+var visCurve *ImageTools.CurveManipulator
 
 // ExtractShapeFiles extracts the shapefiles to temp folder and return path for shp file
 func ExtractShapeFiles() (string, error) {
@@ -69,4 +73,31 @@ func GetDefaultMapDrawer() *MapDrawer.MapDrawer {
 	}
 
 	return mapDrawer
+}
+
+func GetVisibleCurveManipulator() *ImageTools.CurveManipulator {
+	if visCurve == nil {
+		visCurve = ImageTools.MakeDefaultCurveManipulator()
+	}
+
+	return visCurve
+}
+
+func GetFalseColorLUT() *ImageTools.Lut2D {
+	if fsclrLut == nil {
+		lutData, err := Asset(falseColorLutName)
+		if err != nil {
+			SLog.Error("Cannot load False Color LUT data: %s", err)
+			return nil
+		}
+		lut2d, err := ImageTools.MakeLut2DFromMemory(lutData)
+
+		if err != nil {
+			SLog.Error("Error creating False Color LUT: %s", err)
+		} else {
+			fsclrLut = lut2d
+		}
+	}
+
+	return fsclrLut
 }

@@ -170,7 +170,7 @@ func main() {
 	switch strings.ToLower(DSP.CurrentConfig.Base.DemuxerType) {
 	case "direct":
 		SLog.Info(aurora.Cyan("Direct Internal Demuxer selected.").String())
-		dd := Demuxer.MakeDirectDemuxer(DSP.CurrentConfig.DirectDemuxer.OutputFolder, DSP.CurrentConfig.DirectDemuxer.TemporaryFolder)
+		dd := Demuxer.MakeDirectDemuxer(DSP.CurrentConfig.DirectDemuxer.OutputFolder, DSP.CurrentConfig.DirectDemuxer.TemporaryFolder, DSP.CurrentConfig.DirectDemuxer.DrawMap, DSP.CurrentConfig.DirectDemuxer.ReprojectImages, DSP.CurrentConfig.DirectDemuxer.FalseColor)
 		for _, v := range DSP.CurrentConfig.DirectDemuxer.SkipVCID {
 			dd.AddSkipVCID(v)
 		}

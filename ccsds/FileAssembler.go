@@ -47,6 +47,9 @@ func (fa *FileAssembler) SetDrawMap(drawMap bool) {
 func (fa *FileAssembler) SetReprojectImages(reproject bool) {
 	fa.ip.SetReproject(reproject)
 }
+func (fa *FileAssembler) SetFalseColor(fsclr bool) {
+	fa.ip.SetFalseColor(fsclr)
+}
 
 func (fa *FileAssembler) PutMSDU(msdu *MSDU) {
 	if msdu.Sequence == SequenceFirstSegment || msdu.Sequence == SequenceSingleData {

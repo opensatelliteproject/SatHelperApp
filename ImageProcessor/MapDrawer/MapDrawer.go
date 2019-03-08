@@ -107,7 +107,7 @@ func (md *MapDrawer) DrawMap(img *image.RGBA, gc *Geo.Converter) {
 
 	ctx := draw2dimg.NewGraphicContext(img)
 	ctx.SetStrokeColor(color.RGBA{R: 255, A: 255})
-	ctx.SetLineWidth(5)
+	ctx.SetLineWidth(3)
 
 	for _, v := range md.sections {
 		for _, poly := range v.polygons {
