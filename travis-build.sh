@@ -13,7 +13,7 @@ then
   echo "Building RTLSDR"
   git clone https://github.com/librtlsdr/librtlsdr.git
   cd librtlsdr
-  mkdir build && cd build
+  mkdir -p build && cd build
   cmake ..
   make -j10
   sudo make install
@@ -27,7 +27,7 @@ then
   git clone https://github.com/myriadrf/LimeSuite.git
   cd LimeSuite
   git checkout stable
-  mkdir builddir && cd builddir
+  mkdir -p builddir && cd builddir
   cmake ../ -DBUILD_SHARED_LIBS=OFF
   make -j10
   sudo make install
