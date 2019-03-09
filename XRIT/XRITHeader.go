@@ -25,7 +25,7 @@ type Header struct {
 	TimestampHeader             *Structs.TimestampRecord
 	UnknownHeaders              []*Structs.UnknownHeader
 
-	AllHeaders []Structs.BaseRecord
+	AllHeaders []Structs.BaseRecord `json:"-"`
 }
 
 func (xh *Header) Product() *PacketData.NOAAProduct {

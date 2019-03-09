@@ -9,6 +9,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/Tools"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -80,7 +81,7 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 
 	visFilename := strings.Replace(filename, mdch, vismdch, -1)
 	irFilename := strings.Replace(filename, mdch, irmdch, -1)
-	fsclrFileName := strings.Replace(filename, mdch, md+"99", -1)
+	fsclrFileName := strings.Replace(filename, mdch, md+"C99", -1)
 	fsclrFileName = strings.Replace(fsclrFileName, "-nomap", "", -1)
 
 	if !Tools.Exists(visFilename) || !Tools.Exists(irFilename) {
@@ -141,6 +142,14 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 		SLog.Error("Cannot crate GeoConverter: %s", err)
 	}
 
+	xh.NOAASpecificHeader.ProductSubID = 99 // False Color
+
+	metaName := strings.Replace(fsclrFileName, ".png", ".json", -1)
+	err = ioutil.WriteFile(metaName, []byte(xh.ToJSON()), os.ModePerm)
+	if err != nil {
+		SLog.Error("Cannot write Meta file %s: %s", metaName, err)
+	}
+
 	err = ImageTools.SaveImage(fsclrFileName, fsclr)
 	if err != nil {
 		SLog.Error("Error saving false color image to %s: %s", fsclrFileName, err)
@@ -152,6 +161,7 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 	if err != nil {
 		SLog.Error("Error erasing %s: %s", visFilename, err)
 	}
+
 	SLog.Debug("Removing %s", irFilename)
 	err = os.Remove(irFilename)
 	if err != nil {

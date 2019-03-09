@@ -128,6 +128,12 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 		return err, ""
 	}
 
+	metaName := path.Join(folder, msi.Name+".json")
+	err = ioutil.WriteFile(metaName, []byte(msi.FirstSegmentHeader.ToJSON()), os.ModePerm)
+	if err != nil {
+		SLog.Error("Cannot write Meta file %s: %s", metaName, err)
+	}
+
 	if mapDrawer != nil {
 		if saveNoMap && !Tools.Exists(newFilenameNoMap) {
 			SLog.Debug("Saving No Map Image: %s", newFilenameNoMap)
@@ -162,12 +168,6 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 
 	if err != nil {
 		return err, ""
-	}
-
-	metaName := path.Join(folder, msi.Name+".json")
-	err = ioutil.WriteFile(metaName, []byte(msi.FirstSegmentHeader.ToJSON()), os.ModePerm)
-	if err != nil {
-		SLog.Error("Cannot write Meta file %s: %s", metaName, err)
 	}
 
 	return nil, newFilename

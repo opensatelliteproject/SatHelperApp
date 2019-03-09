@@ -72,7 +72,7 @@ func (msi *MultiSegmentImage) PutSegment(filename string, xh *XRIT.Header) {
 		msi.Files = append(msi.Files, filename)
 	}
 
-	if (xh.SegmentIdentificationHeader.Sequence == 0 || xh.SegmentIdentificationHeader.Sequence == 1) && msi.FirstSegmentHeader == nil {
+	if msi.FirstSegmentHeader == nil || xh.SegmentIdentificationHeader.Sequence < msi.FirstSegmentHeader.SegmentIdentificationHeader.Sequence {
 		msi.FirstSegmentHeader = xh
 		msi.FirstSegmentFilename = filename
 	}
