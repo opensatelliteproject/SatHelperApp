@@ -3,8 +3,9 @@ module github.com/opensatelliteproject/SatHelperApp
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/airking05/termui v2.2.0+incompatible
-	github.com/jonas-p/go-shp v0.1.1 // indirect
-	github.com/llgcode/draw2d v0.0.0-20180825133448-f52c8a71aff0 // indirect
+	github.com/jonas-p/go-shp v0.1.1
+	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
+	github.com/llgcode/draw2d v0.0.0-20180825133448-f52c8a71aff0
 	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e
 	github.com/lucasb-eyer/go-colorful v0.0.0-20181028223441-12d3b2882a08
 	github.com/maruel/panicparse v1.1.1 // indirect
@@ -23,7 +24,9 @@ require (
 	github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5
 	github.com/sirupsen/logrus v1.3.0 // indirect
 	github.com/stretchr/testify v1.3.0 // indirect
-	golang.org/x/crypto v0.0.0-20190225124518-7f87c0fbb88b // indirect
-	golang.org/x/sys v0.0.0-20190225065934-cc5685c2db12 // indirect
+	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 // indirect
+	golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
+	golang.org/x/sys v0.0.0-20190309122539-980fc434d28e // indirect
+	golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 )

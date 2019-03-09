@@ -10,10 +10,15 @@ import (
 	"math"
 )
 
-type MapDrawer struct {
-	sections []*MapSection
+const defaultLineWidth = 3
 
-	cache map[string][]*MapSection
+var defaultLineColor = color.RGBA{R: 255, A: 255}
+
+type MapDrawer struct {
+	sections  []*MapSection
+	cache     map[string][]*MapSection
+	lineWidth float64
+	lineColor color.Color
 }
 
 type MapSection struct {
@@ -30,8 +35,10 @@ func MakeMapDrawer(shapeFile string) (error, *MapDrawer) {
 	defer shape.Close()
 
 	md := &MapDrawer{
-		sections: make([]*MapSection, 0),
-		cache:    make(map[string][]*MapSection),
+		sections:  make([]*MapSection, 0),
+		cache:     make(map[string][]*MapSection),
+		lineWidth: defaultLineWidth,
+		lineColor: defaultLineColor,
 	}
 
 	fields := shape.Fields()
@@ -100,14 +107,22 @@ func MakeMapDrawer(shapeFile string) (error, *MapDrawer) {
 	return nil, md
 }
 
+func (md *MapDrawer) SetLineColor(c color.Color) {
+	md.lineColor = c
+}
+
+func (md *MapDrawer) SetLineWidth(w float64) {
+	md.lineWidth = w
+}
+
 func (md *MapDrawer) DrawMap(img *image.RGBA, gc *Geo.Converter) {
 	w := float64(img.Bounds().Dx())
 	h := float64(img.Bounds().Dy())
 	draw := false
 
 	ctx := draw2dimg.NewGraphicContext(img)
-	ctx.SetStrokeColor(color.RGBA{R: 255, A: 255})
-	ctx.SetLineWidth(3)
+	ctx.SetStrokeColor(md.lineColor)
+	ctx.SetLineWidth(md.lineWidth)
 
 	for _, v := range md.sections {
 		for _, poly := range v.polygons {
