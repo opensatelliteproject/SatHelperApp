@@ -1,4 +1,4 @@
-[![Snap Status](https://build.snapcraft.io/badge/opensatelliteproject/SatHelperApp.svg)](https://build.snapcraft.io/user/opensatelliteproject/SatHelperApp) [![Build Status](https://api.travis-ci.org/opensatelliteproject/libsathelper.svg?branch=master)](https://travis-ci.org/opensatelliteproject/libsathelper) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://tldrlegal.com/license/mit-license)
+[![Snap Status](https://build.snapcraft.io/badge/opensatelliteproject/SatHelperApp.svg)](https://build.snapcraft.io/user/opensatelliteproject/SatHelperApp) [![Build Status](https://api.travis-ci.org/opensatelliteproject/SatHelperApp.svg?branch=master)](https://travis-ci.org/opensatelliteproject/SatHelperApp) [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://tldrlegal.com/license/mit-license)
 
 
 SatHelperApp
