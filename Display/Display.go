@@ -96,7 +96,7 @@ func InitDisplay() {
 	}
 	// endregion
 	// region HEAD
-	headStr := fmt.Sprintf("SatHelperApp - %s.%s", SatHelperApp.GetVersion(), SatHelperApp.GetRevision())
+	headStr := fmt.Sprintf("SatHelperApp - %s", SatHelperApp.GetVersion())
 	head := ui.NewPar(headStr)
 	head.TextFgColor = ui.ColorWhite
 	head.BorderFg = ui.ColorCyan
