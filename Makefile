@@ -1,8 +1,8 @@
 PACKAGE := OpenSatelliteProject/SatHelperApp
-REV_VAR := main.RevString
-VERSION_VAR := main.VersionString
-BUILD_DATE_VAR := main.CompilationDate
-BUILD_TIME_VAR := main.CompilationTime
+REV_VAR := SatHelperApp.RevString
+VERSION_VAR := SatHelperApp.VersionString
+BUILD_DATE_VAR := SatHelperApp.CompilationDate
+BUILD_TIME_VAR := SatHelperApp.CompilationTime
 REPO_VERSION := $(shell git describe --always --dirty --tags)
 REPO_REV := $(shell git rev-parse --sq HEAD)
 BUILD_DATE := $(shell date +"%b %d %Y")

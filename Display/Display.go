@@ -4,6 +4,7 @@ import (
 	"fmt"
 	ui "github.com/airking05/termui"
 	"github.com/nsf/termbox-go"
+	"github.com/opensatelliteproject/SatHelperApp"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"log"
 	"regexp"
@@ -95,11 +96,12 @@ func InitDisplay() {
 	}
 	// endregion
 	// region HEAD
-	head := ui.NewPar("SatHelper Application")
+	headStr := fmt.Sprintf("SatHelperApp - %s.%s", SatHelperApp.GetVersion(), SatHelperApp.GetRevision())
+	head := ui.NewPar(headStr)
 	head.TextFgColor = ui.ColorWhite
 	head.BorderFg = ui.ColorCyan
 	head.Height = 3
-	head.Text = "SatHelper Application"
+	head.Text = headStr
 	// endregion
 	// region Locked Bar
 	signalLocked := ui.NewPar("NOT LOCKED")

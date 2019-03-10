@@ -228,6 +228,7 @@ func main() {
 
 	if DSP.CurrentConfig.Decoder.Display {
 		ui.Handle("/timer/100ms", func(e ui.Event) {
+			freq := float32(DSP.Device.GetCenterFrequency()) + DSP.GetCostasFrequency()
 			stat := DSP.GetStats()
 			Display.UpdateSignalQuality(stat.SignalQuality)
 			Display.UpdateLockedState(stat.FrameLock == 1)
@@ -241,7 +242,7 @@ func main() {
 			Display.UpdatePhaseCorr(stat.PhaseCorrection)
 			Display.UpdateSyncCorrelation(stat.SyncCorrelation)
 			Display.UpdateMode(strings.ToUpper(DSP.CurrentConfig.Base.Mode))
-			Display.UpdateCenterFrequency(DSP.Device.GetCenterFrequency())
+			Display.UpdateCenterFrequency(uint32(freq))
 			Display.UpdateDevice(DSP.Device.GetShortName())
 			Display.UpdateDemuxer(DSP.SDemuxer.GetName())
 			Display.Render()

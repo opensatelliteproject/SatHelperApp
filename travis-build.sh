@@ -1,7 +1,29 @@
 #!/bin/bash
 
-TAG=`git describe --exact-match --tags HEAD`
 
+REV_VAR="SatHelperApp.RevString"
+VERSION_VAR="SatHelperApp.VersionString"
+BUILD_DATE_VAR="SatHelperApp.CompilationDate"
+BUILD_TIME_VAR="SatHelperApp.CompilationTime"
+REPO_VERSION=$(git describe --always --dirty --tags)
+REPO_REV=$(git rev-parse HEAD)
+BUILD_DATE=$(date +"%b %d %Y")
+BUILD_TIME=$(date +"%H:%M:%S")
+GOBUILD_VERSION_ARGS="-ldflags \"-X ${REV_VAR}='${REPO_REV}' -X ${VERSION_VAR}='${REPO_VERSION}' -X ${BUILD_DATE_VAR}='${BUILD_DATE}' -X ${BUILD_TIME_VAR}='${BUILD_TIME}'\""
+
+
+echo "REV_VAR=${REV_VAR}"
+echo "VERSION_VAR=${VERSION_VAR}"
+echo "BUILD_DATE_VAR=${BUILD_DATE_VAR}"
+echo "BUILD_TIME_VAR=${BUILD_TIME_VAR}"
+echo "REPO_VERSION=${REPO_VERSION}"
+echo "REPO_REV=${REPO_REV}"
+echo "BUILD_DATE=${BUILD_DATE}"
+echo "BUILD_TIME=${BUILD_TIME}"
+echo "GOBUILD_VERSION_ARGS=${GOBUILD_VERSION_ARGS}"
+
+
+TAG=`git describe --exact-match --tags HEAD 2>/dev/null`
 if [[ $? -eq 0 ]];
 then
   echo "Releasing for tag ${TAG}"
@@ -47,8 +69,8 @@ then
   do
     echo "Building $i"
     cd ${i}
-    echo go build -o ../../bins/${i}
-    go build -o ../../bins/${i}
+    echo go build $(GOBUILD_VERSION_ARGS) -o ../../bins/${i}
+    go build $(GOBUILD_VERSION_ARGS) -o ../../bins/${i}
     echo "Zipping ${i}-${TAG}-linux-amd64.zip"
     zip -r "../../zips/${i}-${TAG}-linux-amd64.zip" ../../bins/$i
     cd ..

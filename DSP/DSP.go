@@ -77,6 +77,12 @@ func sendConstellation() {
 	}
 }
 
+func GetCostasFrequency() float32 {
+	dspLock.Lock()
+	defer dspLock.Unlock()
+	return costasLoop.GetFrequencyHz()
+}
+
 func processSamples() {
 	dspLock.Lock()
 	length := samplesFifo.Len()
