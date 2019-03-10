@@ -69,8 +69,8 @@ then
   do
     echo "Building $i"
     cd ${i}
-    echo go build $(GOBUILD_VERSION_ARGS) -o ../../bins/${i}
-    go build $(GOBUILD_VERSION_ARGS) -o ../../bins/${i}
+    echo go build ${GOBUILD_VERSION_ARGS} -o ../../bins/${i}
+    go build ${GOBUILD_VERSION_ARGS} -o ../../bins/${i}
     echo "Zipping ${i}-${TAG}-linux-amd64.zip"
     zip -r "../../zips/${i}-${TAG}-linux-amd64.zip" ../../bins/$i
     cd ..
