@@ -60,8 +60,8 @@ then
   cd "$ORIGINAL_FOLDER"
 
   echo "Updating Code to have static libLimeSuite"
-  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
-  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
+  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
+  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
 
   echo "Building"
   cd cmd

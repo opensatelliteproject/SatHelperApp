@@ -70,7 +70,12 @@ func (p *Projector) ReprojectLinearMultiThread(src image.Image) *image.RGBA {
 	width := src.Bounds().Dx()
 	height := src.Bounds().Dy()
 
-	n := runtime.NumCPU()
+	n := runtime.NumCPU() / 3 // Let's not use ALL available stuff since that can break other stuff
+	n = int(math.Round(float64(n)))
+	if n < 1 {
+		n = 1
+	}
+
 	n2 := int(math.Sqrt(float64(n)))
 
 	nX := n2

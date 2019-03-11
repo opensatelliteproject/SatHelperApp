@@ -4,6 +4,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"io/ioutil"
 	"os"
 	"path"
@@ -17,6 +18,8 @@ const falseColorLutName = "wx-star.com_GOES-R_ABI_False-Color-LUT.png"
 var mapDrawer *MapDrawer.MapDrawer
 var fsclrLut *ImageTools.Lut2D
 var visCurve *ImageTools.CurveManipulator
+
+var tempLut map[string]*ImageTools.Lut1D
 
 // ExtractShapeFiles extracts the shapefiles to temp folder and return path for shp file
 func ExtractShapeFiles() (string, error) {
@@ -90,14 +93,38 @@ func GetFalseColorLUT() *ImageTools.Lut2D {
 			SLog.Error("Cannot load False Color LUT data: %s", err)
 			return nil
 		}
+
 		lut2d, err := ImageTools.MakeLut2DFromMemory(lutData)
 
 		if err != nil {
 			SLog.Error("Error creating False Color LUT: %s", err)
-		} else {
-			fsclrLut = lut2d
+			return nil
 		}
+
+		fsclrLut = lut2d
 	}
 
 	return fsclrLut
+}
+
+func GetTemperatureLUT(xh *XRIT.Header) *ImageTools.Lut1D {
+	if xh.ImageDataFunctionHash == "" {
+		return nil
+	}
+
+	if tempLut == nil {
+		tempLut = map[string]*ImageTools.Lut1D{}
+	}
+
+	if tempLut[xh.ImageDataFunctionHash] == nil {
+		colorLut := ScaleLutToColor(minV, scaleFact, xh.GetTemperatureLUT(), TemperatureScaleLUT)
+		lut1d, err := ImageTools.MakeLut1DFromColors(colorLut)
+		if err != nil {
+			SLog.Error("Error creating Temperature LUT: %s", err)
+			return nil
+		}
+		tempLut[xh.ImageDataFunctionHash] = lut1d
+	}
+
+	return tempLut[xh.ImageDataFunctionHash]
 }

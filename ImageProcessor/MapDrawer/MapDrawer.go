@@ -10,9 +10,14 @@ import (
 	"math"
 )
 
-const defaultLineWidth = 3
+const defaultLineWidth = 2
 
-var defaultLineColor = color.RGBA{R: 255, A: 255}
+var defaultLineColor = color.RGBA{
+	R: 120,
+	G: 120,
+	B: 120,
+	A: 255,
+}
 
 type MapDrawer struct {
 	sections  []*MapSection

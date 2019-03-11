@@ -1,12 +1,14 @@
 package XRIT
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/NOAAProductID"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/ScannerSubProduct"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/Structs"
+	"strconv"
 	"strings"
 )
 
@@ -26,6 +28,10 @@ type Header struct {
 	UnknownHeaders              []*Structs.UnknownHeader
 
 	AllHeaders []Structs.BaseRecord `json:"-"`
+
+	// Non XRIT Headers - Auxiliary stuff
+	TemperatureLUT        []float32
+	ImageDataFunctionHash string
 }
 
 func (xh *Header) Product() *PacketData.NOAAProduct {
@@ -136,6 +142,7 @@ func (xh *Header) SetHeader(record Structs.BaseRecord) {
 		xh.HeaderStructuredHeader = record.(*Structs.HeaderStructuredRecord)
 	case PacketData.ImageDataFunctionRecord:
 		xh.ImageDataFunctionHeader = record.(*Structs.ImageDataFunctionRecord)
+		xh.computeTemperatureLUT()
 	case PacketData.ImageNavigationRecord:
 		xh.ImageNavigationHeader = record.(*Structs.ImageNavigationRecord)
 	case PacketData.ImageStructureRecord:
@@ -190,4 +197,45 @@ func (xh *Header) IsFalseColorPiece() bool {
 func (xh *Header) ToJSON() string {
 	data, _ := json.MarshalIndent(xh, "", "   ")
 	return string(data)
+}
+
+func (xh *Header) computeTemperatureLUT() {
+	if xh.ImageDataFunctionHeader == nil {
+		return
+	}
+	d := map[string]string{}
+	lines := strings.Split(xh.ImageDataFunctionHeader.StringData, "\n")
+	for _, v := range lines {
+		o := strings.Split(v, ":=")
+		if len(o) == 2 {
+			d[o[0]] = o[1]
+		}
+	}
+
+	lut := make([]float32, 256)
+
+	lastV := float32(0) // Use for filling non contiguous space (if any)
+	for i := 0; i < 256; i++ {
+		stri := strconv.FormatInt(int64(i), 10)
+		if d[stri] != "" {
+			v, err := strconv.ParseFloat(d[stri], 32)
+			if err == nil {
+				lastV = float32(v)
+			}
+		}
+		lut[i] = lastV
+	}
+
+	xh.TemperatureLUT = lut
+
+	h := sha256.New()
+	_, _ = h.Write([]byte(xh.ImageDataFunctionHeader.StringData))
+
+	xh.ImageDataFunctionHash = fmt.Sprintf("%x", h.Sum(nil))
+}
+
+// GetTemperatureLUT returns a LUT for converting pixel value (index) to degrees kelvin.
+// Returns nil in case of no ImageDataFunctionHeader available
+func (xh *Header) GetTemperatureLUT() []float32 {
+	return xh.TemperatureLUT
 }

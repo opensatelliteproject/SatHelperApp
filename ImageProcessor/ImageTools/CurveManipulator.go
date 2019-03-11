@@ -76,6 +76,9 @@ func (cm *CurveManipulator) applyCurveRGBA(img *image.RGBA) error {
 func (cm *CurveManipulator) applyCurveParallel(data []byte) {
 	wg := sync.WaitGroup{}
 	n := runtime.NumCPU()
+	if n > 4 { // Limit to 4 routines
+		n = 4
+	}
 	t := len(data)
 	w := t / n
 

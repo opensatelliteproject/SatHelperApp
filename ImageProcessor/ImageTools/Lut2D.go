@@ -11,10 +11,6 @@ import (
 	"reflect"
 )
 
-type ColorReader interface {
-	At(x, y int) color.Color
-}
-
 type Lut2D struct {
 	lut [][]color.Color
 }
@@ -35,13 +31,11 @@ func MakeLut2DFromMemory(data []byte) (*Lut2D, error) {
 }
 
 func MakeLut2DFromReader(r io.Reader) (*Lut2D, error) {
-	img, format, err := image.Decode(r)
+	img, _, err := image.Decode(r)
 
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(format)
 
 	b := img.Bounds()
 

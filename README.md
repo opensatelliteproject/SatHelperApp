@@ -98,7 +98,7 @@ Then change [LimeDevice.go](Frontend/LimeDevice/LimeDevice.go) ldflags line from
 to
 
 ```
-#cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -lm -lusb-1.0
+#cgo LDFLAGS: -l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0
 ```
 
 And then compile SatHelperApp as normal.
