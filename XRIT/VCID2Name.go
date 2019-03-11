@@ -24,6 +24,7 @@ var VCID2Name = map[int]string{
 	31: "DCS",
 	32: "DCS",
 	60: "Himawari",
+	63: "IDLE",
 }
 
 /*

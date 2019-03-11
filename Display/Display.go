@@ -6,6 +6,7 @@ import (
 	"github.com/nsf/termbox-go"
 	"github.com/opensatelliteproject/SatHelperApp"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"log"
 	"regexp"
 	"strconv"
@@ -155,8 +156,8 @@ func InitDisplay() {
 	syncWord.Align()
 	// endregion
 	// region VCID / SCID
-	vcid := ui.NewPar("VCID")
-	vcid.BorderLabel = "VCID"
+	vcid := ui.NewPar("Channel")
+	vcid.BorderLabel = "Channel"
 	vcid.TextFgColor = ui.ColorWhite
 	vcid.Text = "0"
 	vcid.Height = 3
@@ -371,8 +372,13 @@ func updateComponents() {
 	state.displayObjects.syncWord.Align()
 	// endregion
 	// region SCID / VCID
+	vcidname := XRIT.VCID2Name[int(state.vcid)]
+	if vcidname != "" {
+		state.displayObjects.vcid.Text = vcidname
+	} else {
+		state.displayObjects.vcid.Text = strconv.FormatUint(uint64(state.vcid), 10)
+	}
 	state.displayObjects.scid.Text = strconv.FormatUint(uint64(state.scid), 10)
-	state.displayObjects.vcid.Text = strconv.FormatUint(uint64(state.vcid), 10)
 	// endregion
 	// region FIFO
 	state.displayObjects.decoderFifoUsage.Percent = int(state.decoderFifoUsage)

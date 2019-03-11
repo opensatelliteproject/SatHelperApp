@@ -1,6 +1,9 @@
 package Structs
 
-import "github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+import (
+	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"strings"
+)
 
 type StringFieldRecord struct {
 	Type       byte
@@ -18,7 +21,7 @@ func MakeAncillaryText(data []byte) *AncillaryText {
 
 	v.Type = PacketData.AncillaryTextRecord
 
-	v.StringData = string(data)
+	v.StringData = strings.Trim(string(data), " \n\r")
 
 	return &v
 }
@@ -27,7 +30,7 @@ func MakeAnnotationRecord(data []byte) *AnnotationRecord {
 
 	v.Type = PacketData.AnnotationRecord
 
-	v.StringData = string(data)
+	v.StringData = strings.Trim(string(data), " \n\r")
 
 	return &v
 }
@@ -36,7 +39,7 @@ func MakeDCSFilenameRecord(data []byte) *DCSFilenameRecord {
 
 	v.Type = PacketData.DCSFileNameRecord
 
-	v.StringData = string(data)
+	v.StringData = strings.Trim(string(data), " \n\r")
 
 	return &v
 }
@@ -45,7 +48,7 @@ func MakeHeaderStructuredRecord(data []byte) *HeaderStructuredRecord {
 
 	v.Type = PacketData.HeaderStructuredRecord
 
-	v.StringData = string(data)
+	v.StringData = strings.Trim(string(data), " \n\r")
 
 	return &v
 }
@@ -54,7 +57,7 @@ func MakeImageDataFunctionRecord(data []byte) *ImageDataFunctionRecord {
 
 	v.Type = PacketData.ImageDataFunctionRecord
 
-	v.StringData = string(data)
+	v.StringData = strings.Trim(string(data), " \n\r")
 
 	return &v
 }

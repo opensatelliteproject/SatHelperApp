@@ -24,7 +24,7 @@ var buffer1 []complex64
 var agc SatHelper.AGC
 
 //var rrcFilter SatHelper.FirFilter
-var costasLoop SatHelper.CostasLoop
+//var costasLoop SatHelper.CostasLoop
 var clockRecovery SatHelper.ClockRecovery
 var Device Frontend.BaseFrontend
 

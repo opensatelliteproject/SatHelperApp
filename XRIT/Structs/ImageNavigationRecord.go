@@ -3,6 +3,7 @@ package Structs
 import (
 	"encoding/binary"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"strings"
 )
 
 type ImageNavigationRecord struct {
@@ -20,7 +21,7 @@ func MakeImageNavigationRecord(data []byte) *ImageNavigationRecord {
 
 	inr.Type = PacketData.ImageNavigationRecord
 
-	inr.ProjectionName = string(data[:32])
+	inr.ProjectionName = strings.Trim(string(data[:32]), " \n\r")
 	inr.ColumnScalingFactor = binary.BigEndian.Uint32(data[32:36])
 	inr.LineScalingFactor = binary.BigEndian.Uint32(data[36:40])
 	inr.ColumnOffset = int32(binary.BigEndian.Uint32(data[40:44]))

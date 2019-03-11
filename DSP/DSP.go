@@ -38,7 +38,7 @@ func InitDSP() {
 
 	//decimator = SatHelper.NewFirFilter(uint(CurrentConfig.Base.Decimation), decimatorTaps)
 	agc = SatHelper.NewAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
-	costasLoop = SatHelper.NewCostasLoop(PllAlpha, LoopOrder)
+	//costasLoop = SatHelper.NewCostasLoop(PllAlpha, LoopOrder)
 	clockRecovery = SatHelper.NewClockRecovery(sps, ClockGainOmega, ClockMu, ClockAlpha, ClockOmegaLimit)
 	//rrcFilter = SatHelper.NewFirFilter(1, rrcTaps)
 
@@ -80,7 +80,7 @@ func sendConstellation() {
 func GetCostasFrequency() float32 {
 	dspLock.Lock()
 	defer dspLock.Unlock()
-	return costasLoop.GetFrequencyHz()
+	return costasLoopNew.GetFrequencyHz()
 }
 
 func processSamples() {
