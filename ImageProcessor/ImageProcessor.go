@@ -1,7 +1,6 @@
 package ImageProcessor
 
 import (
-	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
@@ -26,7 +25,7 @@ type ImageProcessor struct {
 func MakeImageProcessor() *ImageProcessor {
 	return &ImageProcessor{
 		MultiSegmentCache: make(map[string]*Structs.MultiSegmentImage),
-		mapDrawer:         ImageData.GetDefaultMapDrawer(),
+		mapDrawer:         ImageTools.GetDefaultMapDrawer(),
 		reproject:         false,
 		drawmap:           false,
 		falsecolor:        false,

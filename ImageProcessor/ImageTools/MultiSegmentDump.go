@@ -17,6 +17,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 )
 
 var saveNoMap = false
@@ -106,7 +107,7 @@ func GetNoProjName(filename string) string {
 	return filename[:len(filename)-16] + "-noproj.png"
 }
 
-func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, reproject bool) (error, string) {
+func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, visCurve *CurveManipulator, reproject bool) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
@@ -132,6 +133,13 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 	err = ioutil.WriteFile(metaName, []byte(msi.FirstSegmentHeader.ToJSON()), os.ModePerm)
 	if err != nil {
 		SLog.Error("Cannot write Meta file %s: %s", metaName, err)
+	}
+
+	if strings.Contains(newFilename, "C02_") { // Only on visible channels
+		err = visCurve.ApplyCurve(img)
+		if err != nil {
+			SLog.Error("Error applying curve to visible image: %s", err)
+		}
 	}
 
 	if mapDrawer != nil {

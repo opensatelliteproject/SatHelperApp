@@ -264,9 +264,6 @@ var TemperatureScaleLUT = []color.Color{
 	color.RGBA{R: 0, G: 0, B: 0, A: 255},
 }
 
-const minV = 173 // Kelvin
-const scaleFact = 256.0 / (340 - minV)
-
 func ScaleLutToColor(minV, scaleFact float32, baseLut []float32, colorLut []color.Color) []color.Color {
 	out := make([]color.Color, len(baseLut))
 	for i := 0; i < len(baseLut); i++ {

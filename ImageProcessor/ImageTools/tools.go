@@ -2,6 +2,8 @@ package ImageTools
 
 import (
 	"fmt"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
@@ -11,6 +13,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -170,4 +173,125 @@ func Image2Gray(img image.Image) *image.Gray {
 	gray := image.NewGray(img.Bounds())
 	draw.Draw(gray, img.Bounds(), img, img.Bounds().Min, draw.Src)
 	return gray
+}
+
+const shpFileName = "ne_50m_admin_0_countries.shp"
+const dbfFileName = "ne_50m_admin_0_countries.dbf"
+const falseColorLutName = "wx-star.com_GOES-R_ABI_False-Color-LUT.png"
+
+var mapDrawer *MapDrawer.MapDrawer
+var fsclrLut *Lut2D
+var visCurve *CurveManipulator
+
+var tempLut map[string]*Lut1D
+
+// ExtractShapeFiles extracts the shapefiles to temp folder and return path for shp file
+func ExtractShapeFiles() (string, error) {
+
+	folder, err := ioutil.TempDir("", "satHelperShapes")
+	if err != nil {
+		return "", err
+	}
+	SLog.Debug("Extracting ShapeFiles to %s", folder)
+
+	shpFileData, err := ImageData.Asset(shpFileName)
+	if err != nil {
+		return "", err
+	}
+	dbfFileData, err := ImageData.Asset(dbfFileName)
+	if err != nil {
+		return "", err
+	}
+
+	err = ioutil.WriteFile(path.Join(folder, shpFileName), shpFileData, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+	err = ioutil.WriteFile(path.Join(folder, dbfFileName), dbfFileData, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+
+	return path.Join(folder, shpFileName), nil
+}
+
+func CleanShapeFiles(shpFile string) {
+	SLog.Debug("Cleaning ShapeFiles from %s", shpFile)
+	_ = os.Remove(shpFile)
+	_ = os.Remove(strings.Replace(shpFile, ".shp", ".dbf", -1))
+}
+
+func GetDefaultMapDrawer() *MapDrawer.MapDrawer {
+	if mapDrawer == nil {
+		shpFile, err := ExtractShapeFiles()
+		if err != nil {
+			SLog.Error("Error extracting Shape Files: %s", err)
+			SLog.Error("Map Drawer will be disabled")
+		}
+
+		if shpFile != "" {
+			err, mapDrawer = MapDrawer.MakeMapDrawer(shpFile)
+			if err != nil {
+				SLog.Error("Error creating Map Drawer: %s", err)
+			} else {
+				CleanShapeFiles(shpFile)
+			}
+		}
+	}
+
+	return mapDrawer
+}
+
+func GetVisibleCurveManipulator() *CurveManipulator {
+	if visCurve == nil {
+		visCurve = MakeDefaultCurveManipulator()
+	}
+
+	return visCurve
+}
+
+func GetFalseColorLUT() *Lut2D {
+	if fsclrLut == nil {
+		lutData, err := ImageData.Asset(falseColorLutName)
+		if err != nil {
+			SLog.Error("Cannot load False Color LUT data: %s", err)
+			return nil
+		}
+
+		lut2d, err := MakeLut2DFromMemory(lutData)
+
+		if err != nil {
+			SLog.Error("Error creating False Color LUT: %s", err)
+			return nil
+		}
+
+		fsclrLut = lut2d
+	}
+
+	return fsclrLut
+}
+
+const minV = 173 // Kelvin
+const scaleFact = 256.0 / (340 - minV)
+
+func GetTemperatureLUT(xh *XRIT.Header) *Lut1D {
+	if xh.ImageDataFunctionHash == "" {
+		return nil
+	}
+
+	if tempLut == nil {
+		tempLut = map[string]*Lut1D{}
+	}
+
+	if tempLut[xh.ImageDataFunctionHash] == nil {
+		colorLut := ImageData.ScaleLutToColor(minV, scaleFact, xh.GetTemperatureLUT(), ImageData.TemperatureScaleLUT)
+		lut1d, err := MakeLut1DFromColors(colorLut)
+		if err != nil {
+			SLog.Error("Error creating Temperature LUT: %s", err)
+			return nil
+		}
+		tempLut[xh.ImageDataFunctionHash] = lut1d
+	}
+
+	return tempLut[xh.ImageDataFunctionHash]
 }

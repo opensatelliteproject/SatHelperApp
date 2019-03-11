@@ -1,7 +1,6 @@
 package ImageProcessor
 
 import (
-	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
@@ -27,6 +26,7 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 		PlainLRITImage(ip, filename, xh)
 		return
 	}
+	curveManipulator := ImageTools.GetVisibleCurveManipulator()
 
 	basename := path.Base(filename)
 	name := strings.TrimSuffix(basename, filepath.Ext(basename))
@@ -40,7 +40,7 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 
 	if ms.Done() {
 		SLog.Info("Got all segments for %s", name)
-		err, outname := ImageTools.DumpMultiSegment(ms, ip.GetMapDrawer(), ip.reproject)
+		err, outname := ImageTools.DumpMultiSegment(ms, ip.GetMapDrawer(), curveManipulator, ip.reproject)
 		if err != nil {
 			SLog.Error("Error dumping Multi Segment Image %s: %s", name, err)
 		}
@@ -108,14 +108,7 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 		return
 	}
 
-	curveManipulator := ImageData.GetVisibleCurveManipulator()
-	falseLut := ImageData.GetFalseColorLUT()
-
-	err = curveManipulator.ApplyCurve(vis)
-	if err != nil {
-		SLog.Error("Error applying curve to visible image: %s", err)
-		return
-	}
+	falseLut := ImageTools.GetFalseColorLUT()
 
 	fsclr, err := falseLut.Apply(vis, ir)
 	if err != nil {
