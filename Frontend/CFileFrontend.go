@@ -2,10 +2,10 @@ package Frontend
 
 import (
 	"bufio"
-	"encoding/binary"
 	"fmt"
 	. "github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/racerxdl/fastconvert"
 	"os"
 	"sync"
 	"time"
@@ -120,14 +120,17 @@ func (f *CFileFrontend) Start() {
 			period /= 8 // Avoid lock up
 		}
 
+		buff := make([]byte, len(frontend.sampleBuffer)*4*2)
+
 		for frontend.isRunning() {
 			if float32(time.Since(frontend.t0).Seconds()) >= period {
-				err := binary.Read(reader, binary.LittleEndian, frontend.sampleBuffer)
+				_, err = reader.Read(buff)
 				if err != nil {
 					SLog.Error("Error reading input CFile: %s", Bold(err))
 					frontend.running = false
 					break
 				}
+				fastconvert.ReadByteArrayToComplex64Array(buff, frontend.sampleBuffer)
 				if frontend.cb != nil {
 					var cbData = SampleCallbackData{
 						SampleType:   SampleTypeFloatIQ,
