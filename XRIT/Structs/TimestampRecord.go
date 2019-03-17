@@ -16,16 +16,15 @@ func MakeTimestampRecord(data []byte) *TimestampRecord {
 	v := TimestampRecord{}
 
 	v.Type = PacketData.TimestampRecord
-
-	v.Days = binary.BigEndian.Uint16(data[0:2])
-	v.Milisseconds = binary.BigEndian.Uint32(data[2:6])
+	v.Days = binary.BigEndian.Uint16(data[1:3])
+	v.Milisseconds = binary.BigEndian.Uint32(data[3:7])
 
 	return &v
 }
 
 func (tr *TimestampRecord) GetDateTime() time.Time {
 	d := time.Date(1958, 1, 1, 0, 0, 0, 0, time.UTC)
-	d = d.Add(time.Duration(tr.Days) * time.Second * 3600 * 24)
+	d = d.Add(time.Duration(int64(tr.Days)*3600*24) * time.Second)
 	d = d.Add(time.Duration(tr.Milisseconds) * time.Millisecond)
 
 	return d
