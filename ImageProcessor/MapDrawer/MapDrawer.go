@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/jonas-p/go-shp"
 	"github.com/llgcode/draw2d/draw2dimg"
-	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"image"
 	"image/color"
 	"math"
@@ -120,7 +120,7 @@ func (md *MapDrawer) SetLineWidth(w float64) {
 	md.lineWidth = w
 }
 
-func (md *MapDrawer) DrawMap(img *image.RGBA, gc *Geo.Converter) {
+func (md *MapDrawer) DrawMap(img *image.RGBA, gc Projector.ProjectionConverter) {
 	w := float64(img.Bounds().Dx())
 	h := float64(img.Bounds().Dy())
 	draw := false
@@ -133,7 +133,6 @@ func (md *MapDrawer) DrawMap(img *image.RGBA, gc *Geo.Converter) {
 		for _, poly := range v.polygons {
 			p0 := poly.Points[0]
 			lastX, lastY := gc.LatLon2XYf(p0.Y, p0.X)
-
 			ctx.BeginPath()
 			ctx.MoveTo(lastX, lastY)
 

@@ -26,6 +26,7 @@ const (
 	baseFootFontSize      = 34
 
 	minFontSize = 10
+	minWidth    = 1000
 )
 
 type ImageEnhancer struct {
@@ -77,71 +78,22 @@ func (ie *ImageEnhancer) EnhanceWithLUT(img *image.RGBA) (*image.RGBA, error) {
 }
 
 func (ie *ImageEnhancer) DrawMeta(section string, img *image.RGBA, xh *XRIT.Header) (*image.RGBA, error) {
-	// Compute Scale of everything
-	scaleFactor := float64(img.Bounds().Dx()) / baseImageWidth
-
-	// Scale Constants used here
-	scaleHeight := scaleFactor * baseScaleHeight
-	imgPad := scaleFactor * baseImgPad
-	scaleTextFontSize := scaleFont(scaleFactor, baseScaleTextFontSize)
-	titleFontSize := scaleFont(scaleFactor, baseTitleFontSize)
-	footFontSize := scaleFont(scaleFactor, baseFootFontSize)
-
-	scaleTotalHeight := imgPad + scaleHeight + scaleTextFontSize*fontSpaceFactor + imgPad
-	headHeight := imgPad + titleFontSize*fontSpaceFactor + imgPad
-	footHeight := imgPad + footFontSize*fontSpaceFactor + imgPad
-	outLayDiff := scaleTotalHeight + headHeight + footHeight
-
-	// Check Title
-	title := xh.ToBaseNameString()
-	if section != "" {
-		title += " - " + section
-	}
-	// TODO: Check if title requires more space than image width
-
-	// Now check if its a overlay or outlay
-	if !ie.overLay {
-		b := img.Bounds()
-
-		oldW := b.Dx()
-		oldH := b.Dy()
-
-		newW := oldW + 2*int(imgPad)
-		newH := oldH + int(outLayDiff)
-
-		targetRect := image.Rect(int(imgPad), int(headHeight), newW-int(imgPad), int(headHeight)+oldH)
-
-		// Create Image that fits head and scale
-		n := image.NewRGBA(image.Rect(0, 0, newW, newH))
-
-		draw.Draw(n, targetRect, img, b.Min, draw.Src)
-		img = n
-	}
-
-	w := float64(img.Bounds().Dx())
-	h := float64(img.Bounds().Dy())
-
-	dc := draw2dimg.NewGraphicContext(img)
-	dc.SetFontData(draw2d.FontData{
-		Name:   "FreeMono",
-		Family: draw2d.FontFamilyMono,
-		Style:  draw2d.FontStyleNormal,
-	})
-	dc.SetFontSize(titleFontSize)
-	dc.SetFillColor(color.White)
-	dc.SetStrokeColor(color.Black)
-	dc.SetLineWidth(lineWidth)
-
-	ie.drawTitle(title, w, scaleFactor, dc)
-	ie.drawScale(w, h, scaleFactor, img, dc)
-	ie.drawFoot(w, h, scaleFactor, dc, xh)
-
-	return img, nil
+	return ie.drawMeta(section, img, xh, true)
 }
 
 func (ie *ImageEnhancer) DrawMetaWithoutScale(section string, img *image.RGBA, xh *XRIT.Header) (*image.RGBA, error) {
+	return ie.drawMeta(section, img, xh, false)
+}
+
+func (ie *ImageEnhancer) drawMeta(section string, img *image.RGBA, xh *XRIT.Header, drawScale bool) (*image.RGBA, error) {
 	// Compute Scale of everything
-	scaleFactor := float64(img.Bounds().Dx()) / baseImageWidth
+	w := float64(img.Bounds().Dx())
+
+	if w < minWidth {
+		w = minWidth
+	}
+
+	scaleFactor := w / baseImageWidth
 
 	// Scale Constants used here
 	scaleHeight := scaleFactor * baseScaleHeight
@@ -172,7 +124,13 @@ func (ie *ImageEnhancer) DrawMetaWithoutScale(section string, img *image.RGBA, x
 		newW := oldW + 2*int(imgPad)
 		newH := oldH + int(outLayDiff)
 
-		targetRect := image.Rect(int(imgPad), int(headHeight), newW-int(imgPad), int(headHeight)+oldH)
+		if newW < minWidth {
+			newW = minWidth
+		}
+
+		tx := (newW - oldW) / 2
+
+		targetRect := image.Rect(int(imgPad)+tx, int(headHeight), newW-int(imgPad)+tx, int(headHeight)+oldH)
 
 		// Create Image that fits head and scale
 		n := image.NewRGBA(image.Rect(0, 0, newW, newH))
@@ -181,7 +139,7 @@ func (ie *ImageEnhancer) DrawMetaWithoutScale(section string, img *image.RGBA, x
 		img = n
 	}
 
-	w := float64(img.Bounds().Dx())
+	w = float64(img.Bounds().Dx())
 	h := float64(img.Bounds().Dy())
 
 	dc := draw2dimg.NewGraphicContext(img)
@@ -190,12 +148,16 @@ func (ie *ImageEnhancer) DrawMetaWithoutScale(section string, img *image.RGBA, x
 		Family: draw2d.FontFamilyMono,
 		Style:  draw2d.FontStyleNormal,
 	})
+
 	dc.SetFontSize(titleFontSize)
 	dc.SetFillColor(color.White)
 	dc.SetStrokeColor(color.Black)
 	dc.SetLineWidth(lineWidth)
 
 	ie.drawTitle(title, w, scaleFactor, dc)
+	if drawScale {
+		ie.drawScale(w, h, scaleFactor, img, dc)
+	}
 	ie.drawFoot(w, h, scaleFactor, dc, xh)
 
 	return img, nil
@@ -279,7 +241,7 @@ func (ie *ImageEnhancer) drawScale(w, h, sf float64, img *image.RGBA, dc *draw2d
 		dc.FillStringAt(data, x-w/2, y+dc.GetFontSize())
 	}
 
-	drawScale("ºK", float64(scaleBox.Max.X), float64(scaleBox.Min.Y-int(imgPad*2))-dc.GetFontSize())
+	drawScale("ºK", float64(scaleBox.Max.X)+pad/2, float64(scaleBox.Min.Y))
 
 	for i := 0; i <= scaleCount; i++ {
 		x := i * scaleSpace

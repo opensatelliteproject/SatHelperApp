@@ -3,6 +3,7 @@ package Geo
 import (
 	"crypto/sha256"
 	"fmt"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"math"
 	"regexp"
@@ -30,7 +31,7 @@ type Converter struct {
 //  lfac => Line Scaling Factor
 //  fixAspect => If the aspect ratio should be fixed for cutting image
 //  imageWidth => Image Width in pixels
-func MakeGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac float64, fixAspect bool, imageWidth int) *Converter {
+func MakeGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac float64, fixAspect bool, imageWidth int) Projector.ProjectionConverter {
 	return &Converter{
 		satelliteLongitude: satelliteLongitude,
 		coff:               coff,
@@ -45,7 +46,7 @@ func MakeGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac flo
 }
 
 // MakeGeoConverterFromXRIT Creates a new instance of GeoConverter from a XRIT File Header
-func MakeGeoConverterFromXRIT(xh *XRIT.Header) (*Converter, error) {
+func MakeGeoConverterFromXRIT(xh *XRIT.Header) (Projector.ProjectionConverter, error) {
 
 	x := regexp.MustCompile(`.*\((.*)\)`)
 
@@ -77,7 +78,7 @@ func MakeGeoConverterFromXRIT(xh *XRIT.Header) (*Converter, error) {
 //  loff => Line Offset
 //  cfac => Column Scaling Factor
 //  lfac => Line Scaling Factor
-func MakeSimpleGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac float64) *Converter {
+func MakeSimpleGeoConverter(satelliteLongitude float64, coff, loff int, cfac, lfac float64) Projector.ProjectionConverter {
 	return MakeGeoConverter(satelliteLongitude, coff, loff, cfac, lfac, false, 0)
 }
 

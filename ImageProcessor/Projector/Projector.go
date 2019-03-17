@@ -1,7 +1,6 @@
 package Projector
 
 import (
-	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
 	"image"
 	"image/color"
 	"math"
@@ -10,10 +9,10 @@ import (
 )
 
 type Projector struct {
-	gc *Geo.Converter
+	gc ProjectionConverter
 }
 
-func MakeProjector(gc *Geo.Converter) *Projector {
+func MakeProjector(gc ProjectionConverter) *Projector {
 	return &Projector{
 		gc: gc,
 	}
@@ -166,7 +165,7 @@ func (p *Projector) reprojectChunk(dst *image.RGBA, sampler *Sampler2D, sx, sy, 
 	for y := sy; y < ey; y++ {
 		for x := sx; x < ex; x++ {
 			lat := (p.gc.MaxLatitude() - p.gc.TrimLatitude()) - ((float64(y) * (p.gc.LatitudeCoverage() - p.gc.TrimLatitude()*2)) / float64(height))
-			lon := ((float64(x) * (p.gc.LatitudeCoverage() - p.gc.TrimLatitude()*2)) / float64(width)) + (p.gc.MinLongitude() + p.gc.TrimLatitude())
+			lon := ((float64(x) * (p.gc.LongitudeCoverage() - p.gc.TrimLongitude()*2)) / float64(width)) + (p.gc.MinLongitude() + p.gc.TrimLongitude())
 
 			if lat > p.gc.MaxLatitude() || lat < p.gc.MinLatitude() || lon > p.gc.MaxLongitude() || lon < p.gc.MinLongitude() {
 				dPtr[y*stride+x] = 0
@@ -197,7 +196,7 @@ func (p *Projector) reprojectChunkGray(dst *image.Gray, sampler *Sampler2D, sx, 
 	for y := sy; y < ey; y++ {
 		for x := sx; x < ex; x++ {
 			lat := (p.gc.MaxLatitude() - p.gc.TrimLatitude()) - ((float64(y) * (p.gc.LatitudeCoverage() - p.gc.TrimLatitude()*2)) / float64(height))
-			lon := ((float64(x) * (p.gc.LatitudeCoverage() - p.gc.TrimLatitude()*2)) / float64(width)) + (p.gc.MinLongitude() + p.gc.TrimLatitude())
+			lon := ((float64(x) * (p.gc.LongitudeCoverage() - p.gc.TrimLongitude()*2)) / float64(width)) + (p.gc.MinLongitude() + p.gc.TrimLongitude())
 
 			if lat > p.gc.MaxLatitude() || lat < p.gc.MinLatitude() || lon > p.gc.MaxLongitude() || lon < p.gc.MinLongitude() {
 				dPtr[y*stride+x] = 0

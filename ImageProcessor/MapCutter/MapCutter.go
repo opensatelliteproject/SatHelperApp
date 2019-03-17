@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/jonas-p/go-shp"
-	"github.com/opensatelliteproject/SatHelperApp/XRIT/Geo"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"golang.org/x/image/draw"
 	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
@@ -51,10 +51,30 @@ func MakeMapCutter(shapeFile string) (*MapCutter, error) {
 	}
 	defer shape.Close()
 
-	return MakeMapDrawerFromShape(shape)
+	return MakeMapDrawerFromShapes([]*shp.Reader{shape})
 }
 
-func MakeMapDrawerFromShape(shape *shp.Reader) (*MapCutter, error) {
+func MakeMapCutterFromFiles(shapeFiles []string) (*MapCutter, error) {
+	readers := make([]*shp.Reader, 0)
+
+	defer func() {
+		for _, v := range readers {
+			_ = v.Close()
+		}
+	}()
+
+	for _, shapeFile := range shapeFiles {
+		shape, err := shp.Open(shapeFile)
+		if err != nil {
+			return nil, err
+		}
+		readers = append(readers, shape)
+	}
+
+	return MakeMapDrawerFromShapes(readers)
+}
+
+func MakeMapDrawerFromShapes(shapes []*shp.Reader) (*MapCutter, error) {
 
 	mc := &MapCutter{
 		sections:     map[string]BorderSection{},
@@ -62,49 +82,72 @@ func MakeMapDrawerFromShape(shape *shp.Reader) (*MapCutter, error) {
 		marginPixels: defaultMargin,
 	}
 
-	// Cache all Border Sections
-	fields := shape.Fields()
-	for shape.Next() {
-		n, p := shape.Shape()
+	for _, shape := range shapes {
+		// Cache all Border Sections
+		fields := shape.Fields()
+		for shape.Next() {
+			n, p := shape.Shape()
 
-		var poly *shp.Polygon
+			var poly *shp.Polygon
 
-		switch v := p.(type) {
-		case *shp.Polygon:
-			poly = v
-		}
-
-		if poly == nil {
-			continue
-		}
-
-		s := BorderSection{
-			Bounds:     poly.BBox(),
-			Properties: make(map[string]string),
-		}
-
-		for k, f := range fields {
-			fieldBytes := f.Name[:]
-
-			a := bytes.Split(fieldBytes, []byte{0})
-
-			field := string(a[0])
-
-			val := shape.ReadAttribute(n, k)
-			s.Properties[field] = val
-			if field == "name" {
-				s.Name = val
+			switch v := p.(type) {
+			case *shp.Polygon:
+				poly = v
 			}
-		}
 
-		if s.Name != "" {
-			mc.sections[nameToIndex(s.Name)] = s
+			if poly == nil {
+				continue
+			}
+
+			s := BorderSection{
+				Bounds:     poly.BBox(),
+				Properties: make(map[string]string),
+			}
+
+			for k, f := range fields {
+				fieldBytes := f.Name[:]
+
+				a := bytes.Split(fieldBytes, []byte{0})
+
+				field := string(a[0])
+
+				val := shape.ReadAttribute(n, k)
+				s.Properties[field] = val
+				if field == "name" {
+					s.Name = val
+				}
+			}
+
+			if s.Name != "" {
+				mc.sections[nameToIndex(s.Name)] = s
+			}
 		}
 	}
 
 	mc.buildTree()
 
 	return mc, nil
+}
+
+func MergeMapCutters(a, b *MapCutter) *MapCutter {
+	mc := &MapCutter{
+		sections:     map[string]BorderSection{},
+		searchTree:   map[string]*BSSearchTreeItem{},
+		marginPixels: defaultMargin,
+	}
+
+	// Copy sections
+	for k, v := range a.sections {
+		mc.sections[k] = v
+	}
+	for k, v := range b.sections {
+		mc.sections[k] = v
+	}
+
+	// Build New Tree
+	mc.buildTree()
+
+	return mc
 }
 
 func (mc *MapCutter) buildTree() {
@@ -178,7 +221,7 @@ func (mc *MapCutter) GetSection(name string) (BorderSection, error) {
 	return mc.sections[s[0]], nil
 }
 
-func (mc *MapCutter) CutMap(section string, img image.Image, gc *Geo.Converter) (image.Image, error) {
+func (mc *MapCutter) CutMap(section string, img image.Image, gc Projector.ProjectionConverter) (image.Image, error) {
 	s, err := mc.GetSection(section)
 	if err != nil {
 		return nil, err
@@ -207,6 +250,75 @@ func (mc *MapCutter) CutMap(section string, img image.Image, gc *Geo.Converter) 
 
 	if maxY > img.Bounds().Dy() {
 		maxY = img.Bounds().Dy()
+	}
+
+	// Slice image
+
+	out := image.NewRGBA(image.Rect(0, 0, maxX-minX, maxY-minY))
+	draw.Draw(out, out.Bounds(), img, image.Point{X: minX, Y: minY}, draw.Src)
+	return out, nil
+}
+
+func (mc *MapCutter) CutMapMany(sections []string, img image.Image, gc Projector.ProjectionConverter) (image.Image, error) {
+	if sections == nil || len(sections) == 0 {
+		return nil, fmt.Errorf("no sections specified")
+	}
+
+	if len(sections) == 1 {
+		return mc.CutMap(sections[0], img, gc)
+	}
+
+	minX := int(math.MaxInt32)
+	maxX := int(math.MinInt32)
+	minY := minX
+	maxY := maxX
+
+	for _, section := range sections {
+		s, err := mc.GetSection(section)
+		if err != nil {
+			return nil, err
+		}
+
+		// Convert BBox to Pixels
+		X0, Y0 := gc.LatLon2XYf(s.Bounds.MinY, s.Bounds.MinX)
+		X1, Y1 := gc.LatLon2XYf(s.Bounds.MaxY, s.Bounds.MaxX)
+
+		_minX := int(math.Min(X0, X1)) - mc.marginPixels
+		_minY := int(math.Min(Y0, Y1)) - mc.marginPixels
+		_maxX := int(math.Max(X0, X1)) + mc.marginPixels
+		_maxY := int(math.Max(Y0, Y1)) + mc.marginPixels
+
+		if _minX < minX {
+			minX = _minX
+		}
+
+		if _maxX > maxX {
+			maxX = _maxX
+		}
+
+		if _minY < minY {
+			minY = _minY
+		}
+
+		if _maxY > maxY {
+			maxY = _maxY
+		}
+
+		if minX < 0 {
+			minX = 0
+		}
+
+		if minY < 0 {
+			minY = 0
+		}
+
+		if maxX > img.Bounds().Dx() {
+			maxX = img.Bounds().Dx()
+		}
+
+		if maxY > img.Bounds().Dy() {
+			maxY = img.Bounds().Dy()
+		}
 	}
 
 	// Slice image
