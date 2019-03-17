@@ -164,7 +164,7 @@ func (xh *Header) SetHeader(record Structs.BaseRecord) {
 	xh.AllHeaders = append(xh.AllHeaders, record)
 }
 
-func (xh *Header) ToNameString() string {
+func (xh *Header) ToBaseNameString() string {
 	baseName := xh.Product().Name
 
 	if xh.SubProduct().Name != "Unknown" {
@@ -177,10 +177,16 @@ func (xh *Header) ToNameString() string {
 		xh.Product().ID == NOAAProductID.GOES17_ABI ||
 		xh.Product().ID == NOAAProductID.HIMAWARI8_ABI {
 		baseName = xh.Product().Name + " - " + xh.SubProduct().Name
+	}
 
-		if xh.SegmentIdentificationHeader != nil {
-			baseName = fmt.Sprintf("%s (ID: %d Seg: %d/%d)", baseName, xh.SegmentIdentificationHeader.ImageID, xh.SegmentIdentificationHeader.Sequence, xh.SegmentIdentificationHeader.MaxSegments-1)
-		}
+	return baseName
+}
+
+func (xh *Header) ToNameString() string {
+	baseName := xh.ToBaseNameString()
+
+	if xh.SegmentIdentificationHeader != nil {
+		baseName = fmt.Sprintf("%s (ID: %d Seg: %d/%d)", baseName, xh.SegmentIdentificationHeader.ImageID, xh.SegmentIdentificationHeader.Sequence, xh.SegmentIdentificationHeader.MaxSegments-1)
 	}
 
 	return baseName

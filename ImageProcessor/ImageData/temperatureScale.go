@@ -264,17 +264,41 @@ var TemperatureScaleLUT = []color.Color{
 	color.RGBA{R: 0, G: 0, B: 0, A: 255},
 }
 
-func ScaleLutToColor(minV, scaleFact float32, baseLut []float32, colorLut []color.Color) []color.Color {
+const (
+	colorLutLength = 256
+)
+
+func LutTempToIndex(minTemperature, maxTemperature, temp float32) int {
+	scale := colorLutLength / float32(maxTemperature-minTemperature)
+	temp -= minTemperature
+	temp *= scale
+
+	if temp < 0 {
+		temp = 0
+	}
+
+	if temp > 255 {
+		temp = 255
+	}
+
+	return int(temp)
+}
+
+func ScaleLutToColor(minTemperature, maxTemperature float32, baseLut []float32, colorLut []color.Color) []color.Color {
 	out := make([]color.Color, len(baseLut))
 	for i := 0; i < len(baseLut); i++ {
-		v := (baseLut[i] - minV) * scaleFact
-		if v < 0 {
-			v = 0
-		}
-		if v > 255 {
-			v = 255
-		}
-		out[i] = colorLut[int(v)]
+		temp := baseLut[i]
+		colorIdx := LutTempToIndex(minTemperature, maxTemperature, temp)
+		out[i] = colorLut[colorIdx]
 	}
 	return out
+}
+
+func LutIndexToTemperature(minTemperature, maxTemperature float32, index int) float32 {
+	scale := colorLutLength / float32(maxTemperature-minTemperature)
+	temp := float32(index)
+	temp /= scale
+	temp += minTemperature
+
+	return temp
 }
