@@ -265,7 +265,9 @@ var TemperatureScaleLUT = []color.Color{
 }
 
 const (
-	colorLutLength = 256
+	colorLutLength            = 256
+	DefaultMinimumTemperature = 173
+	DefaultMaximumTemperature = 373
 )
 
 func LutTempToIndex(minTemperature, maxTemperature, temp float32) int {

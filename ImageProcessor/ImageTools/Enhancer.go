@@ -66,6 +66,17 @@ func MakeImageEnhancer(minTemp, maxTemp float32, satLut []float32, enhanceLut []
 	}
 }
 
+func MakeImageEnhancerEmpty(overlay bool) *ImageEnhancer {
+	return &ImageEnhancer{
+		colorMap:         nil,
+		originalColorMap: nil,
+		minTemp:          0,
+		maxTemp:          0,
+		overLay:          overlay,
+		colorLut:         nil,
+	}
+}
+
 func (ie *ImageEnhancer) EnhanceWithLUT(img *image.RGBA) (*image.RGBA, error) {
 	// First apply LUT
 	img, err := ie.colorLut.ApplyFromRGBA(img)
@@ -134,6 +145,10 @@ func (ie *ImageEnhancer) drawMeta(section string, img *image.RGBA, xh *XRIT.Head
 
 		// Create Image that fits head and scale
 		n := image.NewRGBA(image.Rect(0, 0, newW, newH))
+
+		for i := 0; i < len(n.Pix)/4; i++ {
+			n.Pix[i*4+3] = 255
+		}
 
 		draw.Draw(n, targetRect, img, b.Min, draw.Src)
 		img = n

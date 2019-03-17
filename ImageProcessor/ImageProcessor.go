@@ -20,6 +20,9 @@ type ImageProcessor struct {
 	reproject         bool
 	drawmap           bool
 	falsecolor        bool
+	enhance           bool
+	metadata          bool
+	enh               *ImageTools.ImageEnhancer
 }
 
 func MakeImageProcessor() *ImageProcessor {
@@ -29,6 +32,8 @@ func MakeImageProcessor() *ImageProcessor {
 		reproject:         false,
 		drawmap:           false,
 		falsecolor:        false,
+		enhance:           false,
+		metadata:          false,
 	}
 }
 
@@ -38,7 +43,6 @@ func (ip *ImageProcessor) SetFalseColor(fsclr bool) {
 		SLog.Warn("False color is enabled, so it will also save plain images with no map")
 		ImageTools.SetSaveNoMap(true) // Needed for FSCLR
 	}
-
 }
 
 func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
@@ -47,6 +51,14 @@ func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
 
 func (ip *ImageProcessor) SetReproject(reproject bool) {
 	ip.reproject = reproject
+}
+
+func (ip *ImageProcessor) SetMetadata(metadata bool) {
+	ip.metadata = metadata
+}
+
+func (ip *ImageProcessor) SetEnhance(enhance bool) {
+	ip.enhance = enhance
 }
 
 func (ip *ImageProcessor) GetFalseColor() bool {
@@ -59,6 +71,14 @@ func (ip *ImageProcessor) GetDrawMap() bool {
 
 func (ip *ImageProcessor) GetReproject() bool {
 	return ip.reproject
+}
+
+func (ip *ImageProcessor) GetEnhance() bool {
+	return ip.enhance
+}
+
+func (ip *ImageProcessor) GetMetadata() bool {
+	return ip.metadata
 }
 
 func (ip *ImageProcessor) GetMapDrawer() *MapDrawer.MapDrawer {

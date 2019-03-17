@@ -31,6 +31,8 @@ func main() {
 	reproject := kingpin.Flag("linear", "Reproject to linear").Bool()
 	drawMap := kingpin.Flag("drawMap", "Draw Map Overlay").Bool()
 	falseColor := kingpin.Flag("falsecolor", "Generate False Color Image").Bool()
+	metadata := kingpin.Flag("metadata", "Generate Overlays with Metadata").Bool()
+	enhance := kingpin.Flag("enhance", "Output Enhanced Infrared Images").Bool()
 	purge := kingpin.Flag("purge", "Purge LRIT files after generating").Bool()
 	files := kingpin.Arg("filenames", "File names to dump image").Required().ExistingFilesOrDirs()
 
@@ -40,6 +42,8 @@ func main() {
 	ip.SetDrawMap(*drawMap)
 	ip.SetReproject(*reproject)
 	ip.SetFalseColor(*falseColor)
+	ip.SetMetadata(*metadata)
+	ip.SetEnhance(*enhance)
 
 	ImageProcessor.SetPurgeFiles(*purge)
 

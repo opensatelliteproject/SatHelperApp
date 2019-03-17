@@ -40,7 +40,7 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 
 	if ms.Done() {
 		SLog.Info("Got all segments for %s", name)
-		err, outname := ImageTools.DumpMultiSegment(ms, ip.GetMapDrawer(), curveManipulator, ip.reproject)
+		err, outname := ImageTools.DumpMultiSegment(ms, ip.GetMapDrawer(), curveManipulator, ip.reproject, ip.enhance, ip.metadata)
 		if err != nil {
 			SLog.Error("Error dumping Multi Segment Image %s: %s", name, err)
 		}
@@ -110,6 +110,8 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 
 	falseLut := ImageTools.GetFalseColorLUT()
 
+	enhancer := ImageTools.MakeImageEnhancerEmpty(false)
+
 	fsclr, err := falseLut.Apply(vis, ir)
 	if err != nil {
 		SLog.Error("Error applying false color LUT: %s", err)
@@ -119,23 +121,33 @@ func ProcessFalseColor(ip *ImageProcessor, xh *XRIT.Header, filename string) {
 	gc, err := Geo.MakeGeoConverterFromXRIT(xh)
 
 	if err == nil {
+		if ip.GetReproject() {
+			SLog.Debug("Reprojection Enabled, reprojecting FalseColor")
+			proj := Projector.MakeProjector(gc)
+			fsclr = proj.ReprojectLinearMultiThread(fsclr)
+			gc = Projector.MakeLinearConverter(fsclr.Bounds().Dx(), fsclr.Bounds().Dy(), gc)
+		}
 		mapDrawer := ip.GetMapDrawer()
 
 		if mapDrawer != nil {
 			SLog.Debug("Map Drawer Enabled, drawing at FalseColor")
 			mapDrawer.DrawMap(fsclr, gc)
 		}
-
-		if ip.GetReproject() {
-			SLog.Debug("Reprojection Enabled, reprojecting FalseColor")
-			proj := Projector.MakeProjector(gc)
-			fsclr = proj.ReprojectLinearMultiThread(fsclr)
-		}
 	} else {
 		SLog.Error("Cannot crate GeoConverter: %s", err)
 	}
-
 	xh.NOAASpecificHeader.ProductSubID = 99 // False Color
+
+	if ip.metadata {
+		im2, err := enhancer.DrawMetaWithoutScale("", fsclr, xh)
+		if err != nil {
+			SLog.Error("Error drawing metadata: %s", err)
+		}
+
+		if im2 != nil {
+			fsclr = im2
+		}
+	}
 
 	metaName := strings.Replace(fsclrFileName, ".png", ".json", -1)
 	err = ioutil.WriteFile(metaName, []byte(xh.ToJSON()), os.ModePerm)
