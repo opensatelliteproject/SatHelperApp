@@ -529,9 +529,7 @@ func GetConsoleLines() []string {
 	defer consoleLock.Unlock()
 	// Copy lines
 	lines := make([]string, len(state.consoleLines))
-	for i, v := range state.consoleLines {
-		lines[i] = v
-	}
+	copy(lines, state.consoleLines)
 	return lines
 }
 
