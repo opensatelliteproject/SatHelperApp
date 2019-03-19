@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.sathelperapp";
+option java_outer_classname = "SatHelperAppProto";
+
+package sathelperapp;
+
+import "google/protobuf/empty.proto";
+
+service Information {
+    rpc GetStatistics(google.protobuf.Empty) returns (StatData) {}
+    rpc GetConsoleLines(google.protobuf.Empty) returns (ConsoleData) {}
+}
+
+message ConsoleData {
+    repeated string consoleLines = 1;
+}
+
+message StatData {
+    // Signal Quality (in percent)
+    uint32 signalQuality = 1;
+
+    // If the signal is locked
+    bool signalLocked = 2;
+
+    // Received Channel Packets
+    repeated int64 channelPackets = 3 [packed=true];
+
+    // Reed Solomon Errors
+    repeated int32 rsErrors = 4 [packed=true];
+
+    // Sync Word
+    bytes syncWord = 5;
+
+    // Current SCID
+    int32 scid = 6;
+
+    // Current VCID
+    int32 vcid = 7;
+
+    // Decoder Fifo Usage (in percent)
+    int32 decoderFifoUsage = 8;
+
+    // Demodulator Fifo Usage (in percent)
+    int32 demodulatorFifoUsage = 9;
+
+    // Viterbi Errors (in bits)
+    int32 viterbiErrors = 10;
+
+    // Frame Size (in bits)
+    int32 frameSize = 11;
+
+    // Phase Correction (in degrees)
+    int32 phaseCorrection = 12;
+
+    // Sync Correlation (in bits)
+    int32 syncCorrelation = 13;
+
+    // Center Frequency (in Hertz)
+    uint32 centerFrequency = 14;
+
+    // Demodulator Mode
+    string mode = 15;
+
+    // Demuxer
+    string demuxer = 16;
+
+    // Device
+    string device = 17;
+}

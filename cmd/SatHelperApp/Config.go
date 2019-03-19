@@ -74,6 +74,11 @@ func LoadDefaults(save bool) {
 	DSP.CurrentConfig.DirectDemuxer.Enhanced = false
 	DSP.CurrentConfig.DirectDemuxer.MetaFrame = true
 
+	// RPC
+	DSP.CurrentConfig.RPC.Enable = true
+	DSP.CurrentConfig.RPC.ListenAddr = ""
+	DSP.CurrentConfig.RPC.ListenPort = DSP.DefaultRPCPort
+
 	if save {
 		SaveConfig()
 	}

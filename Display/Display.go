@@ -10,9 +10,11 @@ import (
 	"log"
 	"regexp"
 	"strconv"
+	"sync"
 	"time"
 )
 
+const MaxStoredConsoleLines = 50
 const MaxConsoleLines = 10
 
 type Objects struct {
@@ -406,7 +408,11 @@ func updateComponents() {
 	state.displayObjects.demuxer.Text = state.demuxer
 	// endregion
 	// region Console
-	state.displayObjects.console.Items = state.consoleLines
+	linesToShow := MaxConsoleLines
+	if linesToShow > len(state.consoleLines) {
+		linesToShow = len(state.consoleLines)
+	}
+	state.displayObjects.console.Items = state.consoleLines[len(state.consoleLines)-linesToShow:]
 	// endregion
 	// region UI Alignments
 	ui.Body.Align()
@@ -505,13 +511,28 @@ func UpdateDemuxer(demuxer string) {
 
 var reg, _ = regexp.Compile("\x1b\\[[0-9;]*m")
 
+var consoleLock = sync.Mutex{}
+
 func AddConsoleLine(line string) {
+	consoleLock.Lock()
+	defer consoleLock.Unlock()
 	line = reg.ReplaceAllString(line, "")
 
 	state.consoleLines = append(state.consoleLines, line)
-	if len(state.consoleLines) > MaxConsoleLines {
+	if len(state.consoleLines) > MaxStoredConsoleLines {
 		state.consoleLines = state.consoleLines[1:]
 	}
+}
+
+func GetConsoleLines() []string {
+	consoleLock.Lock()
+	defer consoleLock.Unlock()
+	// Copy lines
+	lines := make([]string, len(state.consoleLines))
+	for i, v := range state.consoleLines {
+		lines[i] = v
+	}
+	return lines
 }
 
 // endregion

@@ -12,6 +12,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/Frontend"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/RPC"
 	"github.com/opensatelliteproject/libsathelper"
 	"log"
 	"os"
@@ -70,6 +71,17 @@ func main() {
 	DSP.ConstellationServer = Demuxer.NewUDPServer("localhost", 9000)
 	DSP.ConstellationServer.Start()
 	defer DSP.ConstellationServer.Stop()
+
+	if DSP.CurrentConfig.RPC.Enable {
+		addr := fmt.Sprintf("%s:%d", DSP.CurrentConfig.RPC.ListenAddr, DSP.CurrentConfig.RPC.ListenPort)
+		SLog.Info("Enabling gRPC at %s", addr)
+		rpc := RPC.MakeRPCServer(rpcSource)
+		defer rpc.Stop()
+		err := rpc.Listen(addr)
+		if err != nil {
+			SLog.Error("Error starting gRPC: %s", err)
+		}
+	}
 
 	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)
 

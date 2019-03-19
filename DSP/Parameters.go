@@ -70,8 +70,8 @@ const LastFrameData = LastFrameDataBits / 8
 
 const DefaultFlywheelRecheck = 100
 const DefaultVchannelPort = 5001
-
 const DefaultStatisticsPort = 5002
+const DefaultRPCPort = 5500
 
 const AverageLastNSamples = 10000
 

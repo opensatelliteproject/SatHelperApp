@@ -75,6 +75,12 @@ type DirectDemuxerConfig struct {
 	MetaFrame              bool
 }
 
+type RPC struct {
+	Enable     bool
+	ListenPort int
+	ListenAddr string
+}
+
 type AppConfig struct {
 	Title            string
 	Base             BaseConfig
@@ -88,6 +94,7 @@ type AppConfig struct {
 	SpyserverSource  SpyserverSourceConfig
 	DirectDemuxer    DirectDemuxerConfig
 	RtlsdrSource     RTLSDRSourceConfig
+	RPC              RPC
 }
 
 // endregion
