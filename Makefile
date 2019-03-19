@@ -47,9 +47,9 @@ deps: | $(BASE)
 	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) get
 
 do-static: | $(BASE)
-  @echo "Updating Code to have static libLimeSuite"
-  @sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
-  @sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
+	@echo "Updating Code to have static libLimeSuite"
+	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
+	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
 
 
 update: | $(BASE)
