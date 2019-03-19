@@ -22,7 +22,6 @@ type ImageProcessor struct {
 	falsecolor        bool
 	enhance           bool
 	metadata          bool
-	enh               *ImageTools.ImageEnhancer
 }
 
 func MakeImageProcessor() *ImageProcessor {

@@ -260,7 +260,7 @@ func (mc *MapCutter) CutMap(section string, img image.Image, gc Projector.Projec
 }
 
 func (mc *MapCutter) CutMapMany(sections []string, img image.Image, gc Projector.ProjectionConverter) (image.Image, error) {
-	if sections == nil || len(sections) == 0 {
+	if len(sections) == 0 {
 		return nil, fmt.Errorf("no sections specified")
 	}
 

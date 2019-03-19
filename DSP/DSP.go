@@ -20,13 +20,15 @@ func InitAll() {
 
 const defaultTransitionWidth = 200e3
 
+var circuitSampleRate float32
+
 func InitDSP() {
 	Device.SetSamplesAvailableCallback(newSamplesCallback)
 	lastConstellationSend = time.Now()
 	samplesFifo = fifo.NewQueue()
 	constellationFifo = fifo.NewQueue()
 	constellationBuffer = make([]byte, 1024)
-	circuitSampleRate := float32(Device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
+	circuitSampleRate = float32(Device.GetSampleRate()) / float32(CurrentConfig.Base.Decimation)
 	sps := circuitSampleRate / float32(CurrentConfig.Base.SymbolRate)
 
 	SLog.Debug("Samples per Symbol: %f", Bold(Green(sps)))
@@ -80,7 +82,8 @@ func sendConstellation() {
 func GetCostasFrequency() float32 {
 	dspLock.Lock()
 	defer dspLock.Unlock()
-	return costasLoopNew.GetFrequencyHz()
+
+	return costasLoopNew.GetFrequencyHz(circuitSampleRate)
 }
 
 func processSamples() {

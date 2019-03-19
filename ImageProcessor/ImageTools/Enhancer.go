@@ -200,7 +200,7 @@ func (ie *ImageEnhancer) drawScale(w, h, sf float64, img *image.RGBA, dc *draw2d
 	ex = len(ie.colorMap) * tScale
 	pad := (w - float64(ex)) / 2
 
-	ex = tScale * len(ie.colorMap)
+	// ex = tScale * len(ie.colorMap)
 
 	x0 := int(pad)
 	x1 := int(w - pad)

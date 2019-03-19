@@ -19,6 +19,8 @@ github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7a
 github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 h1:DACJavvAHhabrF08vX0COfcOBJRhZ8lUbR+ZWIs0Y5g=
 github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0/go.mod h1:E/TSTwGwJL78qG/PmXZO1EjYhfJinVAhrmmHX6Z8B9k=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/gorilla/websocket v1.4.0 h1:WDFjx/TMzVgy9VdMMQi2K2Emtwi2QcUQsztZ/zLaH/Q=
+github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/jonas-p/go-shp v0.1.1 h1:LY81nN67DBCz6VNFn2kS64CjmnDo9IP8rmSkTvhO9jE=
 github.com/jonas-p/go-shp v0.1.1/go.mod h1:MRIhyxDQ6VVp0oYeD7yPGr5RSTNScUFKCDsI5DR7PtI=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
@@ -69,8 +71,12 @@ github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a h1:uuXKE3aD/U
 github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a/go.mod h1:V4kP6uu5nqjDVGhlYMtT/7JG7WJjXnipMGcQ8PFeUqU=
 github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374 h1:P2TDDsGEWzzfhAnthdQc+Vwmv/+xEKHwoNFF3Swl6X0=
 github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374/go.mod h1:CvYWG6Py4TRzGCUVX2n8+CjE6mrME/+kHkkGmbDA5zw=
+github.com/racerxdl/radioserver v0.0.0-20190316070955-f8953f368ce1 h1:5YbIVG7MODnk7V093xluQeb0bHQbzrhxp/ZOkSLcJ5Q=
+github.com/racerxdl/radioserver v0.0.0-20190316070955-f8953f368ce1/go.mod h1:cSQupBUlkn/QhajTmf6QMErp3PbTVT5Xdd5DSiE0hAI=
 github.com/racerxdl/segdsp v0.0.0-20190224053945-7d2d24254b44 h1:O8aLu82uf6hSVaXPmrXrcFDzr/ZIdSXK8iX+jrMnpQQ=
 github.com/racerxdl/segdsp v0.0.0-20190224053945-7d2d24254b44/go.mod h1:YckaqBtBcmcSBVnedhv93CfXNe88jyMRy89MVNoNgII=
+github.com/racerxdl/segdsp v0.0.0-20190319031409-d037b2dad22d h1:qA5jIPIP0jftCkdZvB2lEw4pO5YDpml+iQawVHxFZGA=
+github.com/racerxdl/segdsp v0.0.0-20190319031409-d037b2dad22d/go.mod h1:YckaqBtBcmcSBVnedhv93CfXNe88jyMRy89MVNoNgII=
 github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5 h1:d5YktJ1/dWFayIHjoeCgoQJE3kz2h5/8axdVdoAJwTo=
 github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5/go.mod h1:ioS4oIwJsgrSeKKPATMpsbJQdi4p2Xsbg3V5j2nCOzM=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=

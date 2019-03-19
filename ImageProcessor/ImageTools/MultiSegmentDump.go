@@ -162,7 +162,11 @@ func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDr
 
 	if enhance {
 		imgRGBA, err = enh.EnhanceWithLUT(imgRGBA)
-		img = imgRGBA
+		if err != nil {
+			SLog.Error("Error enhancing image %s: %s", newFilenameNoMap, err)
+		} else {
+			img = imgRGBA
+		}
 	}
 
 	if reproject {

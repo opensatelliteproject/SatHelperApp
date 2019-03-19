@@ -3,6 +3,8 @@ module github.com/opensatelliteproject/SatHelperApp
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/airking05/termui v2.2.0+incompatible
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/jonas-p/go-shp v0.1.1
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/llgcode/draw2d v0.0.0-20180825133448-f52c8a71aff0
@@ -20,7 +22,8 @@ require (
 	github.com/prometheus/common v0.2.0
 	github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a
 	github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374
-	github.com/racerxdl/segdsp v0.0.0-20190224053945-7d2d24254b44
+	github.com/racerxdl/radioserver v0.0.0-20190316070955-f8953f368ce1 // indirect
+	github.com/racerxdl/segdsp v0.0.0-20190319031409-d037b2dad22d
 	github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5
 	github.com/sirupsen/logrus v1.3.0 // indirect
 	github.com/stretchr/testify v1.3.0 // indirect
