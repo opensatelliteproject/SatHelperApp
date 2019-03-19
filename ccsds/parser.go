@@ -67,6 +67,14 @@ func (dm *Demuxer) SetFalseColor(r bool) {
 	dm.fileAssembler.SetFalseColor(r)
 }
 
+func (dm *Demuxer) SetMetaFrame(r bool) {
+	dm.fileAssembler.SetMetaFrame(r)
+}
+
+func (dm *Demuxer) SetEnhance(r bool) {
+	dm.fileAssembler.SetEnhance(r)
+}
+
 func (dm *Demuxer) SetOnFrameLost(cb func(channelId, currentFrame, lastFrame int)) {
 	dm.Lock()
 	dm.cbOnFrameLost = cb

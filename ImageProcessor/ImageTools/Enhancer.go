@@ -328,7 +328,7 @@ func (ie *ImageEnhancer) drawFoot(w, h, sf float64, dc *draw2dimg.GraphicContext
 	versionString := "SatHelperApp"
 
 	if SatHelperApp.GetVersion() != "<unknown>" {
-		versionString += fmt.Sprintf(" %s.%s", SatHelperApp.GetVersion(), SatHelperApp.GetRevision())
+		versionString += fmt.Sprintf(" %s", SatHelperApp.GetVersion())
 	}
 
 	dc.FillStringAt(versionString, imgPad, float64(y1)-imgPad)

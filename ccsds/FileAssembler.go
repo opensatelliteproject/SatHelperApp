@@ -47,8 +47,17 @@ func (fa *FileAssembler) SetDrawMap(drawMap bool) {
 func (fa *FileAssembler) SetReprojectImages(reproject bool) {
 	fa.ip.SetReproject(reproject)
 }
+
 func (fa *FileAssembler) SetFalseColor(fsclr bool) {
 	fa.ip.SetFalseColor(fsclr)
+}
+
+func (fa *FileAssembler) SetMetaFrame(meta bool) {
+	fa.ip.SetMetadata(meta)
+}
+
+func (fa *FileAssembler) SetEnhance(enhance bool) {
+	fa.ip.SetEnhance(enhance)
 }
 
 func (fa *FileAssembler) PutMSDU(msdu *MSDU) {

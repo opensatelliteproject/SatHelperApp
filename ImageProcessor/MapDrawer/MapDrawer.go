@@ -10,7 +10,7 @@ import (
 	"math"
 )
 
-const defaultLineWidth = 2
+const defaultLineWidth = 3
 
 //var defaultLineColor = color.RGBA{
 //	R: 120,

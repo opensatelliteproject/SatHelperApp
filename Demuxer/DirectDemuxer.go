@@ -10,7 +10,7 @@ type DirectDemuxer struct {
 	demux *ccsds.Demuxer
 }
 
-func MakeDirectDemuxer(outFolder, tmpFolder string, drawMap, reproject, falseColor bool) *DirectDemuxer {
+func MakeDirectDemuxer(outFolder, tmpFolder string, drawMap, reproject, falseColor, metaframe, enhance bool) *DirectDemuxer {
 	d := &DirectDemuxer{}
 
 	d.demux = ccsds.MakeDemuxer()
@@ -19,6 +19,8 @@ func MakeDirectDemuxer(outFolder, tmpFolder string, drawMap, reproject, falseCol
 	d.demux.SetDrawMap(drawMap)
 	d.demux.SetReprojectImage(reproject)
 	d.demux.SetFalseColor(falseColor)
+	d.demux.SetMetaFrame(metaframe)
+	d.demux.SetEnhance(enhance)
 
 	SLog.Info("Starting direct Demuxer with: ")
 	SLog.Info(" Output Folder: %s", aurora.Bold(outFolder).Green())

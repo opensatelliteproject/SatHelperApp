@@ -71,6 +71,8 @@ type DirectDemuxerConfig struct {
 	ReprojectImages        bool
 	DrawMap                bool
 	FalseColor             bool
+	Enhanced               bool
+	MetaFrame              bool
 }
 
 type AppConfig struct {

@@ -71,6 +71,8 @@ func LoadDefaults(save bool) {
 	DSP.CurrentConfig.DirectDemuxer.DrawMap = false
 	DSP.CurrentConfig.DirectDemuxer.ReprojectImages = false
 	DSP.CurrentConfig.DirectDemuxer.FalseColor = false
+	DSP.CurrentConfig.DirectDemuxer.Enhanced = false
+	DSP.CurrentConfig.DirectDemuxer.MetaFrame = true
 
 	if save {
 		SaveConfig()
