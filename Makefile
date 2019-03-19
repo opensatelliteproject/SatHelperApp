@@ -46,6 +46,12 @@ deps: | $(BASE)
 	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) get
 	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) get
 
+do-static: | $(BASE)
+  @echo "Updating Code to have static libLimeSuite"
+  @sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
+  @sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
+
+
 update: | $(BASE)
 	@echo Updating AirspyDevice Wrapper
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/AirspyDevice/AirspyDevice.i
