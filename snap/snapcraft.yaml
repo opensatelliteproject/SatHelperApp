@@ -45,8 +45,6 @@ parts:
       - libairspy0
       - libsoapysdr0.6
       - libstdc++6
-      - soapysdr0.6-module-lms7
-      - limesuite
       - libc6
       - libudev1
       - libgcc1
