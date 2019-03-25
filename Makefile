@@ -8,9 +8,9 @@ REPO_REV := $(shell git rev-parse --sq HEAD)
 BUILD_DATE := $(shell date +"%b %d %Y")
 BUILD_TIME := $(shell date +"%H:%M:%S")
 
-PATH := $(PATH):/usr/lib/go-1.10/bin
+PATH := $(PATH):/usr/lib/go-1.11/bin
 
-GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.10/bin:/usr/local/Cellar/go/1.10.2/bin command -v go 2> /dev/null)
+GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.11/bin:/usr/local/Cellar/go/1.11.2/bin command -v go 2> /dev/null)
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
@@ -41,41 +41,36 @@ clean:
 
 deps: | $(BASE)
 	@echo Downloading dependencies
-	@cd $(BASE) && GOPATH=$(GOPATH) $(GOBIN) get
-	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) get
-	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) get
-	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE) && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
 
 do-static: | $(BASE)
 	@echo "Updating Code to have static libLimeSuite"
-	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
-	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
+	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' $(GOPATH)/pkg/mod/github.com/myriadrf/limedrv*/limewrap/limewrap.go
 
 
-update: | $(BASE)
+update: | do-static $(BASE)
 	@echo Updating AirspyDevice Wrapper
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/AirspyDevice/AirspyDevice.i
-	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/SpyserverDevice/SpyserverDevice.i
-
-	@echo Updating LimeDevice Wrapper
-	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/LimeDevice/LimeDevice.i
 
 	@echo Updating RTLSDR Wrappper
 	@cd $(BASE) && swig -cgo -go -c++ -intgosize $(INTSIZE) Frontend/RTLSDRDevice/RTLSDRDevice.i
 
 build: | $(BASE)
 	@echo Building SatHelperApp
-	@cd $(BASE)/cmd/SatHelperApp && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
 	@echo Building DemuxReplay
-	@cd $(BASE)/cmd/demuxReplay && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
+	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
 	@echo Building xritparse
-	@cd $(BASE)/cmd/xritparse && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritparse
+	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritparse
 	@echo Building xritcat
-	@cd $(BASE)/cmd/xritcat && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritcat
+	@cd $(BASE)/cmd/xritcat && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritcat
 	@echo Building xritimg
-	@cd $(BASE)/cmd/xritimg && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritimg
+	@cd $(BASE)/cmd/xritimg && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritimg
 	@echo Building xritpdcs
-	@cd $(BASE)/cmd/xritpdcs && GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritpdcs
+	@cd $(BASE)/cmd/xritpdcs && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritpdcs
 
 
 install: | $(BASE)
