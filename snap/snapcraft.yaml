@@ -8,9 +8,9 @@ description: |
 grade: devel
 confinement: devmode
 
-architectures:
-  - arm64
-  - amd64
+#architectures:
+#  - build-on: [arm64, amd64]
+#    run-on: [arm64, amd64]
 
 parts:
   ppaadd:
