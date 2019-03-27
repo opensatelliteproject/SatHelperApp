@@ -9,8 +9,8 @@ grade: devel
 confinement: devmode
 
 architectures:
-  - build-on: [arm64, amd64]
-    run-on: [arm64, amd64]
+  - arm64
+  - amd64
 
 parts:
   ppaadd:
@@ -49,3 +49,28 @@ apps:
   sathelperapp:
     plugs: [network-bind, network, raw-usb]
     command: SatHelperApp
+  demuxreplay:
+    plugs: [raw-usb]
+    command: DemuxReplay
+  xritparse:
+    plugs: [raw-usb]
+    command: xritparse
+  xritcat:
+    plugs: [raw-usb]
+    command: xritcat
+  xritimg:
+    plugs: [raw-usb]
+    command: xritimg
+  xritimg:
+    plugs: [raw-usb]
+    command: xritimg
+  xritpdcs:
+    plugs: [raw-usb]
+    command: xritpdcs
+  sathelperdump:
+    plugs: [raw-usb]
+    command: SatHelperDump
+  sathelperclient:
+    plugs: [network-bind, network, raw-usb]
+    command: SatHelperClient
+

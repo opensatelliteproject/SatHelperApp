@@ -42,9 +42,22 @@ clean:
 deps: | $(BASE)
 	@echo Downloading dependencies
 	@cd $(BASE) && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for SatHelperApp
 	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for DemuxReplay
 	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for xritparse
 	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for xritcat
+	@cd $(BASE)/cmd/xritcat && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for xritimg
+	@cd $(BASE)/cmd/xritimg && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for xritpdcs
+	@cd $(BASE)/cmd/xritpdcs && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for MultiSegmentDump
+	@cd $(BASE)/cmd/MultiSegmentDump && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@echo Deps for rpcClient
+	@cd $(BASE)/cmd/rpcClient && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
 
 do-static: | $(BASE)
 	@echo "Updating Code to have static libLimeSuite"
@@ -61,23 +74,34 @@ update: | do-static $(BASE)
 build: | $(BASE)
 	@echo Building SatHelperApp
 	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperApp
+
 	@echo Building DemuxReplay
 	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/DemuxReplay
+
 	@echo Building xritparse
 	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritparse
+
 	@echo Building xritcat
 	@cd $(BASE)/cmd/xritcat && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritcat
+
 	@echo Building xritimg
 	@cd $(BASE)/cmd/xritimg && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritimg
+
 	@echo Building xritpdcs
 	@cd $(BASE)/cmd/xritpdcs && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/xritpdcs
+
+	@echo Building MultiSegmentDump
+	@cd $(BASE)/cmd/MultiSegmentDump && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperDump
+
+	@echo Building rpcClient
+	@cd $(BASE)/cmd/rpcClient && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperClient
 
 
 install: | $(BASE)
 	@echo Installing
 	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/SatHelperApp
 	@chmod +x $(DESTDIR)/SatHelperApp
-	@cd $(BASE) && cp $(BASEDIR)/SatHelperApp $(DESTDIR)/DemuxReplay
+	@cd $(BASE) && cp $(BASEDIR)/DemuxReplay $(DESTDIR)/DemuxReplay
 	@chmod +x $(DESTDIR)/DemuxReplay
 	@cd $(BASE) && cp $(BASEDIR)/xritparse $(DESTDIR)/xritparse
 	@chmod +x $(DESTDIR)/xritparse
@@ -87,6 +111,10 @@ install: | $(BASE)
 	@chmod +x $(DESTDIR)/xritimg
 	@cd $(BASE) && cp $(BASEDIR)/xritpdcs $(DESTDIR)/xritpdcs
 	@chmod +x $(DESTDIR)/xritpdcs
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperDump $(DESTDIR)/SatHelperDump
+	@chmod +x $(DESTDIR)/SatHelperDump
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperClient $(DESTDIR)/SatHelperClient
+	@chmod +x $(DESTDIR)/SatHelperClient
 
 test:
 	go test -v -race $(shell go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ | grep -v /librtlsdr/ )
