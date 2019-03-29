@@ -22,17 +22,14 @@ require (
 	github.com/prometheus/common v0.2.0
 	github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a
 	github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374
-	github.com/racerxdl/segdsp v0.0.0-20190319031409-d037b2dad22d
+	github.com/racerxdl/segdsp v0.0.0-20190329062126-4f400f793b40
 	github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5
 	github.com/sirupsen/logrus v1.3.0 // indirect
-	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/crypto v0.0.0-20190313024323-a1f597ede03a // indirect
 	golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
-	golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3 // indirect
-	golang.org/x/net v0.0.0-20190318221613-d196dffd7c2b
+	golang.org/x/net v0.0.0-20190322120337-addf6b3196f6
 	golang.org/x/sys v0.0.0-20190318195719-6c81ef8f67ca // indirect
 	golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2
-	golang.org/x/tools v0.0.0-20190318200714-bb1270c20edf // indirect
-	google.golang.org/grpc v1.19.0
+	google.golang.org/grpc v1.19.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 )
