@@ -46,12 +46,19 @@ script:
   - ./travis-build.sh
 
 deploy:
-  provider: releases
-  api_key:
-    secure: cID0Ex92EsQRN6Xsh1ngF9jZVqiVdYCNC2JhnEbnTtipb5Z00m8wasdo3R22aafGUkaWpcg0zbRRSC/VCMqrLj6PRoKJ0KBtOQA4BiJ3xc4YkWg2nmwOs19KSn61vO6VIrIDfQfBSlavfTsUdLKc0tE2QGxkw2j49Y8+0vswynXvx9yQ+renigtS8yhK6FT6VpIQ1+Yqx0DSN7XnFyAlqA1fymx32GzXIFhs1llOUiUPmnyOryJFfJxus8GGf1f8QX+elgBEN08nYkvc2yGlhh/+LhY7SBcdKgR3acHvhooaxmuPXfC92OVlrizV27wLsTX913jT7ELm5kGqEP7FuBpE4kvxoZhcZI71vt5P3CR60ELz9vTfN+U2YTnaZ43Nlgjwzq9SfQPxXBF2FLGEEBd4zkuEKGvATYLrI1WdPo1Zns85viFWo3X65eZ/WW2tK+m5wVYQmMWw8RYc/ANrVdovzX6Ss+Z2hTh9qvGNjy1Ph+qvaVU9cdeO8JM9r9+Xsm4UTGZ7nUEnYN5DbeZ7aDGk4p8E67B19Xvroyzt/JEIrfH3C+y+eX1YZOS74xi9REeFzje90SODBh18onsI6sfssw+AHE7H24hMfHadjUWqMzx/5vgCi/pyP13inuwasCrqS13XJEvlY3elwhdFVbb8OkwVW99Ukkzn+rq5tVE=
-  file_glob: true
-  file: zips/*
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: opensatelliteproject/SatHelperApp
+  - provider: releases
+    api_key:
+      secure: cID0Ex92EsQRN6Xsh1ngF9jZVqiVdYCNC2JhnEbnTtipb5Z00m8wasdo3R22aafGUkaWpcg0zbRRSC/VCMqrLj6PRoKJ0KBtOQA4BiJ3xc4YkWg2nmwOs19KSn61vO6VIrIDfQfBSlavfTsUdLKc0tE2QGxkw2j49Y8+0vswynXvx9yQ+renigtS8yhK6FT6VpIQ1+Yqx0DSN7XnFyAlqA1fymx32GzXIFhs1llOUiUPmnyOryJFfJxus8GGf1f8QX+elgBEN08nYkvc2yGlhh/+LhY7SBcdKgR3acHvhooaxmuPXfC92OVlrizV27wLsTX913jT7ELm5kGqEP7FuBpE4kvxoZhcZI71vt5P3CR60ELz9vTfN+U2YTnaZ43Nlgjwzq9SfQPxXBF2FLGEEBd4zkuEKGvATYLrI1WdPo1Zns85viFWo3X65eZ/WW2tK+m5wVYQmMWw8RYc/ANrVdovzX6Ss+Z2hTh9qvGNjy1Ph+qvaVU9cdeO8JM9r9+Xsm4UTGZ7nUEnYN5DbeZ7aDGk4p8E67B19Xvroyzt/JEIrfH3C+y+eX1YZOS74xi9REeFzje90SODBh18onsI6sfssw+AHE7H24hMfHadjUWqMzx/5vgCi/pyP13inuwasCrqS13XJEvlY3elwhdFVbb8OkwVW99Ukkzn+rq5tVE=
+    file_glob: true
+    file: zips/*
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: opensatelliteproject/SatHelperApp
+  - provider: snap
+    snap: sathelperapp
+    channel: edge
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: opensatelliteproject/SatHelperApp
