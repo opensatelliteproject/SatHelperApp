@@ -5,12 +5,31 @@ summary: LRIT/HRIT Demodulator / Decoder
 description: |
   The OpenSatelliteProject Satellite Helper Application! This is currently a LRIT/HRIT Demodulator / Decoder program
 
-grade: devel
-confinement: devmode
+grade: stable
+confinement: strict
 
-#architectures:
-#  - build-on: [arm64, amd64]
-#    run-on: [arm64, amd64]
+apps:
+  sathelperapp:
+    plugs: [network-bind, network, home, raw-usb]
+    command: SatHelperApp
+  SatHelperApp: # Alias
+    plugs: [network-bind, network, home, raw-usb]
+    command: SatHelperApp
+  DemuxReplay:
+    command: DemuxReplay
+  xritparse:
+    command: xritparse
+  xritcat:
+    command: xritcat
+  xritimg:
+    command: xritimg
+  xritpdcs:
+    command: xritpdcs
+  SatHelperDump:
+    command: SatHelperDump
+  SatHelperClient:
+    plugs: [network-bind, network, home]
+    command: SatHelperClient
 
 parts:
   ppaadd:
@@ -44,33 +63,4 @@ parts:
       - libc6
       - libudev1
       - libgcc1
-
-apps:
-  sathelperapp:
-    plugs: [network-bind, network, raw-usb]
-    command: SatHelperApp
-  demuxreplay:
-    plugs: [raw-usb]
-    command: DemuxReplay
-  xritparse:
-    plugs: [raw-usb]
-    command: xritparse
-  xritcat:
-    plugs: [raw-usb]
-    command: xritcat
-  xritimg:
-    plugs: [raw-usb]
-    command: xritimg
-  xritimg:
-    plugs: [raw-usb]
-    command: xritimg
-  xritpdcs:
-    plugs: [raw-usb]
-    command: xritpdcs
-  sathelperdump:
-    plugs: [raw-usb]
-    command: SatHelperDump
-  sathelperclient:
-    plugs: [network-bind, network, raw-usb]
-    command: SatHelperClient
 

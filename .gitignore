@@ -25,3 +25,4 @@ bins
 zips
 cmd/xritpdcs/xritpdcs
 cmd/rpcClient/client
+out
