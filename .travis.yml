@@ -4,61 +4,71 @@ env:
   - COMMIT=${TRAVIS_COMMIT::8}
   - GO111MODULE=on
 
-before_install:
-  - sudo add-apt-repository ppa:opensatelliteproject/ppa -y
-  - sudo add-apt-repository ppa:opensatelliteproject/drivers -y
-  - sudo add-apt-repository ppa:myriadrf/gnuradio -y
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev
-  - echo "Building RTLSDR"
-  - git clone https://github.com/librtlsdr/librtlsdr.git
-  - cd librtlsdr
-  - mkdir build && cd build
-  - cmake ..
-  - make -j10
-  - sudo make install
-  - sudo ldconfig
-  - cd ../..
-  - echo "Building Static LimeSuite"
-  - git clone https://github.com/myriadrf/LimeSuite.git
-  - cd LimeSuite
-  - git checkout stable
-  - mkdir builddir && cd builddir
-  - cmake ../
-  - make -j10
-  - sudo make install
-  - sudo ldconfig
-  - cd ../..
-  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.15.0
-
-language: go
-
-go:
-  - 1.11.x
-
-git:
-  depth: 1
-
-script:
-  - go get
-  - make test
-  - golangci-lint run
-  - ./travis-build.sh
-
-deploy:
-  - provider: releases
-    api_key:
-      secure: cID0Ex92EsQRN6Xsh1ngF9jZVqiVdYCNC2JhnEbnTtipb5Z00m8wasdo3R22aafGUkaWpcg0zbRRSC/VCMqrLj6PRoKJ0KBtOQA4BiJ3xc4YkWg2nmwOs19KSn61vO6VIrIDfQfBSlavfTsUdLKc0tE2QGxkw2j49Y8+0vswynXvx9yQ+renigtS8yhK6FT6VpIQ1+Yqx0DSN7XnFyAlqA1fymx32GzXIFhs1llOUiUPmnyOryJFfJxus8GGf1f8QX+elgBEN08nYkvc2yGlhh/+LhY7SBcdKgR3acHvhooaxmuPXfC92OVlrizV27wLsTX913jT7ELm5kGqEP7FuBpE4kvxoZhcZI71vt5P3CR60ELz9vTfN+U2YTnaZ43Nlgjwzq9SfQPxXBF2FLGEEBd4zkuEKGvATYLrI1WdPo1Zns85viFWo3X65eZ/WW2tK+m5wVYQmMWw8RYc/ANrVdovzX6Ss+Z2hTh9qvGNjy1Ph+qvaVU9cdeO8JM9r9+Xsm4UTGZ7nUEnYN5DbeZ7aDGk4p8E67B19Xvroyzt/JEIrfH3C+y+eX1YZOS74xi9REeFzje90SODBh18onsI6sfssw+AHE7H24hMfHadjUWqMzx/5vgCi/pyP13inuwasCrqS13XJEvlY3elwhdFVbb8OkwVW99Ukkzn+rq5tVE=
-    file_glob: true
-    file: zips/*
-    skip_cleanup: true
-    on:
-      tags: true
-      repo: opensatelliteproject/SatHelperApp
-  - provider: snap
-    snap: sathelperapp
-    channel: edge
-    skip_cleanup: true
-    on:
-      tags: true
-      repo: opensatelliteproject/SatHelperApp
+matrix:
+  include:
+    - language: go
+      go:
+        - 1.11.x
+      git:
+        depth: 1
+      before_install:
+        - sudo add-apt-repository ppa:opensatelliteproject/ppa -y
+        - sudo add-apt-repository ppa:opensatelliteproject/drivers -y
+        - sudo add-apt-repository ppa:myriadrf/gnuradio -y
+        - sudo apt-get -qq update
+        - sudo apt-get install -y libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev
+        - echo "Building RTLSDR"
+        - git clone https://github.com/librtlsdr/librtlsdr.git
+        - cd librtlsdr
+        - mkdir build && cd build
+        - cmake ..
+        - make -j10
+        - sudo make install
+        - sudo ldconfig
+        - cd ../..
+        - echo "Building Static LimeSuite"
+        - git clone https://github.com/myriadrf/LimeSuite.git
+        - cd LimeSuite
+        - git checkout stable
+        - mkdir builddir && cd builddir
+        - cmake ../
+        - make -j10
+        - sudo make install
+        - sudo ldconfig
+        - cd ../..
+        - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b $GOPATH/bin v1.15.0
+      script:
+        - go get
+        - make test
+        - golangci-lint run
+        - ./travis-build.sh
+      deploy:
+        - provider: releases
+          api_key:
+            secure: cID0Ex92EsQRN6Xsh1ngF9jZVqiVdYCNC2JhnEbnTtipb5Z00m8wasdo3R22aafGUkaWpcg0zbRRSC/VCMqrLj6PRoKJ0KBtOQA4BiJ3xc4YkWg2nmwOs19KSn61vO6VIrIDfQfBSlavfTsUdLKc0tE2QGxkw2j49Y8+0vswynXvx9yQ+renigtS8yhK6FT6VpIQ1+Yqx0DSN7XnFyAlqA1fymx32GzXIFhs1llOUiUPmnyOryJFfJxus8GGf1f8QX+elgBEN08nYkvc2yGlhh/+LhY7SBcdKgR3acHvhooaxmuPXfC92OVlrizV27wLsTX913jT7ELm5kGqEP7FuBpE4kvxoZhcZI71vt5P3CR60ELz9vTfN+U2YTnaZ43Nlgjwzq9SfQPxXBF2FLGEEBd4zkuEKGvATYLrI1WdPo1Zns85viFWo3X65eZ/WW2tK+m5wVYQmMWw8RYc/ANrVdovzX6Ss+Z2hTh9qvGNjy1Ph+qvaVU9cdeO8JM9r9+Xsm4UTGZ7nUEnYN5DbeZ7aDGk4p8E67B19Xvroyzt/JEIrfH3C+y+eX1YZOS74xi9REeFzje90SODBh18onsI6sfssw+AHE7H24hMfHadjUWqMzx/5vgCi/pyP13inuwasCrqS13XJEvlY3elwhdFVbb8OkwVW99Ukkzn+rq5tVE=
+          file_glob: true
+          file: zips/*
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: opensatelliteproject/SatHelperApp
+    - language: bash
+      addons:
+        snaps:
+          - name: snapcraft
+            classic: true
+      services: [docker]
+      script:
+        - sudo apt-get -qq update && sudo apt-get install libusb-1.0-0 swig swig3.0
+        - docker run --rm -v "$PWD":/build -w /build snapcore/snapcraft bash -c "apt update && snapcraft"
+        - ls -lah
+      deploy:
+        - provider: snap
+          snap: sathelperapp*.snap
+          channel: edge
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: opensatelliteproject/SatHelperApp
+      after_success:
+        - openssl aes-256-cbc -K $encrypted_f24dcc1fa9db_key -iv $encrypted_f24dcc1fa9db_iv -in .snapcraft/travis_snapcraft.cfg -out .snapcraft/snapcraft.cfg -d

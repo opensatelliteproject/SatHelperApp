@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 REV_VAR="github.com/opensatelliteproject/SatHelperApp.RevString"
 VERSION_VAR="github.com/opensatelliteproject/SatHelperApp.VersionString"
 BUILD_DATE_VAR="github.com/opensatelliteproject/SatHelperApp.CompilationDate"
@@ -10,7 +9,6 @@ REPO_REV=$(git rev-parse HEAD)
 BUILD_DATE=$(date +"%d%m%Y")
 BUILD_TIME=$(date +"%H%M%S")
 GOBUILD_VERSION_ARGS="-ldflags \"-X '${REV_VAR}=${REPO_REV}' -X '${VERSION_VAR}=${REPO_VERSION}' -X '${BUILD_DATE_VAR}=${BUILD_DATE}' -X '${BUILD_TIME_VAR}=${BUILD_TIME}'\""
-
 
 echo "REV_VAR=${REV_VAR}"
 echo "VERSION_VAR=${VERSION_VAR}"
@@ -22,6 +20,7 @@ echo "BUILD_DATE=${BUILD_DATE}"
 echo "BUILD_TIME=${BUILD_TIME}"
 echo "GOBUILD_VERSION_ARGS=${GOBUILD_VERSION_ARGS}"
 
+export GO111MODULE=on
 
 TAG=`git describe --exact-match --tags HEAD 2>/dev/null`
 if [[ $? -eq 0 ]];
@@ -60,8 +59,7 @@ then
   cd "$ORIGINAL_FOLDER"
 
   echo "Updating Code to have static libLimeSuite"
-  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' Frontend/LimeDevice/LimeDevice.go
-  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' ../../myriadrf/limedrv/limewrap/limewrap.go
+  sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' $(GOPATH)/pkg/mod/github.com/myriadrf/limedrv*/limewrap/limewrap.go
 
   echo "Building"
   cd cmd
