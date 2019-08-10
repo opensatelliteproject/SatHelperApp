@@ -47,6 +47,13 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 
 		SLog.Info("New image %s", outname)
 
+		if len(ip.cutRegions) > 0 {
+			err = ImageTools.DumpCutRegion(ms, ip.GetMapDrawer(), ip.GetMapCutter(), curveManipulator, ip.reproject, ip.enhance, ip.metadata, ip.cutRegions)
+			if err != nil {
+				SLog.Error("Error processing region cuts: %s", err)
+			}
+		}
+
 		delete(ip.MultiSegmentCache, name)
 
 		if purgeFiles {
@@ -57,7 +64,7 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 
 		if ms.FirstSegmentHeader.IsFalseColorPiece() {
 			folder := path.Dir(ms.FirstSegmentFilename)
-			nomapFile := path.Join(folder, ImageTools.GetNoMapName(ms.Name))
+			nomapFile := path.Join(folder, ImageTools.GetNoMapName(ms.Name, ""))
 			ProcessFalseColor(ip, ms.FirstSegmentHeader, nomapFile)
 		}
 	}

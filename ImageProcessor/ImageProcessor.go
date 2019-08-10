@@ -2,6 +2,7 @@ package ImageProcessor
 
 import (
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageTools"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapCutter"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
@@ -17,22 +18,26 @@ type ImageProcessor struct {
 	sync.Mutex
 	MultiSegmentCache map[string]*Structs.MultiSegmentImage
 	mapDrawer         *MapDrawer.MapDrawer
+	mapCutter         *MapCutter.MapCutter
 	reproject         bool
 	drawmap           bool
 	falsecolor        bool
 	enhance           bool
 	metadata          bool
+	cutRegions        []string
 }
 
 func MakeImageProcessor() *ImageProcessor {
 	return &ImageProcessor{
 		MultiSegmentCache: make(map[string]*Structs.MultiSegmentImage),
 		mapDrawer:         ImageTools.GetDefaultMapDrawer(),
+		mapCutter:         ImageTools.GetDefaultMapCutter(),
 		reproject:         false,
 		drawmap:           false,
 		falsecolor:        false,
 		enhance:           false,
 		metadata:          false,
+		cutRegions:        make([]string, 0),
 	}
 }
 
@@ -42,6 +47,10 @@ func (ip *ImageProcessor) SetFalseColor(fsclr bool) {
 		SLog.Warn("False color is enabled, so it will also save plain images with no map")
 		ImageTools.SetSaveNoMap(true) // Needed for FSCLR
 	}
+}
+
+func (ip *ImageProcessor) SetCutRegions(regions []string) {
+	ip.cutRegions = regions
 }
 
 func (ip *ImageProcessor) SetDrawMap(drawMap bool) {
@@ -78,6 +87,14 @@ func (ip *ImageProcessor) GetEnhance() bool {
 
 func (ip *ImageProcessor) GetMetadata() bool {
 	return ip.metadata
+}
+
+func (ip *ImageProcessor) GetCutRegions() []string {
+	return ip.cutRegions
+}
+
+func (ip *ImageProcessor) GetMapCutter() *MapCutter.MapCutter {
+	return ip.mapCutter
 }
 
 func (ip *ImageProcessor) GetMapDrawer() *MapDrawer.MapDrawer {

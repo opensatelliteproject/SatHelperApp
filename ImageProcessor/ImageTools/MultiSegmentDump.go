@@ -3,6 +3,7 @@ package ImageTools
 import (
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapCutter"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Projector"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/Structs"
@@ -99,21 +100,144 @@ func SaveImage(filename string, img image.Image) error {
 	return nil
 }
 
-func GetNoMapName(filename string) string {
+func GetNoMapName(filename, extra string) string {
 	// Remove file timestamp
+	if extra != "" {
+		return filename[:len(filename)-16] + "-" + extra + "-nomap.png"
+	}
 	return filename[:len(filename)-16] + "-nomap.png"
 }
-func GetNoProjName(filename string) string {
+func GetNoProjName(filename, extra string) string {
 	// Remove file timestamp
+	if extra != "" {
+		return filename[:len(filename)-16] + "-" + extra + "-noproj.png"
+	}
 	return filename[:len(filename)-16] + "-noproj.png"
+}
+
+func cutRegionAndDump(region string, msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, mapCutter *MapCutter.MapCutter, visCurve *CurveManipulator, reproject bool, enhance bool, metadata bool) (error, string) {
+	s, err := mapCutter.GetSection(region)
+	if err != nil {
+		return err, ""
+	}
+
+	folder := path.Dir(msi.FirstSegmentFilename)
+
+	newFilename := path.Join(folder, fmt.Sprintf("%s-%s.png", msi.Name, region))
+	newFilenameEnhanced := path.Join(folder, fmt.Sprintf("%s-%s-enhanced.png", msi.Name, region))
+
+	if Tools.Exists(newFilename) {
+		SLog.Info("File %s already exists, skipping...", newFilename)
+		return nil, newFilename
+	}
+
+	err, img := MultiSegmentAssemble(msi)
+	if err != nil {
+		return err, ""
+	}
+
+	gc, err := Geo.MakeGeoConverterFromXRIT(msi.FirstSegmentHeader)
+	if err != nil {
+		return err, ""
+	}
+
+	if strings.Contains(newFilename, "C02_") { // Only on visible channels
+		err = visCurve.ApplyCurve(img)
+		if err != nil {
+			SLog.Error("Error applying curve to visible image: %s", err)
+		}
+		enhance = false
+	}
+
+	imgRGBA := image.NewRGBA(img.Bounds())
+	draw.Draw(imgRGBA, img.Bounds(), img, img.Bounds().Min, draw.Src)
+
+	satLut := msi.FirstSegmentHeader.TemperatureLUT
+
+	enh := MakeImageEnhancer(ImageData.DefaultMinimumTemperature, ImageData.DefaultMaximumTemperature, satLut, ImageData.TemperatureScaleLUT, false)
+
+	if enhance {
+		imgRGBA, err = enh.EnhanceWithLUT(imgRGBA)
+		if err != nil {
+			SLog.Error("Error enhancing image %s: %s", newFilename, err)
+		} else {
+			img = imgRGBA
+		}
+	}
+
+	if reproject {
+		SLog.Debug("Reprojecting Image to Linear")
+
+		proj := Projector.MakeProjector(gc)
+		imgRGBA = proj.ReprojectLinearMultiThread(imgRGBA)
+		img = imgRGBA
+		gc = Projector.MakeLinearConverter(imgRGBA.Bounds().Dx(), imgRGBA.Bounds().Dy(), gc)
+	}
+
+	if mapDrawer != nil {
+		SLog.Debug("Map Drawer enabled. Drawing maps...")
+		mapDrawer.DrawMap(imgRGBA, gc)
+		img = imgRGBA
+	}
+
+	img, err = mapCutter.CutMap(region, img, gc)
+	imgRGBA = img.(*image.RGBA)
+
+	if err != nil {
+		return err, ""
+	}
+
+	if metadata {
+		if enhance {
+			imgRGBA, err = enh.DrawMeta(s.Name, imgRGBA, msi.FirstSegmentHeader)
+			if err != nil {
+				SLog.Error("Error drawing metadata on %s: %s", newFilenameEnhanced, err)
+			}
+		} else {
+			imgRGBA, err = enh.DrawMetaWithoutScale(s.Name, imgRGBA, msi.FirstSegmentHeader)
+			if err != nil {
+				SLog.Error("Error drawing metadata on %s: %s", newFilenameEnhanced, err)
+			}
+		}
+		if imgRGBA != nil {
+			img = imgRGBA
+		}
+	}
+
+	if enhance {
+		err = SaveImage(newFilenameEnhanced, img)
+	} else {
+		err = SaveImage(newFilename, img)
+	}
+
+	if err != nil {
+		return err, ""
+	}
+
+	return nil, newFilename
+}
+
+func DumpCutRegion(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, mapCutter *MapCutter.MapCutter, visCurve *CurveManipulator, reproject bool, enhance bool, metadata bool, cutRegions []string) error {
+	if mapCutter == nil || len(cutRegions) == 0 {
+		return fmt.Errorf("no regions to cut")
+	}
+
+	for _, region := range cutRegions {
+		err, _ := cutRegionAndDump(region, msi, mapDrawer, mapCutter, visCurve, reproject, enhance, metadata)
+		if err != nil {
+			SLog.Error("Error processing region %s: %s", region, err)
+		}
+	}
+
+	return nil
 }
 
 func DumpMultiSegment(msi *Structs.MultiSegmentImage, mapDrawer *MapDrawer.MapDrawer, visCurve *CurveManipulator, reproject bool, enhance bool, metadata bool) (error, string) {
 	folder := path.Dir(msi.FirstSegmentFilename)
 
 	newFilename := path.Join(folder, msi.Name+".png")
-	newFilenameNoMap := path.Join(folder, GetNoMapName(msi.Name))
-	newFilenameNoProj := path.Join(folder, GetNoProjName(msi.Name))
+	newFilenameNoMap := path.Join(folder, GetNoMapName(msi.Name, ""))
+	newFilenameNoProj := path.Join(folder, GetNoProjName(msi.Name, ""))
 	newFilenameEnhanced := path.Join(folder, msi.Name+"-enhanced.png")
 
 	if Tools.Exists(newFilename) {

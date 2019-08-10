@@ -3,6 +3,7 @@ package ImageTools
 import (
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
+	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapCutter"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapDrawer"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
@@ -177,11 +178,14 @@ func Image2Gray(img image.Image) *image.Gray {
 
 const shpFileName = "ne_50m_admin_0_countries.shp"
 const dbfFileName = "ne_50m_admin_0_countries.dbf"
+const statesShpFileName = "ne_50m_admin_1_states_provinces.shp"
+const statesDbfFileName = "ne_50m_admin_1_states_provinces.dbf"
 const falseColorLutName = "wx-star.com_GOES-R_ABI_False-Color-LUT.png"
 
 var mapDrawer *MapDrawer.MapDrawer
 var fsclrLut *Lut2D
 var visCurve *CurveManipulator
+var mapCutter *MapCutter.MapCutter
 
 var tempLut map[string]*Lut1D
 
@@ -215,6 +219,36 @@ func ExtractShapeFiles() (string, error) {
 	return path.Join(folder, shpFileName), nil
 }
 
+// ExtractStateShapeFiles extracts the shapefiles for states to temp folder and return path for shp file
+func ExtractStateShapeFiles() (string, error) {
+
+	folder, err := ioutil.TempDir("", "satHelperShapes")
+	if err != nil {
+		return "", err
+	}
+	SLog.Debug("Extracting ShapeFiles to %s", folder)
+
+	shpFileData, err := ImageData.Asset(statesShpFileName)
+	if err != nil {
+		return "", err
+	}
+	dbfFileData, err := ImageData.Asset(statesDbfFileName)
+	if err != nil {
+		return "", err
+	}
+
+	err = ioutil.WriteFile(path.Join(folder, statesShpFileName), shpFileData, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+	err = ioutil.WriteFile(path.Join(folder, statesDbfFileName), dbfFileData, os.ModePerm)
+	if err != nil {
+		return "", err
+	}
+
+	return path.Join(folder, statesShpFileName), nil
+}
+
 func CleanShapeFiles(shpFile string) {
 	SLog.Debug("Cleaning ShapeFiles from %s", shpFile)
 	_ = os.Remove(shpFile)
@@ -240,6 +274,41 @@ func GetDefaultMapDrawer() *MapDrawer.MapDrawer {
 	}
 
 	return mapDrawer
+}
+
+func GetDefaultMapCutter() *MapCutter.MapCutter {
+	if mapCutter == nil {
+		shpFiles := make([]string, 0)
+
+		shpFile, err := ExtractShapeFiles()
+		if err != nil {
+			SLog.Error("Error extracting Shape Files: %s", err)
+			SLog.Error("Map Cutter will be disabled")
+		} else {
+			shpFiles = append(shpFiles, shpFile)
+		}
+
+		stateShpFile, err := ExtractStateShapeFiles()
+		if err != nil {
+			SLog.Error("Error extracting State Shape Files: %s", err)
+			SLog.Error("Map Cutter wont have states")
+		} else {
+			shpFiles = append(shpFiles, stateShpFile)
+		}
+
+		if len(shpFiles) > 0 {
+			mapCutter, err = MapCutter.MakeMapCutterFromFiles(shpFiles)
+			if err != nil {
+				SLog.Error("Error creating Map Cutter: %s", err)
+			}
+		}
+
+		for _, v := range shpFiles {
+			CleanShapeFiles(v)
+		}
+	}
+
+	return mapCutter
 }
 
 func GetVisibleCurveManipulator() *CurveManipulator {
