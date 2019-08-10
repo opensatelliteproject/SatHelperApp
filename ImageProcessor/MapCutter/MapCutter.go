@@ -18,8 +18,15 @@ import (
 const rootIndexAlphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
 const defaultMargin = 5
 
+var printProperties = map[string]string{
+	"formal_en": "Formal Name",
+	"continent": "Continent",
+	"subregion": "Sub Region",
+}
+
 type BorderSection struct {
 	Name       string
+	FormalName string
 	Bounds     shp.Box
 	Properties map[string]string
 }
@@ -42,6 +49,22 @@ type MapCutter struct {
 	sections     map[string]BorderSection
 	searchTree   map[string]*BSSearchTreeItem
 	marginPixels int
+}
+
+func (mc *MapCutter) SetMarginPixels(pixels int) {
+	mc.marginPixels = pixels
+}
+
+func (bs *BorderSection) String() string {
+	s := fmt.Sprintf("Name: %s\n", bs.Name)
+	s += fmt.Sprintf("Boundary: (%.6f; %.6f) (%.6f; %.6f)\n", bs.Bounds.MinX, bs.Bounds.MinY, bs.Bounds.MaxX, bs.Bounds.MaxY)
+	for k, v := range bs.Properties {
+		d, ok := printProperties[k]
+		if ok {
+			s += fmt.Sprintf("%s: %s\n", d, v)
+		}
+	}
+	return s
 }
 
 func MakeMapCutter(shapeFile string) (*MapCutter, error) {
@@ -116,6 +139,9 @@ func MakeMapDrawerFromShapes(shapes []*shp.Reader) (*MapCutter, error) {
 				if field == "name" {
 					s.Name = val
 				}
+				if field == "formal_en" {
+					s.FormalName = val
+				}
 			}
 
 			if s.Name != "" {
@@ -181,6 +207,10 @@ func (mc *MapCutter) buildTree() {
 			currentNode.Childs = append(currentNode.Childs, sectionName)
 		}
 	}
+}
+
+func (mc *MapCutter) ListSections() map[string]BorderSection {
+	return mc.sections
 }
 
 func (mc *MapCutter) SearchSection(name string) []string {

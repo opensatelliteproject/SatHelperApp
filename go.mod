@@ -24,11 +24,11 @@ require (
 	github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374
 	github.com/racerxdl/segdsp v0.0.0-20190329062126-4f400f793b40
 	github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5
+	github.com/richardwilkes/toolbox v1.10.0
 	github.com/sirupsen/logrus v1.3.0 // indirect
 	golang.org/x/crypto v0.0.0-20190313024323-a1f597ede03a // indirect
 	golang.org/x/image v0.0.0-20190227222117-0694c2d4d067
 	golang.org/x/net v0.0.0-20190322120337-addf6b3196f6
-	golang.org/x/sys v0.0.0-20190318195719-6c81ef8f67ca // indirect
 	golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2
 	google.golang.org/grpc v1.19.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6

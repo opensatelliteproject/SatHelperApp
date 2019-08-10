@@ -26,3 +26,6 @@ zips
 cmd/xritpdcs/xritpdcs
 cmd/rpcClient/client
 out
+*.exe
+cmd/MultiSegmentDump/testdata/*.json
+cmd/MultiSegmentDump/testdata/*.png
