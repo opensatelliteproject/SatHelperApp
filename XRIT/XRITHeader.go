@@ -32,6 +32,7 @@ type Header struct {
 	// Non XRIT Headers - Auxiliary stuff
 	TemperatureLUT        []float32
 	ImageDataFunctionHash string
+	IDFName               string
 }
 
 func (xh *Header) Product() *PacketData.NOAAProduct {
@@ -165,6 +166,10 @@ func (xh *Header) SetHeader(record Structs.BaseRecord) {
 }
 
 func (xh *Header) ToBaseNameString() string {
+	if xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.COMS1 {
+		// COMS-1 Image
+		return fmt.Sprintf("%s- %s", xh.ImageNavigationHeader.ProjectionName, xh.IDFName)
+	}
 	baseName := xh.Product().Name
 
 	if xh.SubProduct().Name != "Unknown" {
@@ -209,12 +214,16 @@ func (xh *Header) computeTemperatureLUT() {
 	if xh.ImageDataFunctionHeader == nil {
 		return
 	}
+
 	d := map[string]string{}
 	lines := strings.Split(xh.ImageDataFunctionHeader.StringData, "\n")
 	for _, v := range lines {
 		o := strings.Split(v, ":=")
 		if len(o) == 2 {
 			d[o[0]] = o[1]
+		}
+		if o[0] == "_NAME" {
+			xh.IDFName = o[1]
 		}
 	}
 

@@ -67,6 +67,11 @@ func MakeGeoConverterFromXRIT(xh *XRIT.Header) (Projector.ProjectionConverter, e
 
 	inh := xh.ImageNavigationHeader
 
+	if xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.COMS1 {
+		xh.ImageNavigationHeader.LineScalingFactor >>= 9 // Not sure why is needed
+		xh.ImageNavigationHeader.LineScalingFactor -= 180000
+	}
+
 	return MakeSimpleGeoConverter(lon, int(inh.ColumnOffset), int(inh.LineOffset), float64(inh.ColumnScalingFactor), float64(inh.LineScalingFactor)), nil
 
 }

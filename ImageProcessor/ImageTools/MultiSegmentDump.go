@@ -1,6 +1,7 @@
 package ImageTools
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/ImageData"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor/MapCutter"
@@ -14,6 +15,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
 	"image"
 	"image/draw"
+	"image/jpeg"
 	"image/png"
 	"io"
 	"io/ioutil"
@@ -43,6 +45,20 @@ func DrawGray8At(data []byte, px, py int, image *image.Gray) {
 func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 	width := int(msi.FirstSegmentHeader.SegmentIdentificationHeader.MaxColumns)
 	height := int(msi.FirstSegmentHeader.SegmentIdentificationHeader.MaxRows)
+
+	if width == 0 || height == 0 {
+		// COMS-1 for example doesn't have so we sum up the sizes
+		w := int(msi.FirstSegmentHeader.ImageStructureHeader.Columns)
+		h := int(msi.FirstSegmentHeader.ImageStructureHeader.Lines) * int(msi.FirstSegmentHeader.SegmentIdentificationHeader.MaxSegments)
+
+		if width == 0 {
+			width = w
+		}
+		if height == 0 {
+			height = h
+		}
+	}
+
 	img := image.NewGray(image.Rect(0, 0, width, height))
 
 	for _, filename := range msi.Files {
@@ -76,7 +92,17 @@ func MultiSegmentAssemble(msi *Structs.MultiSegmentImage) (error, image.Image) {
 		px := int(xh.SegmentIdentificationHeader.StartColumn)
 		py := int(xh.SegmentIdentificationHeader.StartLine)
 
-		DrawGray8At(data, px, py, img)
+		// COMS-1 JPG Image
+		if xh.Compression() == PacketData.JPEG {
+			b := bytes.NewReader(data)
+			im, err := jpeg.Decode(b)
+			if err != nil {
+				return err, nil
+			}
+			draw.Draw(img, im.Bounds().Add(image.Pt(px, py)), im, im.Bounds().Min, draw.Src)
+		} else {
+			DrawGray8At(data, px, py, img)
+		}
 	}
 
 	return nil, img
