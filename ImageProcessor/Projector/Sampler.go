@@ -38,6 +38,11 @@ func (s *Sampler2D) GetPixelGray(x, y float64) color.Gray {
 
 func (s *Sampler2D) GetPixel(x, y float64) color.Color {
 	var r, g, b, a byte
+
+	if x < 0 || y < 0 {
+		return color.Black
+	}
+
 	r = BilinearInterp(s.pixData, x, y, s.stride, s.numChannels, 0)
 	a = 255
 

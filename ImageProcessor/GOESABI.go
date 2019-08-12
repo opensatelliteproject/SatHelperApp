@@ -22,7 +22,7 @@ const visChan = "C02"
 const irChan = "C14"
 
 func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
-	if xh.NOAASpecificHeader.ProductSubID == 0 { // Mesoscales and unknown data
+	if xh.SubProduct().ID == 0 && !(xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.COMS1) { // Mesoscales and unknown data
 		PlainLRITImage(ip, filename, xh)
 		return
 	}
@@ -31,8 +31,13 @@ func ProcessGOESABI(ip *ImageProcessor, filename string, xh *XRIT.Header) {
 	basename := path.Base(filename)
 	name := strings.TrimSuffix(basename, filepath.Ext(basename))
 
+	if xh.SegmentIdentificationHeader != nil && xh.SegmentIdentificationHeader.COMS1 {
+		// Remove last 3 bytes from the name
+		name = name[:len(name)-3]
+	}
+
 	if ip.MultiSegmentCache[name] == nil {
-		ip.MultiSegmentCache[name] = Structs.MakeMultiSegmentImage(name, int(xh.NOAASpecificHeader.ProductSubID), int(xh.SegmentIdentificationHeader.ImageID))
+		ip.MultiSegmentCache[name] = Structs.MakeMultiSegmentImage(name, xh.SubProduct().ID, int(xh.SegmentIdentificationHeader.ImageID))
 	}
 
 	ms := ip.MultiSegmentCache[name]

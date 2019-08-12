@@ -22,7 +22,7 @@ func MakeImageStructureRecord(data []byte) *ImageStructureRecord {
 	v.BitsPerPixel = data[0]
 	v.Columns = binary.BigEndian.Uint16(data[1:3])
 	v.Lines = binary.BigEndian.Uint16(data[3:5])
-	v.Compression = data[4]
+	v.Compression = data[5]
 
 	return &v
 }

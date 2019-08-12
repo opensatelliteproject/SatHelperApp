@@ -21,7 +21,7 @@ func MakeImageNavigationRecord(data []byte) *ImageNavigationRecord {
 
 	inr.Type = PacketData.ImageNavigationRecord
 
-	inr.ProjectionName = strings.Trim(string(data[:32]), " \n\r")
+	inr.ProjectionName = strings.Trim(string(data[:32]), " \n\r\x00")
 	inr.ColumnScalingFactor = binary.BigEndian.Uint32(data[32:36])
 	inr.LineScalingFactor = binary.BigEndian.Uint32(data[36:40])
 	inr.ColumnOffset = int32(binary.BigEndian.Uint32(data[40:44]))

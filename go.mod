@@ -20,6 +20,7 @@ require (
 	github.com/opensatelliteproject/goaec v0.0.0-20190224065807-d814e01b69fa
 	github.com/opensatelliteproject/libsathelper v0.0.0-20190224071010-9df110e77627
 	github.com/prometheus/common v0.2.0
+	github.com/quan-to/slog v0.0.0-20190317205605-56a2b4159924
 	github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a
 	github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374
 	github.com/racerxdl/segdsp v0.0.0-20190329062126-4f400f793b40
