@@ -80,6 +80,10 @@ func (p *Projector) ReprojectLinearMultiThread(src image.Image) *image.RGBA {
 	nX := n2
 	nY := n - n2
 
+	if nY == 0 {
+		nY = 1 // Single Thread
+	}
+
 	wg := sync.WaitGroup{}
 
 	deltaY := height / nY
@@ -123,6 +127,10 @@ func (p *Projector) ReprojectLinearMultiThreadGray(src image.Image) *image.Gray 
 
 	nX := n2
 	nY := n - n2
+
+	if nY == 0 {
+		nY = 1 // Single Thread
+	}
 
 	wg := sync.WaitGroup{}
 
