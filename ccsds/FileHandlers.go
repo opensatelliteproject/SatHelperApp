@@ -6,6 +6,7 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT"
 	"github.com/opensatelliteproject/SatHelperApp/XRIT/PacketData"
+	"github.com/opensatelliteproject/SatHelperApp/metrics"
 	"io"
 	"io/ioutil"
 	"os"
@@ -14,6 +15,7 @@ import (
 )
 
 func PostHandleFile(filename, outBase string, vcid int, ip *ImageProcessor.ImageProcessor) {
+	metrics.NewFile()
 	xh, err := XRIT.ParseFile(filename)
 
 	if err != nil {

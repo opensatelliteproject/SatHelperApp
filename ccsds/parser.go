@@ -1,6 +1,7 @@
 package ccsds
 
 import (
+	"github.com/opensatelliteproject/SatHelperApp/metrics"
 	"sync"
 )
 
@@ -136,6 +137,7 @@ func (dm *Demuxer) parse() {
 
 		if lostFrames > 0 {
 			dm.incFrameLost(cd.VCID(), lostFrames)
+			metrics.DroppedPackets(lostFrames)
 		}
 
 		if cd.VCID() != 63 { // Skip Fill Channel
@@ -145,7 +147,7 @@ func (dm *Demuxer) parse() {
 					dm.cbNewVCID(cd.VCID())
 				}
 			}
-
+			metrics.NewPacket()
 			dm.transports[cd.VCID()].WriteChannelData(cd)
 		}
 	}

@@ -81,6 +81,12 @@ type RPC struct {
 	ListenAddr string
 }
 
+type Prometheus struct {
+	Enable     bool
+	ListenPort int
+	ListenAddr string
+}
+
 type AppConfig struct {
 	Title            string
 	Base             BaseConfig
@@ -95,6 +101,7 @@ type AppConfig struct {
 	DirectDemuxer    DirectDemuxerConfig
 	RtlsdrSource     RTLSDRSourceConfig
 	RPC              RPC
+	Prometheus       Prometheus
 }
 
 // endregion
