@@ -101,7 +101,9 @@ func main() {
 			return
 		}
 
-		go srv.Serve(lis)
+		go func() {
+			_ = srv.Serve(lis)
+		}()
 	}
 
 	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)
