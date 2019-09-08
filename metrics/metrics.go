@@ -16,8 +16,8 @@ var (
 		Help: "Decoder FIFO usage in Percent",
 	})
 	demodulatorFifoUsage = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name: "sathelperapp_decoderfifousage",
-		Help: "Decoder FIFO usage in Percent",
+		Name: "sathelperapp_demodulatorfifousage",
+		Help: "Demodulator FIFO usage in Percent",
 	})
 	viterbi = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: "sathelperapp_viterbi",
