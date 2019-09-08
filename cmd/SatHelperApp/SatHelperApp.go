@@ -13,8 +13,11 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/RPC"
+	"github.com/opensatelliteproject/SatHelperApp/metrics"
 	"github.com/opensatelliteproject/libsathelper"
 	"log"
+	"net"
+	"net/http"
 	"os"
 	"runtime/pprof"
 	"strings"
@@ -81,6 +84,26 @@ func main() {
 		if err != nil {
 			SLog.Error("Error starting gRPC: %s", err)
 		}
+	}
+
+	if DSP.CurrentConfig.Prometheus.Enable {
+		addr := fmt.Sprintf("%s:%d", DSP.CurrentConfig.Prometheus.ListenAddr, DSP.CurrentConfig.Prometheus.ListenPort)
+		SLog.Info("Enabling Prometheus Metrics at %s", addr)
+		metrics.EnablePrometheus()
+
+		srv := &http.Server{}
+		srv.Handler = metrics.GetHandler()
+		srv.Addr = addr
+
+		lis, err := net.Listen("tcp", addr)
+		if err != nil {
+			SLog.Error("Error starting prometheus server: %s", err)
+			return
+		}
+
+		go func() {
+			_ = srv.Serve(lis)
+		}()
 	}
 
 	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)

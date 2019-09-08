@@ -79,6 +79,11 @@ func LoadDefaults(save bool) {
 	DSP.CurrentConfig.RPC.ListenAddr = ""
 	DSP.CurrentConfig.RPC.ListenPort = DSP.DefaultRPCPort
 
+	// Prometheus
+	DSP.CurrentConfig.Prometheus.Enable = true
+	DSP.CurrentConfig.Prometheus.ListenAddr = ""
+	DSP.CurrentConfig.Prometheus.ListenPort = DSP.DefaultPrometheusPort
+
 	if save {
 		SaveConfig()
 	}

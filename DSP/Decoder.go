@@ -6,6 +6,7 @@ import (
 	. "github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
 	"github.com/opensatelliteproject/SatHelperApp/Models"
+	"github.com/opensatelliteproject/SatHelperApp/metrics"
 	"github.com/opensatelliteproject/libsathelper"
 	"github.com/racerxdl/go.fifo"
 	"log"
@@ -72,6 +73,7 @@ func decoderLoop() {
 	for IsRunning() {
 		if symbolsFifo.Len() >= CodedFrameSize {
 			decodFifoUsage = uint8(100 * float32(symbolsFifo.Len()) / float32(FifoSize))
+			metrics.DemodulatorFifoUsage(float64(demodFifoUsage))
 			if localStats.TotalPackets%AverageLastNSamples == 0 {
 				averageRSCorrections = 0
 				averageVitCorrections = 0
@@ -111,9 +113,12 @@ func decoderLoop() {
 				phaseShift = SatHelper.DEG_180
 			}
 
+			metrics.SyncCorrelation(int(corr))
+
 			if corr < MinCorrelationBits {
 				SLog.Error("Correlation didn't match criteria of %d bits. Got %d", Bold(MinCorrelationBits), Bold(corr))
 				lastFrameOk = false
+				metrics.SignalStatus(false)
 				continue
 			}
 
@@ -167,12 +172,16 @@ func decoderLoop() {
 				vitBitErr = 0
 			}
 
+			metrics.Viterbi(vitBitErr)
+
 			signalQuality := 100 * ((float32(maxViterbiErrors) - float32(vitBitErr)) / float32(maxViterbiErrors))
 			if signalQuality > 100 {
 				signalQuality = 100
 			} else if signalQuality < 0 {
 				signalQuality = 0
 			}
+
+			metrics.SignalQuality(int(signalQuality))
 
 			averageVitCorrections += float32(vitBitErr)
 
@@ -197,6 +206,8 @@ func decoderLoop() {
 
 			derrors := make([]int32, RsBlocks)
 
+			totalBytesFixed := int32(0)
+
 			for i := 0; i < RsBlocks; i++ {
 				reedSolomon.Deinterleave(&decodedData[0], &rsWorkBuffer[0], byte(i), RsBlocks)
 				derrors[i] = int32(int8(reedSolomon.Decode_ccsds(&rsWorkBuffer[0])))
@@ -205,15 +216,22 @@ func decoderLoop() {
 					averageRSCorrections += float32(derrors[i])
 				}
 				localStats.RsErrors[i] = derrors[i]
+				if derrors[i] > -1 {
+					totalBytesFixed += derrors[i]
+				}
 			}
+
+			metrics.ReedSolomon(int(totalBytesFixed))
 
 			if derrors[0] == -1 && derrors[1] == -1 && derrors[2] == -1 && derrors[3] == -1 {
 				isCorrupted = true
 				lastFrameOk = false
 				localStats.DroppedPackets += 1
+				metrics.SignalStatus(false)
 			} else {
 				isCorrupted = false
 				lastFrameOk = true
+				metrics.SignalStatus(true)
 			}
 
 			scid := ((rsCorrectedData[0] & 0x3F) << 2) | (rsCorrectedData[1]&0xC0)>>6

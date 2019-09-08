@@ -4,6 +4,7 @@ import (
 	. "github.com/logrusorgru/aurora"
 	"github.com/opensatelliteproject/SatHelperApp/Frontend"
 	"github.com/opensatelliteproject/SatHelperApp/Logger"
+	"github.com/opensatelliteproject/SatHelperApp/metrics"
 	"github.com/opensatelliteproject/libsathelper"
 	"github.com/racerxdl/go.fifo"
 	"github.com/racerxdl/segdsp/dsp"
@@ -90,6 +91,7 @@ func processSamples() {
 	dspLock.Lock()
 	length := samplesFifo.Len()
 	demodFifoUsage = uint8(100 * float32(length) / float32(FifoSize))
+	metrics.DemodulatorFifoUsage(float64(demodFifoUsage))
 	dspLock.Unlock()
 
 	if length <= 64*1024 {

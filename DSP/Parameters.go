@@ -72,6 +72,7 @@ const DefaultFlywheelRecheck = 100
 const DefaultVchannelPort = 5001
 const DefaultStatisticsPort = 5002
 const DefaultRPCPort = 5500
+const DefaultPrometheusPort = 9100
 
 const AverageLastNSamples = 10000
 
