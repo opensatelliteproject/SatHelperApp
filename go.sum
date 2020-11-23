@@ -78,6 +78,8 @@ github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3Rllmb
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/myriadrf/limedrv v0.0.0-20190225221912-8583a26e3fce h1:dJlJ3Us07pq0vD/tHrg1Agn/ShwqpNIPx/rbq8fk1T4=
 github.com/myriadrf/limedrv v0.0.0-20190225221912-8583a26e3fce/go.mod h1:/SXVBJBHAVLlvLU1B1n0a0QPcZBtqF1VpH5POPZzuBw=
+github.com/myriadrf/limedrv v0.0.0-20191110180121-2887b3325268 h1:eipZKpYRfrubDbzFB0CNksuXMf5eFLOlzK28P89HzSs=
+github.com/myriadrf/limedrv v0.0.0-20191110180121-2887b3325268/go.mod h1:pdymsBM5+Hvv+N9d4mfKKFnkoczunZ+4VtrNwlKSRP0=
 github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d h1:x3S6kxmy49zXVVyhcnrFqxvNVCBPb2KZ9hV2RBdS840=
 github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d/go.mod h1:IuKpRQcYE1Tfu+oAQqaLisqDeXgjyyltCfsaoYN18NQ=
 github.com/opensatelliteproject/goaec v0.0.0-20190224065807-d814e01b69fa h1:xeLJ69MtY3i01MRSMzViI+fVuw0lG2+uGyfTYpfx3po=
@@ -109,6 +111,8 @@ github.com/quan-to/slog v0.0.0-20190317205605-56a2b4159924 h1:LRAAFmYMlaelEo4YLL
 github.com/quan-to/slog v0.0.0-20190317205605-56a2b4159924/go.mod h1:xc9X6JvWjqAAIox9u4uuolisjwl/GbfkktH6f+nOgqU=
 github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a h1:uuXKE3aD/UCTL2U/mnvnDlZV/0161Qo5Ebq1kh8x3Ys=
 github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a/go.mod h1:V4kP6uu5nqjDVGhlYMtT/7JG7WJjXnipMGcQ8PFeUqU=
+github.com/racerxdl/fastconvert v0.0.0-20190331022425-fb823eda3cf9 h1:8H8QiqMPxXhmfrnUN1vvGMEhKBLUaOs1RzowJMVJjyU=
+github.com/racerxdl/fastconvert v0.0.0-20190331022425-fb823eda3cf9/go.mod h1:bTp7e/9T9NBHg1W0U+Z7t6F5PSGZvGMR71sUF3eYmkY=
 github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374 h1:P2TDDsGEWzzfhAnthdQc+Vwmv/+xEKHwoNFF3Swl6X0=
 github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374/go.mod h1:CvYWG6Py4TRzGCUVX2n8+CjE6mrME/+kHkkGmbDA5zw=
 github.com/racerxdl/radioserver v0.0.0-20190316070955-f8953f368ce1/go.mod h1:cSQupBUlkn/QhajTmf6QMErp3PbTVT5Xdd5DSiE0hAI=

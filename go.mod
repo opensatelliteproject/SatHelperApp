@@ -1,5 +1,7 @@
 module github.com/opensatelliteproject/SatHelperApp
 
+go 1.14
+
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/airking05/termui v2.2.0+incompatible
@@ -19,14 +21,14 @@ require (
 	github.com/mitchellh/go-wordwrap v1.0.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/myriadrf/limedrv v0.0.0-20190225221912-8583a26e3fce
+	github.com/myriadrf/limedrv v0.0.0-20191110180121-2887b3325268
 	github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d
 	github.com/opensatelliteproject/goaec v0.0.0-20190224065807-d814e01b69fa
 	github.com/opensatelliteproject/libsathelper v0.0.0-20190224071010-9df110e77627
 	github.com/prometheus/client_golang v1.1.0
 	github.com/prometheus/common v0.6.0
 	github.com/quan-to/slog v0.0.0-20190317205605-56a2b4159924
-	github.com/racerxdl/fastconvert v0.0.0-20190129064530-871b6f6cd82a
+	github.com/racerxdl/fastconvert v0.0.0-20190331022425-fb823eda3cf9
 	github.com/racerxdl/go.fifo v0.0.0-20180604061744-c6aa83afe374
 	github.com/racerxdl/segdsp v0.0.0-20190329062126-4f400f793b40
 	github.com/racerxdl/spy2go v0.0.0-20190103011754-14102c047be5

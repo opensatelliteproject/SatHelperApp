@@ -65,6 +65,7 @@ void RtlFrontend::Start() {
   if (mainThread != NULL) {
     throw SatHelperException("The worker is already running!");
   }
+  tuner = rtlsdr_get_tuner_type(device);
 
   if (rtlsdr_set_sample_rate(device, sampleRate) != 0) {
     std::cerr << "Cannot set sample rate to " << sampleRate << std::endl;
@@ -82,15 +83,11 @@ void RtlFrontend::Start() {
     throw SatHelperException("Cannot set Tuner AGC");
   }
 
-  if (rtlsdr_set_tuner_gain_ext(device, lnaGain, mixerGain, vgaGain) != 0) {
-    std::cerr << "Cannot set Tuner Gains" << std::endl;
-    throw SatHelperException("Cannot set Tuner Gains");
-  }
+  refreshGains();
 
   if (rtlsdr_reset_buffer(device) != 0) {
     throw SatHelperException("Cannot reset device buffer");
   }
-
   mainThread = new std::thread(&RtlFrontend::threadWork, this);
 }
 
@@ -125,7 +122,18 @@ void RtlFrontend::internalCallback(unsigned char *data, unsigned int length) {
 }
 
 void RtlFrontend::refreshGains() {
-  rtlsdr_set_tuner_gain_ext(device, lnaGain, mixerGain, vgaGain);
+  switch (tuner) {
+    case RTLSDR_TUNER_R820T: rtlsdr_set_tuner_gain_ext(device, lnaGain, mixerGain, vgaGain); break;
+    case RTLSDR_TUNER_E4000:
+      rtlsdr_set_tuner_gain(device, lnaGain);
+//      rtlsdr_set_tuner_if_gain(device, 0, mixerGain);
+//      rtlsdr_set_tuner_if_gain(device, 1, vgaGain);
+//      rtlsdr_set_tuner_if_gain(device, 2, lnaGain);
+      break;
+    default:
+      rtlsdr_set_tuner_gain(device, lnaGain);
+
+  }
 }
 
 void RtlFrontend::Stop() {
