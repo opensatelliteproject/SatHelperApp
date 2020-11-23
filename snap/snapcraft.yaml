@@ -59,10 +59,12 @@ parts:
       - libusb-1.0-0
       - swig
       - swig3.0
+      - libwebkit2gtk-4.0-dev
     stage-packages:
       - libusb-1.0-0
       - libstdc++6
       - libc6
       - libudev1
       - libgcc1
+      - libwebkit2gtk-4.0-37
 

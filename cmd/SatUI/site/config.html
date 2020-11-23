@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/page.css">
+
+    <title>SatUI - Configuration</title>
+    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="container">
+        <div class="accordion" id="configAccordion">
+          <div class="card">
+            <div class="card-header" id="headingProtocol">
+              <h2 class="mb-0">
+                <button id="protocolbtn" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#protocolCollapse" aria-expanded="true" aria-controls="protocolCollapse">
+                    Satellite Protocol
+                </button>
+              </h2>
+            </div>
+            <div>
+            <div id="protocolCollapse" class="collapse show" aria-labelledby="headingProtocol" data-parent="#configAccordion">
+              <div class="card-body">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="protocolDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Protocol
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="protocolDropdown">
+                        <a class="dropdown-item" onclick="selectProtocol('HRIT')" href="#">HRIT</a>
+                        <a class="dropdown-item" onclick="selectProtocol('LRIT')" href="#">LRIT</a>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingSDR">
+              <h2 class="mb-0">
+                <button id="sdrbtn" class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sdrCollapse" aria-expanded="false" aria-controls="sdrCollapse">
+                  SDR
+                </button>
+              </h2>
+            </div>
+            <div id="sdrCollapse" class="collapse" aria-labelledby="headingSDR" data-parent="#configAccordion">
+              <div class="card-body">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="protocolDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select SDR
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="protocolDropdown">
+                        <a class="dropdown-item" onclick="selectSdr('cfile')" href="#">GNURadio Complex File</a>
+                        <a class="dropdown-item" onclick="selectSdr('lime')" href="#">LimeSDR</a>
+                        <a class="dropdown-item" onclick="selectSdr('rtlsdr')" href="#">RTLSDR</a>
+                        <a class="dropdown-item" onclick="selectSdr('airspy')" href="#">Airspy</a>
+                        <a class="dropdown-item" onclick="selectSdr('spyserver')" href="#">Spyserver</a>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingSDRSettings">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sdrSettingsCollapse" aria-expanded="false" aria-controls="sdrSettingsCollapse">
+                  SDR Settings
+                </button>
+              </h2>
+            </div>
+            <div id="sdrSettingsCollapse" class="collapse" aria-labelledby="headingSDRSettings" data-parent="#configAccordion">
+              <div class="card-body">
+                SDR Settings
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script>
+        let config;
+        $("#configAccordion").hide();
+
+        function selectProtocol(protocol) {
+            config.Base.Mode = protocol;
+            refreshView();
+            $("#sdrCollapse").collapse('show');
+        }
+
+        function selectSdr(sdr) {
+            config.Base.DeviceType = sdr;
+            refreshView();
+            $("#sdrSettingsCollapse").collapse('show');
+        }
+
+        function refreshView() {
+            $("#protocolbtn").html('Satellite Protocol (<B>' + config.Base.Mode + '</B>)')
+            switch (config.Base.DeviceType) {
+                case 'limedrv':
+                case 'lime':
+                    $("#sdrbtn").html('SDR (<B>LimeSDR</B>)');
+                    break
+                case 'cfile':
+                    $("#sdrbtn").html('SDR (<B>GNURadio CFile</B>)');
+                    break
+                case 'rtlsdr':
+                    $("#sdrbtn").html('SDR (<B>RTLSDR</B>)');
+                    break
+                case 'airspy':
+                    $("#sdrbtn").html('SDR (<B>Airspy</B>)');
+                    break
+                case 'spyserver':
+                    $("#sdrbtn").html('SDR (<B>SpyServer</B>)');
+                    break
+                default:
+                    $("#sdrbtn").html('SDR')
+            }
+        }
+
+        async function start() {
+            console.log("Loading config");
+            config = await SatHelperApp_GetConfig();
+            console.log(JSON.stringify(config, null, 2));
+            refreshView();
+            $("#configAccordion").show();
+        }
+
+        start();
+    </script>
+</body>
+</html>

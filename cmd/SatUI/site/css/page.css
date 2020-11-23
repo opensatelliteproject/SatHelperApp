@@ -1,0 +1,9 @@
+.dropdown-toggle {
+  float: left;
+}
+.dropdown-menu.show {
+  position: relative !important;
+  clear: both;
+  margin-top: 0;
+  transform: none !important;
+}
