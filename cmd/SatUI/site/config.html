@@ -27,14 +27,12 @@
             <div>
             <div id="protocolCollapse" class="collapse show" aria-labelledby="headingProtocol" data-parent="#configAccordion">
               <div class="card-body">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="protocolDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select Protocol
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="protocolDropdown">
-                        <a class="dropdown-item" onclick="selectProtocol('HRIT')" href="#">HRIT</a>
-                        <a class="dropdown-item" onclick="selectProtocol('LRIT')" href="#">LRIT</a>
-                      </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Satellite Protocol</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="selectProtocol('HRIT')" href="#">HRIT (GOES 16/17)</a>
+                            <a class="dropdown-item" onclick="selectProtocol('LRIT')" href="#">LRIT (GOES 13/14/15)</a>
+                        </div>
                     </div>
               </div>
             </div>
@@ -49,17 +47,15 @@
             </div>
             <div id="sdrCollapse" class="collapse" aria-labelledby="headingSDR" data-parent="#configAccordion">
               <div class="card-body">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="protocolDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select SDR
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="protocolDropdown">
-                        <a class="dropdown-item" onclick="selectSdr('cfile')" href="#">GNURadio Complex File</a>
-                        <a class="dropdown-item" onclick="selectSdr('lime')" href="#">LimeSDR</a>
-                        <a class="dropdown-item" onclick="selectSdr('rtlsdr')" href="#">RTLSDR</a>
-                        <a class="dropdown-item" onclick="selectSdr('airspy')" href="#">Airspy</a>
-                        <a class="dropdown-item" onclick="selectSdr('spyserver')" href="#">Spyserver</a>
-                      </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select SDR Model</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" onclick="selectSdr('cfile')" href="#">GNURadio Complex File</a>
+                            <a class="dropdown-item" onclick="selectSdr('lime')" href="#">LimeSDR</a>
+                            <a class="dropdown-item" onclick="selectSdr('rtlsdr')" href="#">RTLSDR</a>
+                            <a class="dropdown-item" onclick="selectSdr('airspy')" href="#">Airspy</a>
+                            <a class="dropdown-item" onclick="selectSdr('spyserver')" href="#">Spyserver</a>
+                        </div>
                     </div>
               </div>
             </div>
@@ -74,15 +70,311 @@
             </div>
             <div id="sdrSettingsCollapse" class="collapse" aria-labelledby="headingSDRSettings" data-parent="#configAccordion">
               <div class="card-body">
-                SDR Settings
-              </div>
+                <div id="sdrGlobal">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Frequency</span>
+                        </div>
+                        <input id="frequency" type="text" class="form-control" placeholder="1694100000" aria-label="Frequency" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div id="sdrConfigCFile" style="display: none">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Filename</span>
+                        </div>
+                        <input id="filepath" type="text" class="form-control" placeholder="C:\test.cfile or /data/test.cfile" aria-label="Filename" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="fastAsPossible" aria-label="Read input fast as possible">
+                            </div>
+                        </div>
+                        <span class="form-control" aria-label="Read input fast as possible">Read input fast as possible</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Sample Rate</span>
+                        </div>
+                        <input id="cfileSampleRate" type="text" class="form-control" placeholder="5000000" aria-label="Sample Rate" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div id="sdrConfigAirspy" style="display: none">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Mixer Gain</span>
+                        </div>
+                        <input id="airspyMixerGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">LNA Gain</span>
+                        </div>
+                        <input id="airspyLNAGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">VGA Gain</span>
+                        </div>
+                        <input id="airspyVGAGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="airspyBiasT" aria-label="Bias T Enabled">
+                            </div>
+                        </div>
+                        <span class="form-control" aria-label="Bias T Enabled">Bias T Enabled</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sample Rate</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="$('#airspySampleRate').val(2500000)" href="#">2500000 (Airspy R2)</a>
+                                <a class="dropdown-item" onclick="$('#airspySampleRate').val(3000000)" href="#">3000000 (Airspy Mini)</a>
+                                <a class="dropdown-item" onclick="$('#airspySampleRate').val(6000000)" href="#">6000000 (Airspy Mini)</a>
+                                <a class="dropdown-item" onclick="$('#airspySampleRate').val(10000000)" href="#">10000000 (Airspy R2)</a>
+                            </div>
+                        </div>
+                        <input type="text" disabled id="airspySampleRate" class="form-control" placeholder="Sample Rate"/>
+                    </div>
+                </div>
+                <div id="sdrConfigRTLSDR" style="display: none">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Mixer Gain</span>
+                        </div>
+                        <input id="rtlsdrMixerGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">LNA Gain</span>
+                        </div>
+                        <input id="rtlsdrLNAGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">VGA Gain</span>
+                        </div>
+                        <input id="rtlsdrVGAGain" min="0" max="15" value="0" type="number" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="rtlsdrBiasT" aria-label="Bias T Enabled">
+                            </div>
+                        </div>
+                        <span class="form-control" aria-label="Bias T Enabled">Bias T Enabled</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sample Rate</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(240000)" href="#">240000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(300000)" href="#">300000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(960000)" href="#">960000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1152000)" href="#">1152000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1200000)" href="#">1200000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1440000)" href="#">1440000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1600000)" href="#">1600000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1800000)" href="#">1800000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(1920000)" href="#">1920000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(2400000)" href="#">2400000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(2560000)" href="#">2560000 (Recommended)</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(2880000)" href="#">2880000</a>
+                                <a class="dropdown-item" onclick="$('#rtlsdrSampleRate').val(3200000)" href="#">3200000</a>
+                            </div>
+                        </div>
+                    <input type="text" disabled id="rtlsdrSampleRate" class="form-control" placeholder="Sample Rate"/>
+                </div>
             </div>
+            <div id="sdrConfigLime" style="display: none">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Gain</span>
+                    </div>
+                    <input id="limeGain" min="0" max="15" value="0" type="number" class="form-control" />
+                </div>
+                <div class="input-group mb-3">
+                    <button id="limeAntenna" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Antenna</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="selectLimeAntenna('LNAL')" href="#">LNAL</a>
+                        <a class="dropdown-item" onclick="selectLimeAntenna('LNAW')" href="#">LNAW</a>
+                        <a class="dropdown-item" onclick="selectLimeAntenna('LNAH')" href="#">LNAH</a>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Sample Rate</span>
+                    </div>
+                    <input id="limeSampleRate" type="text" class="form-control" placeholder="5000000" aria-label="Sample Rate" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div id="sdrConfigSpyserver" style="display: none">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Gain</span>
+                    </div>
+                    <input id="spyserverGain" min="0" max="15" value="0" type="number" class="form-control" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Hostname</span>
+                    </div>
+                    <input id="spyserverHostname" type="text" class="form-control" placeholder="0.0.0.0" aria-label="Filename" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Port</span>
+                    </div>
+                    <input id="spyserverPort" min="0" max="65535" value="5555" type="number" class="form-control" />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Sample Rate</span>
+                    </div>
+                    <input id="spyserverSampleRate" type="text" class="form-control" placeholder="5000000" aria-label="Sample Rate" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <button id="sdrConfirmBtn" onclick="setSDRSettings()" type="button" disabled class="btn btn-success">Select a SDR first</button>
           </div>
         </div>
+      </div>
+    </div>
     </div>
     <script>
-        let config;
+        let config = {
+          "Title": "",
+          "Base": {
+            "SymbolRate": 0,
+            "RRCAlpha": 0,
+            "Mode": "",
+            "Decimation": 0,
+            "AGCEnabled": false,
+            "DeviceType": "",
+            "SendConstellation": false,
+            "PLLAlpha": 0,
+            "DemuxerType": "",
+            "StatisticsPort": 0
+          },
+          "Decoder": {
+            "Display": false,
+            "UseLastFrameData": false
+          },
+          "Source": {
+            "SampleRate": 0,
+            "Frequency": 0
+          },
+          "AirspySource": {
+            "MixerGain": 0,
+            "LNAGain": 0,
+            "VGAGain": 0,
+            "BiasTEnabled": false
+          },
+          "LimeSource": {
+            "LNAGain": 0,
+            "Antenna": ""
+          },
+          "CFileSource": {
+            "Filename": "",
+            "FastAsPossible": false
+          },
+          "RtlsdrSource": {
+            "MixerGain": 0,
+            "LNAGain": 0,
+            "VGAGain": 0,
+            "BiasTEnabled": false
+          },
+          "TCPServerDemuxer": {
+            "Port": 0,
+            "Host": ""
+          },
+          "FileDemuxer": {
+            "Filename": ""
+          },
+          "SpyserverSource": {
+            "Gain": 0,
+            "Hostname": "",
+            "Port": 0
+          },
+          "DirectDemuxer": {
+            "OutputFolder": "",
+            "TemporaryFolder": "",
+            "PurgeFilesAfterProcess": false,
+            "SkipVCID": null,
+            "ReprojectImages": false,
+            "DrawMap": false,
+            "FalseColor": false,
+            "Enhanced": false,
+            "MetaFrame": false
+          },
+          "RPC": {
+            "Enable": false,
+            "ListenPort": 0,
+            "ListenAddr": ""
+          },
+          "Prometheus": {
+            "Enable": false,
+            "ListenPort": 0,
+            "ListenAddr": ""
+          }
+        };
+
         $("#configAccordion").hide();
+
+        function setSDRSettings() {
+            // Base Source
+            config.Source.Frequency = parseInt($("#frequency").val(), 10);
+            switch (config.Base.DeviceType) {
+                case 'limedrv':
+                case 'lime':
+                    config.Source.SampleRate = parseInt($("#limeSampleRate").val(), 10);
+                    break
+                case 'cfile':
+                    config.Source.SampleRate = parseInt($("#cfileSampleRate").val(), 10);
+                    break
+                case 'rtlsdr':
+                    config.Source.SampleRate = parseInt($("#rtlsdrSampleRate").val(), 10);
+                    break
+                case 'airspy':
+                    config.Source.SampleRate = parseInt($("#airspySampleRate").val(), 10);
+                    break
+                case 'spyserver':
+                    config.Source.SampleRate = parseInt($("#spyserverSampleRate").val(), 10);
+                    break
+            }
+
+            // Airspy Source
+            config.AirspySource.MixerGain = parseInt($("#airspyMixerGain").val(), 10);
+            config.AirspySource.LNAGain = parseInt($("#airspyLNAGain").val(), 10);
+            config.AirspySource.VGAGain = parseInt($("#airspyVGAGain").val(), 10);
+            config.AirspySource.BiasTEnabled = $("#airspyBiasT").is(':checked');
+
+            // RTLSDR Source
+            config.RtlsdrSource.MixerGain = parseInt($("#rtlsdrMixerGain").val(), 10);
+            config.RtlsdrSource.LNAGain = parseInt($("#rtlsdrLNAGain").val(), 10);
+            config.RtlsdrSource.VGAGain = parseInt($("#rtlsdrVGAGain").val(), 10);
+            config.RtlsdrSource.BiasTEnabled = $("#rtlsdrBiasT").is(':checked');
+
+            // Lime Source
+            config.LimeSource.LNAGain = parseInt($("#limeGain").val(), 10);
+            // config.LimeSource.Antenna = Set by selectLimeAntenna
+
+            // CFile Source
+            config.CFileSource.Filename = $("#filepath").val();
+            config.CFileSource.FastAsPossible = $("#fastAsPossible").is(':checked');
+
+            // Spyserver Source
+            config.SpyserverSource.Gain = parseInt($("#spyserverGain").val(), 10);
+            config.SpyserverSource.Hostname = $("#spyserverHostname").val();
+            config.SpyserverSource.Port = parseInt($("#spyserverPort").val(), 10);
+        }
+
+        function selectLimeAntenna(antenna) {
+            config.LimeSource.Antenna = antenna;
+            refreshView();
+        }
 
         function selectProtocol(protocol) {
             config.Base.Mode = protocol;
@@ -97,26 +389,45 @@
         }
 
         function refreshView() {
-            $("#protocolbtn").html('Satellite Protocol (<B>' + config.Base.Mode + '</B>)')
+            if ($("#frequency").val() === '' && config.Base.Mode !== '') {
+                $("#frequency").val(config.Base.Mode === 'HRIT' ? '1694100000' : '1691000000')
+            }
+
+            if (config.LimeSource.Antenna !== '') {
+                $("#limeAntenna").html(config.LimeSource.Antenna);
+            }
+
+            $("#protocolbtn").html('Satellite Protocol (<B>' + config.Base.Mode + '</B>)');
+            $("div[id^=sdrConfig]").hide();
+            $("#sdrConfirmBtn").removeAttr("disabled");
+            $("#sdrConfirmBtn").html("OK");
+
             switch (config.Base.DeviceType) {
                 case 'limedrv':
                 case 'lime':
                     $("#sdrbtn").html('SDR (<B>LimeSDR</B>)');
+                    $("#sdrConfigLime").show();
                     break
                 case 'cfile':
                     $("#sdrbtn").html('SDR (<B>GNURadio CFile</B>)');
+                    $("#sdrConfigCFile").show();
                     break
                 case 'rtlsdr':
                     $("#sdrbtn").html('SDR (<B>RTLSDR</B>)');
+                    $("#sdrConfigRTLSDR").show();
                     break
                 case 'airspy':
                     $("#sdrbtn").html('SDR (<B>Airspy</B>)');
+                    $("#sdrConfigAirspy").show();
                     break
                 case 'spyserver':
                     $("#sdrbtn").html('SDR (<B>SpyServer</B>)');
+                    $("#sdrConfigSpyserver").show();
                     break
                 default:
                     $("#sdrbtn").html('SDR')
+                    $("#sdrConfirmBtn").html("Select SDR First");
+                    $("#sdrConfirmBtn").prop("disabled", true);
             }
         }
 
@@ -126,6 +437,7 @@
             console.log(JSON.stringify(config, null, 2));
             refreshView();
             $("#configAccordion").show();
+            $("input[id$=Gain]").keypress(function (evt) {  evt.preventDefault(); });
         }
 
         start();

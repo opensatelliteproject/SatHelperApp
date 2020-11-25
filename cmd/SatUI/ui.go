@@ -24,6 +24,10 @@ var boundFuncs = map[string]interface{}{
 	"SatHelperApp_StopServer":     stopServerApp,
 }
 
+func openDialog() {
+	webviewWindow.Window()
+}
+
 func startServerApp() error {
 	return nil
 }

@@ -2,8 +2,19 @@
   float: left;
 }
 .dropdown-menu.show {
-  position: relative !important;
+  position: absolute !important;
   clear: both;
   margin-top: 0;
   transform: none !important;
+}
+
+#container {
+  height: 100vh;
+}
+#configAccordion {
+  height: 100vh;
+}
+
+.accordion>.card {
+  overflow: visible;
 }
