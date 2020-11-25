@@ -70,6 +70,7 @@
             </div>
             <div id="sdrSettingsCollapse" class="collapse" aria-labelledby="headingSDRSettings" data-parent="#configAccordion">
               <div class="card-body">
+                <h3>Global Settings</h3>
                 <div id="sdrGlobal">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -77,7 +78,30 @@
                         </div>
                         <input id="frequency" type="text" class="form-control" placeholder="1694100000" aria-label="Frequency" aria-describedby="basic-addon1">
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Decimation</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" onclick="$('#decimation').val(1)" href="#">1</a>
+                                <a class="dropdown-item" onclick="$('#decimation').val(2)" href="#">2</a>
+                                <a class="dropdown-item" onclick="$('#decimation').val(4)" href="#">4</a>
+                                <a class="dropdown-item" onclick="$('#decimation').val(8)" href="#">8</a>
+                                <a class="dropdown-item" onclick="$('#decimation').val(16)" href="#">16</a>
+                            </div>
+                        </div>
+                        <input type="text" disabled id="decimation" class="form-control" placeholder="Decimation"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id="agcEnabled" aria-label="Sofware Automatic Gain Control">
+                            </div>
+                        </div>
+                        <span class="form-control" aria-label="Bias T Enabled">Sofware Automatic Gain Control</span>
+                    </div>
                 </div>
+                <hr/>
+                <h3>SDR Specific Settings</h3>
                 <div id="sdrConfigCFile" style="display: none">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -262,30 +286,6 @@
             "Display": false,
             "UseLastFrameData": false
           },
-          "Source": {
-            "SampleRate": 0,
-            "Frequency": 0
-          },
-          "AirspySource": {
-            "MixerGain": 0,
-            "LNAGain": 0,
-            "VGAGain": 0,
-            "BiasTEnabled": false
-          },
-          "LimeSource": {
-            "LNAGain": 0,
-            "Antenna": ""
-          },
-          "CFileSource": {
-            "Filename": "",
-            "FastAsPossible": false
-          },
-          "RtlsdrSource": {
-            "MixerGain": 0,
-            "LNAGain": 0,
-            "VGAGain": 0,
-            "BiasTEnabled": false
-          },
           "TCPServerDemuxer": {
             "Port": 0,
             "Host": ""
@@ -324,6 +324,10 @@
         $("#configAccordion").hide();
 
         function setSDRSettings() {
+            // Base
+            config.Base.Decimation = parseInt($("#decimation").val(), 10);
+            config.Base.AGCEnabled = $("#agcEnabled").is(':checked');
+
             // Base Source
             config.Source.Frequency = parseInt($("#frequency").val(), 10);
             switch (config.Base.DeviceType) {
@@ -388,7 +392,57 @@
             $("#sdrSettingsCollapse").collapse('show');
         }
 
-        function refreshView() {
+        function refreshView(firstTime) {
+            if (firstTime) {
+                $("#decimation").val(config.Base.Decimation);
+                $("#agcEnabled").attr('checked', config.Base.AGCEnabled);
+                // Base Source
+                $("#frequency").val(config.Source.Frequency);
+
+                switch (config.Base.DeviceType) {
+                    case 'limedrv':
+                    case 'lime':
+                        $("#limeSampleRate").val(config.Source.SampleRate);
+                        break
+                    case 'cfile':
+                        $("#cfileSampleRate").val(config.Source.SampleRate);
+                        break
+                    case 'rtlsdr':
+                        $("#rtlsdrSampleRate").val(config.Source.SampleRate);
+                        break
+                    case 'airspy':
+                        $("#airspySampleRate").val(config.Source.SampleRate);
+                        break
+                    case 'spyserver':
+                        $("#spyserverSampleRate").val(config.Source.SampleRate);
+                        break
+                }
+
+                // Airspy Source
+                $("#airspyMixerGain").val(config.AirspySource.MixerGain);
+                $("#airspyLNAGain").val(config.AirspySource.LNAGain);
+                $("#airspyVGAGain").val(config.AirspySource.VGAGain);
+                $("#airspyBiasT").attr('checked', config.AirspySource.BiasTEnabled);
+
+                // RTLSDR Source
+                $("#rtlsdrMixerGain").val(config.RtlsdrSource.MixerGain);
+                $("#rtlsdrLNAGain").val(config.RtlsdrSource.LNAGain);
+                $("#rtlsdrVGAGain").val(config.RtlsdrSource.VGAGain);
+                $("#rtlsdrBiasT").attr('checked', config.RtlsdrSource.BiasTEnabled);
+
+                // Lime Source
+                $("#limeGain").val(config.LimeSource.LNAGain);
+
+                // CFile Source
+                $("#filepath").val(config.CFileSource.Filename);
+                $("#fastAsPossible").attr('checked', config.CFileSource.FastAsPossible);
+
+                // Spyserver Source
+                $("#spyserverGain").val(config.SpyserverSource.Gain);
+                $("#spyserverHostname").val(config.SpyserverSource.Hostname);
+                $("#spyserverPort").val(config.SpyserverSource.Port);
+            }
+
             if ($("#frequency").val() === '' && config.Base.Mode !== '') {
                 $("#frequency").val(config.Base.Mode === 'HRIT' ? '1694100000' : '1691000000')
             }
@@ -433,9 +487,9 @@
 
         async function start() {
             console.log("Loading config");
+            await SatHelperApp_LoadConfig();
             config = await SatHelperApp_GetConfig();
-            console.log(JSON.stringify(config, null, 2));
-            refreshView();
+            refreshView(true);
             $("#configAccordion").show();
             $("input[id$=Gain]").keypress(function (evt) {  evt.preventDefault(); });
         }
