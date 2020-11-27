@@ -1,0 +1,80 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/page.css">
+    <title>SatUI - Configuration</title>
+    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="content">
+      <div class="control-panel">
+        <div class="card" style="width: 200px;">
+          <button id="btnstart" onclick="startBtn()" type="button" class="btn btn-success">Start Server</button>
+          <BR/>
+          <button id="btncfg" onclick="cfgBtn()" type="button" class="btn btn-warning">Configure</button>
+          <BR/>
+          <button id="btnexit" onclick="exitBtn()" type="button" class="btn btn-danger">Exit</button>
+        </div>
+      </div>
+    </div>
+    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        let serverRunning = false;
+        async function startBtn() {
+          $("#btnstart").attr('disabled', true);
+
+          if (serverRunning) {
+            $("#btnstart").addClass('btn-warning').removeClass('btn-danger');
+            $("#btnstart").html("Stopping");
+
+            try {
+              await SatHelperApp_StopServer();
+              $("#btnstart").removeClass('btn-warning').addClass('btn-success');
+              $("#btnstart").html("Start Server");
+              serverRunning = false;
+            } catch (e) {
+              $("#btnstart").removeClass('btn-warning').addClass('btn-danger');
+              $("#btnstart").html("Stop Server");
+              alert("Error stopping server: " + e);
+            }
+          } else {
+            $("#btnstart").addClass('btn-warning').removeClass('btn-success');
+            $("#btnstart").html("Starting");
+
+            try {
+              await SatHelperApp_StartServer("callback");
+              $("#btnstart").removeClass('btn-warning').addClass('btn-danger');
+              $("#btnstart").html("Stop Server");
+              serverRunning = true;
+            } catch (e) {
+              $("#btnstart").removeClass('btn-warning').addClass('btn-success');
+              $("#btnstart").html("Start Server");
+              alert("Error starting server: " + e);
+            }
+          }
+          $("#btnstart").attr('disabled', false);
+        }
+
+        function callback() {
+          alert("PORRA FUNCIONO CARALHO DE GAMBAIRRA");
+        }
+
+        async function cfgBtn() {
+          window.location.replace("/config.html");
+        }
+
+        function exitBtn() {
+          const result = confirm('Are you sure you want to exit?');
+          if (result) {
+            SatHelperApp_Exit();
+          }
+        }
+    </script>
+  </body>
+</html>

@@ -24,11 +24,11 @@ func getConfig() Models.AppConfig {
 }
 
 func setConfig(config Models.AppConfig) {
-	fmt.Println(config)
+	DSP.CurrentConfig = config
 }
 
 func saveConfig() error {
-	f, err := os.OpenFile(finalConfigFilePath, os.O_CREATE, os.ModePerm)
+	f, err := os.OpenFile(finalConfigFilePath, os.O_CREATE|os.O_RDWR, os.ModePerm)
 	if err != nil {
 		return err
 	}

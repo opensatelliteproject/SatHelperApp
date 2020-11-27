@@ -6,6 +6,9 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/airking05/termui v2.2.0+incompatible
 	github.com/alecthomas/kong v0.2.11
+	github.com/asticode/go-astikit v0.13.0
+	github.com/asticode/go-astilectron v0.19.0
+	github.com/asticode/go-astilectron-bootstrap v0.4.3
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
 	github.com/golang/protobuf v1.3.2
 	github.com/gorilla/mux v1.8.0
