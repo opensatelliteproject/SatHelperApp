@@ -1,2 +1,3 @@
-bind_linux_amd64.go
+bind_*.go
 output
+vendor

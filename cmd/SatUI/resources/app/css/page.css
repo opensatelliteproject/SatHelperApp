@@ -20,17 +20,35 @@
 }
 
 .control-panel {
-  width: 200px;
+  width: 300px;
   height: 200px;
 
   position: absolute;
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
+  top: 10px;
 }
 
 .content {
-  width: 100%;
+  width: 90%;
   height: 100%;
+}
+
+body {
+  background: rgba(0,0,0,1);
+  margin: 10 10 10 10;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+#terminal {
+  font-family: 'Fira Code', monospace;
+  width: 980px;
+  height: 280px;
+  background: rgba(64,64,64,1);
+  position: absolute;
+  bottom: 0px;
+  padding: 5px 5px 5px 5px;
+  overflow: hidden;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }

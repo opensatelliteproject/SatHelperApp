@@ -7,7 +7,9 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/opensatelliteproject/SatHelperApp/DSP"
 	"github.com/opensatelliteproject/SatHelperApp/Models"
+	"github.com/prometheus/common/log"
 	"github.com/quan-to/slog"
+	"io"
 	"os"
 )
 
@@ -16,23 +18,30 @@ var configLoaded bool
 var satlog = slog.Scope("SatUI")
 
 func isConfigLoaded() bool {
+	log.Info("isConfigLoaded()")
 	return configLoaded
 }
 
 func getConfig() Models.AppConfig {
+	log.Info("getConfig()")
 	return DSP.CurrentConfig
 }
 
 func setConfig(config Models.AppConfig) {
+	log.Info("setConfig()")
 	DSP.CurrentConfig = config
 }
 
 func saveConfig() error {
-	f, err := os.OpenFile(finalConfigFilePath, os.O_CREATE|os.O_RDWR, os.ModePerm)
+	log.Info("saveConfig()")
+	f, err := os.OpenFile(finalConfigFilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
+
+	_ = f.Truncate(0)
+	_, _ = f.Seek(0, io.SeekStart)
 
 	enc := toml.NewEncoder(f)
 	enc.Indent = "  "
@@ -40,6 +49,7 @@ func saveConfig() error {
 }
 
 func loadConfig() {
+	log.Info("loadConfig()")
 	home, _ := homedir.Dir()
 
 	err := os.MkdirAll(fmt.Sprintf("%s/SatHelperApp", home), os.ModePerm)

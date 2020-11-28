@@ -1,134 +1,247 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"github.com/alecthomas/kong"
 	"github.com/asticode/go-astikit"
 	"github.com/asticode/go-astilectron"
 	bootstrap "github.com/asticode/go-astilectron-bootstrap"
-	"github.com/gorilla/mux"
-	"github.com/opensatelliteproject/SatHelperApp"
-	"github.com/webview/webview"
-	"net"
-	"net/http"
+	"github.com/prometheus/common/log"
+	"io"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"runtime/debug"
+	"sync"
+	"syscall"
 	"time"
 )
 
 var astiWindow *astilectron.Window
-var webviewWindow webview.WebView
-var tcpPort int
-var httpListen net.Listener
-
 var boundFuncs = map[string]interface{}{
-	"SatHelperApp_SaveConfig":     saveConfig,
-	"SatHelperApp_IsConfigLoaded": isConfigLoaded,
-	"SatHelperApp_GetConfig":      getConfig,
-	"SatHelperApp_SetConfig":      setConfig,
-	"SatHelperApp_LoadConfig":     loadConfig,
-	"SatHelperApp_StartServer":    startServerApp,
-	"SatHelperApp_StopServer":     stopServerApp,
-	"SatHelperApp_Exit":           exit,
+	"SatHelperApp_SaveConfig":      saveConfig,
+	"SatHelperApp_IsConfigLoaded":  isConfigLoaded,
+	"SatHelperApp_GetConfig":       getConfig,
+	"SatHelperApp_SetConfig":       setConfig,
+	"SatHelperApp_LoadConfig":      loadConfig,
+	"SatHelperApp_StartServer":     startServerApp,
+	"SatHelperApp_StopServer":      stopServerApp,
+	"SatHelperApp_ServerIsRunning": isRunning,
+	"SatHelperApp_Exit":            exit,
+}
+
+func reflectCall(f interface{}, data json.RawMessage) (v interface{}, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf("panic: %s", r)
+			log.Errorf("error: %s", r)
+			debug.PrintStack()
+		}
+	}()
+	fType := reflect.TypeOf(f)
+	if fType.Kind() != reflect.Func {
+		return nil, fmt.Errorf("reflectCall called with a non function interface")
+	}
+
+	numIn := fType.NumIn()
+	fmethod := reflect.Indirect(reflect.ValueOf(f))
+
+	in := make([]reflect.Value, numIn)
+
+	var params []interface{}
+
+	err = json.Unmarshal(data, &params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < numIn; i++ {
+		t := fType.In(i)
+		if len(params) > i {
+			paramValue := params[i]
+			if t.Kind() == reflect.Struct {
+				// Re-marshal
+				d, _ := json.Marshal(paramValue)
+				n := reflect.New(t).Interface()
+				err = json.Unmarshal(d, n)
+				if err != nil {
+					return nil, err
+				}
+				in[i] = reflect.Indirect(reflect.ValueOf(n))
+			} else {
+				in[i] = reflect.ValueOf(paramValue)
+			}
+		} else {
+			in[i] = reflect.New(t).Elem()
+		}
+	}
+
+	out := fmethod.Call(in)
+	if len(out) == 0 {
+		return nil, nil
+	}
+
+	lastParam := out[len(out)-1]
+
+	if lastParam.Type() == reflect.TypeOf((*error)(nil)).Elem() && lastParam.Interface() != nil {
+		out = out[:len(out)-1]
+		if !lastParam.IsNil() {
+			err = *lastParam.Interface().(*error)
+		}
+	}
+
+	if len(out) == 1 {
+		return out[0].Interface(), err
+	}
+
+	interfaceArray := make([]interface{}, len(out))
+	for i, v := range out {
+		interfaceArray[i] = v.Interface()
+	}
+
+	return interfaceArray, err
 }
 
 // handleMessages handles messages
 func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
-	switch m.Name {
-	case "explore":
-		// Unmarshal payload
-		var path string
-		if len(m.Payload) > 0 {
-			// Unmarshal payload
-			if err = json.Unmarshal(m.Payload, &path); err != nil {
-				payload = err.Error()
-				return
-			}
-		}
+	if function, ok := boundFuncs[m.Name]; ok {
+		return reflectCall(function, m.Payload)
 	}
+
 	return
 }
 
 func exit() {
 	_ = stopServerApp()
-	if httpListen != nil {
-		_ = httpListen.Close()
+	if astiWindow != nil {
+		_ = astiWindow.Close()
 	}
+	os.Exit(0)
 }
 
-func startServerApp(function string) error {
-	go func() {
-		time.Sleep(time.Second * 5)
-		webviewWindow.Dispatch(func() {
-			webviewWindow.Eval(fmt.Sprintf("%s()", function))
-		})
-	}()
-	return nil
+var proc *exec.Cmd
+var procMtx = sync.Mutex{}
+
+func getAppPath() (string, error) {
+	return filepath.Abs(os.Args[0])
 }
 
-func stopServerApp() error {
-	time.Sleep(time.Second * 2)
-	return nil
+func sendBuffer(stdname string, data []byte) error {
+	return astiWindow.SendMessage(bootstrap.MessageOut{
+		Name:    stdname,
+		Payload: data,
+	})
 }
 
-func initView() error {
-	var err error
-	webviewWindow.SetTitle(fmt.Sprintf("SatUI - %s", SatHelperApp.GetVersion()))
-	webviewWindow.SetSize(1000, 600, webview.HintNone)
-	webviewWindow.Navigate(fmt.Sprintf("http://127.0.0.1:%d/index.html", tcpPort))
-	for funcName, function := range boundFuncs {
-		fmt.Printf("Binding function %s\n", funcName)
-		err = webviewWindow.Bind(funcName, function)
+func stdioLoop(stdname string, stdioReader io.ReadCloser) {
+	log.Infof("Starting %s readers", stdname)
+	stdio := bufio.NewReader(stdioReader)
+	lastFlush := time.Now()
+
+	buffer := make([]byte, 4096)
+	currentLength := 0
+
+	for {
+		b, err := stdio.ReadByte()
 		if err != nil {
-			return err
+			if err != io.EOF {
+				log.Errorf("error reading line: %s", err)
+			}
+			break
+		}
+		buffer[currentLength] = b
+		currentLength++
+		if currentLength == len(buffer) ||
+			(time.Since(lastFlush) > time.Millisecond*10 && currentLength > 0) ||
+			b == '\n' {
+			err = sendBuffer(stdname, buffer[:currentLength])
+			if err != nil {
+				log.Errorf("error sending buffer: %s", err)
+				break
+			}
+			currentLength = 0
+			lastFlush = time.Now()
 		}
 	}
-	return err
+	log.Info("Ending readers")
 }
 
-func webserv(c chan bool) error {
-	var err error
-	defer func() {
-		c <- false
-	}()
+func isRunning() bool {
+	return proc != nil && proc.ProcessState == nil
+}
 
-	r := mux.NewRouter()
-	fs := http.FileServer(http.Dir("./site"))
-	r.PathPrefix("/").Handler(fs)
+func startServerApp() error {
+	procMtx.Lock()
+	defer procMtx.Unlock()
+	if isRunning() {
+		return fmt.Errorf("already running")
+	}
 
-	httpListen, err = net.Listen("tcp", "127.0.0.1:0")
+	appPath, err := getAppPath()
 	if err != nil {
 		return err
 	}
 
-	tcpPort = httpListen.Addr().(*net.TCPAddr).Port
-	c <- true
-	fmt.Printf("Webserver running at 127.0.0.1:%d\n", tcpPort)
-	return http.Serve(httpListen, r)
+	log.Infof("Executing %s server", appPath)
+
+	proc = exec.Command(appPath, "server")
+
+	stderrReader, err := proc.StderrPipe()
+	if err != nil {
+		proc = nil
+		return err
+	}
+	stdoutReader, err := proc.StdoutPipe()
+	if err != nil {
+		proc = nil
+		return err
+	}
+
+	go stdioLoop("serverStdout", stdoutReader)
+	go stdioLoop("serverStderr", stderrReader)
+
+	err = proc.Start()
+	if err != nil {
+		proc = nil
+		return err
+	}
+
+	log.Info("Process started")
+
+	return nil
 }
 
-func runWebkit(c chan bool) {
-	fmt.Println("Starting webkit")
-	c <- true
-	webviewWindow.Run()
-	c <- false
+func stopServerApp() error {
+	procMtx.Lock()
+	defer procMtx.Unlock()
+
+	if isRunning() {
+		log.Info("Stopping process")
+		_ = proc.Process.Signal(syscall.SIGTERM)
+		_, _ = proc.Process.Wait()
+		proc = nil
+		log.Info("Process stopped")
+	}
+
+	return nil
 }
 
 func runAstilectron() error {
+	mydir, _ := os.Getwd()
 	err := bootstrap.Run(bootstrap.Options{
 		Asset:    Asset,
 		AssetDir: AssetDir,
 		AstilectronOptions: astilectron.Options{
-			AppName: "SatUI",
+			AppName:           "SatUI",
+			DataDirectoryPath: mydir,
 		},
 		Debug: true,
 		OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
 			astiWindow = ws[0]
-			go func() {
-				time.Sleep(5 * time.Second)
-				if err := bootstrap.SendMessage(astiWindow, "FODACI", "FODACI O ASTIELETROCON"); err != nil {
-					fmt.Println(fmt.Errorf("sending check.out.menu event failed: %w", err))
-				}
-			}()
 			return nil
 		},
 		MenuOptions: []*astilectron.MenuItemOptions{
@@ -186,6 +299,7 @@ func runAstilectron() error {
 				},
 			},
 		},
+		//ResourcesPath: "/resources",
 		RestoreAssets: RestoreAssets,
 		Windows: []*bootstrap.Window{{
 			Homepage:       "index.html",
@@ -193,8 +307,8 @@ func runAstilectron() error {
 			Options: &astilectron.WindowOptions{
 				BackgroundColor: astikit.StrPtr("#333"),
 				Center:          astikit.BoolPtr(true),
-				Height:          astikit.IntPtr(1000),
-				Width:           astikit.IntPtr(800),
+				Height:          astikit.IntPtr(640),
+				Width:           astikit.IntPtr(1000),
 			},
 		}},
 	})
@@ -203,45 +317,5 @@ func runAstilectron() error {
 }
 
 func startUI(pctx *kong.Context) error {
-	webChan := make(chan bool, 1)
-	//kitChan := make(chan bool, 1)
-	// Starting server
-	go webserv(webChan)
-
-	<-webChan // Wait server to start
-
-	//debug := true
-	//webviewWindow = webview.New(debug)
-	//defer webviewWindow.Destroy()
-	//err := initView()
-	//if err != nil {
-	//	return err
-	//}
-
-	go func() {
-		fmt.Println("Running...")
-
-		select {
-		case <-webChan:
-			fmt.Println("HTTP Server Closed")
-		}
-
-		if httpListen != nil {
-			_ = httpListen.Close()
-		}
-		if webviewWindow != nil {
-			webviewWindow.Terminate()
-		}
-	}()
-
-	err := runAstilectron()
-
-	if err != nil {
-		if httpListen != nil {
-			_ = httpListen.Close()
-		}
-		return err
-	}
-
-	return nil
+	return runAstilectron()
 }

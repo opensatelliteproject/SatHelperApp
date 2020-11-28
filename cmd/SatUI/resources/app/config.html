@@ -4,11 +4,14 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-      <link rel="stylesheet" href="/css/page.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/page.css">
       <title>SatUI - Configuration</title>
-      <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+      <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+      <script src="js/jquery-3.5.1.slim.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script>if (window.module) module = window.module;</script>
+      <script src="js/satui.js"></script>
    </head>
    <body>
       <div id="container">
@@ -27,8 +30,8 @@
                      <div class="input-group mb-3">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Satellite Protocol</button>
                         <div class="dropdown-menu">
-                           <a class="dropdown-item" onclick="selectProtocol('HRIT')" href="#">HRIT (GOES 16/17)</a>
-                           <a class="dropdown-item" onclick="selectProtocol('LRIT')" href="#">LRIT (GOES 13/14/15)</a>
+                           <a class="dropdown-item" onclick="selectProtocol('hrit')" href="#">HRIT (GOES 16/17)</a>
+                           <a class="dropdown-item" onclick="selectProtocol('lrit')" href="#">LRIT (GOES 13/14/15)</a>
                         </div>
                      </div>
                   </div>
@@ -362,7 +365,7 @@
          async function save() {
             await SatHelperApp_SetConfig(config);
             await SatHelperApp_SaveConfig();
-            window.location.replace("/main.html");
+            window.location.replace("main.html");
          }
 
          async function exit() {
@@ -444,6 +447,7 @@
              config.SpyserverSource.Gain = parseInt($("#spyserverGain").val(), 10);
              config.SpyserverSource.Hostname = $("#spyserverHostname").val();
              config.SpyserverSource.Port = parseInt($("#spyserverPort").val(), 10);
+             $("#demuxerCollapse").collapse('show');
          }
 
          function selectLimeAntenna(antenna) {
@@ -465,12 +469,16 @@
 
          function refreshView(firstTime) {
              if (firstTime) {
-                 $("#decimation").val(config.Base.Decimation);
-                 $("#agcEnabled").attr('checked', config.Base.AGCEnabled);
-                 // Base Source
-                 $("#frequency").val(config.Source.Frequency);
-
-                 switch (config.Base.DeviceType) {
+               if(config.Base.Decimation !== 0) {
+                  $("#decimation").val(config.Base.Decimation);
+               }
+               $("#agcEnabled").attr('checked', config.Base.AGCEnabled);
+               // Base Source
+               if(config.Source.Frequency !== 0) {
+                  $("#frequency").val(config.Source.Frequency);
+               }
+               if (config.Source.SampleRate !== 0) {
+                  switch (config.Base.DeviceType) {
                      case 'limedrv':
                      case 'lime':
                          $("#limeSampleRate").val(config.Source.SampleRate);
@@ -488,52 +496,53 @@
                          $("#spyserverSampleRate").val(config.Source.SampleRate);
                          break
                  }
+               }
 
-                 // Airspy Source
-                 $("#airspyMixerGain").val(config.AirspySource.MixerGain);
-                 $("#airspyLNAGain").val(config.AirspySource.LNAGain);
-                 $("#airspyVGAGain").val(config.AirspySource.VGAGain);
-                 $("#airspyBiasT").attr('checked', config.AirspySource.BiasTEnabled);
+               // Airspy Source
+               $("#airspyMixerGain").val(config.AirspySource.MixerGain);
+               $("#airspyLNAGain").val(config.AirspySource.LNAGain);
+               $("#airspyVGAGain").val(config.AirspySource.VGAGain);
+               $("#airspyBiasT").attr('checked', config.AirspySource.BiasTEnabled);
 
-                 // RTLSDR Source
-                 $("#rtlsdrMixerGain").val(config.RtlsdrSource.MixerGain);
-                 $("#rtlsdrLNAGain").val(config.RtlsdrSource.LNAGain);
-                 $("#rtlsdrVGAGain").val(config.RtlsdrSource.VGAGain);
-                 $("#rtlsdrBiasT").attr('checked', config.RtlsdrSource.BiasTEnabled);
+               // RTLSDR Source
+               $("#rtlsdrMixerGain").val(config.RtlsdrSource.MixerGain);
+               $("#rtlsdrLNAGain").val(config.RtlsdrSource.LNAGain);
+               $("#rtlsdrVGAGain").val(config.RtlsdrSource.VGAGain);
+               $("#rtlsdrBiasT").attr('checked', config.RtlsdrSource.BiasTEnabled);
 
-                 // Lime Source
-                 $("#limeGain").val(config.LimeSource.LNAGain);
+               // Lime Source
+               $("#limeGain").val(config.LimeSource.LNAGain);
 
-                 // CFile Source
-                 $("#filepath").val(config.CFileSource.Filename);
-                 $("#fastAsPossible").attr('checked', config.CFileSource.FastAsPossible);
+               // CFile Source
+               $("#filepath").val(config.CFileSource.Filename);
+               $("#fastAsPossible").attr('checked', config.CFileSource.FastAsPossible);
 
-                 // Spyserver Source
-                 $("#spyserverGain").val(config.SpyserverSource.Gain);
-                 $("#spyserverHostname").val(config.SpyserverSource.Hostname);
-                 $("#spyserverPort").val(config.SpyserverSource.Port);
+               // Spyserver Source
+               $("#spyserverGain").val(config.SpyserverSource.Gain);
+               $("#spyserverHostname").val(config.SpyserverSource.Hostname);
+               $("#spyserverPort").val(config.SpyserverSource.Port);
 
-                // Demuxer
-                $("#temporaryFolder").val(config.DirectDemuxer.TemporaryFolder);
-                if (config.DirectDemuxer.TemporaryFolder === '') {
-                    config.DirectDemuxer.TemporaryFolder = 'tmp';
-                }
+               // Demuxer
+               $("#temporaryFolder").val(config.DirectDemuxer.TemporaryFolder);
+               if (config.DirectDemuxer.TemporaryFolder === '') {
+                  config.DirectDemuxer.TemporaryFolder = 'tmp';
+               }
 
-                $("#outputFolder").val(config.DirectDemuxer.OutputFolder);
-                if (config.DirectDemuxer.OutputFolder === '') {
-                    config.DirectDemuxer.OutputFolder = 'out';
-                }
+               $("#outputFolder").val(config.DirectDemuxer.OutputFolder);
+               if (config.DirectDemuxer.OutputFolder === '') {
+                  config.DirectDemuxer.OutputFolder = 'out';
+               }
 
-                $("#purgeFilesAfterProcess").attr('checked', config.DirectDemuxer.PurgeFilesAfterProcess);
-                $("#reprojectImages").attr('checked', config.DirectDemuxer.ReprojectImages);
-                $("#drawMap").attr('checked', config.DirectDemuxer.DrawMap);
-                $("#falseColor").attr('checked', config.DirectDemuxer.FalseColor);
-                $("#enhanced").attr('checked', config.DirectDemuxer.Enhanced);
-                $("#metaFrame").attr('checked', config.DirectDemuxer.MetaFrame);
+               $("#purgeFilesAfterProcess").attr('checked', config.DirectDemuxer.PurgeFilesAfterProcess);
+               $("#reprojectImages").attr('checked', config.DirectDemuxer.ReprojectImages);
+               $("#drawMap").attr('checked', config.DirectDemuxer.DrawMap);
+               $("#falseColor").attr('checked', config.DirectDemuxer.FalseColor);
+               $("#enhanced").attr('checked', config.DirectDemuxer.Enhanced);
+               $("#metaFrame").attr('checked', config.DirectDemuxer.MetaFrame);
              }
 
              if ($("#frequency").val() === '' && config.Base.Mode !== '') {
-                 $("#frequency").val(config.Base.Mode === 'HRIT' ? '1694100000' : '1691000000')
+                 $("#frequency").val(config.Base.Mode === 'hrit' ? '1694100000' : '1691000000')
              }
 
              if (config.LimeSource.Antenna !== '') {
@@ -578,12 +587,14 @@
              console.log("Loading config");
              await SatHelperApp_LoadConfig();
              config = await SatHelperApp_GetConfig();
+             console.log(config);
              refreshView(true);
              $("#configAccordion").show();
              $("input[id$=Gain]").keypress(function (evt) {  evt.preventDefault(); });
          }
-
-         start();
+         document.addEventListener('astilectron-ready', function() {
+           start();
+         })
       </script>
    </body>
 </html>

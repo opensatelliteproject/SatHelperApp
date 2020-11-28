@@ -1,0 +1,59 @@
+{
+  "name": "terminal.js",
+  "version": "1.0.10",
+  "author": "Enno Boland <eb@s01.de>",
+  "description": "terminal emulation library for javascript.",
+  "scripts": {
+    "prepublish": "grunt",
+    "test": "grunt test"
+  },
+  "main": "./index",
+  "homepage": "http://github.com/Gottox/terminal.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gottox/terminal.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Gottox/terminal.js/issues"
+  },
+  "keywords": [
+    "vt100",
+    "xterm",
+    "vt",
+    "terminal"
+  ],
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-mocha-test": "^0.13.2",
+    "jsdom": "9.*",
+    "jsdom-global": "^2.1.1",
+    "mocha": "^3.3.0",
+    "wcwidth": "^1.0.1"
+  },
+  "engine": {
+    "node": ">=0.8"
+  },
+  "license": "MIT",
+  "jshintConfig": {
+    "strict": true,
+    "eqeqeq": true,
+    "quotmark": true,
+    "nonew": true,
+    "indent": true,
+    "latedef": true,
+    "noarg": true,
+    "node": true,
+    "undef": true,
+    "predef": [
+      "window"
+    ]
+  }
+}

@@ -4,26 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/page.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/page.css">
     <title>SatUI - Configuration</title>
-    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="js/jquery-3.5.1.slim.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script src="js/satui.js"></script>
   </head>
   <body>
     <div class="content">
       <div class="control-panel">
-        <div class="card" style="width: 200px;">
-          <button id="btnstart" onclick="startBtn()" type="button" class="btn btn-success">Start Server</button>
-          <BR/>
-          <button id="btncfg" onclick="cfgBtn()" type="button" class="btn btn-warning">Configure</button>
-          <BR/>
-          <button id="btnexit" onclick="exitBtn()" type="button" class="btn btn-danger">Exit</button>
-        </div>
+        <button id="btnstart" onclick="startBtn()" type="button" class="btn btn-success">Start Server</button>
+        <button id="btncfg" onclick="cfgBtn()" type="button" class="btn btn-warning">Configure</button>
+        <button id="btnexit" onclick="exitBtn()" type="button" class="btn btn-danger">Exit</button>
       </div>
+      <pre id="terminal" data-columns="80" data-rows="20"></pre>
     </div>
-    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script>
         let serverRunning = false;
         async function startBtn() {
@@ -48,7 +46,7 @@
             $("#btnstart").html("Starting");
 
             try {
-              await SatHelperApp_StartServer("callback");
+              await SatHelperApp_StartServer();
               $("#btnstart").removeClass('btn-warning').addClass('btn-danger');
               $("#btnstart").html("Stop Server");
               serverRunning = true;
@@ -61,12 +59,8 @@
           $("#btnstart").attr('disabled', false);
         }
 
-        function callback() {
-          alert("PORRA FUNCIONO CARALHO DE GAMBAIRRA");
-        }
-
         async function cfgBtn() {
-          window.location.replace("/config.html");
+          window.location.replace("config.html");
         }
 
         function exitBtn() {
@@ -75,6 +69,23 @@
             SatHelperApp_Exit();
           }
         }
+        document.addEventListener('astilectron-ready', async function() {
+            serverRunning = await SatHelperApp_ServerIsRunning();
+            if (serverRunning) {
+              $("#btnstart").removeClass('btn-success').addClass('btn-danger');
+              $("#btnstart").html("Stop Server");
+            }
+              astilectron.onMessage((message) => {
+                if (message.name === 'serverStderr' || message.name === 'serverStdout') {
+                  let msg = atob(message.payload);
+                  msg = msg.replace("\n", "\r\n").replace("\r\r\n", "\r\n");
+                  terminal.write(msg);
+                  $("#terminal").html(terminal.toString('html'));
+                } else {
+                  console.log("MESSAGE", message);
+                }
+              });
+        })
     </script>
   </body>
 </html>
