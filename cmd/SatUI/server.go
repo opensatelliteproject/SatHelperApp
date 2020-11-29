@@ -7,7 +7,6 @@ import (
 	"github.com/opensatelliteproject/SatHelperApp"
 	"github.com/opensatelliteproject/SatHelperApp/DSP"
 	"github.com/opensatelliteproject/SatHelperApp/Demuxer"
-	"github.com/opensatelliteproject/SatHelperApp/Display"
 	"github.com/opensatelliteproject/SatHelperApp/Frontend"
 	"github.com/opensatelliteproject/SatHelperApp/ImageProcessor"
 	SLog "github.com/opensatelliteproject/SatHelperApp/Logger"
@@ -89,6 +88,8 @@ func startServer(pctx *kong.Context) error {
 
 	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)
 
+	go startHTTP()
+
 	switch strings.ToLower(DSP.CurrentConfig.Base.Mode) {
 	case "lrit":
 		SLog.Info(aurora.Cyan("Selected LRIT mode. Ignoring parameters from config file.").String())
@@ -120,7 +121,7 @@ func startServer(pctx *kong.Context) error {
 		}
 		defer DSP.Device.Destroy()
 
-		DSP.Device.SetGain1(DSP.CurrentConfig.LimeSource.LNAGain)
+		DSP.Device.SetGain1(int(DSP.CurrentConfig.LimeSource.LNAGain))
 		DSP.Device.SetAntenna(DSP.CurrentConfig.LimeSource.Antenna)
 
 		SLog.Info(aurora.Cyan("	LNA Gain: %d").String(), aurora.Bold(aurora.Green(DSP.CurrentConfig.LimeSource.LNAGain)))
@@ -135,10 +136,11 @@ func startServer(pctx *kong.Context) error {
 		}
 		defer DSP.Device.Destroy()
 
-		DSP.Device.SetGain1(DSP.CurrentConfig.RtlsdrSource.LNAGain)
-		DSP.Device.SetGain2(DSP.CurrentConfig.RtlsdrSource.VGAGain)
-		DSP.Device.SetGain3(DSP.CurrentConfig.RtlsdrSource.MixerGain)
+		DSP.Device.SetGain1(int(DSP.CurrentConfig.RtlsdrSource.LNAGain))
+		DSP.Device.SetGain2(int(DSP.CurrentConfig.RtlsdrSource.VGAGain))
+		DSP.Device.SetGain3(int(DSP.CurrentConfig.RtlsdrSource.MixerGain))
 		DSP.Device.SetBiasT(DSP.CurrentConfig.RtlsdrSource.BiasTEnabled)
+		DSP.Device.(*Frontend.RTLSDRFrontend).SetOffsetTunning(DSP.CurrentConfig.RtlsdrSource.OffsetTunning)
 	case "airspy":
 		SLog.Info(aurora.Cyan("Airspy Frontend selected.").String())
 		Frontend.AirspyInitialize()
@@ -151,9 +153,9 @@ func startServer(pctx *kong.Context) error {
 		}
 		defer DSP.Device.Destroy()
 
-		DSP.Device.SetGain1(DSP.CurrentConfig.AirspySource.LNAGain)
-		DSP.Device.SetGain2(DSP.CurrentConfig.AirspySource.VGAGain)
-		DSP.Device.SetGain3(DSP.CurrentConfig.AirspySource.MixerGain)
+		DSP.Device.SetGain1(int(DSP.CurrentConfig.AirspySource.LNAGain))
+		DSP.Device.SetGain2(int(DSP.CurrentConfig.AirspySource.VGAGain))
+		DSP.Device.SetGain3(int(DSP.CurrentConfig.AirspySource.MixerGain))
 		DSP.Device.SetBiasT(DSP.CurrentConfig.AirspySource.BiasTEnabled)
 	case "spyserver":
 		SLog.Info(aurora.Cyan("Spyserver Frontend Selected. Target: %s:%d").String(), aurora.Bold(DSP.CurrentConfig.SpyserverSource.Hostname), aurora.Bold(DSP.CurrentConfig.SpyserverSource.Port))
@@ -163,7 +165,7 @@ func startServer(pctx *kong.Context) error {
 			return fmt.Errorf("error initializing device")
 		}
 		defer DSP.Device.Destroy()
-		DSP.Device.SetGain1(DSP.CurrentConfig.SpyserverSource.Gain)
+		DSP.Device.SetGain1(int(DSP.CurrentConfig.SpyserverSource.Gain))
 	default:
 		SLog.Error(aurora.Red("Device %s is not currently supported.").String(), aurora.Bold(DSP.CurrentConfig.Base.DeviceType))
 		return fmt.Errorf("device %s is not currently supported", DSP.CurrentConfig.Base.DeviceType)
@@ -207,10 +209,6 @@ func startServer(pctx *kong.Context) error {
 	}
 
 	DSP.InitAll()
-
-	if DSP.CurrentConfig.Decoder.Display {
-		Display.InitDisplay()
-	}
 
 	DSP.SDemuxer.Init()
 	DSP.Device.Start()

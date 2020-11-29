@@ -37,9 +37,10 @@ private:
   float iavg;
   float qavg;
   std::thread *mainThread;
-  uint8_t lnaGain;
-  uint8_t vgaGain;
-  uint8_t mixerGain;
+  int32_t lnaGain;
+  int32_t vgaGain;
+  int32_t mixerGain;
+  uint8_t offsetTunning;
   rtlsdr_tuner tuner;
   bool agc;
   GoDeviceCallback *cb;
@@ -61,10 +62,12 @@ public:
   void Stop();
   void SetAGC(bool agc);
 
-  void SetLNAGain(uint8_t value);
-  void SetVGAGain(uint8_t value);
-  void SetMixerGain(uint8_t value);
+  void SetLNAGain(int32_t value);
+  void SetVGAGain(int32_t value);
+  void SetMixerGain(int32_t value);
   void SetBiasT(uint8_t value);
+  void SetOffsetTunning(uint8_t value);
+  uint8_t GetTuner();
   uint32_t GetCenterFrequency();
 
   const std::string &GetName();

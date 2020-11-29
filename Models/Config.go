@@ -12,6 +12,7 @@ type BaseConfig struct {
 	PLLAlpha          float32
 	DemuxerType       string
 	StatisticsPort    int
+	GenerateFFTImage  bool
 }
 
 type CFileSourceConfig struct {
@@ -27,10 +28,11 @@ type AirspySourceConfig struct {
 }
 
 type RTLSDRSourceConfig struct {
-	MixerGain    uint8
-	LNAGain      uint8
-	VGAGain      uint8
-	BiasTEnabled bool
+	MixerGain     int16
+	LNAGain       int16
+	VGAGain       int16
+	BiasTEnabled  bool
+	OffsetTunning bool
 }
 
 type LimeSourceConfig struct {

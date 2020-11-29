@@ -52,3 +52,9 @@ body {
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
+
+#fft {
+  width: 980px;
+  text-align: center;
+  margin-top: -32px;
+}

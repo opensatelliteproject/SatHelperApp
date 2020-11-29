@@ -165,17 +165,30 @@
                         </div>
                      </div>
                      <div id="sdrConfigRTLSDR" style="display: none">
+                        <h5>Presets</h5>
+                        <ol>
+                           <li>E4000 with Nooelec GOES Kit</li>
+                           <li>
+                              <ol>
+                                 <li> IF Gain: <B>400</B> </li>
+                                 <li> LNA Gain: <B>480</B> </li>
+                                 <li> VGA Gain: <B>Doesn't matter</B></li>
+                                 <li> Sample Rate: <B>2560000</B></li>
+                                 <li> Decimation: <B>1</B></li>
+                              </ol>
+                           </li>
+                        </ol>
                         <div class="input-group mb-3">
                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="basic-addon1">Mixer Gain</span>
+                              <span class="input-group-text" id="basic-addon1">Mixer Gain (IF Gain for E4000)</span>
                            </div>
-                           <input id="rtlsdrMixerGain" min="0" max="15" value="0" type="number" class="form-control" />
+                           <input id="rtlsdrMixerGain" min="0" max="400" value="0" type="number" class="form-control" />
                         </div>
                         <div class="input-group mb-3">
                            <div class="input-group-prepend">
                               <span class="input-group-text" id="basic-addon1">LNA Gain</span>
                            </div>
-                           <input id="rtlsdrLNAGain" min="0" max="15" value="0" type="number" class="form-control" />
+                           <input id="rtlsdrLNAGain" min="0" max="480" value="0" type="number" class="form-control" />
                         </div>
                         <div class="input-group mb-3">
                            <div class="input-group-prepend">
@@ -401,6 +414,7 @@
              config.Base.SendConstellation = true;
              config.Base.DemuxerType = 'direct';
              config.Base.StatisticsPort = 5002;
+             config.Base.GenerateFFTImage = true;
 
              // Base Source
              config.Source.Frequency = parseInt($("#frequency").val(), 10);
@@ -434,6 +448,7 @@
              config.RtlsdrSource.LNAGain = parseInt($("#rtlsdrLNAGain").val(), 10);
              config.RtlsdrSource.VGAGain = parseInt($("#rtlsdrVGAGain").val(), 10);
              config.RtlsdrSource.BiasTEnabled = $("#rtlsdrBiasT").is(':checked');
+             config.RtlsdrSource.OffsetTunning = true;
 
              // Lime Source
              config.LimeSource.LNAGain = parseInt($("#limeGain").val(), 10);

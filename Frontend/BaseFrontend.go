@@ -91,9 +91,9 @@ type BaseFrontend interface {
 	Stop()
 	SetAntenna(value string)
 	SetAGC(agc bool)
-	SetGain1(value uint8)
-	SetGain2(value uint8)
-	SetGain3(value uint8)
+	SetGain1(value int)
+	SetGain2(value int)
+	SetGain3(value int)
 	SetBiasT(value bool)
 	GetCenterFrequency() uint32
 	GetName() string

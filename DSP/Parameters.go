@@ -2,6 +2,7 @@ package DSP
 
 import (
 	. "github.com/opensatelliteproject/SatHelperApp/Models"
+	"time"
 )
 
 // region Demodulator Parameters
@@ -43,6 +44,7 @@ const DefaultVgaGain = 5
 const DefaultMixGain = 5
 
 const DefaultBiast = false
+const DefaultOffsetTunning = false
 
 // FIFO Size in Samples
 // 10 * 1024 * 1024 samples is about 40Mb of ram.
@@ -75,6 +77,17 @@ const DefaultRPCPort = 5500
 const DefaultPrometheusPort = 9100
 
 const AverageLastNSamples = 10000
+
+// FFT
+
+const fftFps = 20
+const fftInterval = time.Second / fftFps
+const fftWidth = 4096
+const fftOffset = -40
+const fftScale = 12
+const fftFilterAlpha = float32(15)
+const imgWidth = 1024
+const imgHeight = 512
 
 // endregion
 // region Current Config Stuff

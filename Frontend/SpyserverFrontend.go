@@ -103,11 +103,11 @@ func (f *SpyserverFrontend) Stop() {
 func (f *SpyserverFrontend) SetAGC(agc bool) {
 	SLog.Warn("AGC not supported by SpyServer Frontend")
 }
-func (f *SpyserverFrontend) SetGain1(gain uint8) {
+func (f *SpyserverFrontend) SetGain1(gain int) {
 	f.ss.SetGain(uint32(gain))
 }
-func (f *SpyserverFrontend) SetGain2(gain uint8) {}
-func (f *SpyserverFrontend) SetGain3(gain uint8) {}
+func (f *SpyserverFrontend) SetGain2(gain int) {}
+func (f *SpyserverFrontend) SetGain3(gain int) {}
 func (f *SpyserverFrontend) SetBiasT(biast bool) {
 	SLog.Warn("BiasT not supported by SpyServer Frontend")
 }

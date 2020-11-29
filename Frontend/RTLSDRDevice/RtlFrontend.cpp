@@ -13,7 +13,7 @@ std::vector<uint32_t> RtlFrontend::supportedSampleRates = {
 };
 
 RtlFrontend::RtlFrontend(GoDeviceCallback *cb) :
-    sampleRate(2560000), centerFrequency(106300000), deviceId(0), alpha(0), iavg(0), qavg(0), lnaGain(0), vgaGain(0), mixerGain(0),
+    sampleRate(2560000), centerFrequency(106300000), deviceId(0), alpha(0), iavg(0), qavg(0), lnaGain(0), vgaGain(0), mixerGain(0), offsetTunning(0),
      agc(false) {
   this->cb = cb;
   for (int i = 0; i < 256; i++) {
@@ -85,6 +85,11 @@ void RtlFrontend::Start() {
 
   refreshGains();
 
+  if (tuner == RTLSDR_TUNER_E4000 && rtlsdr_set_offset_tuning(device, offsetTunning) != 0) {
+    std::cerr << "Error setting offset tunning" << std::endl;
+    throw SatHelperException("Error setting offset tunning");
+  }
+
   if (rtlsdr_reset_buffer(device) != 0) {
     throw SatHelperException("Cannot reset device buffer");
   }
@@ -121,14 +126,65 @@ void RtlFrontend::internalCallback(unsigned char *data, unsigned int length) {
   delete[] iq;
 }
 
+void RtlFrontend::SetOffsetTunning(uint8_t value) {
+  int result;
+  offsetTunning = value;
+  if (tuner == RTLSDR_TUNER_E4000) {
+      result = rtlsdr_set_offset_tuning(device, offsetTunning);
+      if (result != 0) {
+        std::cerr << "Error setting offset tunning to " << offsetTunning << std::endl;
+      }
+  }
+}
+uint8_t RtlFrontend::GetTuner()  {
+    return tuner;
+}
+
+const std::vector<int>    minGain = {-3, 0, 0, 0,  3,  3};
+const std::vector<int>    maxGain = { 6, 9, 9, 2, 15, 15};
+const std::vector<int>    step    = { 9, 3, 3, 1,  3,  3};
+
 void RtlFrontend::refreshGains() {
+  int result;
+  // Variables for E4000
+  std::vector<double>       gains   = {-3, 0, 0, 0,  3,  3};
+  double gain = ((double)mixerGain) / 10;
+
   switch (tuner) {
     case RTLSDR_TUNER_R820T: rtlsdr_set_tuner_gain_ext(device, lnaGain, mixerGain, vgaGain); break;
     case RTLSDR_TUNER_E4000:
-      rtlsdr_set_tuner_gain(device, lnaGain);
-//      rtlsdr_set_tuner_if_gain(device, 0, mixerGain);
-//      rtlsdr_set_tuner_if_gain(device, 1, vgaGain);
-//      rtlsdr_set_tuner_if_gain(device, 2, lnaGain);
+      result = rtlsdr_set_tuner_gain(device, lnaGain);
+      if (result != 0) {
+        std::cerr << "Error setting GAIN0" << std::endl;
+      }
+
+      // Calculate Stages
+
+      for (int i = minGain.size() -1; i >= 0; i--) {
+        double error = gain;
+        for (double g = minGain[i]; g <= maxGain[i]; g += step[i]) {
+          double sum = 0;
+          for (int j = 0; j < int(gains.size()); j++) {
+            if ( i == j )
+              sum += g;
+            else
+              sum += gains[ j + 1 ];
+          }
+
+          double err = std::abs(gain - sum);
+          if (err < error) {
+            error = err;
+            gains[ i + 1 ] = g;
+          }
+        }
+      }
+
+      for (unsigned int stage = 1; stage <= gains.size(); stage++) {
+        result = rtlsdr_set_tuner_if_gain(device, stage,  int(gains[ stage ] * 10.0));
+        if (result != 0) {
+          std::cerr << "Error setting GAIN" << stage << std::endl;
+        }
+      }
       break;
     default:
       rtlsdr_set_tuner_gain(device, lnaGain);
@@ -149,17 +205,17 @@ void RtlFrontend::SetAGC(bool agc) {
   this->agc = agc;
 }
 
-void RtlFrontend::SetLNAGain(uint8_t value) {
+void RtlFrontend::SetLNAGain(int32_t value) {
   lnaGain = value;
   refreshGains();
 }
 
-void RtlFrontend::SetVGAGain(uint8_t value) {
+void RtlFrontend::SetVGAGain(int32_t value) {
   vgaGain = value;
   refreshGains();
 }
 
-void RtlFrontend::SetMixerGain(uint8_t value) {
+void RtlFrontend::SetMixerGain(int32_t value) {
   mixerGain = value;
   refreshGains();
 }

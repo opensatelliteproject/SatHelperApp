@@ -83,14 +83,14 @@ func (f *AirspyFrontend) Stop() {
 func (f *AirspyFrontend) SetAGC(agc bool) {
 	f.device.SetAGC(agc)
 }
-func (f *AirspyFrontend) SetGain1(gain uint8) {
-	f.device.SetLNAGain(gain)
+func (f *AirspyFrontend) SetGain1(gain int) {
+	f.device.SetLNAGain(uint8(gain))
 }
-func (f *AirspyFrontend) SetGain2(gain uint8) {
-	f.device.SetVGAGain(gain)
+func (f *AirspyFrontend) SetGain2(gain int) {
+	f.device.SetVGAGain(uint8(gain))
 }
-func (f *AirspyFrontend) SetGain3(gain uint8) {
-	f.device.SetMixerGain(gain)
+func (f *AirspyFrontend) SetGain3(gain int) {
+	f.device.SetMixerGain(uint8(gain))
 }
 func (f *AirspyFrontend) SetBiasT(biast bool) {
 	val := uint8(0)

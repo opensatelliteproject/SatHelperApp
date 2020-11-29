@@ -133,7 +133,7 @@ func (f *LimeDrvFrontend) Stop() {
 
 	SLog.Error("LimeDRV Frontend not initialized!")
 }
-func (f *LimeDrvFrontend) SetGain1(gain uint8) {
+func (f *LimeDrvFrontend) SetGain1(gain int) {
 	f.gain = uint(gain)
 	if f.device != nil {
 		f.device.SetGainDB(f.activeChannel, true, f.gain)
@@ -141,8 +141,8 @@ func (f *LimeDrvFrontend) SetGain1(gain uint8) {
 	}
 	SLog.Error("LimeDRV Frontend not initialized!")
 }
-func (f *LimeDrvFrontend) SetGain2(gain uint8) {}
-func (f *LimeDrvFrontend) SetGain3(gain uint8) {}
+func (f *LimeDrvFrontend) SetGain2(gain int) {}
+func (f *LimeDrvFrontend) SetGain3(gain int) {}
 func (f *LimeDrvFrontend) SetChannel(value int) {
 	if f.device != nil {
 		if f.running {

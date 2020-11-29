@@ -106,6 +106,13 @@ func loadDefaults() {
 	DSP.CurrentConfig.LimeSource.LNAGain = 10
 	DSP.CurrentConfig.LimeSource.Antenna = "LNAH"
 
+	// RTLSDR Source Defaults
+	DSP.CurrentConfig.RtlsdrSource.LNAGain = DSP.DefaultLnaGain
+	DSP.CurrentConfig.RtlsdrSource.MixerGain = DSP.DefaultMixGain
+	DSP.CurrentConfig.RtlsdrSource.VGAGain = DSP.DefaultVgaGain
+	DSP.CurrentConfig.RtlsdrSource.BiasTEnabled = DSP.DefaultBiast
+	DSP.CurrentConfig.RtlsdrSource.OffsetTunning = DSP.DefaultOffsetTunning
+
 	// Spyserver
 	DSP.CurrentConfig.SpyserverSource.Hostname = "127.0.0.1"
 	DSP.CurrentConfig.SpyserverSource.Port = 5555

@@ -1,8 +1,31 @@
 package Frontend
 
 import (
+	"fmt"
 	"github.com/opensatelliteproject/SatHelperApp/Frontend/RTLSDRDevice"
 )
+
+type RTLSDRTuner uint8
+
+const (
+	RTLSDR_TUNER_UNKNOWN RTLSDRTuner = 0
+	RTLSDR_TUNER_E4000   RTLSDRTuner = 1
+	RTLSDR_TUNER_FC0012  RTLSDRTuner = 2
+	RTLSDR_TUNER_FC0013  RTLSDRTuner = 3
+	RTLSDR_TUNER_FC2580  RTLSDRTuner = 4
+	RTLSDR_TUNER_R820T2  RTLSDRTuner = 5
+	RTLSDR_TUNER_R828D   RTLSDRTuner = 6
+)
+
+var rtlsdrTunerName = map[RTLSDRTuner]string{
+	RTLSDR_TUNER_UNKNOWN: "Unknown",
+	RTLSDR_TUNER_E4000:   "E4000",
+	RTLSDR_TUNER_FC0012:  "FC0012",
+	RTLSDR_TUNER_FC0013:  "FC0013",
+	RTLSDR_TUNER_FC2580:  "FC2580",
+	RTLSDR_TUNER_R820T2:  "R820T/2",
+	RTLSDR_TUNER_R828D:   "R828D",
+}
 
 // region Struct Definition
 type RTLSDRFrontend struct {
@@ -31,11 +54,11 @@ func NewRTLSDRFrontend() *RTLSDRFrontend {
 // endregion
 // region Getters
 func (f *RTLSDRFrontend) GetName() string {
-	return f.device.GetName()
+	return fmt.Sprintf("RTLSDR with %s Tuner", f.GetTunerName())
 }
 
 func (f *RTLSDRFrontend) GetShortName() string {
-	return f.device.GetName()
+	return fmt.Sprintf("RTLSDR %s", f.GetTunerName())
 }
 
 func (f *RTLSDRFrontend) GetAvailableSampleRates() []uint32 {
@@ -54,6 +77,22 @@ func (f *RTLSDRFrontend) GetCenterFrequency() uint32 {
 
 func (f *RTLSDRFrontend) GetSampleRate() uint32 {
 	return uint32(f.device.GetSampleRate())
+}
+
+func (f *RTLSDRFrontend) GetTuner() RTLSDRTuner {
+	return RTLSDRTuner(f.device.GetTuner())
+}
+
+func (f *RTLSDRFrontend) GetTunerName() string {
+	return rtlsdrTunerName[f.GetTuner()]
+}
+
+func (f *RTLSDRFrontend) SetOffsetTunning(enable bool) {
+	b := byte(0)
+	if enable {
+		b = 1
+	}
+	f.device.SetOffsetTunning(b)
 }
 
 // endregion
@@ -86,15 +125,15 @@ func (f *RTLSDRFrontend) SetAGC(agc bool) {
 	f.device.SetAGC(agc)
 }
 
-func (f *RTLSDRFrontend) SetGain1(gain uint8) {
+func (f *RTLSDRFrontend) SetGain1(gain int) {
 	f.device.SetLNAGain(gain)
 }
 
-func (f *RTLSDRFrontend) SetGain2(gain uint8) {
+func (f *RTLSDRFrontend) SetGain2(gain int) {
 	f.device.SetVGAGain(gain)
 }
 
-func (f *RTLSDRFrontend) SetGain3(gain uint8) {
+func (f *RTLSDRFrontend) SetGain3(gain int) {
 	f.device.SetMixerGain(gain)
 }
 

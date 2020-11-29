@@ -20,6 +20,7 @@
         <button id="btncfg" onclick="cfgBtn()" type="button" class="btn btn-warning">Configure</button>
         <button id="btnexit" onclick="exitBtn()" type="button" class="btn btn-danger">Exit</button>
       </div>
+      <div id="fft"></div>
       <pre id="terminal" data-columns="80" data-rows="20"></pre>
     </div>
     <script>
@@ -69,22 +70,31 @@
             SatHelperApp_Exit();
           }
         }
+
+        async function FFTLoop() {
+          if (serverRunning) {
+            await UpdateFFT();
+          }
+          setTimeout(() => FFTLoop(), 1000/20);
+        }
+
         document.addEventListener('astilectron-ready', async function() {
             serverRunning = await SatHelperApp_ServerIsRunning();
             if (serverRunning) {
               $("#btnstart").removeClass('btn-success').addClass('btn-danger');
               $("#btnstart").html("Stop Server");
             }
-              astilectron.onMessage((message) => {
-                if (message.name === 'serverStderr' || message.name === 'serverStdout') {
-                  let msg = atob(message.payload);
-                  msg = msg.replace("\n", "\r\n").replace("\r\r\n", "\r\n");
-                  terminal.write(msg);
-                  $("#terminal").html(terminal.toString('html'));
-                } else {
-                  console.log("MESSAGE", message);
-                }
-              });
+            FFTLoop();
+            astilectron.onMessage((message) => {
+              if (message.name === 'serverStderr' || message.name === 'serverStdout') {
+                let msg = atob(message.payload);
+                msg = msg.replace("\n", "\r\n").replace("\r\r\n", "\r\n");
+                terminal.write(msg);
+                $("#terminal").html(terminal.toString('html'));
+              } else {
+                console.log("MESSAGE", message);
+              }
+            });
         })
     </script>
   </body>

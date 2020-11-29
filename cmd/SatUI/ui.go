@@ -163,6 +163,7 @@ func stdioLoop(stdname string, stdioReader io.ReadCloser) {
 				log.Errorf("error sending buffer: %s", err)
 				break
 			}
+			log.Info(string(buffer[:currentLength]))
 			currentLength = 0
 			lastFlush = time.Now()
 		}
@@ -233,8 +234,8 @@ func stopServerApp() error {
 func runAstilectron() error {
 	mydir, _ := os.Getwd()
 	err := bootstrap.Run(bootstrap.Options{
-		Asset:    Asset,
-		AssetDir: AssetDir,
+		//Asset:    Asset,
+		//AssetDir: AssetDir,
 		AstilectronOptions: astilectron.Options{
 			AppName:           "SatUI",
 			DataDirectoryPath: mydir,
@@ -300,7 +301,7 @@ func runAstilectron() error {
 			},
 		},
 		//ResourcesPath: "/resources",
-		RestoreAssets: RestoreAssets,
+		//RestoreAssets: RestoreAssets,
 		Windows: []*bootstrap.Window{{
 			Homepage:       "index.html",
 			MessageHandler: handleMessages,

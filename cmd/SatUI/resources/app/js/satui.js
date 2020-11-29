@@ -57,5 +57,19 @@ async function SatHelperApp_ServerIsRunning() {
   return sendMessage('SatHelperApp_ServerIsRunning', arguments);
 }
 
+async function UpdateFFT() {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = 'http://localhost:14123/fft?' + Date.now();
+    img.onload = () => {
+      img.width = 980;
+      $("#fft").html('');
+      $("#fft").prepend(img);
+      resolve();
+    };
+    img.onerror = resolve;
+  });
+}
+
 const Terminal = require("./terminal/index.js");
 const terminal = new Terminal({columns: 80, rows: 16});

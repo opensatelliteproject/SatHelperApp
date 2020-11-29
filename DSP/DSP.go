@@ -114,6 +114,10 @@ func processSamples() {
 	ba := &ban[0]
 	bb := &bbn[0]
 
+	if CurrentConfig.Base.GenerateFFTImage {
+		computeFFT(buffer0)
+	}
+
 	if CurrentConfig.Base.Decimation > 1 {
 		//length /= int(CurrentConfig.Base.Decimation)
 		length = decimatorNew.WorkBuffer(ban, bbn)
