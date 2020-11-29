@@ -40,6 +40,7 @@ private:
   uint8_t lnaGain;
   uint8_t vgaGain;
   uint8_t mixerGain;
+  rtlsdr_tuner tuner;
   bool agc;
   GoDeviceCallback *cb;
 

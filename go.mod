@@ -22,6 +22,8 @@ require (
 	github.com/mewkiz/pkg v0.0.0-20190222151137-b7948a1ad1b1
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/go-wordwrap v1.0.0 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/myriadrf/limedrv v0.0.0-20191110180121-2887b3325268
 	github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d
 	github.com/opensatelliteproject/goaec v0.0.0-20190224065807-d814e01b69fa
