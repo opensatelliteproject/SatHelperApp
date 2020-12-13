@@ -10,7 +10,7 @@ BUILD_TIME := $(shell date +"%H:%M:%S")
 
 PATH := $(PATH):/usr/lib/go-1.11/bin
 
-GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.11/bin:/usr/local/Cellar/go/1.11.2/bin command -v go 2> /dev/null)
+GOBIN := $(shell PATH=$PATH:/usr/lib/go-1.14/bin:/usr/local/Cellar/go/1.14/bin command -v go 2> /dev/null)
 BASEDIR := $(CURDIR)
 GOPATH := $(CURDIR)/.gopath
 BASE := $(GOPATH)/src/$(PACKAGE)
@@ -19,7 +19,7 @@ GOBUILD_VERSION_ARGS := -ldflags "-X $(REV_VAR)=$(REPO_REV) -X $(VERSION_VAR)=$(
 
 INTSIZE := $(shell getconf LONG_BIT)
 
-.PHONY: all build
+.PHONY: all build $(BASE)
 .NOTPARALLEL: pre deps update
 
 all: | $(BASE) pre deps update build
@@ -27,7 +27,7 @@ all: | $(BASE) pre deps update build
 $(BASE):
 	@echo Linking virtual GOPATH
 	@mkdir -p $(dir $@)
-	@ln -sf $(CURDIR) $@
+	@mount --bind $(CURDIR) $@
 
 pre:
 	@echo Prechecking
@@ -41,28 +41,29 @@ clean:
 
 deps: | $(BASE)
 	@echo Downloading dependencies
-	@cd $(BASE) && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE) && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for SatHelperApp
-	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/SatHelperApp && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for DemuxReplay
-	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/demuxReplay && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for xritparse
-	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritparse && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for xritcat
-	@cd $(BASE)/cmd/xritcat && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritcat && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for xritimg
-	@cd $(BASE)/cmd/xritimg && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritimg && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for xritpdcs
-	@cd $(BASE)/cmd/xritpdcs && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/xritpdcs && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for MultiSegmentDump
-	@cd $(BASE)/cmd/MultiSegmentDump && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/MultiSegmentDump && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 	@echo Deps for rpcClient
-	@cd $(BASE)/cmd/rpcClient && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get
+	@cd $(BASE)/cmd/rpcClient && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
+	@echo Deps for SatUI
+	@cd $(BASE)/cmd/SatUI && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) get ./...
 
 do-static: | $(BASE)
 	@echo "Updating Code to have static libLimeSuite"
 	@sed -i 's/-lLimeSuite/-l:libLimeSuite.a -l:libstdc++.a -static-libgcc -lm -lusb-1.0/g' $(GOPATH)/pkg/mod/github.com/myriadrf/limedrv*/limewrap/limewrap.go
-
 
 update: | do-static $(BASE)
 	@echo Updating AirspyDevice Wrapper
@@ -96,6 +97,11 @@ build: | $(BASE)
 	@echo Building rpcClient
 	@cd $(BASE)/cmd/rpcClient && GO111MODULE=on GOPATH=$(GOPATH) $(GOBIN) build $(GOBUILD_VERSION_ARGS) -o $(BASEDIR)/SatHelperClient
 
+	@echo Building SatUI
+	@GO111MODULE=off GOPATH=$(GOPATH) $(GOBIN) get github.com/asticode/go-astilectron-bundler/...
+	@GO111MODULE=off GOPATH=$(GOPATH) $(GOBIN) install github.com/asticode/go-astilectron-bundler/astilectron-bundler
+	@mkdir -p $(BASEDIR)/SatUI/
+	@cd $(BASE)/cmd/SatUI && $(GOPATH)/bin/astilectron-bundler -l -o $(BASEDIR)/SatUI/
 
 install: | $(BASE)
 	@echo Installing
@@ -115,6 +121,10 @@ install: | $(BASE)
 	@chmod +x $(DESTDIR)/SatHelperDump
 	@cd $(BASE) && cp $(BASEDIR)/SatHelperClient $(DESTDIR)/SatHelperClient
 	@chmod +x $(DESTDIR)/SatHelperClient
+	@cd $(BASE) && cp $(BASEDIR)/SatHelperClient $(DESTDIR)/SatHelperClient
+	@chmod +x $(DESTDIR)/SatHelperClient
+	@cd $(BASE) && cp $(BASEDIR)/SatUI/$(shell go env GOOS)-$(shell go env GOARCH)/SatUI $(DESTDIR)/SatUI
+	@chmod +x $(DESTDIR)/SatUI
 
 test:
 	go test -v -race $(shell go list ./... | grep -v /parts/ | grep -v /prime/ | grep -v /snap/ | grep -v /stage/ | grep -v /tmp/ | grep -v /librtlsdr/ )

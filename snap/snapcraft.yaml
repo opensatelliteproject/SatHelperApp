@@ -7,6 +7,7 @@ description: |
 
 grade: stable
 confinement: strict
+base: core18
 
 apps:
   sathelperapp:
@@ -30,6 +31,9 @@ apps:
   SatHelperClient:
     plugs: [network-bind, network, home]
     command: SatHelperClient
+  SatUI:
+    plugs: [network-bind, network, home]
+    command: SatUI
 
 parts:
   ppaadd:
@@ -37,15 +41,24 @@ parts:
     override-build: |
       echo "deb http://ppa.launchpad.net/opensatelliteproject/ppa/ubuntu xenial main" | tee /etc/apt/sources.list.d/opensatelliteproject.list
       echo "deb http://ppa.launchpad.net/opensatelliteproject/drivers/ubuntu xenial main" | tee /etc/apt/sources.list.d/drivers.list
-      echo "deb http://ppa.launchpad.net/gophers/archive/ubuntu xenial main" | tee /etc/apt/sources.list.d/gophers-archive.list
+      echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu bionic main" | tee /etc/apt/sources.list.d/longsleep.list
+
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 496DD3727263A7A279F9B349407E8BB01C195687
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 11FC2E68126782B43762694F22C627172ECB91FE
       apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C73998DC9DFEA6DCF1241057308C15A29AD198E9
+      apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 52B59B1571A79DBC054901C0F6BC817356A3D45E
       apt update
-      apt install -yy libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev swig swig3.0 golang-1.11
+      apt install -yy libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libsoapysdr-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev swig swig3.0 golang-1.14
+      ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
+
+      echo "Building Airspy"
+      [ ! -d "airspy" ] && git clone https://github.com/airspy/airspyone_host.git
+      cd airspyone_host && mkdir build && cd build && cmake .. && make -j10 && make install && ldconfig && cd ../..
+
       echo "Building RTLSDR"
       [ ! -d "librtlsdr" ] && git clone https://github.com/librtlsdr/librtlsdr.git
       cd librtlsdr && mkdir build && cd build && cmake .. && make -j10 && make install && ldconfig && cd ../..
+
       echo "Building Static LimeSuite"
       [ ! -d "LimeSuite" ] && git clone https://github.com/myriadrf/LimeSuite.git
       cd LimeSuite && git checkout stable && mkdir builddir && cd builddir && cmake ../ -DBUILD_SHARED_LIBS=OFF && make -j10 && make install && rm -fr * && cmake ../ && make -j10 && make install && ldconfig && cd ../..
@@ -60,6 +73,7 @@ parts:
       - swig
       - swig3.0
       - libwebkit2gtk-4.0-dev
+      - gnupg
     stage-packages:
       - libusb-1.0-0
       - libstdc++6
