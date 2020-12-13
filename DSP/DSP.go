@@ -49,7 +49,7 @@ func InitDSP() {
 	SLog.Debug("Automatic Gain Control: %t", Bold(Green(CurrentConfig.Base.AGCEnabled)))
 
 	// region SegDSP
-	agcNew = dsp.MakeSimpleAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
+	//agcNew = dsp.MakeSimpleAGC(AgcRate, AgcReference, AgcGain, AgcMaxGain)
 	rrcFilterNew = dsp.MakeFirFilter(dsp.MakeRRC(1, float64(circuitSampleRate), float64(CurrentConfig.Base.SymbolRate), float64(CurrentConfig.Base.RRCAlpha), RrcTaps))
 
 	newDecimatorTaps := dsp.MakeLowPass(1, float64(Device.GetSampleRate()), float64(circuitSampleRate/2)-defaultTransitionWidth/2, defaultTransitionWidth)

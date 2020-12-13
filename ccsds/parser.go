@@ -100,11 +100,7 @@ func (dm *Demuxer) onMSDU(msdu *MSDU) {
 }
 
 func (dm *Demuxer) incFrameLost(channelId, count int) {
-	if _, ok := dm.framesLost[channelId]; ok {
-		dm.framesLost[channelId] += uint64(count)
-	} else {
-		dm.framesLost[channelId] = uint64(count)
-	}
+	dm.framesLost[channelId] += uint64(count)
 }
 
 func (dm *Demuxer) checkLostFrameAndSave(channelId, currentFrame int) int {

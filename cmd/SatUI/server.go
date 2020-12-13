@@ -12,9 +12,7 @@ import (
 	SLog "github.com/opensatelliteproject/SatHelperApp/Logger"
 	SatHelper "github.com/opensatelliteproject/libsathelper"
 	"os"
-	"os/exec"
 	"os/signal"
-	"runtime"
 	"strings"
 	"syscall"
 	"time"
@@ -88,7 +86,9 @@ func startServer(pctx *kong.Context) error {
 
 	ImageProcessor.SetPurgeFiles(DSP.CurrentConfig.DirectDemuxer.PurgeFilesAfterProcess)
 
-	go startHTTP()
+	go func() {
+		_ = startHTTP()
+	}()
 
 	switch strings.ToLower(DSP.CurrentConfig.Base.Mode) {
 	case "lrit":
@@ -240,32 +240,4 @@ func startServer(pctx *kong.Context) error {
 	}
 
 	return nil
-}
-
-var clear = map[string]func(){
-	"linux": func() {
-		cmd := exec.Command("clear") //Linux example, its tested
-		cmd.Stdout = os.Stdout
-		err := cmd.Run()
-		if err != nil {
-			panic(err)
-		}
-	},
-	"windows": func() {
-		cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
-		cmd.Stdout = os.Stdout
-		err := cmd.Run()
-		if err != nil {
-			panic(err)
-		}
-	},
-}
-
-func callClear() {
-	value, ok := clear[runtime.GOOS] //runtime.GOOS -> linux, windows, darwin etc.
-	if ok {                          //if we defined a clear func for that platform:
-		value() //we execute it
-	} else { //unsupported platform
-		clear["linux"]()
-	}
 }

@@ -22,7 +22,7 @@ echo "GOBUILD_VERSION_ARGS=${GOBUILD_VERSION_ARGS}"
 
 export GO111MODULE=on
 
-TAG=`git describe --exact-match --tags HEAD 2>/dev/null`
+TAG=$(git describe --exact-match --tags HEAD 2>/dev/null)
 if [[ $? -eq 0 ]];
 then
   echo "Releasing for tag ${TAG}"
@@ -30,6 +30,18 @@ then
   echo "I'm in `pwd`"
   mkdir -p bins
   mkdir -p zips
+
+   echo "Building Airspy"
+   git clone https://github.com/airspy/airspyone_host.git
+   cd airspyone_host
+   mkdir -p build && cd build
+   cmake ..
+   make -j10
+   sudo make install
+   sudo ldconfig
+
+  echo "Going back to $ORIGINAL_FOLDER"
+  cd "$ORIGINAL_FOLDER"
 
   echo "Building RTLSDR"
   git clone https://github.com/librtlsdr/librtlsdr.git
@@ -67,7 +79,7 @@ then
   do
     echo "Building $i"
     cd ${i}
-    echo go build ${GOBUILD_VERSION_ARGS} -o ../../bins/${i}
+    echo go build "${GOBUILD_VERSION_ARGS}" -o ../../bins/${i}
     bash -c "go build ${GOBUILD_VERSION_ARGS} -o ../../bins/${i}"
     echo "Zipping ${i}-${TAG}-linux-amd64.zip"
     zip -r "../../zips/${i}-${TAG}-linux-amd64.zip" ../../bins/$i

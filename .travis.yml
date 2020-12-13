@@ -8,15 +8,25 @@ matrix:
   include:
     - language: go
       go:
-        - 1.11.x
+        - 1.14.x
       git:
         depth: 1
       before_install:
         - sudo add-apt-repository ppa:opensatelliteproject/ppa -y
         - sudo add-apt-repository ppa:opensatelliteproject/drivers -y
         - sudo add-apt-repository ppa:myriadrf/gnuradio -y
+        - sudo add-apt-repository ppa:longsleep/golang-backports -y
         - sudo apt-get -qq update
-        - sudo apt-get install -y libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libairspy0 libsoapysdr-dev libairspy-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev
+        - sudo apt-get install -y libaec-dev libaec0 libcorrect libsathelper libsoapysdr0.6 libsoapysdr-dev git g++ cmake libsqlite3-dev libi2c-dev libusb-1.0-0-dev
+        - echo "Building Airspy"
+        - git clone https://github.com/airspy/airspyone_host.git
+        - cd airspyone_host
+        - mkdir build
+        - cd build && cmake ..
+        - make -j10
+        - sudo make install
+        - sudo ldconfig
+        - cd ../..
         - echo "Building RTLSDR"
         - git clone https://github.com/librtlsdr/librtlsdr.git
         - cd librtlsdr

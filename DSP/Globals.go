@@ -29,7 +29,7 @@ var clockRecovery SatHelper.ClockRecovery
 var Device Frontend.BaseFrontend
 
 // region SegDSP Blocks
-var agcNew *dsp.SimpleAGC
+//var agcNew *dsp.SimpleAGC
 var rrcFilterNew *dsp.FirFilter
 var decimatorNew *dsp.FirFilter
 var costasLoopNew dsp.CostasLoop

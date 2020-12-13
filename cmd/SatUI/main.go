@@ -6,8 +6,8 @@ import (
 )
 
 var cli struct {
-	UI     struct{} `cmd help:"User Interface for SatUI" default:"1"`
-	Server struct{} `cmd help:"SatHelperApp Headless mode"`
+	UI     struct{} `cmd help:"User Interface for SatUI" default:"1"` //nolint
+	Server struct{} `cmd help:"SatHelperApp Headless mode"` //nolint
 }
 
 func main() {
