@@ -22,3 +22,7 @@ run:
   - stage
   - tmp
   - prime
+
+linters:
+  disable:
+    - megacheck

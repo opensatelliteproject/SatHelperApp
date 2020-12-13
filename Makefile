@@ -26,8 +26,8 @@ all: | $(BASE) pre deps update build
 
 $(BASE):
 	@echo Linking virtual GOPATH
-	@mkdir -p $(dir $@)
-	@mount --bind $(CURDIR) $@
+	@mkdir -p "$(dir $@)"
+	@sudo mount --bind $(CURDIR) "$(dir $@)"
 
 pre:
 	@echo Prechecking
