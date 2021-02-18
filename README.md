@@ -28,7 +28,7 @@ Ubuntu Instructions to get it running
 
 Base tools:
 ```bash
-sudo apt install build-essential cmake swig
+sudo apt install build-essential cmake swig liblimesuite-dev libaec-dev librtlsdr-dev
 ```
 
 Quick Instructions to get GO 1.10 running:
